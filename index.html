@@ -1345,6 +1345,41 @@ function renderWorldSelection(){
     g.selectAll(".china-sector").classed("active",false).attr("opacity",.62);
   }
 }
+function directNationMap(k){
+  const r=COUNTRY_VIEW[k],n=N[k];
+  if(!r||!n)return;
+
+  const zoom=(["rok","jpn"].includes(k)?5.1:
+    ["crf","ncdr","wur","mex"].includes(k)?3.7:
+    ["ind","bra","sea","edc"].includes(k)?2.9:
+    ["aus","afr"].includes(k)?2.45:
+    ["rus","afu","can"].includes(k)?2.05:2.5);
+
+  const pX=(Number(r.lon)+180)/360*1000;
+  const pY=(90-Number(r.lat))/180*500;
+  const w=1000/zoom,h=w/2;
+  const x=Math.max(0,Math.min(1000-w,pX-w/2));
+  const y=Math.max(0,Math.min(500-h,pY-h/2));
+
+  const svg=document.querySelector("#globeMount > svg");
+  if(svg)svg.setAttribute("viewBox",x+" "+y+" "+w+" "+h);
+
+  const reticle=document.getElementById("mapCenterReticle");
+  const label=document.getElementById("mapCenterReticleLabel");
+  if(label)label.textContent=(n.sigil||k).toUpperCase();
+  if(reticle)reticle.style.setProperty("--marker-color",n.color||"#e2be79");
+
+  const caption=document.getElementById("globeCaption");
+  if(caption)caption.textContent=(n.sigil||k).toUpperCase();
+
+  // Keep legacy state in sync, but DOM movement above is authoritative.
+  globeSelectedKey=k;
+  globeFocusCoord={lon:r.lon,lat:r.lat};
+  globeState.lon=r.lon;
+  globeState.lat=r.lat;
+  globeState.zoom=zoom;
+  if(typeof flatView!=="undefined")flatView={x,y,w,h};
+}
 function nation(k){
   const n=N[k];if(!n)return;
   sel=k;carouselIndex=COUNTRY_ORDER.indexOf(k);
@@ -1370,8 +1405,10 @@ function nation(k){
     g.selectAll(".china-sector").classed("active",d=>d.key===k)
       .attr("opacity",d=>chinaKeys.includes(k)?(d.key===k?1:.2):.5);
   }
-  setGlobeLabel((n.sigil||k).toUpperCase(),false);
-  focusNation(k);
+  // Move the actual SVG immediately from the same click path that updates the flag.
+  directNationMap(k);
+  requestAnimationFrame(()=>directNationMap(k));
+  setTimeout(()=>directNationMap(k),80);
 }
 function stepCountry(dir){
   if(carouselIndex<0)carouselIndex=dir>0?0:COUNTRY_ORDER.length-1;
@@ -1554,14 +1591,9 @@ function redrawGlobe(){}
 function setWorldSpin(){}
 
 function focusNation(k){
-  const r=COUNTRY_VIEW[k];if(!r)return;
+  if(!COUNTRY_VIEW[k])return;
   ++globeMoveToken;
-  globeSelectedKey=k;
-  globeFocusCoord={lon:r.lon,lat:r.lat};
-  globeState.lon=r.lon;globeState.lat=r.lat;globeState.zoom=flatZoomForNation(k);
-  setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
-  applyFlatView(flatTarget(r.lon,r.lat,flatZoomForNation(k)));
-  refreshGlobeCountries();
+  directNationMap(k);
 }
 
 function initMap(){
