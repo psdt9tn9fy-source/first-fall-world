@@ -794,6 +794,350 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 @media(prefers-reduced-motion:reduce){
   .hard-lock-pulse{animation:none;opacity:.55}
 }
+
+/* === 2134 FLAG PRESENTATION REVAMP === */
+
+/* Main selector flag: remove the cheap picture-frame look and let the flag float. */
+.flag-focus .flag{
+  border:0!important;
+  box-shadow:none!important;
+  background-color:transparent!important;
+  overflow:visible!important;
+}
+.flag-focus .flag.rok{
+  width:min(300px,38vw)!important;
+  max-width:300px!important;
+  aspect-ratio:3/2!important;
+  min-height:0!important;
+  background:
+    url("./assets/flags/rok-2134.jpg?v=2134f2")
+    center/106% auto no-repeat!important;
+  clip-path:polygon(
+    1% 8%, 12% 5%, 29% 6%, 47% 7%, 63% 10%, 78% 13%, 91% 17%, 98% 23%,
+    99% 38%, 98% 55%, 99% 71%, 97% 86%, 88% 94%, 71% 94%, 57% 92%,
+    43% 91%, 28% 90%, 14% 88%, 2% 84%, 0% 67%, 1% 49%, 0% 30%
+  );
+  filter:
+    drop-shadow(0 16px 18px rgba(0,0,0,.72))
+    drop-shadow(0 0 8px rgba(142,171,183,.15));
+  animation:flagFloat2134 5.2s ease-in-out infinite!important;
+}
+.flag-focus .flag.rok::before,
+.flag-focus .flag.rok::after{display:none!important}
+
+@keyframes flagFloat2134{
+  0%,100%{transform:perspective(700px) rotateY(-1.5deg) rotateZ(-.35deg) translateY(0)}
+  50%{transform:perspective(700px) rotateY(2deg) rotateZ(.25deg) translateY(-3px)}
+}
+
+/* Make the selector card itself feel like a display bay rather than a picture frame. */
+.flag-carousel-card{
+  background:
+    radial-gradient(circle at 38% 35%,rgba(111,147,160,.10),transparent 35%),
+    linear-gradient(180deg,#0d1417,#070b0d)!important;
+}
+.flag-focus{
+  grid-template-columns:minmax(230px,310px) minmax(0,1fr)!important;
+  gap:30px!important;
+}
+
+/* Country index becomes compact tactical flag tiles. */
+.country-index-list{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:7px!important;
+}
+.country-index-item{
+  min-height:58px!important;
+  padding:7px 9px!important;
+  grid-template-columns:52px minmax(0,1fr)!important;
+  gap:9px!important;
+  background:
+    linear-gradient(90deg,rgba(94,125,137,.055),transparent 42%),
+    #071014!important;
+  border-color:#26343b!important;
+  position:relative;
+  overflow:hidden;
+}
+.country-index-item::after{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:2px;
+  background:#5d7580;
+  opacity:.36;
+}
+.country-index-item:hover,
+.country-index-item.active{
+  border-color:#816f50!important;
+  background:
+    linear-gradient(90deg,rgba(151,127,82,.10),transparent 46%),
+    #0b1113!important;
+}
+.country-index-item.active::after{background:#b69a62;opacity:.95}
+
+.country-index-item .flag{
+  width:52px!important;
+  height:32px!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:1px;
+  box-shadow:0 5px 12px rgba(0,0,0,.5);
+  overflow:hidden!important;
+  position:relative;
+  clip-path:polygon(2% 4%,98% 8%,100% 87%,74% 94%,48% 91%,24% 95%,0 87%);
+}
+.country-index-item .flag::before,
+.country-index-item .flag::after{
+  transform:none!important;
+  transform-origin:center!important;
+}
+.country-index-item b{
+  font-size:.65rem!important;
+  letter-spacing:-.015em;
+}
+.country-index-item small{
+  font-size:.43rem!important;
+  opacity:.82;
+}
+
+/* ROK — uses the uploaded 2134 national flag art. */
+.country-index-item .flag.rok,
+.nation .flag.rok{
+  background:
+    url("./assets/flags/rok-2134.jpg?v=2134f2")
+    center/cover no-repeat!important;
+}
+.country-index-item .flag.rok::before,
+.country-index-item .flag.rok::after,
+.nation .flag.rok::before,
+.nation .flag.rok::after{display:none!important}
+
+/* AFU — federal navy field, crimson military bars, white command star. */
+.country-index-item .flag.afu,
+.nation .flag.afu{
+  background:
+    linear-gradient(155deg,transparent 0 58%,rgba(187,42,55,.92) 59% 66%,transparent 67%),
+    repeating-linear-gradient(0deg,#102b50 0 6px,#0b1c35 6px 10px)!important;
+}
+.flag.afu::before{
+  content:""!important;
+  display:block!important;
+  width:17px!important;height:17px!important;
+  left:7px!important;top:7px!important;
+  background:#eef2ef!important;
+  clip-path:polygon(50% 0,61% 34%,98% 36%,68% 57%,78% 94%,50% 73%,22% 94%,32% 57%,2% 36%,39% 34%)!important;
+}
+.flag.afu::after{display:none!important}
+
+/* Japan — retained sun motif, now ringed as a military-state emblem. */
+.country-index-item .flag.jpn,
+.nation .flag.jpn{
+  background:
+    radial-gradient(circle at 50% 50%,#b72938 0 18%,#e8e6df 19% 31%,#21364d 32% 36%,#f0eee8 37%)!important;
+}
+.flag.jpn::before,
+.flag.jpn::after{display:none!important}
+
+/* CRF — reconstruction red with a white command node. */
+.country-index-item .flag.crf,
+.nation .flag.crf{
+  background:
+    radial-gradient(circle at 52% 48%,#eee9dd 0 8%,transparent 9%),
+    linear-gradient(135deg,#a72c3c 0 58%,#651521 59%)!important;
+}
+.flag.crf::before{
+  content:""!important;display:block!important;
+  width:22px!important;height:2px!important;left:15px!important;top:15px!important;
+  background:#eee9dd!important;transform:rotate(-34deg)!important;
+}
+.flag.crf::after{display:none!important}
+
+/* NCDR — northern command bloc, oxidized red + command gold slash. */
+.country-index-item .flag.ncdr,
+.nation .flag.ncdr{
+  background:linear-gradient(135deg,#4a1718 0 45%,#c19250 46% 53%,#171518 54%)!important;
+}
+.flag.ncdr::before{
+  content:""!important;display:block!important;inset:7px 12px!important;
+  border:1px solid rgba(224,190,121,.75)!important;
+  transform:skewX(-14deg)!important;background:transparent!important;
+}
+.flag.ncdr::after{display:none!important}
+
+/* WUR — western union, black field and bronze orbital ring. */
+.country-index-item .flag.wur,
+.nation .flag.wur{
+  background:
+    radial-gradient(circle at 50% 50%,transparent 0 20%,#b9934a 21% 25%,transparent 26%),
+    linear-gradient(135deg,#080b0d,#26221a)!important;
+}
+.flag.wur::before{
+  content:""!important;display:block!important;
+  width:24px!important;height:2px!important;left:14px!important;top:15px!important;
+  background:#b9934a!important;transform:rotate(28deg)!important;
+}
+.flag.wur::after{display:none!important}
+
+/* Russia — recognizable tricolor hardened with a vertical command bar. */
+.country-index-item .flag.rus,
+.nation .flag.rus{
+  background:
+    linear-gradient(90deg,rgba(30,32,37,.92) 0 11%,transparent 11%),
+    linear-gradient(#ecebea 0 33%,#263f69 33% 66%,#8b2635 66%)!important;
+}
+.flag.rus::before,
+.flag.rus::after{display:none!important}
+
+/* EDC — deep navy, gold continental ring and shield. */
+.country-index-item .flag.edc,
+.nation .flag.edc{background:#0d2341!important}
+.flag.edc::before{
+  content:""!important;display:block!important;
+  width:20px!important;height:20px!important;left:16px!important;top:6px!important;
+  border:2px solid #d0aa68!important;border-radius:50%!important;background:transparent!important;
+}
+.flag.edc::after{
+  content:""!important;display:block!important;
+  width:8px!important;height:12px!important;left:23px!important;top:10px!important;
+  border:1px solid #d0aa68!important;
+  clip-path:polygon(50% 0,100% 18%,88% 76%,50% 100%,12% 76%,0 18%)!important;
+  background:#0d2341!important;
+}
+
+/* India — heritage tricolor with a compact navy wheel. */
+.country-index-item .flag.ind,
+.nation .flag.ind{
+  background:linear-gradient(#d9863f 0 33%,#eeeae0 33% 66%,#3f7a55 66%)!important;
+}
+.flag.ind::before{
+  content:""!important;display:block!important;
+  width:12px!important;height:12px!important;left:20px!important;top:10px!important;
+  border:2px solid #1c355c!important;border-radius:50%!important;background:transparent!important;
+}
+.flag.ind::after{display:none!important}
+
+/* Brazil — emerald field, angular gold core. */
+.country-index-item .flag.bra,
+.nation .flag.bra{background:#1a5a40!important}
+.flag.bra::before{
+  content:""!important;display:block!important;
+  width:23px!important;height:17px!important;left:14px!important;top:8px!important;
+  background:#b7a24f!important;
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)!important;
+}
+.flag.bra::after{
+  content:""!important;display:block!important;
+  width:9px!important;height:9px!important;left:21px!important;top:12px!important;
+  border-radius:50%!important;background:#183656!important;
+}
+
+/* Australia — deep pacific blue with a pale command star cluster. */
+.country-index-item .flag.aus,
+.nation .flag.aus{
+  background:linear-gradient(135deg,#102a4d,#285d88)!important;
+}
+.flag.aus::before{
+  content:"✦"!important;display:block!important;
+  left:14px!important;top:4px!important;color:#e8f0ee!important;
+  font:bold 20px/1 sans-serif!important;background:none!important;
+}
+.flag.aus::after{
+  content:"·  ·\A  ·"!important;white-space:pre!important;display:block!important;
+  right:7px!important;top:6px!important;color:#8cc7d8!important;
+  font:bold 12px/8px monospace!important;background:none!important;
+}
+
+/* Canada — restrained future maple geometry. */
+.country-index-item .flag.can,
+.nation .flag.can{
+  background:linear-gradient(90deg,#8f2a39 0 25%,#eeeae2 25% 75%,#8f2a39 75%)!important;
+}
+.flag.can::before{
+  content:""!important;display:block!important;
+  width:15px!important;height:17px!important;left:19px!important;top:8px!important;
+  background:#8f2a39!important;
+  clip-path:polygon(50% 0,61% 27%,82% 17%,75% 40%,100% 45%,77% 61%,84% 84%,58% 73%,50% 100%,42% 73%,16% 84%,23% 61%,0 45%,25% 40%,18% 17%,39% 27%)!important;
+}
+.flag.can::after{display:none!important}
+
+/* Mexico — green/white/red with a black-gold federal core. */
+.country-index-item .flag.mex,
+.nation .flag.mex{
+  background:linear-gradient(90deg,#2f694c 0 33%,#e9e7df 33% 66%,#87313e 66%)!important;
+}
+.flag.mex::before{
+  content:""!important;display:block!important;
+  width:12px!important;height:12px!important;left:20px!important;top:10px!important;
+  border:2px solid #23251f!important;border-radius:50%!important;
+  box-shadow:inset 0 0 0 2px #b29a59!important;background:transparent!important;
+}
+.flag.mex::after{display:none!important}
+
+/* SEA — maritime federation cyan with an orbital triangle. */
+.country-index-item .flag.sea,
+.nation .flag.sea{
+  background:linear-gradient(135deg,#0d4857,#1d817f)!important;
+}
+.flag.sea::before{
+  content:""!important;display:block!important;
+  width:20px!important;height:20px!important;left:16px!important;top:6px!important;
+  border:2px solid #d0b66d!important;border-radius:50%!important;background:transparent!important;
+}
+.flag.sea::after{
+  content:""!important;display:block!important;
+  width:12px!important;height:10px!important;left:20px!important;top:11px!important;
+  background:#d0b66d!important;
+  clip-path:polygon(50% 0,100% 100%,0 100%)!important;
+}
+
+/* AFR — continental defense green, black core, gold sun node. */
+.country-index-item .flag.afr,
+.nation .flag.afr{
+  background:
+    radial-gradient(circle at 50% 50%,#c0a45c 0 8%,transparent 9%),
+    linear-gradient(135deg,#143f34 0 58%,#081b18 59%)!important;
+}
+.flag.afr::before{
+  content:""!important;display:block!important;
+  width:25px!important;height:1px!important;left:13px!important;top:16px!important;
+  background:#c0a45c!important;transform:rotate(-32deg)!important;
+}
+.flag.afr::after{display:none!important}
+
+/* Legacy China placeholder if it ever appears. */
+.country-index-item .flag.chn,
+.nation .flag.chn{
+  background:linear-gradient(90deg,#742232 0 34%,#171b25 34% 67%,#17545b 67%)!important;
+}
+.flag.chn::before,.flag.chn::after{display:none!important}
+
+@media(max-width:900px){
+  .country-index-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
+@media(max-width:650px){
+  .flag-focus{
+    grid-template-columns:1fr!important;
+    gap:4px!important;
+  }
+  .flag-focus .flag.rok{
+    width:min(52vw,178px)!important;
+    max-width:178px!important;
+  }
+  .country-index-list{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+  }
+  .country-index-item{
+    min-height:50px!important;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    padding:5px 6px!important;
+  }
+  .country-index-item .flag{
+    width:44px!important;
+    height:28px!important;
+  }
+}
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
 {"type":"Feature","properties":{"name":"Angola"},"geometry":{"type":"MultiPolygon","coordinates":[[[[16.326528,-5.87747],[16.57318,-6.622645],[16.860191,-7.222298],[17.089996,-7.545689],[17.47297,-8.068551],[18.134222,-7.987678],[18.464176,-7.847014],[19.016752,-7.988246],[19.166613,-7.738184],[19.417502,-7.155429],[20.037723,-7.116361],[20.091622,-6.94309],[20.601823,-6.939318],[20.514748,-7.299606],[21.728111,-7.290872],[21.746456,-7.920085],[21.949131,-8.305901],[21.801801,-8.908707],[21.875182,-9.523708],[22.208753,-9.894796],[22.155268,-11.084801],[22.402798,-10.993075],[22.837345,-11.017622],[23.456791,-10.867863],[23.912215,-10.926826],[24.017894,-11.237298],[23.904154,-11.722282],[24.079905,-12.191297],[23.930922,-12.565848],[24.016137,-12.911046],[21.933886,-12.898437],[21.887843,-16.08031],[22.562478,-16.898451],[23.215048,-17.523116],[21.377176,-17.930636],[18.956187,-17.789095],[18.263309,-17.309951],[14.209707,-17.353101],[14.058501,-17.423381],[13.462362,-16.971212],[12.814081,-16.941343],[12.215461,-17.111668],[11.734199,-17.301889],[11.640096,-16.673142],[11.778537,-15.793816],[12.123581,-14.878316],[12.175619,-14.449144],[12.500095,-13.5477],[12.738479,-13.137906],[13.312914,-12.48363],[13.633721,-12.038645],[13.738728,-11.297863],[13.686379,-10.731076],[13.387328,-10.373578],[13.120988,-9.766897],[12.87537,-9.166934],[12.929061,-8.959091],[13.236433,-8.562629],[12.93304,-7.596539],[12.728298,-6.927122],[12.227347,-6.294448],[12.322432,-6.100092],[12.735171,-5.965682],[13.024869,-5.984389],[13.375597,-5.864241],[16.326528,-5.87747]]],[[[12.436688,-5.684304],[12.182337,-5.789931],[11.914963,-5.037987],[12.318608,-4.60623],[12.62076,-4.438023],[12.995517,-4.781103],[12.631612,-4.991271],[12.468004,-5.248362],[12.436688,-5.684304]]]]},"id":"AGO"},
@@ -1158,7 +1502,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 </section>
 
 <section class="panel" data-panel="nations">
-  <div class="heading"><div><div class="eyebrow">NATIONAL / REGIONAL DATABASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">국기 이미지는 추후 정식 아트로 교체 예정</div></div>
+  <div class="heading"><div><div class="eyebrow">NATIONAL / REGIONAL DATABASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">2134 군사시대 국가·세력 식별기</div></div>
   <div class="grid3" id="nationGrid"></div>
 </section>
 
