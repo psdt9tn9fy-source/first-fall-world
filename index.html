@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050914">
-<title>2134 : 군사시대 // WORLD STRATEGIC ARCHIVE</title>
+<title>FIRST DESCENT ARCHIVE // WORLD STRATEGIC RECORDS</title>
 <style>
 :root{
   --bg:#050914;--bg2:#08101d;--panel:#0b1626;--panel2:#0e1d31;--line:#21334b;
@@ -23,38 +23,63 @@ button{font:inherit}a{color:inherit}
 @keyframes scan{to{transform:translateY(calc(100vh + 240px))}}
 @media(prefers-reduced-motion:reduce){.scan{display:none}}
 
-.boot{position:relative;z-index:50;min-height:100vh;display:grid;place-items:center;overflow:hidden;padding:22px;background:
-linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.76)),
-radial-gradient(circle at 72% 17%,rgba(190,146,87,.17),transparent 29%),
-radial-gradient(circle at 22% 72%,rgba(105,30,25,.13),transparent 28%),
-linear-gradient(180deg,#191713 0%,#0c0b0a 46%,#050505 100%)}
-.boot:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:
-repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 4px),
-radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.28) 70%,rgba(0,0,0,.78) 100%);mix-blend-mode:screen;opacity:.5}
-.boot:after{content:"";position:absolute;inset:-15%;z-index:1;pointer-events:none;background:
-radial-gradient(ellipse at 15% 60%,rgba(184,170,142,.08),transparent 22%),
-radial-gradient(ellipse at 75% 72%,rgba(184,170,142,.06),transparent 23%);filter:blur(34px);animation:smoke 12s ease-in-out infinite alternate}
-@keyframes smoke{from{transform:translate3d(-2%,1%,0) scale(1)}to{transform:translate3d(3%,-1%,0) scale(1.07)}}
-.boot.boot-exit{animation:bootExit .7s ease forwards}@keyframes bootExit{to{opacity:0;filter:blur(4px);transform:scale(1.015)}}
-.ruins{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.ruins i{position:absolute;bottom:-5vh;width:clamp(56px,8vw,150px);height:var(--h);left:var(--x);background:linear-gradient(90deg,#080808,#191815 48%,#070707);opacity:.92;clip-path:polygon(0 8%,13% 9%,16% 3%,27% 8%,35% 0,46% 6%,55% 4%,62% 12%,76% 7%,83% 15%,100% 12%,96% 100%,0 100%);box-shadow:0 0 35px #000}
-.ruins i:after{content:"";position:absolute;inset:8% 18% 0;background:repeating-linear-gradient(180deg,transparent 0 15px,rgba(183,147,91,.055) 16px 17px)}
-.ruin-ground{position:absolute;left:-5%;right:-5%;bottom:-4%;height:23%;background:linear-gradient(168deg,transparent 0 27%,#090909 28% 100%);z-index:0;opacity:.96}
-.boot-card{position:relative;z-index:3;width:min(900px,100%);padding:56px 40px 38px;border:1px solid rgba(183,161,125,.24);background:linear-gradient(180deg,rgba(8,8,7,.68),rgba(5,5,5,.89));box-shadow:0 38px 100px #000c, inset 0 0 80px rgba(255,255,255,.015);text-align:left}
-.boot-card:before,.boot-card:after{content:"";position:absolute;width:56px;height:56px;border-color:rgba(176,148,105,.55)}
-.boot-card:before{left:-1px;top:-1px;border-left:2px solid;border-top:2px solid}.boot-card:after{right:-1px;bottom:-1px;border-right:2px solid;border-bottom:2px solid}
-.kicker,.eyebrow{font:700 .66rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
-.archive-mark{display:flex;align-items:center;gap:12px;margin-bottom:34px;color:#a68f6b;font:700 .63rem ui-monospace,monospace;letter-spacing:.19em}.archive-mark:before{content:"";width:42px;height:1px;background:#8b7656}
-.boot-date{font:800 clamp(.72rem,1.8vw,.88rem) ui-monospace,monospace;letter-spacing:.23em;color:#9f3c3c;margin-bottom:10px}
-.boot h1{margin:0;color:#e8e2d7;font:900 clamp(2.25rem,8vw,5.8rem)/.92 "Arial Narrow","Noto Sans KR",system-ui,sans-serif;letter-spacing:-.055em;text-shadow:0 8px 38px #000}
-.boot h1 span{display:block;margin-top:12px;font:700 clamp(.72rem,1.5vw,.95rem)/1.4 ui-monospace,monospace;letter-spacing:.28em;color:#7f7465}
-.boot-lead{max-width:650px;margin:30px 0 0;padding-left:16px;border-left:2px solid #6d2929;color:#c7bfb1;font-size:clamp(.88rem,1.6vw,1rem);line-height:1.9}
-.boot-lead strong{color:#f0e8da;font-weight:800}
-.boot .sub{margin:14px 0 0;color:#796f63;font:.67rem/1.7 ui-monospace,monospace;letter-spacing:.08em}
-.log{margin:30px 0 22px;padding:16px 18px;text-align:left;border-top:1px solid rgba(173,149,112,.18);border-bottom:1px solid rgba(173,149,112,.18);background:rgba(0,0,0,.2);min-height:104px;font:.72rem/1.85 ui-monospace,monospace;color:#8f8679}
-.log div{opacity:.92}.log div:before{content:"— ";color:#693333}
-.boot .btn{min-width:190px;min-height:48px;border:1px solid #735f43;background:#15120e;color:#d8cbb7;padding:0 22px;cursor:pointer;font:800 .72rem ui-monospace,monospace;letter-spacing:.16em;box-shadow:none}
-.boot .btn:hover{background:#211a12;border-color:#a3885e;color:#fff0d8}
+.intro-lock{overflow:hidden}
+.boot{position:fixed;inset:0;z-index:1000;overflow:hidden;background:#020304;color:#e8e7e1}
+.boot::after{content:"";position:absolute;inset:0;z-index:12;pointer-events:none;background:
+radial-gradient(circle at center,transparent 0 28%,rgba(0,0,0,.18) 58%,rgba(0,0,0,.72) 100%),
+repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
+.vault-core{position:absolute;inset:0;display:grid;place-items:center;z-index:30;transition:opacity .45s ease,transform .45s ease}
+.access-unit{position:relative;width:min(430px,calc(100vw - 34px));padding:28px 26px 24px;border:1px solid #363c40;background:
+linear-gradient(180deg,rgba(22,25,27,.98),rgba(8,10,11,.99));box-shadow:0 28px 90px #000, inset 0 0 0 1px #08090a;text-align:center}
+.access-unit::before,.access-unit::after{content:"";position:absolute;top:14px;bottom:14px;width:3px;background:repeating-linear-gradient(180deg,#786337 0 8px,#171717 8px 16px)}
+.access-unit::before{left:-4px}.access-unit::after{right:-4px}
+.access-kicker{font:700 .61rem ui-monospace,monospace;letter-spacing:.22em;color:#737a7e}
+.access-title{margin:9px 0 3px;font:900 clamp(1.12rem,4vw,1.7rem)/1.1 ui-monospace,monospace;letter-spacing:.09em;color:#ddd9cd}
+.access-sub{margin:0 0 22px;color:#716f69;font:.69rem/1.6 ui-monospace,monospace;letter-spacing:.08em}
+.reader{position:relative;width:128px;height:152px;margin:0 auto 18px;border:1px solid #444b50;background:linear-gradient(160deg,#16191b,#090b0c);box-shadow:inset 0 0 28px #000}
+.reader::before{content:"";position:absolute;left:21px;right:21px;top:24px;height:46px;border:1px solid #212729;background:#050606;box-shadow:inset 0 0 18px #000}
+.reader-light{position:absolute;left:31px;right:31px;top:82px;height:5px;background:#582323;box-shadow:0 0 10px #6e2222}
+.reader-label{position:absolute;left:0;right:0;bottom:18px;font:800 .55rem ui-monospace,monospace;letter-spacing:.16em;color:#5d6367}
+.access-card{position:relative;width:190px;height:104px;margin:0 auto;display:block;border:1px solid #555c60;background:
+linear-gradient(135deg,#292d30 0 28%,#171a1c 28% 70%,#262a2c 70%);color:#d9d6cb;cursor:pointer;box-shadow:0 16px 42px #000a;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .35s}
+.access-card:hover{transform:translateY(-4px)}
+.access-card::before{content:"";position:absolute;left:18px;top:21px;width:34px;height:25px;border:1px solid #7b6b48;background:linear-gradient(135deg,#9b8759,#4b4029)}
+.access-card::after{content:"IDA";position:absolute;right:16px;bottom:13px;font:900 .75rem ui-monospace,monospace;letter-spacing:.16em;color:#6f7579}
+.card-lines{position:absolute;left:18px;right:64px;bottom:19px;height:18px;border-top:1px solid #555;border-bottom:1px solid #333}
+.card-name{position:absolute;left:18px;top:58px;font:800 .62rem ui-monospace,monospace;letter-spacing:.08em;color:#b9b6ad}
+.access-status{height:22px;margin-top:16px;color:#857456;font:700 .62rem ui-monospace,monospace;letter-spacing:.12em}
+.opening .access-card{transform:translateY(-168px) scale(.72);opacity:.1}
+.opening .vault-core{opacity:0;transform:scale(.98);transition-delay:.45s}
+.opening .reader-light{background:#356249;box-shadow:0 0 18px #4d9a6c}
+
+.door-layer{position:absolute;inset:0;z-index:20;pointer-events:none;perspective:900px}
+.door-layer.layer-2{z-index:19;filter:brightness(.8)}
+.door-layer.layer-3{z-index:18;filter:brightness(.62)}
+.door{position:absolute;top:0;bottom:0;width:50.35%;background:
+linear-gradient(90deg,rgba(255,255,255,.035),transparent 7% 93%,rgba(255,255,255,.025)),
+repeating-linear-gradient(0deg,#171a1c 0 74px,#111315 74px 76px);
+box-shadow:inset 0 0 70px #000;border-color:#30363a;transition:transform 1.05s cubic-bezier(.65,0,.2,1)}
+.door.left{left:0;border-right:3px solid #050606}
+.door.right{right:0;border-left:3px solid #050606}
+.door::before{content:"";position:absolute;top:7%;bottom:7%;width:46px;background:
+repeating-linear-gradient(135deg,#8d6a2a 0 9px,#181818 9px 18px);opacity:.36}
+.door.left::before{right:22px}.door.right::before{left:22px}
+.door::after{content:"";position:absolute;top:50%;width:150px;height:210px;transform:translateY(-50%);border:1px solid #2e3437;background:linear-gradient(180deg,#1e2224,#0d0f10);box-shadow:inset 0 0 45px #000}
+.door.left::after{right:76px}.door.right::after{left:76px}
+.lockbar{position:absolute;left:50%;top:0;bottom:0;z-index:27;width:14px;transform:translateX(-50%);background:linear-gradient(90deg,#080909,#50565a,#080909);box-shadow:0 0 16px #000}
+.lockbar::after{content:"";position:absolute;left:50%;top:50%;width:62px;height:62px;transform:translate(-50%,-50%);border:5px solid #252b2e;border-radius:50%;background:#090a0b;box-shadow:0 0 0 1px #555,inset 0 0 20px #000}
+.layer-2 .door{background:repeating-linear-gradient(90deg,#131719 0 86px,#0c0e0f 86px 89px)}
+.layer-3 .door{background:linear-gradient(90deg,#0c0e10,#181c1e 35%,#0b0d0e)}
+.opening .layer-1 .door.left{transform:translateX(-104%)}.opening .layer-1 .door.right{transform:translateX(104%)}
+.opening .layer-1 .door{transition-delay:.72s}
+.opening .layer-2 .door.left{transform:translateX(-104%)}.opening .layer-2 .door.right{transform:translateX(104%)}
+.opening .layer-2 .door{transition-delay:1.58s}
+.opening .layer-3 .door.left{transform:translateX(-104%)}.opening .layer-3 .door.right{transform:translateX(104%)}
+.opening .layer-3 .door{transition-delay:2.44s}
+.opening .lockbar{opacity:0;transition:opacity .28s ease .45s}
+.gate-status{position:absolute;z-index:40;left:50%;bottom:5.5vh;transform:translateX(-50%);min-width:min(620px,88vw);text-align:center;color:#777d80;font:700 .64rem ui-monospace,monospace;letter-spacing:.16em;text-shadow:0 2px 10px #000}
+.gate-status strong{color:#a48959}
+.boot.finish{opacity:0;transition:opacity .45s ease}
 .btn{min-height:44px;border:1px solid #376fa9;background:linear-gradient(180deg,#153f70,#0c294b);color:var(--text);padding:0 18px;cursor:pointer;font-weight:800;letter-spacing:.06em}
 .btn:hover{filter:brightness(1.13)}.btn.secondary{background:#091522;border-color:var(--line);color:#bec9d6}.btn.danger{border-color:#7d2a3c;background:#2b0b14}
 
@@ -105,33 +130,41 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 .footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
 
 @media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.mapwrap{height:500px}}
-@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot{padding:12px}.boot-card{padding:38px 20px 28px}.boot h1{font-size:clamp(2.25rem,15vw,4rem)}.boot-lead{margin-top:24px}.archive-mark{margin-bottom:28px}.statusline .badge{display:none}}
+@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot{padding:0}.access-unit{padding:24px 18px 20px}.door::after{width:90px;height:150px}.door.left::after{right:52px}.door.right::after{left:52px}.statusline .badge{display:none}}
 </style>
 </head>
-<body>
+<body class="intro-lock">
 <canvas id="fx" aria-hidden="true"></canvas><div class="scan" aria-hidden="true"></div>
 
 <section class="boot" id="boot">
-  <div class="ruins" aria-hidden="true">
-    <i style="--x:2%;--h:54vh"></i><i style="--x:13%;--h:34vh"></i><i style="--x:24%;--h:61vh"></i>
-    <i style="--x:39%;--h:43vh"></i><i style="--x:56%;--h:70vh"></i><i style="--x:72%;--h:47vh"></i><i style="--x:87%;--h:59vh"></i>
-    <div class="ruin-ground"></div>
+  <div class="door-layer layer-3" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
+  <div class="door-layer layer-2" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
+  <div class="door-layer layer-1" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
+  <div class="lockbar" aria-hidden="true"></div>
+
+  <div class="vault-core">
+    <div class="access-unit">
+      <div class="access-kicker">RESTRICTED STRATEGIC ARCHIVE</div>
+      <div class="access-title">IDENTITY VERIFICATION</div>
+      <p class="access-sub">제1강하 이후 통합전략기록 // CLEARANCE REQUIRED</p>
+      <div class="reader">
+        <div class="reader-light"></div>
+        <div class="reader-label">CARD READER 03</div>
+      </div>
+      <button class="access-card" id="enter" type="button" aria-label="카드키 인증">
+        <span class="card-name">AUTHORIZED ACCESS</span>
+        <span class="card-lines"></span>
+      </button>
+      <div class="access-status" id="accessStatus">CARD KEY REQUIRED</div>
+    </div>
   </div>
-  <div class="boot-card">
-    <div class="archive-mark">RECOVERED WAR ARCHIVE // 2134</div>
-    <div class="boot-date">2031.04 — THE FIRST DESCENT</div>
-    <h1># 2134 : 군사시대 <span>ONE HUNDRED AND THREE YEARS OF WAR</span></h1>
-    <p class="boot-lead">하늘이 갈라진 뒤, 세계는 한 번 무너졌다.<br><strong>인류는 살아남았다. 전쟁도 살아남았다.</strong></p>
-    <p class="sub">문명은 다시 세워졌고, 도시에는 다시 불이 켜졌다. 그러나 국경 밖의 땅은 아직 돌아오지 않았다.</p>
-    <div class="log" id="log" aria-live="polite"></div>
-    <button class="btn" id="enter" type="button">기록 열람</button>
-  </div>
+  <div class="gate-status" id="gateStatus"><strong>VAULT 03</strong> // SEALED</div>
 </section>
 
 <main class="app" id="app" hidden>
 <header class="top">
-  <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle"># 2134 : 군사시대</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.3</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.4</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -149,26 +182,13 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 </nav>
 
 <section class="panel active" data-panel="world">
-  <div class="heading"><div><div class="eyebrow">WORLD STATUS // 2134</div><h2>문명은 살아남았다. 전쟁은 끝나지 않았다.</h2></div><div class="muted">제1강하 이후 103년</div></div>
-  <article class="card hero">
-    <span class="badge">CANON CORE</span>
-    <h3>2031년 「제1강하」 이후의 세계</h3>
-    <p>2031년 4월, 세계 각지 상공에 정체불명의 거대 구조물이 출현했고 기계생명체 <b>에이돌론(EIDOLON)</b>이 강하했다. 인류는 멸망하지 않았지만, 한 세기 동안 수많은 도시와 영토를 잃었다. 2134년의 대도시에는 학교·기업·대학·문화·연애와 여행이 존재한다. 동시에 전선, 방위구역, 난민 문제와 전사자 명부 역시 일상의 일부다.</p>
-    <div class="quote">“문명은 살아남았다. 그러나 그 문명의 정점에는 군이 있다.”</div>
-    <div class="worldfacts">
-      <div class="fact"><span>CURRENT YEAR</span><b>2134</b></div>
-      <div class="fact"><span>WAR DURATION</span><b>103 YEARS</b></div>
-      <div class="fact"><span>WORLD POP. // PROVISIONAL</span><b>≈ 4.7 BILLION*</b></div>
-      <div class="fact"><span>PRIMARY THREAT</span><b>EIDOLON</b></div>
-    </div>
-    <div class="muted" style="margin-top:10px">* 인구·일부 국가명·사건연도는 최종 정합성 검토 전의 작업 수치.</div>
-  </article>
+  <div class="heading"><div><div class="eyebrow">GLOBAL STRATEGIC THEATER // 2134</div><h2>세계 전략상황도</h2></div><div class="muted">제1강하 이후 103년</div></div>
 
-  <div class="grid2" style="margin-top:14px">
+  <div class="grid2 world-entry">
     <section class="card">
-      <div class="mapbar"><span>GLOBAL STRATEGIC MAP</span><span>CLICK HIGHLIGHTED REGIONS</span></div>
-      <div class="mapwrap"><svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg><div class="loading" id="loading">STRATEGIC MAP LOADING...</div></div>
-      <div class="mapfoot"><span>POLITICAL LAYER // WORKING CANON</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
+      <div class="mapbar"><span>LIVE STRATEGIC MAP</span><span>CLICK HIGHLIGHTED REGIONS</span></div>
+      <div class="mapwrap" style="height:clamp(470px,64vh,720px)"><svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg><div class="loading" id="loading">STRATEGIC MAP LOADING...</div></div>
+      <div class="mapfoot"><span>POLITICAL / DEFENSE LAYER // WORKING CANON</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
     </section>
     <aside class="card intel">
       <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
@@ -182,6 +202,20 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
       <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
     </aside>
   </div>
+
+  <article class="card hero" style="margin-top:14px">
+    <span class="badge">ARCHIVE NOTE</span>
+    <h3>2031년 「제1강하」 이후의 세계</h3>
+    <p>2031년 4월, 세계 각지 상공에 정체불명의 거대 구조물이 출현했고 기계생명체 <b>에이돌론(EIDOLON)</b>이 강하했다. 인류는 멸망하지 않았지만, 한 세기 동안 수많은 도시와 영토를 잃었다. 2134년의 대도시에는 학교·기업·대학·문화·연애와 여행이 존재한다. 동시에 전선, 방위구역, 난민 문제와 전사자 명부 역시 일상의 일부다.</p>
+    <div class="quote">“문명은 살아남았다. 그러나 그 문명의 정점에는 군이 있다.”</div>
+    <div class="worldfacts">
+      <div class="fact"><span>CURRENT YEAR</span><b>2134</b></div>
+      <div class="fact"><span>WAR DURATION</span><b>103 YEARS</b></div>
+      <div class="fact"><span>WORLD POP. // PROVISIONAL</span><b>≈ 4.7 BILLION*</b></div>
+      <div class="fact"><span>PRIMARY THREAT</span><b>EIDOLON</b></div>
+    </div>
+    <div class="muted" style="margin-top:10px">* 인구·일부 국가명·사건연도는 최종 정합성 검토 전의 작업 수치.</div>
+  </article>
 </section>
 
 <section class="panel" data-panel="nations">
@@ -366,7 +400,7 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span># 2134 : 군사시대 // WORLD DATABASE V0.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.4</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -412,8 +446,25 @@ pyongyang:{id:"KR // 2086 // RECLAMATION",title:"평양 탈환전",body:"작전�
 core9:{id:"I.D.A. // 2108 // CLEARANCE 05",title:"코어-9 참사",body:"회수 에이돌론 코어를 활용한 역공학 연구시설에서 통제불능 사고 발생.\n시설 및 인접 연구구역이 봉쇄·소실되었다.\n\n사건 이후 공개 코어 연구에는 국제규제가 도입되었지만 각국의 비공개 연구경쟁은 지속되고 있다.\n\n████████████████████████"}
 };
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-["2031.04 // 제1강하 — 세계 동시다발적 침공","2040 // 대혼란기 종료 — 인류 생존권 재편","2071 // 인류 반격기 — 영토 탈환 개시","2134 // 전쟁 103년째 — 기록은 계속된다"].forEach((t,i)=>setTimeout(()=>{const d=document.createElement("div");d.textContent=t;$("#log").appendChild(d)},260+i*430));
-$("#enter").onclick=()=>{const b=$("#boot");b.classList.add("boot-exit");setTimeout(()=>{b.remove();$("#app").hidden=false;initMap();drawAllPopulation()},650)};
+const accessStatus=$("#accessStatus"),gateStatus=$("#gateStatus");
+let opening=false;
+$("#enter").onclick=()=>{
+  if(opening)return;
+  opening=true;
+  $("#app").hidden=false;
+  initMap();
+  drawAllPopulation();
+  const b=$("#boot");
+  b.classList.add("opening");
+  accessStatus.textContent="CARD VERIFIED // CLEARANCE ACCEPTED";
+  gateStatus.innerHTML="<strong>VAULT 03</strong> // AUTHORIZATION ACCEPTED";
+  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 01</strong> // RELEASED",850);
+  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 02</strong> // RELEASED",1700);
+  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 03</strong> // RELEASED",2560);
+  setTimeout(()=>gateStatus.innerHTML="<strong>GLOBAL STRATEGIC MAP</strong> // ONLINE",3350);
+  setTimeout(()=>{b.classList.add("finish");document.body.classList.remove("intro-lock")},3650);
+  setTimeout(()=>b.remove(),4100);
+};
 function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
 $$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
 
