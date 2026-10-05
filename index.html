@@ -1084,7 +1084,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
               <path id="mapHudLinkPath" d=""></path>
               <circle id="mapHudLinkNode" cx="0" cy="0" r="3"></circle>
             </svg>
-            <button type="button" class="map-world-view" id="mapWorldView" data-hard-world-view>WORLD VIEW</button>
+            <button type="button" class="map-world-view" id="mapWorldView" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">WORLD VIEW</button>
             <div class="map-tactical-hud" id="mapTacticalHud">
               <div class="hud-topline"><span>LIVE TARGET FEED</span><em id="mapHudState">STANDBY</em></div>
               <b id="mapTrackCode">GLOBAL THEATER</b>
@@ -1114,7 +1114,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 
         <div class="mapfoot">
           <span>FLAG SELECTOR ↔ TERRITORY LINKED</span>
-          <button class="btn secondary" id="reset" type="button" data-hard-world-view>WORLD VIEW</button>
+          <button class="btn secondary" id="reset" type="button" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">WORLD VIEW</button>
         </div>
       </section>
 
