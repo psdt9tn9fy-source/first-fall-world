@@ -1445,13 +1445,16 @@ function focusNation(k){
   setGlobeMarker(k);
   refreshGlobeCountries();
 
-  // Country selection uses its own cancellable camera animation.
-  // This avoids the old bundled Globe.GL tween and OrbitControls fighting each other.
-  animateGlobeView({
-    lat:r.lat,
-    lng:r.lon,
-    altitude:globeAltitudeFor(k)
-  },720);
+  // Use the exact same built-in Globe.GL tween path as region selection.
+  // Region buttons are known to work reliably in this vendored build.
+  ++globeMoveToken;
+  try{
+    strategicGlobe.pointOfView({
+      lat:r.lat,
+      lng:r.lon,
+      altitude:globeAltitudeFor(k)
+    },850);
+  }catch(e){console.warn("GLOBE NATION FOCUS",e)}
 }
 function buildGlobeTexture(done){
   if(globeTextureDataUrl){done(globeTextureDataUrl);return}
