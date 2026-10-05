@@ -1504,7 +1504,10 @@ function initMap(){
     flatMapSvg.appendChild(flatMapGroup);
     flatMapEntries=[];
 
-    for(const feature of globeFeatures){
+    const mapFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))
+      ?window.WORLD_GEOJSON.features.filter(f=>(f?.properties?.name||"").toLowerCase()!=="antarctica")
+      :[];
+    for(const feature of mapFeatures){
       const d=flatGeometryPath(feature.geometry);
       if(!d)continue;
       const path=document.createElementNS(ns,"path");
