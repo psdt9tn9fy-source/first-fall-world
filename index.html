@@ -183,6 +183,81 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.stat{padding:11px;border:1px solid #192a40;background:#07101c}.stat span{display:block;color:var(--muted);font:.61rem ui-monospace,monospace}.stat b{display:block;margin-top:5px;font-size:.79rem}
 .brief{margin-top:20px;color:#b5c2d0;font-size:.86rem;line-height:1.72}.actions{display:flex;gap:8px;margin-top:18px}.actions .btn{flex:1;font-size:.74rem}
 
+
+/* === V0.7 COMMAND MAP / COUNTRY DOSSIER === */
+.world-shell{display:grid;grid-template-columns:190px minmax(0,1fr) 205px;gap:10px}
+.rail{border:1px solid #27343c;background:linear-gradient(180deg,#0a1014,#06090b);min-height:650px;padding:12px;box-shadow:0 18px 50px #0007}
+.rail-title{padding-bottom:9px;margin-bottom:10px;border-bottom:1px solid #243039;color:#91a9b6;font:800 .6rem ui-monospace,monospace;letter-spacing:.15em}
+.status-row{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #182126;font:700 .59rem ui-monospace,monospace;color:#74858e}
+.status-row b{color:#d3d9d9;font-size:.72rem}
+.status-row.alert b{color:#b86668}
+.power-link{width:100%;padding:10px 8px;margin:0 0 5px;border:1px solid #25323a;background:#0b1115;color:#aeb9bd;text-align:left;cursor:pointer;font:800 .58rem ui-monospace,monospace;letter-spacing:.06em}
+.power-link:hover{border-color:#66808f;color:#fff;background:#10191e}
+.map-stage{min-width:0}
+.grand-map{border:1px solid #34434c!important;box-shadow:0 26px 90px #000b!important}
+.mapbar{background:linear-gradient(90deg,#081016,#0c151a,#071015)!important;border-color:#2b3a43!important}
+.mapbar span:first-child{color:#a8c0cd}
+.mapwrap{min-height:650px!important;height:min(78vh,820px)!important;background:
+radial-gradient(circle at 50% 47%,rgba(53,93,111,.12),transparent 34%),
+linear-gradient(rgba(51,78,91,.06) 1px,transparent 1px),
+linear-gradient(90deg,rgba(51,78,91,.06) 1px,transparent 1px),#03080b!important;
+background-size:auto,34px 34px,34px 34px!important}
+.map-titleblock{top:66px!important}
+.map-titleblock h1{font-size:clamp(1.8rem,4.1vw,4.2rem)!important;color:#e3e8e8!important;letter-spacing:-.06em!important}
+.map-titleblock .overline{color:#82a5b8!important}
+.map-command{bottom:64px!important;background:rgba(4,9,12,.92)!important;border-color:#30414b!important}
+.map-command b{color:#d6dcda!important}
+.map-intel{top:64px!important;right:14px!important;width:min(370px,38vw)!important;border-color:#3b505c!important;background:linear-gradient(180deg,rgba(8,15,19,.96),rgba(5,9,12,.97))!important}
+.map-intel .mini-flag{height:74px;margin:-20px -20px 16px;border-bottom:1px solid #32424b}
+.map-intel .crest-mini{width:74px;height:74px;flex:0 0 74px}
+.country{stroke-linejoin:round}
+.route{fill:none;stroke:#3f819f;stroke-width:.7;stroke-dasharray:3 4;opacity:.36;vector-effect:non-scaling-stroke;pointer-events:none}
+.sector-marker{cursor:pointer}
+.sector-marker circle{fill:#0b151b;stroke:#d0a966;stroke-width:1.1;vector-effect:non-scaling-stroke}
+.sector-marker text{fill:#d4bd91;font:800 8px ui-monospace,monospace;letter-spacing:.08em;paint-order:stroke;stroke:#040709;stroke-width:2px}
+.sector-marker:hover circle{fill:#5d4727}
+.territory-selected{filter:brightness(1.35) drop-shadow(0 0 4px rgba(132,184,209,.55))}
+.bottom-nations{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:8px}
+.quick-nation{min-width:0;min-height:82px;padding:9px;border:1px solid #26343c;background:#081014;color:#aab5ba;text-align:left;cursor:pointer}
+.quick-nation:hover{border-color:#638091;background:#0d171c}
+.quick-nation .qname{display:block;margin-top:6px;color:#e0e4e3;font-size:.72rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quick-nation small{display:block;color:#64747d;font:.49rem ui-monospace,monospace;letter-spacing:.07em}
+.qcrest{width:26px;height:26px;display:grid;place-items:center;border:1px solid #53626a;border-radius:50%;color:#c8b386;font:900 .62rem ui-monospace,monospace}
+.dossier{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:10px}
+.dossier-hero{grid-column:1/-1;display:grid;grid-template-columns:150px minmax(0,1fr) 170px;gap:18px;align-items:center;padding:20px;min-height:190px;position:relative;overflow:hidden}
+.dossier-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(100,135,151,.04));pointer-events:none}
+.dossier-flag{height:100px;border:1px solid #42515a;box-shadow:0 15px 35px #0008;position:relative;overflow:hidden}
+.crest-large{width:142px;height:142px;margin:auto;border:1px solid #46545c;background:radial-gradient(circle,#151e23 0,#090e11 70%);display:grid;place-items:center;position:relative;overflow:hidden}
+.crest-large:before,.crest-mini:before{content:attr(data-mark);font:900 2.6rem Georgia,serif;color:#d6c39b;text-shadow:0 2px 10px #000}
+.crest-mini{border:1px solid #41515a;border-radius:50%;display:grid;place-items:center;background:#091014;overflow:hidden}
+.crest-mini:before{font-size:1.25rem}
+.crest-rok:before{content:"☯";color:#d8d8d2}.crest-afu:before{content:"✦";color:#d7c6a0}.crest-crf:before{content:"龍";font-size:1.55rem}.crest-ncdr:before{content:"✶";color:#c9aa79}.crest-wur:before{content:"⌁";color:#c4a75e}.crest-jpn:before{content:"✺";color:#d6d1c5}.crest-rus:before{content:"♜";color:#d4c7ae}.crest-edc:before{content:"✧";color:#c8d8e2}.crest-afr:before{content:"◉";color:#c5ad6e}.crest-bra:before{content:"◆";color:#9fb998}.crest-ind:before{content:"◍";color:#d2c49f}.crest-generic:before{content:"◇";color:#8799a2}
+.dossier-title .eyebrow{color:#8ba8b7}.dossier-title h2{margin:5px 0 4px;font-size:clamp(1.8rem,4vw,3.1rem);letter-spacing:-.045em}.dossier-title p{margin:0;color:#7d8b91;font:700 .62rem ui-monospace,monospace;letter-spacing:.12em}
+.dossier-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dossier-card{padding:17px;min-height:160px}
+.dossier-card h3{margin:5px 0 9px;font-size:1rem}.dossier-card p{margin:0;color:#a9b5b8;font-size:.81rem;line-height:1.7}
+.dossier-kv{display:grid;grid-template-columns:1fr 1fr;gap:6px}.dossier-kv div{padding:10px;border:1px solid #202b31;background:#080d10}.dossier-kv span{display:block;color:#66757d;font:.52rem ui-monospace,monospace;letter-spacing:.08em}.dossier-kv b{display:block;margin-top:5px;color:#d4d9d7;font-size:.76rem}
+.dossier-empty{padding:60px 20px;text-align:center;border:1px dashed #34434b;color:#738088}
+.flag-ui{position:relative;overflow:hidden;background:#12191d}
+.flag-ui:after{content:"";position:absolute;inset:-20%;background:linear-gradient(105deg,transparent 15%,rgba(255,255,255,.15) 35%,transparent 53%,rgba(0,0,0,.2) 70%,transparent 85%);transform:skewX(-12deg);opacity:.55}
+.flag-ui.rok{background:linear-gradient(90deg,#eee 0 42%,#f7f7f2 42% 58%,#eee 58%)}.flag-ui.rok:before{content:"";position:absolute;width:38px;height:38px;border-radius:50%;left:calc(50% - 19px);top:calc(50% - 19px);background:linear-gradient(#bb3943 0 50%,#31548b 50%)}
+.flag-ui.jpn{background:#e7e4dc}.flag-ui.jpn:before{content:"";position:absolute;width:45px;height:45px;border-radius:50%;left:calc(50% - 22px);top:calc(50% - 22px);background:#9f2931;box-shadow:13px 2px 0 -10px #e7e4dc}
+.flag-ui.afu{background:#101d36}.flag-ui.afu:before{content:"";position:absolute;left:46%;top:0;bottom:0;width:11%;background:linear-gradient(90deg,#e8e6df 0 28%,#8e2734 28% 72%,#e8e6df 72%)}
+.flag-ui.edc{background:#10264b}.flag-ui.edc:before{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-55%);color:#e7dfc5;font-size:2.6rem}
+.flag-ui.rus{background:linear-gradient(#ddd 0 33%,#233d66 33% 66%,#842d38 66%)}
+.flag-ui.crf{background:#7d171d}.flag-ui.crf:before{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(18deg);color:#d6d7d2;font-size:2.5rem}
+.flag-ui.ncdr{background:#53221e}.flag-ui.ncdr:before{content:"✶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#d2b27b;font-size:2.8rem}
+.flag-ui.wur{background:#090d0e}.flag-ui.wur:before{content:"⋔";position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);color:#b89444;font-size:3rem}
+.flag-ui.ind{background:linear-gradient(#b76d32 0 33%,#dfddd4 33% 66%,#34674b 66%)}.flag-ui.ind:before{content:"◉";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#293f63;font-size:1.7rem}
+.flag-ui.afr{background:#174638}.flag-ui.afr:before{content:"◉";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#c09b54;font-size:2.4rem}
+.flag-ui.bra{background:#28643e}.flag-ui.bra:before{content:"◆";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scaleX(1.35);color:#c4aa50;font-size:2.6rem}
+.flag-ui.can{background:linear-gradient(90deg,#8b2f39 0 25%,#e0ddd5 25% 75%,#8b2f39 75%)}.flag-ui.can:before{content:"♠";position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);color:#8d3038;font-size:1.9rem}
+.flag-ui.mex{background:linear-gradient(90deg,#2d6148 0 33%,#ddd9d0 33% 66%,#89323c 66%)}.flag-ui.aus{background:#17315c}.flag-ui.aus:before{content:"✦  ✧";position:absolute;right:15%;top:38%;color:#e5e3d9}
+.flag-ui.sea{background:linear-gradient(135deg,#204c55,#1f6b62)}.flag-ui.generic{background:linear-gradient(135deg,#26323a,#10171b)}
+.nation{min-height:230px!important;background:#080d10!important;border-color:#26343c!important}.nation:hover{border-color:#6b8592!important}.nation .flag{height:82px!important;background-image:none!important}.nation .crest-chip{position:absolute;right:12px;top:64px;width:48px;height:48px;border:1px solid #4a5961;border-radius:50%;background:#091014;display:grid;place-items:center}
+@media(max-width:1200px){.world-shell{grid-template-columns:1fr}.rail{display:none}.bottom-nations{grid-template-columns:repeat(4,1fr)}.mapwrap{min-height:560px!important}.dossier{grid-template-columns:1fr}.dossier-hero{grid-template-columns:120px 1fr 120px}}
+@media(max-width:650px){.bottom-nations{grid-template-columns:repeat(2,1fr)}.dossier-hero{grid-template-columns:1fr;text-align:center}.dossier-flag{width:min(260px,100%);margin:auto}.crest-large{width:110px;height:110px}.dossier-grid{grid-template-columns:1fr}.map-command{display:none}}
+
 .nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:linear-gradient(90deg,#f7f5ef 0 42%,#0e315a 42% 58%,#f7f5ef 58%)}.flag.rok:after{width:26px;height:26px;border-radius:50%;background:linear-gradient(#d83f4f 0 50%,#315fb3 50%);left:calc(50% - 13px);top:17px}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
 .flag.jpn{background:#f4f2ed}.flag.jpn:before{width:32px;height:32px;border-radius:50%;background:#b92d3e;left:calc(50% - 16px);top:14px}.flag.jpn:after{width:46px;height:46px;border:2px solid #18314e;border-radius:50%;left:calc(50% - 25px);top:5px}
 .flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.ind{background:linear-gradient(#d77c36 0 33%,#eee 33% 66%,#417e59 66%)}.flag.bra{background:linear-gradient(135deg,#1e6044,#b6a94b)}.flag.aus{background:linear-gradient(135deg,#142c54,#3f76a8)}.flag.can{background:linear-gradient(90deg,#9b3040 0 25%,#eee 25% 75%,#9b3040 75%)}.flag.mex{background:linear-gradient(90deg,#2f6d4d 0 33%,#eee 33% 66%,#8b3140 66%)}.flag.sea{background:linear-gradient(135deg,#145968,#2a8d82)}.flag.afr{background:linear-gradient(135deg,#5a4824,#967a3a)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
@@ -253,12 +328,13 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.6</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.7</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
   <button class="tab active" data-tab="world">WORLD</button>
   <button class="tab" data-tab="nations">NATIONS</button>
+  <button class="tab" data-tab="dossier">COUNTRY DATA</button>
   <button class="tab" data-tab="population">POPULATION</button>
   <button class="tab" data-tab="frontlines">FRONTLINES</button>
   <button class="tab" data-tab="diplomacy">DIPLOMACY</button>
@@ -271,59 +347,103 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 </nav>
 
 <section class="panel active" data-panel="world">
-  <div class="world-entry">
-    <section class="card grand-map">
-      <div class="mapbar"><span>I.D.A. // GLOBAL COMMAND NETWORK</span><span>STRATEGIC THEATER OVERVIEW — 2134</span></div>
-      <div class="mapwrap">
-        <svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg>
-        <div class="loading" id="loading">LINKING GLOBAL STRATEGIC GRID...</div>
+  <div class="world-shell">
+    <aside class="rail">
+      <div class="rail-title">GLOBAL STATUS // 2134</div>
+      <div class="status-row"><span>등록 국가·세력</span><b>190+</b></div>
+      <div class="status-row"><span>주요 방위권</span><b>07</b></div>
+      <div class="status-row alert"><span>활성 전선</span><b>09</b></div>
+      <div class="status-row alert"><span>BLACK ZONE</span><b>08+</b></div>
+      <div class="status-row"><span>I.D.A. 링크</span><b>ONLINE</b></div>
+      <div class="rail-title" style="margin-top:18px">MAP LEGEND</div>
+      <div class="status-row"><span>선택 세력</span><b>HIGHLIGHT</b></div>
+      <div class="status-row"><span>위협 신호</span><b style="color:#b86668">RED</b></div>
+      <div class="status-row"><span>전략 회랑</span><b style="color:#77a8bd">CYAN</b></div>
+    </aside>
 
-        <div class="map-titleblock">
-          <div class="overline">GLOBAL THEATER // ACTIVE WARSPACE</div>
-          <h1>WORLD STATUS</h1>
-          <p>103 YEARS AFTER THE FIRST DESCENT</p>
-        </div>
-
-        <div class="map-command" aria-hidden="true">
-          <div><span>ACTIVE FRONTS</span><b>09</b></div>
-          <div><span>BLACK ZONES</span><b>08+</b></div>
-          <div><span>THREAT</span><b>VARIABLE</b></div>
-        </div>
-
-        <aside class="intel map-intel idle" id="mapIntel">
-          <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
-          <div class="stats">
-            <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
-            <div class="stat"><span>POPULATION</span><b id="cpop"></b></div>
-            <div class="stat"><span>CAPITAL / CORE</span><b id="ccapital"></b></div>
-            <div class="stat"><span>STRENGTH</span><b id="cstrength"></b></div>
+    <div class="map-stage">
+      <section class="card grand-map">
+        <div class="mapbar"><span>I.D.A. GLOBAL STRATEGIC NETWORK</span><span>WORLD MAP // 2134.10</span></div>
+        <div class="mapwrap">
+          <svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg>
+          <div class="loading" id="loading">SYNCHRONIZING GLOBAL THEATER...</div>
+          <div class="map-titleblock">
+            <div class="overline">POST–FIRST DESCENT GLOBAL THEATER</div>
+            <h1>WORLD STATUS</h1>
+            <p>103 YEARS OF WAR // HUMANITY STILL HOLDS</p>
           </div>
-          <div class="brief"><div class="eyebrow">STRATEGIC BRIEF</div><p id="cbrief"></p></div>
-          <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
-        </aside>
-      </div>
-      <div class="mapfoot"><span>SELECT A HIGHLIGHTED REGION FOR INTELLIGENCE</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
-    </section>
-  </div>
+          <div class="map-command" aria-hidden="true">
+            <div><span>SAFE / RECLAIMED</span><b>STABLE</b></div>
+            <div><span>CONTESTED</span><b>ACTIVE</b></div>
+            <div><span>LOST / BLACK</span><b>RESTRICTED</b></div>
+          </div>
+          <aside class="intel map-intel idle" id="mapIntel">
+            <div class="mini-flag flag-ui generic" id="miniFlag"></div>
+            <div class="intelhead">
+              <div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div>
+              <div class="crest-mini crest-generic" id="csigil"></div>
+            </div>
+            <div class="stats">
+              <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
+              <div class="stat"><span>POPULATION</span><b id="cpop"></b></div>
+              <div class="stat"><span>CAPITAL / CORE</span><b id="ccapital"></b></div>
+              <div class="stat"><span>STRENGTH</span><b id="cstrength"></b></div>
+            </div>
+            <div class="brief"><div class="eyebrow">STRATEGIC BRIEF</div><p id="cbrief"></p></div>
+            <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
+          </aside>
+        </div>
+        <div class="mapfoot"><span>모든 국가 클릭 가능 // 중국권은 지도 위 3개 후계국 표식 선택</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
+      </section>
 
-  <article class="card hero" style="margin-top:12px">
-    <span class="badge">ARCHIVE NOTE</span>
-    <h3>2031년 「제1강하」 이후의 세계</h3>
-    <p>2031년 4월, 세계 각지 상공에 정체불명의 거대 구조물이 출현했고 기계생명체 <b>에이돌론(EIDOLON)</b>이 강하했다. 인류는 멸망하지 않았지만, 한 세기 동안 수많은 도시와 영토를 잃었다. 2134년의 대도시에는 학교·기업·대학·문화·연애와 여행이 존재한다. 동시에 전선, 방위구역, 난민 문제와 전사자 명부 역시 일상의 일부다.</p>
-    <div class="quote">“문명은 살아남았다. 그러나 그 문명의 정점에는 군이 있다.”</div>
-    <div class="worldfacts">
-      <div class="fact"><span>CURRENT YEAR</span><b>2134</b></div>
-      <div class="fact"><span>WAR DURATION</span><b>103 YEARS</b></div>
-      <div class="fact"><span>WORLD POP. // PROVISIONAL</span><b>≈ 4.7 BILLION*</b></div>
-      <div class="fact"><span>PRIMARY THREAT</span><b>EIDOLON</b></div>
+      <div class="bottom-nations" id="quickNations"></div>
     </div>
-    <div class="muted" style="margin-top:10px">* 인구·일부 국가명·사건연도는 최종 정합성 검토 전의 작업 수치.</div>
-  </article>
+
+    <aside class="rail">
+      <div class="rail-title">MAJOR POWERS</div>
+      <button class="power-link" data-power="afu">AFU // 아메리카 연방연합</button>
+      <button class="power-link" data-power="edc">EDC // 유럽방위공동체</button>
+      <button class="power-link" data-power="rus">RUS // 러시아 연방</button>
+      <button class="power-link" data-power="rok">ROK // 대한민국</button>
+      <button class="power-link" data-power="jpn">JPN // 일본국</button>
+      <button class="power-link" data-power="ind">IND // 인도공화국</button>
+      <button class="power-link" data-power="afr">AU // 아프리카 통합방위권</button>
+      <div class="rail-title" style="margin-top:18px">CHINA SUCCESSORS</div>
+      <button class="power-link" data-power="crf">CRF // 중화재건연방</button>
+      <button class="power-link" data-power="ncdr">NCDR // 화북방위공화국</button>
+      <button class="power-link" data-power="wur">WUR // 서부연합공화국</button>
+    </aside>
+  </div>
 </section>
 
 <section class="panel" data-panel="nations">
-  <div class="heading"><div><div class="eyebrow">NATIONAL / REGIONAL DATABASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">국기 이미지는 추후 정식 아트로 교체 예정</div></div>
+  <div class="heading"><div><div class="eyebrow">NATIONAL / REGIONAL DATABASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">2134 국기 시안 · 국장 시안 기반 UI</div></div>
   <div class="grid3" id="nationGrid"></div>
+</section>
+
+<section class="panel" data-panel="dossier">
+  <div class="heading"><div><div class="eyebrow">NATIONAL INTELLIGENCE DOSSIER</div><h2>국가 데이터</h2></div><div class="muted">선택한 국가·세력의 독립 문서</div></div>
+  <div id="dossierEmpty" class="dossier-empty">세계지도 또는 NATIONS에서 국가를 먼저 선택하세요.</div>
+  <div id="dossierView" class="dossier" hidden>
+    <article class="card dossier-hero">
+      <div class="dossier-flag flag-ui generic" id="dFlag"></div>
+      <div class="dossier-title">
+        <div class="eyebrow" id="dCode"></div>
+        <h2 id="dName"></h2>
+        <p id="dEng"></p>
+        <div class="quote" id="dMotto" style="margin-top:15px"></div>
+      </div>
+      <div class="crest-large crest-generic" id="dCrest"></div>
+    </article>
+    <div class="dossier-grid">
+      <article class="card dossier-card"><div class="eyebrow">OVERVIEW</div><h3>국가 개요</h3><p id="dOverview"></p></article>
+      <article class="card dossier-card"><div class="eyebrow">STATE DATA</div><h3>기본 정보</h3><div class="dossier-kv" id="dKV"></div></article>
+      <article class="card dossier-card"><div class="eyebrow">POST-DESCENT HISTORY</div><h3>제1강하 이후</h3><p id="dHistory"></p></article>
+      <article class="card dossier-card"><div class="eyebrow">MILITARY</div><h3>군사·전략 특징</h3><p id="dMilitary"></p></article>
+      <article class="card dossier-card"><div class="eyebrow">FRONTS</div><h3>주요 전선</h3><p id="dFronts"></p></article>
+      <article class="card dossier-card"><div class="eyebrow">FOREIGN RELATIONS</div><h3>대외관계</h3><p id="dRelations"></p></article>
+    </div>
+  </div>
 </section>
 
 <section class="panel" data-panel="population">
@@ -503,28 +623,33 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.6</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
 const N={
-rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
-afu:{code:"AFU // DRAFT",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
-jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES",color:"#ffb45e",flag:"jpn",brief:"제1강하 이후에도 국호와 국가체제를 유지했다. 2042년 국방재건령으로 자위대를 일본국방위군으로 재편. 도시요새·해양전·정밀방어·소형 무인체계에 강하다."},
-chn:{code:"CN SUCCESSORS // DRAFT",name:"중국권 3개 후계국",eng:"CHINESE SUCCESSOR STATES",sigil:"3C",status:"FRAGMENTED",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"INDUSTRIAL MASS",color:"#ff5d75",flag:"chn",brief:"구 중화인민공화국은 장기전과 중앙통제 붕괴 끝에 소멸했다. 2134년에는 중화재건연방·화북방위공화국·서부연합공화국이 경쟁하며, 대에이돌론 작전에서는 중화공동방위협정(CMDC)을 통해 협력한다."},
-rus:{code:"RUS // 2134",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",status:"CORRIDOR STATE",pop:"≈ 82M",capital:"MOSCOW",strength:"HEAVY / ARCTIC",color:"#a77bff",flag:"rus",brief:"국경상 영토는 광대하지만 실제 안정통제지역은 도시·자원지대·철도·군사회랑에 집중된다. 2043년 시베리아 대단절 이후 장거리 화력·중기갑·혹한전·철도군수 체계가 발달했다."},
-edc:{code:"EDC // DRAFT",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",status:"SUPRANATIONAL",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",color:"#d4af7c",flag:"edc",brief:"프랑스·독일·폴란드 등 유럽 각국이 독립국가와 군을 유지한 채 통합전구사령부를 운영하는 초국가 방위공동체. 센서·전자전·정밀병기·다국적 전장네트워크가 강점이다."},
-ind:{code:"IND // 2134",name:"인도공화국",eng:"REPUBLIC OF INDIA",sigil:"IND",status:"MAJOR POWER",pop:"TBD",capital:"NEW DELHI",strength:"ENERGY / AEROSPACE",color:"#f39b55",flag:"ind",brief:"국가체제를 유지한 주요 강대국. 대규모 무인전력·에너지·항공우주·지상전 역량을 보유하며 I.D.A. 내부에서도 독립적인 외교노선을 유지한다."},
-bra:{code:"BRA // 2134",name:"브라질",eng:"BRAZIL",sigil:"BRA",status:"AMAZON FRONT",pop:"TBD",capital:"BRASILIA",strength:"JUNGLE / EXPLORATION",color:"#69b86f",flag:"bra",brief:"남미의 핵심 군사·산업국. 아마존 BLACK ZONE 때문에 세계 최고 수준의 밀림전·네스트 탐사 경험을 축적했다."},
-aus:{code:"AUS // 2134",name:"호주",eng:"AUSTRALIA",sigil:"AUS",status:"PACIFIC REAR BASE",pop:"TBD",capital:"CANBERRA",strength:"LOGISTICS / MINERALS",color:"#6ab7d6",flag:"aus",brief:"태평양권의 주요 후방 생산·훈련기지이자 광물자원 공급국. 해안 대도시권 방어에 집중하고 대륙 내부 일부는 감시 중심으로 관리한다."},
-can:{code:"CAN // 2134",name:"캐나다",eng:"CANADA",sigil:"CAN",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"OTTAWA",strength:"ARCTIC / SURVEILLANCE",color:"#cf6b72",flag:"can",brief:"AFU와 별개의 주권국가. 북극권 감시·자원·극지전 능력이 강하며 북미공동방위체계에 참여한다."},
-mex:{code:"MEX // 2134",name:"멕시코",eng:"MEXICO",sigil:"MEX",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"MEXICO CITY",strength:"URBAN / MANUFACTURING",color:"#8ab57b",flag:"mex",brief:"AFU와 별개의 주권국가. 중미 연결회랑과 산악·도시전, 대규모 제조업에서 중요한 역할을 한다."},
-sea:{code:"SEA COOP",name:"동남아시아 방위협력권",eng:"SOUTHEAST ASIA DEFENCE COOPERATION",sigil:"SEA",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"MARITIME / ARCHIPELAGO",color:"#63c9b9",flag:"sea",brief:"인도네시아·베트남·싱가포르·필리핀·말레이시아·태국 등은 각자 주권을 유지하면서 해양 네스트와 군도전 대응을 공동조율한다."},
-afr:{code:"AU DEFENSE",name:"아프리카 방위협력권",eng:"AFRICAN UNION DEFENCE COOPERATION",sigil:"AU",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"CORRIDOR DEFENSE",color:"#c2a35c",flag:"afr",brief:"아프리카연합의 방위기능이 강화된 형태. 개별국가는 유지되며 도시·항만·철도·광산·하천축 방어를 중심으로 협력한다."}
+rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",crest:"rok",flag:"rok",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",motto:"문명은 살아남았다. 그리고 우리는 되찾는다.",brief:"한반도 대부분을 통합한 동북아 군사강국. 완전지원제 직업군과 전술기동군, 중앙사관학교 엘리트 네트워크가 사회의 중심을 이룬다.",history:"2031년 제1강하 직후 남부 국가체제를 유지했고, 북부 붕괴 이후 수십 년에 걸친 회복전쟁을 수행했다. 2086년 평양 핵심권역 탈환 이후 한반도 대부분을 통합했다.",military:"육상군·해양군·항공우주군·전술기동군. 고속 적응전, 대코어 정밀타격, 전술제복과 합동전 지휘가 강점이다.",fronts:"개마고원·함경 산악권, 서해 해저·도서 네스트, 동중국해 연계전선.",relations:"일본·AFU와 긴밀히 협력하되 방산·해양권에서 경쟁한다. 중국권 3국과는 협력과 경계가 공존한다."},
+afu:{code:"AFU // DRAFT",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",crest:"afu",flag:"afu",status:"RECONSTITUTED GREAT POWER",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",motto:"Strength through a higher union.",brief:"구 미합중국의 후계 연방. 항공우주·전장AI·대규모 무인전력과 대아크 전략전력에서 세계 최상위권.",history:"2093~2098년 북미 연방위기 이후 기존 연방체제를 재편해 성립. 주 정부는 유지되지만 전략방위권과 연방 전시권한이 강화되었다.",military:"항공우주전, 무인군집, 전장AI, 궤도감시, 대아크 화력이 핵심. 자동화에 의존하되 에이돌론의 패턴학습 때문에 인간 지휘관의 개입이 필수다.",fronts:"북미 내륙 Great Basin BLACK ZONE, 태평양, 북극 전략감시.",relations:"대한민국·일본·EDC와 핵심 동맹. EDC와는 AI 규제·코어 역공학을 두고 경쟁한다."},
+jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",crest:"jpn",flag:"jpn",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES / MARITIME",motto:"흔들리지 않는, 새로운 시대를 위해.",brief:"국호와 의회·황실 체제를 유지한 연속국가. 대도시 요새화와 해양 방위, 정밀 무인체계에 특화.",history:"제1강하 이후 태평양·도서 지역 피해를 겪었으나 중앙정부는 유지되었다. 2042년 국방재건 이후 상시 전시방위 체계를 구축했다.",military:"도시방어, 해상·대잠·도서전, 정밀드론, 촘촘한 센서망. 인구가 밀집된 도시권을 지키는 기술이 매우 발달했다.",fronts:"동중국해–남서제도, 북태평양, 일부 북부 도서·해양 위험구역.",relations:"대한민국과 작전협력은 깊지만 방산과 해양권에서 경쟁. AFU와 태평양 전략동맹 관계."},
+crf:{code:"CRF // DRAFT",name:"중화재건연방",eng:"CHINESE RECONSTRUCTION FEDERATION",sigil:"CRF",crest:"crf",flag:"crf",status:"SUCCESSOR STATE",pop:"≈ 420M",capital:"NANJING",strength:"INDUSTRY / DRONES",motto:"폐허를 넘어, 다시 하나의 중화로.",brief:"구 중국 동부·남부 핵심 산업권을 기반으로 한 최대 후계국. 제조력과 드론 생산력에서 압도적.",history:"중앙통제 붕괴 이후 난징을 중심으로 재편. 스스로를 구 중국의 가장 정통성 있는 계승국으로 보는 정치세력이 강하다.",military:"대량생산형 무인기, 산업동원, 해안방어, 장거리 타격. 전시 생산량이 최대 강점.",fronts:"양쯔 회랑, 동중국해, 중부 회복지대.",relations:"NCDR·WUR와 경쟁하나 CMDC를 통해 대에이돌론 공동방위. 한국·일본과 서해·동중국해에서 이해가 충돌한다."},
+ncdr:{code:"NCDR // DRAFT",name:"화북방위공화국",eng:"NORTH CHINA DEFENSE REPUBLIC",sigil:"NCDR",crest:"ncdr",flag:"ncdr",status:"MILITARIZED SUCCESSOR",pop:"≈ 180M",capital:"BEIJING",strength:"FORTRESS / ARTILLERY",motto:"더 강한 북방, 끝까지 수호한다.",brief:"베이징·화북권을 중심으로 한 고도 군사화 후계국. 방벽·포병·중장갑과 북방전선 경험이 강하다.",history:"중앙 붕괴 과정에서 북방 전구사령부와 민정기구가 결합하며 성립. 생존을 위해 강한 군사행정 체제가 자리잡았다.",military:"장거리 포병, 중장갑, 요새도시, 대공·대아크 방어망. 보수적이지만 매우 견고한 전투교리.",fronts:"화북 방위선, 만주 남부, 중국 중앙회랑.",relations:"CRF의 영향력 확대를 경계. 대한민국·러시아와 북방 정보교류는 실용적으로 유지한다."},
+wur:{code:"WUR // DRAFT",name:"서부연합공화국",eng:"WESTERN UNION REPUBLIC",sigil:"WUR",crest:"wur",flag:"wur",status:"SUCCESSOR STATE",pop:"≈ 140M",capital:"CHENGDU",strength:"ENERGY / UNDERGROUND",motto:"광활한 대지, 함께 더 멀리.",brief:"청두 중심 서부권 후계국. 자원·에너지·지하시설과 산악·고원전에서 독자적 강점을 가진다.",history:"동부 정치권과 단절된 서부 전구·지방정부·산업권이 연합해 성립. 대규모 지하도시와 에너지 시설이 국가 기반이 되었다.",military:"산악전, 지하시설 방어, 중공업, 고밀도 에너지체계. 장기 고립상황에서도 버티는 지속력이 강점.",fronts:"타림 심층구역, 서부 산악전선, 중앙회랑.",relations:"CRF·NCDR 사이에서 독자노선. 인도·러시아와 자원·회랑 협력이 많다."},
+rus:{code:"RUS // 2134",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",crest:"rus",flag:"rus",status:"CORRIDOR STATE",pop:"≈ 82M",capital:"MOSCOW",strength:"HEAVY / ARCTIC",motto:"폐허 속에서도, 국가는 계속된다.",brief:"국경은 광대하지만 실제 안정통제는 도시·철도·자원·군사회랑에 집중된 대륙 군사강국.",history:"2043년 시베리아 대단절 이후 영토 전체를 균일하게 지키는 전략을 포기하고 전략회랑 중심 국가로 재편되었다.",military:"중기갑, 장거리화력, 철도군수, 혹한·오염지역 작전, 전자전. 느리지만 파괴력과 지속력이 강하다.",fronts:"시베리아 회랑, 북극권, 동유럽 연결전선.",relations:"EDC와 정치적 긴장은 남아 있으나 동유럽 전선에서는 상호의존. 한국·중국권과 극동 실무협력을 유지한다."},
+edc:{code:"EDC // DRAFT",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",crest:"edc",flag:"edc",status:"SUPRANATIONAL DEFENSE BLOC",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",motto:"분열된 국가들, 하나의 전선.",brief:"유럽 각국이 주권·국기를 유지한 채 통합 전구사령부를 운영하는 초국가 방위공동체.",history:"대후퇴와 반복된 동유럽 붕괴를 거치며 기존 유럽통합 체계가 방위 중심으로 강화되었다. 하나의 국가는 아니다.",military:"센서융합, 전자전, 정밀타격, 다국적 전장네트워크, 고도 방공. 상호운용성이 강점.",fronts:"발트–동유럽, 카르파티아, 북해·지중해 감시권.",relations:"AFU와 핵심 동맹이지만 기술규제에서 충돌. 러시아와는 긴장 속 전선 공조."},
+ind:{code:"IND // 2134",name:"인도공화국",eng:"REPUBLIC OF INDIA",sigil:"IND",crest:"ind",flag:"ind",status:"MAJOR POWER",pop:"TBD",capital:"NEW DELHI",strength:"ENERGY / AEROSPACE",motto:"독립된 힘, 지속되는 문명.",brief:"거대한 인구·산업·우주·에너지 기반을 유지한 독립적 강대국. 어느 한 진영에 완전히 종속되지 않는다.",history:"제1강하 이후 메가시티와 산업회랑 중심의 방위체계를 구축. 히말라야·인도양 전선과 난민 압력을 동시에 견뎌왔다.",military:"대규모 무인전력, 에너지병기 연구, 항공우주, 대규모 지상군 운용.",fronts:"히말라야, 벵골만, 인도양, 서부 건조지역.",relations:"I.D.A. 핵심국이지만 전략적 자율성을 중시. WUR·중동·동남아와 회랑외교가 활발."},
+afr:{code:"AU DEFENSE // 2134",name:"아프리카 통합방위권",eng:"AFRICAN UNION DEFENCE COOPERATION",sigil:"AU",crest:"afr",flag:"afr",status:"CONTINENTAL DEFENSE BLOC",pop:"TBD",capital:"MULTINATIONAL",strength:"CORRIDOR DEFENSE / RESOURCES",motto:"국가는 남고, 대륙은 함께 방어한다.",brief:"아프리카연합의 방위기능이 극도로 강화된 대륙 단위 협력권. 개별국가는 존속하지만 전략지도에서는 하나의 통합 방위영역으로 표시된다.",history:"광대한 영토 전체를 지킬 수 없다는 현실 때문에 항만·도시·철도·광산·하천축을 연결하는 대륙 회랑방위 체계가 발전했다.",military:"회랑방위, 장거리 수송, 자원거점 방호, 사막·밀림 특수전. 지역군과 AU 합동전력이 병존한다.",fronts:"사하라 Null Belt, 중앙아프리카 회랑, 동아프리카 항만축.",relations:"I.D.A. 내 자원·재건 분야 영향력이 크며 EDC·인도·브라질과 협력이 활발."},
+bra:{code:"BRA // 2134",name:"브라질",eng:"FEDERATIVE REPUBLIC OF BRAZIL",sigil:"BRA",crest:"bra",flag:"bra",status:"AMAZON FRONT POWER",pop:"TBD",capital:"BRASILIA",strength:"JUNGLE / EXPLORATION",motto:"아마존은 여전히 살아 있다.",brief:"남미 최대급 군사·산업국. 아마존 BLACK ZONE 때문에 밀림·네스트 탐사전 경험이 세계 최고 수준.",history:"대도시와 해안 산업권은 유지했지만 아마존 심부의 통제력을 크게 잃었다. 이후 장기 탐사·회복전이 국가정책이 되었다.",military:"밀림특수전, 장거리 정찰, 생태감시, 회수작전, 항공수송.",fronts:"Amazon Deep Nest Belt, 북부 강 유역, 대서양 항로.",relations:"남미 방위협력의 핵심. AFU·AU와 대서양·자원·생태정보 협력이 많다."},
+can:{code:"CAN // 2134",name:"캐나다",eng:"CANADA",sigil:"CAN",crest:"generic",flag:"can",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"OTTAWA",strength:"ARCTIC / SURVEILLANCE",motto:"북극의 문을 지킨다.",brief:"AFU와 별개의 주권국가. 북극권 감시·자원·극지전과 북부 항로 방위에서 핵심 역할.",history:"북미 연방위기에도 독립체제를 유지하며 AFU와 공동방위 협정을 확대했다.",military:"극지 감시, 장거리 레이더, 항공우주 추적, 기동기지.",fronts:"북극권·허드슨 회랑·북태평양.",relations:"AFU와 가장 긴밀하지만 북극 자원과 지휘권을 두고 마찰도 존재."},
+mex:{code:"MEX // 2134",name:"멕시코",eng:"UNITED MEXICAN STATES",sigil:"MEX",crest:"generic",flag:"mex",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"MEXICO CITY",strength:"MANUFACTURING / URBAN",motto:"회랑을 지키고, 대륙을 잇는다.",brief:"북미와 중미를 잇는 제조·물류·도시전 핵심국.",history:"제1강하 이후 북부 산업도시와 중부 고원권 방어에 집중하며 제조기지를 유지했다.",military:"도시전, 산악전, 군수생산, 회랑보안.",fronts:"북부 회랑·멕시코만·중미 연결축.",relations:"AFU·캐나다와 북미공동방위체계에 참여하지만 완전한 종속은 거부한다."},
+sea:{code:"SEA COOP // 2134",name:"동남아시아 방위협력권",eng:"SOUTHEAST ASIA DEFENCE COOPERATION",sigil:"SEA",crest:"generic",flag:"sea",status:"REGIONAL DEFENSE NETWORK",pop:"TBD",capital:"MULTINATIONAL",strength:"MARITIME / ARCHIPELAGO",motto:"섬과 바다를 하나의 전선으로.",brief:"인도네시아·베트남·싱가포르·필리핀·말레이시아·태국 등이 주권을 유지하며 해양 네스트 대응을 공동조율한다.",history:"수중·도서형 에이돌론이 반복적으로 출현하면서 기존 지역협력이 군사·물류 중심으로 확대되었다.",military:"군도전, 소형 함대, 무인정찰, 항만방어, 밀림·연안전.",fronts:"남중국해·말라카·필리핀해·인도네시아 군도.",relations:"일본·인도·호주와 해양안보 협력이 깊다."},
+aus:{code:"AUS // 2134",name:"호주",eng:"COMMONWEALTH OF AUSTRALIA",sigil:"AUS",crest:"generic",flag:"aus",status:"PACIFIC REAR BASE",pop:"TBD",capital:"CANBERRA",strength:"LOGISTICS / MINERALS",motto:"후방을 지키는 것이 전선을 지키는 것이다.",brief:"태평양권의 핵심 후방 생산·훈련기지이자 광물자원 공급국.",history:"해안 대도시와 산업항만 방어에 집중하고 광대한 내륙은 감시 중심으로 관리한다.",military:"장거리 항공, 해양감시, 후방군수, 훈련기지.",fronts:"남태평양·호주 북부 접근로.",relations:"AFU·일본·뉴질랜드와 매우 가까운 태평양 방위망."}
 };
-const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",156:"chn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr"};
+const AFRICA_IDS=new Set([12,24,204,72,854,108,132,120,140,148,174,180,178,384,262,818,226,232,748,231,266,270,288,324,624,404,426,430,434,450,454,466,478,480,504,508,516,562,566,646,678,686,690,694,706,710,728,729,834,768,788,800,894,716]);
+const EDC_IDS=new Set([250,276,616,380,724,528,56,208,752,246,203,703,40,348,642,100,300,620,191,705,233,428,440,372,442]);
+const SEA_IDS=new Set([360,704,608,458,764,702,116,418,104,96,626]);
+const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",643:"rus",356:"ind",76:"bra",124:"can",484:"mex",36:"aus"};
 const POP={
 world:{title:"세계",unit:"B",vals:[8.5,7.4,5.0,4.0,4.3,4.7]},
 rok:{title:"한반도 / 대한민국",unit:"M",vals:[76,67,43,36,39,43]},
@@ -639,23 +764,71 @@ $("#enter").onclick=()=>{
   setTimeout(()=>b.remove(),3680);
 };
 function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
-$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
+$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+$("#nationOpen").onclick=()=>openDossier();
+$("#popOpen").onclick=()=>tab("population");
 
-let sel=null,g,zoom,svg;
-function nation(k){
-  const n=N[k];if(!n)return;
-  sel=k;
-  $("#ccode").textContent=n.code;$("#cname").textContent=n.name;$("#ceng").textContent=n.eng;$("#csigil").textContent=n.sigil;
-  $("#cstatus").textContent=n.status;$("#cpop").textContent=n.pop;$("#ccapital").textContent=n.capital;$("#cstrength").textContent=n.strength;$("#cbrief").textContent=n.brief;
-  const intel=$("#mapIntel");if(intel)intel.classList.remove("idle");
-  if(g)g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
-    const dk=MAP[String(d.id)];
-    if(!dk)return "#12191d";
-    return dk===k?n.color:"#243138";
-  }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.72):.66);
+let sel=null,currentNation=null,g,zoom,svg;
+
+function genericNation(d){
+  const nm=(d&&d.properties&&d.properties.name)||("STATE "+(d?.id||""));
+  return {key:"generic-"+(d?.id||""),code:"STATE // 2134",name:nm,eng:nm.toUpperCase(),sigil:"STATE",crest:"generic",flag:"generic",status:"SOVEREIGN / DATA LIMITED",pop:"DATA PENDING",capital:"CLASSIFIED / PENDING",strength:"REGIONAL DEFENSE",motto:"국가는 여전히 존재한다.",brief:"2134년에도 주권국가로 존속하는 지역. 세부 전략자료는 아직 본 아카이브의 정식 정본으로 편찬되지 않았다.",history:"제1강하 이후 국가체제와 인구·산업 구조가 크게 변동했다. 세부 연표는 추후 국가별 설정 확정 시 갱신된다.",military:"국가별 정규군과 I.D.A. 협력체계를 유지한다. 세부 교리·편제는 미편찬.",fronts:"지역별 SAFE / RECLAIMED / CONTESTED 구역이 혼재한다.",relations:"I.D.A. 및 인접국과 대에이돌론 협력을 유지한다."};
 }
-Object.entries(N).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{nation(k);tab("world")};$("#nationGrid").appendChild(b)});
+function idsFor(k){
+  if(k==="afr")return AFRICA_IDS;
+  if(k==="edc")return EDC_IDS;
+  if(k==="sea")return SEA_IDS;
+  const out=new Set();Object.entries(MAP).forEach(([id,v])=>{if(v===k)out.add(+id)});return out;
+}
+function fillFor(k){
+  return ({rok:"#5c87a2",afu:"#587e92",jpn:"#9c6a63",rus:"#83484d",edc:"#58759e",ind:"#8b806a",afr:"#9a7a3d",bra:"#3e8060",can:"#7f6870",mex:"#617b65",sea:"#4d7775",aus:"#526c8b",crf:"#8d3d40",ncdr:"#6e4939",wur:"#6d6551"}[k]||"#6f8189");
+}
+function applySelectedStyle(k){
+  if(!g)return;
+  const ids=idsFor(k);
+  g.selectAll(".country").classed("focus",d=>ids.has(+d.id))
+    .attr("fill",d=>{
+      const id=+d.id;
+      if(ids.has(id))return fillFor(k);
+      if(AFRICA_IDS.has(id))return "#5d5237";
+      if(EDC_IDS.has(id))return "#344b61";
+      if(SEA_IDS.has(id))return "#315556";
+      if(id===156)return "#513536";
+      return MAP[id]?"#34464f":"#172126";
+    })
+    .attr("opacity",d=>ids.has(+d.id)?.98:.76);
+}
+function setFlag(el,cls){if(!el)return;el.className=el.className.replace(/\b(rok|jpn|afu|edc|rus|crf|ncdr|wur|ind|afr|bra|can|mex|aus|sea|generic)\b/g,"").trim()+" "+(cls||"generic")}
+function setCrest(el,cls){if(!el)return;el.className=el.className.replace(/crest-(rok|afu|crf|ncdr|wur|jpn|rus|edc|afr|bra|ind|generic)/g,"").trim()+" crest-"+(cls||"generic")}
+function selectNation(k,data=null){
+  const n=data||N[k];if(!n)return;
+  sel=k;currentNation=n;
+  $("#ccode").textContent=n.code;$("#cname").textContent=n.name;$("#ceng").textContent=n.eng;
+  $("#cstatus").textContent=n.status;$("#cpop").textContent=n.pop;$("#ccapital").textContent=n.capital;$("#cstrength").textContent=n.strength;$("#cbrief").textContent=n.brief;
+  setFlag($("#miniFlag"),n.flag);setCrest($("#csigil"),n.crest);
+  $("#mapIntel").classList.remove("idle");
+  if(N[k])applySelectedStyle(k); else if(g)g.selectAll(".country").classed("focus",false);
+  renderDossier(n);
+}
+function renderDossier(n){
+  $("#dossierEmpty").hidden=true;$("#dossierView").hidden=false;
+  $("#dCode").textContent=n.code;$("#dName").textContent=n.name;$("#dEng").textContent=n.eng;$("#dMotto").textContent=n.motto||"";
+  $("#dOverview").textContent=n.brief||"";$("#dHistory").textContent=n.history||"";$("#dMilitary").textContent=n.military||"";$("#dFronts").textContent=n.fronts||"";$("#dRelations").textContent=n.relations||"";
+  setFlag($("#dFlag"),n.flag);setCrest($("#dCrest"),n.crest);
+  $("#dKV").innerHTML=[
+    ["STATUS",n.status],["POPULATION",n.pop],["CAPITAL / CORE",n.capital],["STRENGTH",n.strength]
+  ].map(x=>'<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>').join("");
+}
+function openDossier(){if(!currentNation){tab("dossier");return}renderDossier(currentNation);tab("dossier")}
 
+Object.entries(N).forEach(([k,n])=>{
+  const b=document.createElement("button");b.className="nation";
+  b.innerHTML='<div class="flag flag-ui '+n.flag+'"></div><div class="crest-chip crest-mini crest-'+n.crest+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';
+  b.onclick=()=>{selectNation(k);openDossier()};$("#nationGrid").appendChild(b)
+});
+const QUICK=["rok","afu","edc","rus","jpn","afr","ind","bra"];
+QUICK.forEach(k=>{const n=N[k],b=document.createElement("button");b.className="quick-nation";b.innerHTML='<span class="qcrest crest-mini crest-'+n.crest+'"></span><span class="qname">'+n.name+'</span><small>'+n.code+'</small>';b.onclick=()=>selectNation(k);$("#quickNations").appendChild(b)});
+$$(".power-link").forEach(b=>b.onclick=()=>selectNation(b.dataset.power));
 function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
 Object.entries(POP).filter(([k])=>k!=="world").forEach(([k,p])=>sparkCard(k,p));
 
@@ -675,54 +848,64 @@ async function initMap(){
     const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());
     svg=d3.select("#map");
     const countries=topojson.feature(w,w.objects.countries).features;
-    const p=d3.geoNaturalEarth1().fitExtent([[24,24],[936,496]],{type:"Sphere"});
-    const path=d3.geoPath(p);
+    const p=d3.geoNaturalEarth1().fitExtent([[18,18],[942,500]],{type:"Sphere"}),path=d3.geoPath(p);
     g=svg.append("g");
+    g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#071014").attr("stroke","#4a606a").attr("stroke-width",1.05);
+    g.append("path").datum(d3.geoGraticule10()).attr("d",path).attr("fill","none").attr("stroke","#21343e").attr("stroke-width",.32).attr("opacity",.9);
 
-    g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#060a0c").attr("stroke","#47565d").attr("stroke-width",1.05);
-    g.append("path").datum(d3.geoGraticule10()).attr("d",path).attr("fill","none").attr("stroke","#202b30").attr("stroke-width",.34).attr("opacity",.82);
+    function baseFill(d){
+      const id=+d.id;
+      if(AFRICA_IDS.has(id))return "#5d5237";
+      if(EDC_IDS.has(id))return "#344b61";
+      if(SEA_IDS.has(id))return "#315556";
+      if(id===156)return "#513536";
+      if(MAP[id])return "#34464f";
+      return "#172126";
+    }
+    g.selectAll("path.country").data(countries).join("path").attr("class","country").attr("d",path)
+      .attr("fill",baseFill).attr("stroke","#4a5a61").attr("stroke-width",.38).attr("opacity",.82)
+      .on("click",(ev,d)=>{
+        const id=+d.id;
+        if(AFRICA_IDS.has(id))selectNation("afr");
+        else if(EDC_IDS.has(id))selectNation("edc");
+        else if(SEA_IDS.has(id))selectNation("sea");
+        else if(id===156)selectNation("crf");
+        else if(MAP[id])selectNation(MAP[id]);
+        else selectNation("generic-"+id,genericNation(d));
+      })
+      .append("title").text(d=>d.properties?.name||("STATE "+d.id));
 
-    g.selectAll("path.country").data(countries).join("path")
-      .attr("class","country")
-      .attr("d",path)
-      .attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d")
-      .attr("stroke",d=>MAP[String(d.id)]?"#50616a":"#273238")
-      .attr("stroke-width",d=>MAP[String(d.id)]?.56:.34)
-      .attr("opacity",d=>MAP[String(d.id)]?.78:.66)
-      .on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)})
-      .append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});
+    const routes=[
+      [[127,37],[6,46]], [[127,37],[139,36]], [[-77,39],[6,46]], [[6,46],[23,56]], [[77,28],[103,30]], [[151,-33],[139,36]]
+    ];
+    g.append("g").selectAll("path").data(routes).join("path").attr("class","route").attr("d",d=>path({type:"LineString",coordinates:d}));
 
     const hotspots=[
-      {name:"KOREAN N.",lon:128,lat:41.5},
-      {name:"BALTIC",lon:23,lat:56},
-      {name:"SIBERIA",lon:112,lat:61},
-      {name:"GREAT BASIN",lon:-116,lat:39},
-      {name:"AMAZON",lon:-63,lat:-5},
-      {name:"SAHARA",lon:13,lat:23},
-      {name:"MARIANA",lon:145,lat:15}
+      {name:"KOREAN N.",lon:128,lat:41.5},{name:"BALTIC",lon:23,lat:56},{name:"SIBERIA",lon:112,lat:61},
+      {name:"GREAT BASIN",lon:-116,lat:39},{name:"AMAZON",lon:-63,lat:-5},{name:"SAHARA",lon:13,lat:23},{name:"MARIANA",lon:145,lat:15}
     ];
-    const hg=g.append("g").attr("class","hotspots");
-    hotspots.forEach(h=>{
-      const q=p([h.lon,h.lat]); if(!q)return;
-      hg.append("circle").attr("class","threat-ring").attr("cx",q[0]).attr("cy",q[1]).attr("r",7);
-      hg.append("circle").attr("class","threat-dot").attr("cx",q[0]).attr("cy",q[1]).attr("r",2.3);
-      hg.append("text").attr("class","threat-label").attr("x",q[0]+8).attr("y",q[1]-7).text(h.name);
-    });
+    const hg=g.append("g");
+    hotspots.forEach(h=>{const q=p([h.lon,h.lat]);if(!q)return;hg.append("circle").attr("class","threat-ring").attr("cx",q[0]).attr("cy",q[1]).attr("r",7);hg.append("circle").attr("class","threat-dot").attr("cx",q[0]).attr("cy",q[1]).attr("r",2.2);hg.append("text").attr("class","threat-label").attr("x",q[0]+7).attr("y",q[1]-6).text(h.name)});
 
-    zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));
-    svg.call(zoom);
-    $("#loading").remove();
-  }catch(e){
-    $("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능";
-  }
+    const sectors=[{k:"ncdr",n:"NCDR",lon:116.5,lat:40},{k:"crf",n:"CRF",lon:119,lat:31},{k:"wur",n:"WUR",lon:103,lat:30}];
+    const sg=g.append("g");
+    sectors.forEach(a=>{const q=p([a.lon,a.lat]);const z=sg.append("g").attr("class","sector-marker").attr("transform","translate("+q[0]+","+q[1]+")").on("click",(ev)=>{ev.stopPropagation();selectNation(a.k)});z.append("circle").attr("r",7);z.append("text").attr("x",10).attr("y",3).text(a.n)});
+
+    zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));svg.call(zoom);
+    $("#loading")?.remove();
+  }catch(e){$("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능"}
 }
 $("#reset").onclick=()=>{
-  if(svg&&zoom)svg.transition().duration(300).call(zoom.transform,d3.zoomIdentity);
-  sel=null;
-  const intel=$("#mapIntel");if(intel)intel.classList.add("idle");
-  if(g)g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d").attr("opacity",d=>MAP[String(d.id)]?.78:.66);
+  if(svg&&zoom)svg.transition().duration(350).call(zoom.transform,d3.zoomIdentity);
+  sel=null;currentNation=null;
+  $("#mapIntel").classList.add("idle");
+  $("#dossierView").hidden=true;$("#dossierEmpty").hidden=false;
+  if(g){
+    g.selectAll(".country").classed("focus",false).attr("fill",d=>{
+      const id=+d.id;if(AFRICA_IDS.has(id))return "#5d5237";if(EDC_IDS.has(id))return "#344b61";if(SEA_IDS.has(id))return "#315556";if(id===156)return "#513536";if(MAP[id])return "#34464f";return "#172126";
+    }).attr("opacity",.82);
+  }
 };
-
 const c=$("#fx"),ctx=c.getContext("2d");let pts=[];
 function resize(){const r=Math.min(devicePixelRatio||1,2);c.width=innerWidth*r;c.height=innerHeight*r;c.style.width=innerWidth+"px";c.style.height=innerHeight+"px";ctx.setTransform(r,0,0,r,0,0);pts=Array.from({length:Math.min(70,Math.max(28,Math.floor(innerWidth/22)))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.4+.25,v:Math.random()*.15+.04,a:Math.random()*.35+.06}))}
 function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const p of pts){p.y-=p.v;if(p.y<0){p.y=innerHeight;p.x=Math.random()*innerWidth}ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fillStyle="rgba(104,224,255,"+p.a+")";ctx.fill()}requestAnimationFrame(draw)}
