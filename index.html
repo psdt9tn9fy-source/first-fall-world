@@ -4,25 +4,85 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050914">
-<title>FIRST FALL // World Strategic Database</title>
+<title>2134 : 군사시대 // WORLD STRATEGIC ARCHIVE</title>
 <style>
-:root{--bg:#050914;--panel:#0a1322;--panel2:#0d1b2e;--line:#20324b;--text:#e8f1ff;--muted:#8395ad;--blue:#44a6ff;--cyan:#62ddff;--gold:#d4af7c;--red:#ff5a72;--amber:#ffb14f;--green:#68d7ae}
-*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;min-width:320px;color:var(--text);background:radial-gradient(circle at 50% -20%,#152844 0,transparent 42%),linear-gradient(180deg,#050914,#02050a 72%);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-button{font:inherit}button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45}.scan{position:fixed;z-index:30;pointer-events:none;left:0;right:0;top:-100px;height:100px;background:linear-gradient(180deg,transparent,rgba(98,221,255,.035),transparent);animation:scan 9s linear infinite}@keyframes scan{to{transform:translateY(calc(100vh + 200px))}}@media(prefers-reduced-motion:reduce){.scan{display:none}}
-.boot{position:relative;z-index:40;min-height:100vh;display:grid;place-items:center;padding:20px}.boot-card{width:min(650px,100%);padding:38px 24px;border:1px solid #2b4969;background:rgba(5,9,20,.9);backdrop-filter:blur(18px);box-shadow:0 20px 60px #0008;text-align:center}.kicker,.eyebrow{font:600 .68rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}.seal{width:88px;height:88px;border:1px solid #345778;border-radius:50%;margin:28px auto 22px;display:grid;place-items:center;position:relative;color:var(--cyan);font:800 1.5rem ui-monospace,monospace}.seal:before,.seal:after{content:"";position:absolute;border:1px solid #29415d;border-radius:50%;inset:9px}.seal:after{inset:22px;border-color:#4e9bd0}.boot h1{margin:0;font:700 clamp(1.7rem,5vw,2.8rem)/1.1 ui-monospace,monospace;letter-spacing:.06em}.boot p{color:var(--muted)}.log{margin:26px 0 20px;padding:14px 16px;text-align:left;border:1px solid var(--line);background:#020711;min-height:110px;font:.77rem/1.8 ui-monospace,monospace;color:#9cc0df}.log div:before{content:"> ";color:var(--green)}.btn{min-height:44px;border:1px solid #356ca4;background:linear-gradient(180deg,#143c69,#0c2748);color:var(--text);padding:0 18px;cursor:pointer;font-weight:700;letter-spacing:.07em}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:#091421;border-color:var(--line);color:#b9c6d4}
-.app{position:relative;z-index:2;width:min(1480px,100%);margin:auto;padding:14px clamp(10px,2vw,28px) 38px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:70px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:11px}.brandmark{width:42px;height:42px;border:1px solid #31516f;display:grid;place-items:center;color:var(--cyan);font:800 1rem ui-monospace,monospace}.brandtitle{font:800 1.05rem ui-monospace,monospace;letter-spacing:.14em}.online{display:flex;align-items:center;gap:7px;color:var(--muted);font:700 .68rem ui-monospace,monospace}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 13px var(--green)}
-.tabs{position:sticky;top:0;z-index:20;display:flex;gap:6px;overflow-x:auto;padding:10px 0;background:rgba(5,9,20,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto;min-height:44px;padding:0 15px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font:700 .72rem ui-monospace,monospace;letter-spacing:.08em}.tab.active{color:var(--text);border-color:#31516f;background:#0a1727;box-shadow:inset 0 -2px 0 var(--blue)}.tab.enemy.active{box-shadow:inset 0 -2px 0 var(--red);border-color:#65303b}
-.panel{display:none;padding:26px 0;animation:in .28s ease}.panel.active{display:block}@keyframes in{from{opacity:0;transform:translateY(7px)}}.heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:15px}.heading h2{margin:3px 0 0;font-size:clamp(1.35rem,3vw,2rem)}.muted{color:var(--muted);font-size:.82rem}
-.world{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.7fr);gap:14px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,27,46,.94),rgba(5,12,22,.94));box-shadow:0 18px 50px #0006}.mapbar,.mapfoot{min-height:44px;padding:0 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font:600 .66rem ui-monospace,monospace}.mapbar{border-bottom:1px solid var(--line)}.mapfoot{border-top:1px solid var(--line)}.mapwrap{height:clamp(370px,54vw,680px);position:relative;overflow:hidden;background:linear-gradient(rgba(45,74,106,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;background-size:34px 34px}#map{width:100%;height:100%;touch-action:none}.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font:700 .75rem ui-monospace,monospace}.country{cursor:pointer;transition:.18s}.country:hover{filter:brightness(1.35)}.country.focus{filter:brightness(1.7) drop-shadow(0 0 4px rgba(98,221,255,.45))}
-.intel{padding:20px}.intelhead{display:flex;justify-content:space-between;gap:12px}.intel h3{margin:4px 0;font-size:1.45rem}.sigil{width:64px;height:64px;border:1px solid #31516f;border-radius:50%;display:grid;place-items:center;color:var(--cyan);font:800 .8rem ui-monospace,monospace;position:relative}.sigil:after{content:"";position:absolute;inset:7px;border:1px dashed #2b4a67;border-radius:50%}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.stat{padding:11px;border:1px solid #192a40;background:#07101c}.stat span{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.stat b{display:block;margin-top:5px;font-size:.79rem}.meterrow{display:flex;justify-content:space-between;font-size:.75rem;margin-top:18px}.meter{height:7px;background:#111e2f;margin-top:7px}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}.brief{margin-top:22px;color:#b5c2d0;font-size:.87rem;line-height:1.75}.actions{display:flex;gap:8px;margin-top:20px}.actions .btn{flex:1;font-size:.77rem}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.nation{min-height:185px;text-align:left;padding:18px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative}.nation:hover{border-color:#355678}.nation h3{margin:4px 0}.nationmeta{margin-top:38px;color:var(--muted);font:.7rem ui-monospace,monospace}.state{position:absolute;right:14px;top:14px;width:8px;height:8px;border-radius:50%}
-.military{display:grid;grid-template-columns:minmax(250px,.65fr) minmax(0,1.35fr);gap:14px}.milcard{padding:22px;min-height:330px}.emblem{width:150px;height:150px;margin:16px auto 24px;border:1px solid #355677;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#142a44,#07111f 65%);font:800 2.2rem ui-monospace,monospace;color:var(--gold)}.emblem:after{content:"";position:absolute;inset:15px;border:1px dashed #355677;border-radius:50%}.tree{margin-top:18px;font-family:ui-monospace,monospace}.node{display:flex;gap:10px;align-items:center;min-height:46px;border-bottom:1px solid #17273b;color:#b7c6d6}.node:first-child{font-weight:800;color:var(--text)}.academy{margin-top:14px;padding:22px}.academytop{display:flex;justify-content:space-between;gap:16px;align-items:center}.badge{border:1px solid var(--gold);color:var(--gold);padding:10px;font:800 .72rem ui-monospace,monospace}.academygrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}.academygrid div{padding:13px;border:1px solid #17283f;background:#07101b}.academygrid span{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.academygrid b{display:block;margin-top:6px;font-size:.8rem}
-.enemyLayout{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);gap:14px}.elist{display:grid;gap:8px;align-content:start}.eitem{min-height:82px;text-align:left;padding:13px;border:1px solid #3b1d26;background:#11090f;color:var(--text);cursor:pointer}.eitem.active,.eitem:hover{border-color:#9d354a;background:#1a0b12}.eitem span{display:block;color:#bf6b7b;font:.63rem ui-monospace,monospace}.edetail{padding:22px;border-color:#44232c}.ehead{display:flex;justify-content:space-between;gap:12px}.hazard{width:54px;height:54px;border:1px solid #a43a4f;display:grid;place-items:center;color:var(--red);font:800 1.15rem ui-monospace,monospace}.danger{color:#ff7185}.redacted{width:100%;margin-top:20px;text-align:left;padding:14px;border:1px solid #3b1d26;background:#0b080a;color:#afb6c0;cursor:pointer;font:.72rem ui-monospace,monospace}.redacted span{display:block;margin-top:10px;letter-spacing:.13em;color:var(--text)}.redacted.reveal span{color:#ff8798;letter-spacing:.02em}
-.timeline{max-width:900px;margin:auto;position:relative;padding:12px 0}.timeline:before{content:"";position:absolute;left:92px;top:15px;bottom:15px;width:1px;background:linear-gradient(var(--line),var(--blue),var(--line))}.event{display:grid;grid-template-columns:78px 1fr;gap:28px;position:relative;padding:18px 0}.event:after{content:"";position:absolute;left:87px;top:27px;width:11px;height:11px;border:2px solid var(--bg);border-radius:50%;background:var(--blue);box-shadow:0 0 0 1px var(--line)}.event time{text-align:right;padding-top:3px;color:var(--muted);font:700 .71rem ui-monospace,monospace}.event h3{margin:0 0 5px;font-size:1rem}.event p{margin:0;color:var(--muted);font-size:.85rem;line-height:1.7}.event.fall{margin:12px 0;padding:18px;border:1px solid #632333;background:#3a09131f}.event.fall:after{left:69px;background:var(--red);box-shadow:0 0 18px #ff5a7280}.event.fall time{color:#ff8798}
-.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.docbtn{min-height:155px;text-align:left;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#0b1727,#07101b);color:var(--text);cursor:pointer}.docbtn.active,.docbtn:hover{border-color:#355678}.docbtn span,.docbtn small{display:block;color:var(--muted);font:.63rem ui-monospace,monospace}.docbtn b{display:block;margin:20px 0}.viewer{margin-top:14px;padding:22px;min-height:220px}.viewerbody{white-space:pre-line;color:#b6c5d6;font:.82rem/1.9 ui-monospace,monospace}.footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.62rem ui-monospace,monospace}
-@media(max-width:980px){.world,.military,.enemyLayout{grid-template-columns:1fr}.intel{order:-1}.grid,.docs{grid-template-columns:repeat(2,1fr)}.academygrid{grid-template-columns:repeat(2,1fr)}.mapwrap{height:500px}}
-@media(max-width:620px){.app{padding:9px 10px 26px}.heading{align-items:start;flex-direction:column}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.grid,.docs{grid-template-columns:1fr}.academygrid{grid-template-columns:1fr 1fr}.timeline:before{left:9px}.event,.event.fall{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.fall:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot-card{padding:30px 18px}}
+:root{
+  --bg:#050914;--bg2:#08101d;--panel:#0b1626;--panel2:#0e1d31;--line:#21334b;
+  --text:#eef4ff;--muted:#8292a8;--blue:#4aa8ff;--cyan:#68e0ff;--gold:#d4af7c;
+  --red:#ff5d75;--amber:#ffb45e;--green:#69d6a9;--violet:#a77bff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-width:320px;min-height:100vh;color:var(--text);background:
+radial-gradient(circle at 50% -15%,#183050 0,transparent 36%),
+linear-gradient(180deg,#050914 0%,#02050a 72%);
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit}a{color:inherit}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.4}
+.scan{position:fixed;z-index:40;pointer-events:none;left:0;right:0;top:-120px;height:110px;background:linear-gradient(180deg,transparent,rgba(104,224,255,.035),transparent);animation:scan 9s linear infinite}
+@keyframes scan{to{transform:translateY(calc(100vh + 240px))}}
+@media(prefers-reduced-motion:reduce){.scan{display:none}}
+
+.boot{position:relative;z-index:50;min-height:100vh;display:grid;place-items:center;padding:20px}
+.boot-card{width:min(720px,100%);padding:42px 24px;border:1px solid #2b4c6e;background:rgba(4,9,18,.92);backdrop-filter:blur(18px);box-shadow:0 30px 80px #0009;text-align:center}
+.kicker,.eyebrow{font:700 .66rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+.seal{width:94px;height:94px;margin:26px auto 22px;border:1px solid #345b82;border-radius:50%;display:grid;place-items:center;color:var(--cyan);font:900 1.2rem ui-monospace,monospace;position:relative}
+.seal:before,.seal:after{content:"";position:absolute;border-radius:50%;border:1px solid #29425f;inset:9px}.seal:after{inset:23px;border-color:#4c92c6}
+.boot h1{margin:0;font:800 clamp(1.7rem,6vw,3.2rem)/1.06 ui-monospace,monospace;letter-spacing:.06em}
+.boot .sub{margin:12px 0 0;color:var(--muted)}
+.log{margin:28px 0 20px;padding:16px;text-align:left;border:1px solid var(--line);background:#020711;min-height:122px;font:.76rem/1.8 ui-monospace,monospace;color:#a5c5e1}
+.log div:before{content:"> ";color:var(--green)}
+.btn{min-height:44px;border:1px solid #376fa9;background:linear-gradient(180deg,#153f70,#0c294b);color:var(--text);padding:0 18px;cursor:pointer;font-weight:800;letter-spacing:.06em}
+.btn:hover{filter:brightness(1.13)}.btn.secondary{background:#091522;border-color:var(--line);color:#bec9d6}.btn.danger{border-color:#7d2a3c;background:#2b0b14}
+
+.app{position:relative;z-index:2;width:min(1500px,100%);margin:auto;padding:14px clamp(10px,2vw,28px) 44px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:74px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px}.brandmark{width:44px;height:44px;border:1px solid #315676;display:grid;place-items:center;color:var(--cyan);font:900 .92rem ui-monospace,monospace}.brandtitle{font:900 1.02rem ui-monospace,monospace;letter-spacing:.12em}
+.statusline{display:flex;align-items:center;gap:10px;color:var(--muted);font:700 .65rem ui-monospace,monospace}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
+.badge{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border:1px solid #4b3c21;background:#171207;color:var(--gold);font:800 .62rem ui-monospace,monospace;letter-spacing:.08em}
+
+.tabs{position:sticky;top:0;z-index:25;display:flex;gap:6px;overflow-x:auto;padding:10px 0;background:rgba(5,9,20,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;min-height:44px;padding:0 15px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font:800 .71rem ui-monospace,monospace;letter-spacing:.08em}
+.tab.active{color:var(--text);border-color:#31516f;background:#0a1727;box-shadow:inset 0 -2px 0 var(--blue)}.tab.enemy.active{box-shadow:inset 0 -2px 0 var(--red);border-color:#65303b}
+.panel{display:none;padding:26px 0;animation:in .25s ease}.panel.active{display:block}@keyframes in{from{opacity:0;transform:translateY(7px)}}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:16px}.heading h2{margin:3px 0 0;font-size:clamp(1.45rem,3vw,2.1rem)}.muted{color:var(--muted);font-size:.82rem}.danger{color:#ff8294}
+.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,27,46,.96),rgba(5,12,22,.96));box-shadow:0 18px 50px #0005}
+.grid2{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+
+.hero{padding:24px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:380px;height:380px;border:1px solid #1d3753;border-radius:50%;right:-120px;top:-190px;box-shadow:0 0 0 40px #0c1e3215,0 0 0 80px #0c1e320d}
+.hero h3{font-size:clamp(1.55rem,4vw,2.6rem);margin:8px 0 12px}.hero p{color:#b7c5d5;line-height:1.8;max-width:830px}.quote{margin-top:24px;padding:15px 16px;border-left:2px solid var(--gold);background:#0b1320;color:#e6dccb;font-weight:700}
+.worldfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}.fact{padding:13px;border:1px solid #1a2d44;background:#07111d}.fact span{display:block;color:var(--muted);font:.61rem ui-monospace,monospace}.fact b{display:block;margin-top:6px;font-size:.88rem}
+
+.mapbar,.mapfoot{min-height:44px;padding:0 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font:700 .64rem ui-monospace,monospace}.mapbar{border-bottom:1px solid var(--line)}.mapfoot{border-top:1px solid var(--line)}
+.mapwrap{height:clamp(390px,52vw,650px);position:relative;overflow:hidden;background:
+linear-gradient(rgba(45,74,106,.08) 1px,transparent 1px),
+linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;background-size:34px 34px}
+#map{width:100%;height:100%;touch-action:none}.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font:800 .75rem ui-monospace,monospace}.country{cursor:pointer;transition:.15s}.country:hover{filter:brightness(1.3)}.country.focus{filter:brightness(1.75) drop-shadow(0 0 5px rgba(104,224,255,.5))}
+.intel{padding:20px}.intelhead{display:flex;justify-content:space-between;gap:12px}.intel h3{margin:4px 0;font-size:1.45rem}.sigil{width:66px;height:66px;border:1px solid #31516f;border-radius:50%;display:grid;place-items:center;color:var(--cyan);font:900 .78rem ui-monospace,monospace;position:relative}.sigil:after{content:"";position:absolute;inset:7px;border:1px dashed #2b4a67;border-radius:50%}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.stat{padding:11px;border:1px solid #192a40;background:#07101c}.stat span{display:block;color:var(--muted);font:.61rem ui-monospace,monospace}.stat b{display:block;margin-top:5px;font-size:.79rem}
+.brief{margin-top:20px;color:#b5c2d0;font-size:.86rem;line-height:1.72}.actions{display:flex;gap:8px;margin-top:18px}.actions .btn{flex:1;font-size:.74rem}
+
+.nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:linear-gradient(90deg,#f7f5ef 0 42%,#0e315a 42% 58%,#f7f5ef 58%)}.flag.rok:after{width:26px;height:26px;border-radius:50%;background:linear-gradient(#d83f4f 0 50%,#315fb3 50%);left:calc(50% - 13px);top:17px}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
+.flag.jpn{background:#f4f2ed}.flag.jpn:before{width:32px;height:32px;border-radius:50%;background:#b92d3e;left:calc(50% - 16px);top:14px}.flag.jpn:after{width:46px;height:46px;border:2px solid #18314e;border-radius:50%;left:calc(50% - 25px);top:5px}
+.flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
+
+.popcard{padding:20px}.popchart{width:100%;height:300px;margin-top:8px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font:.66rem ui-monospace,monospace}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.populationNote{padding:18px;margin-top:12px;border:1px solid #253951;background:#07111d;color:#aebdcb;line-height:1.75;font-size:.85rem}
+
+.timeline{max-width:980px;margin:auto;position:relative;padding:8px 0}.timeline:before{content:"";position:absolute;left:102px;top:10px;bottom:10px;width:1px;background:linear-gradient(var(--line),var(--blue),var(--red),var(--line))}
+.event{display:grid;grid-template-columns:88px 1fr;gap:28px;position:relative;padding:16px 0}.event:after{content:"";position:absolute;left:97px;top:25px;width:11px;height:11px;border:2px solid var(--bg);border-radius:50%;background:var(--blue);box-shadow:0 0 0 1px var(--line)}.event time{text-align:right;padding-top:3px;color:var(--muted);font:800 .69rem ui-monospace,monospace}.event h3{margin:0 0 5px;font-size:1rem}.event p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.7}.event.major{margin:10px 0;padding:16px;border:1px solid #5e2631;background:#28091322}.event.major:after{left:79px;background:var(--red);box-shadow:0 0 18px #ff5d7566}.event.major time{color:#ff8798}
+
+.branch{padding:18px;min-height:160px}.branch h3{margin:9px 0}.branch p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.7}.branch .code{font:900 .68rem ui-monospace,monospace;color:var(--cyan)}
+.tech{padding:18px;min-height:205px}.tech h3{margin:8px 0}.tech p{margin:0;color:#acbac9;font-size:.82rem;line-height:1.7}.tech small{display:block;margin-top:12px;color:var(--muted);font:.64rem ui-monospace,monospace}
+.korea{display:grid;grid-template-columns:.8fr 1.2fr;gap:14px}.power{padding:20px}.powerline{display:flex;align-items:center;gap:10px;min-height:49px;border-bottom:1px solid #182b41}.powerline b{font-size:.82rem}.powerline span{margin-left:auto;color:var(--muted);font:.64rem ui-monospace,monospace}.notice{padding:18px;border:1px solid #4b3e24;background:#171207;color:#d9c8a9;font-size:.84rem;line-height:1.75;margin-top:12px}
+
+.enemyLayout{display:grid;grid-template-columns:minmax(240px,.7fr) minmax(0,1.3fr);gap:14px}.elist{display:grid;gap:8px;align-content:start}.eitem{min-height:82px;text-align:left;padding:13px;border:1px solid #3b1d26;background:#11090f;color:var(--text);cursor:pointer}.eitem.active,.eitem:hover{border-color:#9d354a;background:#1a0b12}.eitem span{display:block;color:#bf6b7b;font:.63rem ui-monospace,monospace}.edetail{padding:22px;border-color:#44232c}.ehead{display:flex;justify-content:space-between;gap:12px}.hazard{width:56px;height:56px;border:1px solid #a43a4f;display:grid;place-items:center;color:var(--red);font:900 1.15rem ui-monospace,monospace}.redacted{width:100%;margin-top:18px;text-align:left;padding:14px;border:1px solid #3b1d26;background:#0b080a;color:#afb6c0;cursor:pointer;font:.71rem ui-monospace,monospace}.redacted span{display:block;margin-top:10px;letter-spacing:.12em;color:var(--text)}.redacted.reveal span{color:#ff8798;letter-spacing:.02em}
+
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.docbtn{min-height:155px;text-align:left;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#0b1727,#07101b);color:var(--text);cursor:pointer}.docbtn.active,.docbtn:hover{border-color:#355678}.docbtn span,.docbtn small{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.docbtn b{display:block;margin:20px 0}.viewer{margin-top:14px;padding:22px;min-height:220px}.viewerbody{white-space:pre-line;color:#b6c5d6;font:.82rem/1.9 ui-monospace,monospace}
+.footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
+
+@media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.mapwrap{height:500px}}
+@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot-card{padding:32px 18px}.statusline .badge{display:none}}
 </style>
 </head>
 <body>
@@ -31,9 +91,9 @@ button{font:inherit}button:focus-visible{outline:2px solid var(--cyan);outline-o
 <section class="boot" id="boot">
   <div class="boot-card">
     <div class="kicker">KOREA CENTRAL STRATEGIC NETWORK</div>
-    <div class="seal">K</div>
-    <h1>WORLD STRATEGIC DATABASE</h1>
-    <p>POST-FIRST-FALL ARCHIVE // CLEARANCE LEVEL 04</p>
+    <div class="seal">2134</div>
+    <h1>군사시대 // STRATEGIC ARCHIVE</h1>
+    <p class="sub">POST–FIRST DESCENT WORLD DATABASE // CLEARANCE LEVEL 04</p>
     <div class="log" id="log" aria-live="polite"></div>
     <button class="btn" id="enter" type="button">ACCESS DATABASE</button>
   </div>
@@ -41,90 +101,229 @@ button{font:inherit}button:focus-visible{outline:2px solid var(--cyan);outline-o
 
 <main class="app" id="app" hidden>
 <header class="top">
-  <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 208X</div><div class="brandtitle">FIRST FALL</div></div></div>
-  <div class="online"><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle"># 2134 : 군사시대</div></div></div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.2</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
+
 <nav class="tabs">
-  <button class="tab active" data-tab="world">WORLD</button><button class="tab" data-tab="nations">NATIONS</button><button class="tab" data-tab="military">MILITARY</button><button class="tab enemy" data-tab="enemy">ENEMY</button><button class="tab" data-tab="chronicle">CHRONICLE</button><button class="tab" data-tab="archive">ARCHIVE</button>
+  <button class="tab active" data-tab="world">WORLD</button>
+  <button class="tab" data-tab="nations">NATIONS</button>
+  <button class="tab" data-tab="population">POPULATION</button>
+  <button class="tab" data-tab="chronicle">CHRONICLE</button>
+  <button class="tab" data-tab="korea">ROK</button>
+  <button class="tab" data-tab="military">MILITARY</button>
+  <button class="tab enemy" data-tab="enemy">EIDOLON</button>
+  <button class="tab" data-tab="archive">ARCHIVE</button>
 </nav>
 
 <section class="panel active" data-panel="world">
-<div class="heading"><div><div class="eyebrow">GLOBAL TACTICAL MAP</div><h2>세계 전략지도</h2></div><div class="muted">드래그 · 확대/축소 · 국가 선택</div></div>
-<div class="world">
-  <section class="card">
-    <div class="mapbar"><span>LIVE TERRITORIAL OVERVIEW</span><span>POST-FIRST-FALL LAYER</span></div>
-    <div class="mapwrap"><svg id="map" viewBox="0 0 960 520" aria-label="세계지도"></svg><div class="loading" id="loading">STRATEGIC MAP LOADING...</div></div>
-    <div class="mapfoot"><span>PROTOTYPE DATA // DRAFT</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
-  </section>
-  <aside class="card intel">
-    <div class="intelhead"><div><div class="eyebrow" id="ccode">ROK // KOR</div><h3 id="cname">대한민국</h3><div class="muted" id="ceng">REPUBLIC OF KOREA</div></div><div class="sigil" id="csigil">ROK</div></div>
-    <div class="stats"><div class="stat"><span>STATUS</span><b id="cstatus"></b></div><div class="stat"><span>THREAT</span><b id="cthreat"></b></div><div class="stat"><span>CAPITAL</span><b id="ccapital"></b></div><div class="stat"><span>CONTROL</span><b id="ccontrol"></b></div></div>
-    <div class="meterrow"><span>영토 통제율</span><b id="mlabel"></b></div><div class="meter"><i id="mbar"></i></div>
-    <div class="brief"><div class="eyebrow">POST-FIRST-FALL BRIEF</div><p id="cbrief"></p></div>
-    <div class="actions"><button class="btn" id="nationOpen" type="button">국가 목록</button><button class="btn secondary" id="milOpen" type="button">군사 데이터</button></div>
-  </aside>
-</div>
+  <div class="heading"><div><div class="eyebrow">WORLD STATUS // 2134</div><h2>문명은 살아남았다. 전쟁은 끝나지 않았다.</h2></div><div class="muted">제1강하 이후 103년</div></div>
+  <article class="card hero">
+    <span class="badge">CANON CORE</span>
+    <h3>2031년 「제1강하」 이후의 세계</h3>
+    <p>2031년 4월, 세계 각지 상공에 정체불명의 거대 구조물이 출현했고 기계생명체 <b>에이돌론(EIDOLON)</b>이 강하했다. 인류는 멸망하지 않았지만, 한 세기 동안 수많은 도시와 영토를 잃었다. 2134년의 대도시에는 학교·기업·대학·문화·연애와 여행이 존재한다. 동시에 전선, 방위구역, 난민 문제와 전사자 명부 역시 일상의 일부다.</p>
+    <div class="quote">“문명은 살아남았다. 그러나 그 문명의 정점에는 군이 있다.”</div>
+    <div class="worldfacts">
+      <div class="fact"><span>CURRENT YEAR</span><b>2134</b></div>
+      <div class="fact"><span>WAR DURATION</span><b>103 YEARS</b></div>
+      <div class="fact"><span>WORLD POP.</span><b>≈ 4.7 BILLION</b></div>
+      <div class="fact"><span>PRIMARY THREAT</span><b>EIDOLON</b></div>
+    </div>
+  </article>
+
+  <div class="grid2" style="margin-top:14px">
+    <section class="card">
+      <div class="mapbar"><span>GLOBAL STRATEGIC MAP</span><span>CLICK HIGHLIGHTED REGIONS</span></div>
+      <div class="mapwrap"><svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg><div class="loading" id="loading">STRATEGIC MAP LOADING...</div></div>
+      <div class="mapfoot"><span>POLITICAL LAYER // WORKING CANON</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
+    </section>
+    <aside class="card intel">
+      <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
+      <div class="stats">
+        <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
+        <div class="stat"><span>POPULATION</span><b id="cpop"></b></div>
+        <div class="stat"><span>CAPITAL / CORE</span><b id="ccapital"></b></div>
+        <div class="stat"><span>STRENGTH</span><b id="cstrength"></b></div>
+      </div>
+      <div class="brief"><div class="eyebrow">STRATEGIC BRIEF</div><p id="cbrief"></p></div>
+      <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
+    </aside>
+  </div>
 </section>
 
-<section class="panel" data-panel="nations"><div class="heading"><div><div class="eyebrow">NATIONAL DATABASE</div><h2>국가별 현황</h2></div><div class="muted">국가 카드를 눌러 전략지도 기록으로 이동</div></div><div class="grid" id="nationGrid"></div></section>
-
-<section class="panel" data-panel="military">
-<div class="heading"><div><div class="eyebrow">MILITARY INDEX</div><h2>군사조직 데이터</h2></div><div class="muted" id="milEng"></div></div>
-<div class="military"><article class="card milcard" style="text-align:center"><div class="emblem" id="emblem">R</div><div class="eyebrow">NATIONAL COMMAND</div><h3 id="milName"></h3><div class="muted" id="milSub"></div></article><article class="card milcard"><div class="eyebrow">COMMAND STRUCTURE</div><div class="tree" id="tree"></div></article></div>
-<article class="card academy"><div class="academytop"><div><div class="eyebrow">SPECIAL INSTITUTION // PRIORITY</div><h3>대한민국 중앙사관학교</h3><div class="muted">KOREA CENTRAL MILITARY ACADEMY</div></div><div class="badge">K-CMA</div></div><div class="academygrid"><div><span>ROLE</span><b>통합 장교 양성</b></div><div><span>SPECIALTY</span><b>대에네미 전투교리</b></div><div><span>STATUS</span><b>ACTIVE / PRIORITY</b></div><div><span>ARCHIVE</span><b>CADET RECORDS</b></div></div></article>
+<section class="panel" data-panel="nations">
+  <div class="heading"><div><div class="eyebrow">NATIONAL / REGIONAL DATABASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">국기 이미지는 추후 정식 아트로 교체 예정</div></div>
+  <div class="grid3" id="nationGrid"></div>
 </section>
 
-<section class="panel" data-panel="enemy">
-<div class="heading"><div><div class="eyebrow danger">⚠ RESTRICTED ENTITY DATABASE</div><h2>ENEMY INDEX</h2></div><div class="danger">CLEARANCE 04 REQUIRED</div></div>
-<div class="enemyLayout"><div class="elist" id="elist"></div><article class="card edetail"><div class="ehead"><div><div class="eyebrow danger" id="eid"></div><h3 id="ename"></h3></div><div class="hazard" id="hazard">IV</div></div><div class="stats"><div class="stat"><span>TYPE</span><b id="etype"></b></div><div class="stat"><span>THREAT</span><b id="ethreat"></b></div><div class="stat"><span>FIRST CONTACT</span><b id="efirst"></b></div><div class="stat"><span>STATUS</span><b id="estatus"></b></div></div><div class="brief"><div class="eyebrow">TACTICAL NOTES</div><p id="enote"></p></div><button class="redacted" id="redacted" type="button">KNOWN WEAKNESS <span id="weak">████████ CLASSIFIED ████████</span></button></article></div>
+<section class="panel" data-panel="population">
+  <div class="heading"><div><div class="eyebrow">DEMOGRAPHIC LOSS INDEX</div><h2>인구는 ‘고령화’가 아니라 ‘붕괴 후 회복’의 흔적이다</h2></div><div class="muted">2030 → 2031 → 2040 → 2070 → 2100 → 2134</div></div>
+  <article class="card popcard">
+    <div class="eyebrow">GLOBAL POPULATION // BILLIONS</div>
+    <svg class="popchart" id="worldPop" viewBox="0 0 900 300" aria-label="세계인구변화"></svg>
+  </article>
+  <div class="grid3" id="popGrid" style="margin-top:12px"></div>
+  <div class="populationNote"><b>해석:</b> 감소분은 단순 전투 사망자만을 뜻하지 않는다. 제1강하 직접 피해, 도시 붕괴, 기근·질병, 피난 실패, 장기전 사망, 해외 이주와 출산 붕괴가 함께 누적된 결과다. 주요 지역은 21세기 중반 최저점을 찍은 뒤 2134년에야 완만하게 회복하고 있다.</div>
 </section>
 
 <section class="panel" data-panel="chronicle">
-<div class="heading"><div><div class="eyebrow">GLOBAL CHRONICLE</div><h2>제1강하 전후 연표</h2></div><div class="muted">FIRST FALL = 기준사건</div></div>
-<div class="timeline"><article class="event"><time>2068</time><div><h3>동아시아 군비경쟁 격화</h3><p>무인전력과 궤도감시체계가 각국 군 개편의 중심으로 부상.</p></div></article><article class="event"><time>2071</time><div><h3>대한민국 중앙사관학교 개편</h3><p>통합군 장교교육 및 비정규 위협 대응 교리 신설.</p></div></article><article class="event fall"><time>2074.04.17</time><div><h3>FIRST FALL // 제1강하</h3><p>전 세계 복수 지역에서 미확인 개체가 동시 출현. 기존 국제안보체계가 붕괴하기 시작한다.</p></div></article><article class="event"><time>2075–2078</time><div><h3>국가별 방위권 재편</h3><p>붕괴지역·통제지역·회복지역으로 세계 질서가 재구성된다.</p></div></article><article class="event"><time>208X</time><div><h3>CURRENT ERA</h3><p>제1강하 이후 세대가 전선과 사관학교의 주력이 된 시대.</p></div></article></div>
+  <div class="heading"><div><div class="eyebrow">103-YEAR CHRONICLE</div><h2>제1강하 이후 주요 사건</h2></div><div class="muted">사건명·연도는 작업 중 정본</div></div>
+  <div class="timeline">
+    <article class="event major"><time>2031.04</time><div><h3>제1강하</h3><p>전 세계 동시다발적 에이돌론 출현. 주요 도시·군사시설·전력·통신·교통망이 공격받으며 백년전쟁이 시작된다.</p></div></article>
+    <article class="event"><time>2031–33</time><div><h3>검은 겨울</h3><p>물류·농업·의료체계가 붕괴하며 전투 이외의 기근·질병·동사로 막대한 민간 피해가 발생한다.</p></div></article>
+    <article class="event major"><time>2034</time><div><h3>서울 배급폭동</h3><p>수도권 피난민 급증과 군 우선배급 논란으로 폭동이 발생한다. 군 투입과 대규모 사상은 이후 한 세기 동안 이어지는 군 특권 논쟁의 기원이 된다.</p></div></article>
+    <article class="event"><time>2044</time><div><h3>상하이 17일</h3><p>대형 네스트가 상하이를 포위한다. 17일간 방어 명령이 유지된 끝에 도시 상당 구역이 상실되며 중국권의 정치적 분열이 가속된다.</p></div></article>
+    <article class="event major"><time>2049</time><div><h3>제4차 태평양 네스트 공략전</h3><p>대규모 국제공세가 에이돌론의 전술 적응 이후 역전된다. ‘고정된 전술은 죽는다’는 현대 대에이돌론 교리의 출발점.</p></div></article>
+    <article class="event"><time>2058</time><div><h3>대한민국 중앙사관학교 창설</h3><p>합동전·도시전·에이돌론 대응·무인전력을 동시에 지휘할 장교를 양성하기 위해 설립된다.</p></div></article>
+    <article class="event"><time>2065</time><div><h3>제네바 방위협정 / I.D.A. 출범</h3><p>국가들은 주권과 군대를 유지한 채 정보·연구·초국가적 공동작전을 조율하는 국제연합방위기구를 창설한다.</p></div></article>
+    <article class="event"><time>2071</time><div><h3>인류 대반격 선언</h3><p>대코어 병기와 신세대 전술체계가 실전배치되며 인류 전략이 생존 중심 방어에서 영토 탈환으로 전환된다.</p></div></article>
+    <article class="event major"><time>2084</time><div><h3>세라프 제로 사건</h3><p>인간의 언어와 전술 의도를 이해하는 것으로 보이는 특이개체와 첫 공식 교전. 기존 Ⅰ~Ⅴ급 밖의 ‘세라프’ 분류가 신설된다.</p></div></article>
+    <article class="event"><time>2086</time><div><h3>평양 탈환전</h3><p>43일간의 전투 끝에 평양 핵심구역을 확보한다. 현재의 평양은 재건도시·군사도시·전쟁기념도시의 성격을 동시에 가진다.</p></div></article>
+    <article class="event"><time>2093–98</time><div><h3>북미 연방위기</h3><p>난민·징집권·지역군 지휘권·전시행정을 둘러싼 장기 위기 끝에 구 미합중국 체제는 새로운 아메리카 연방연합(AFU)으로 재편된다.</p></div></article>
+    <article class="event major"><time>2108</time><div><h3>코어-9 참사</h3><p>에이돌론 코어 역공학 시설에서 통제불능 사고가 발생한다. 공개 연구는 규제되지만 각국의 비밀 역공학 경쟁은 오히려 심화된다.</p></div></article>
+    <article class="event"><time>2118</time><div><h3>전술기동군 독립군종 승격</h3><p>네스트·세라프·고위험 탈환작전을 담당하던 전문부대들이 대한민국의 독립 군종으로 통합된다.</p></div></article>
+    <article class="event major"><time>2129.03.18</time><div><h3>3·18 군특권 사태</h3><p>군인가문·사관학교 학맥·전사자 특혜와 민간 차별 문제를 둘러싼 시위가 일부 도시에서 폭동과 군경 충돌로 확대된다.</p></div></article>
+    <article class="event"><time>2132</time><div><h3>제5차 서해 네스트 공세</h3><p>서해 해저·도서지역 네스트가 급성장하며 수도권에 비상동원령이 내려진다. 승리했지만 수많은 군·민간 피해를 남긴 최근 전쟁.</p></div></article>
+  </div>
+</section>
+
+<section class="panel" data-panel="korea">
+  <div class="heading"><div><div class="eyebrow">REPUBLIC OF KOREA // 2134</div><h2>대한민국</h2></div><div class="muted">민주공화국 · 군사엘리트 사회 · 완전지원제 직업군</div></div>
+  <div class="korea">
+    <article class="card power">
+      <div class="eyebrow">POWER STRUCTURE</div>
+      <div class="powerline"><b>대통령 / 민간정부</b><span>FORMAL SUPREMACY</span></div>
+      <div class="powerline"><b>국회 · 사법부</b><span>CIVIL POWER</span></div>
+      <div class="powerline"><b>국방부</b><span>POLICY / ADMIN</span></div>
+      <div class="powerline"><b>통합전략사령부</b><span>WAR COMMAND</span></div>
+      <div class="powerline"><b>육상군 · 해양군 · 항공우주군 · 전술기동군</b><span>4 BRANCHES</span></div>
+      <div class="notice">군사독재국은 아니다. 그러나 최고위 지휘관·전쟁영웅·중앙사관학교 학맥·군인가문은 정치인보다 더 큰 사회적 영향력을 행사할 수 있다.</div>
+    </article>
+    <article class="card power">
+      <div class="eyebrow">SERVICE SYSTEM</div>
+      <h3 style="margin:8px 0 6px">평시 징병제 없음 — 완전지원제</h3>
+      <p class="muted" style="line-height:1.75">군은 의무가 아니라 가장 강력한 권력·명예·신분상승 경로 중 하나다. 남녀 모두 지원하며 일반 병 입대부터 선발 경쟁이 존재한다. 병 → 전문병/선임병장 → 부사관 → 장교로 상승할 수 있으며 중앙사관학교는 국가 최상층 엘리트로 진입하는 대표 경로다.</p>
+      <div class="stats">
+        <div class="stat"><span>PEACETIME</span><b>VOLUNTEER ONLY</b></div>
+        <div class="stat"><span>EMERGENCY</span><b>NATIONAL MOBILIZATION</b></div>
+        <div class="stat"><span>CADET ELITE</span><b>KCMA</b></div>
+        <div class="stat"><span>2134 POP.</span><b>≈ 43M</b></div>
+      </div>
+      <div class="notice">국가존망급 상황에서는 대통령·국회 승인 아래 총동원령이 가능하며 민간인도 의료·물류·도시방위·공병지원 등에 동원될 수 있다.</div>
+    </article>
+  </div>
+  <div class="grid3" style="margin-top:14px">
+    <article class="card branch"><div class="code">2031–2034</div><h3>북부 붕괴기</h3><p>북한 중앙통치체계가 붕괴한다. 북부는 곧바로 통일되지 않고 지역 군사세력·민간자치구역·에이돌론 점령지·인도주의 통로가 뒤섞인 장기 불안정지대로 변한다.</p></article>
+    <article class="card branch"><div class="code">2041–2070</div><h3>북부 회복전쟁</h3><p>민간인 구조 → 수송회랑 확보 → 네스트 제거 → 도시 탈환 → 행정 복구 순으로 수십 년간 한반도 북부를 회복한다.</p></article>
+    <article class="card branch"><div class="code">2094–2134</div><h3>통합행정기</h3><p>한반도 대부분이 대한민국 행정체계에 편입되지만 북부 일부에는 특별군사관리구역·네스트 감시구역·재정착지역이 남아 있다.</p></article>
+  </div>
+</section>
+
+<section class="panel" data-panel="military">
+  <div class="heading"><div><div class="eyebrow">MILITARY TECHNOLOGY INDEX</div><h2>2134년 인류군의 전쟁 방식</h2></div><div class="muted">강력하지만 절대적이지 않다 — 에이돌론은 반복을 학습한다</div></div>
+  <div class="grid4">
+    <article class="card tech"><div class="eyebrow">01 // PERSONAL SYSTEM</div><h3>전술제복</h3><p>정복처럼 보이는 초경량 복합소재 전투장비. 방탄·방검·열차단·충격분산과 생체정보·통신·피아식별·HUD·응급처치 보조를 통합한다.</p><small>COMMON / NATIONAL VARIANTS</small></article>
+    <article class="card tech"><div class="eyebrow">02 // CORE KILL</div><h3>대코어 정밀탄</h3><p>에이돌론의 코어를 파괴하기 위한 특수탄과 고속 관통체계. 반복적인 탄종 운용은 적응당할 위험이 있어 전술과 탄종을 지속적으로 교체한다.</p><small>ANTI-EIDOLON STANDARD</small></article>
+    <article class="card tech"><div class="eyebrow">03 // UNMANNED</div><h3>무인전력</h3><p>정찰·군집드론·무인기갑이 널리 쓰이지만 완전자율전은 제한적이다. 에이돌론이 패턴화된 자동전술을 학습하기 때문이다.</p><small>HUMAN COMMAND REQUIRED</small></article>
+    <article class="card tech"><div class="eyebrow">04 // BATTLE NET</div><h3>인간–AI 통합지휘</h3><p>AI는 실시간 전장분석·경로추천·위협예측을 수행하지만 최종 전술변경은 인간 지휘관에게 남겨둔다. 즉흥 판단이 여전히 가장 중요한 무기다.</p><small>ADAPTIVE COMMAND</small></article>
+    <article class="card tech"><div class="eyebrow">05 // HEAVY</div><h3>중기갑·네스트 돌파전력</h3><p>고출력 기갑차량과 자율포대, 네스트 외벽 파괴용 특수공병장비가 운용된다. 장기간의 오염·통신두절 환경에서도 작전 가능하도록 설계된다.</p><small>SIEGE / RECLAMATION</small></article>
+    <article class="card tech"><div class="eyebrow">06 // AEROSPACE</div><h3>항공우주전력</h3><p>고고도 감시·무인전투기·궤도정찰·극초음속 수송체계가 전선 전체를 연결한다. 아크급 대응에는 국가급 항공화력이 투입된다.</p><small>GLOBAL RESPONSE</small></article>
+    <article class="card tech"><div class="eyebrow">07 // DEFENSE CITY</div><h3>도시방위망</h3><p>대도시의 지하교통·대피소·자동요격망·군수창고·감지망이 민간 인프라와 결합되어 있다. 평범한 도시가 동시에 하나의 요새다.</p><small>CIVIL-MILITARY INFRASTRUCTURE</small></article>
+    <article class="card tech"><div class="eyebrow">08 // REVERSE ENGINEERING</div><h3>코어 역공학</h3><p>회수 코어와 장갑을 연구해 인간 기술이 발전했지만 코어-9 참사 이후 공개연구가 규제된다. 각국의 비밀 연구경쟁은 계속된다.</p><small>RESTRICTED / POLITICAL RISK</small></article>
+  </div>
+</section>
+
+<section class="panel" data-panel="enemy">
+  <div class="heading"><div><div class="eyebrow danger">RESTRICTED // EIDOLON DATABASE</div><h2>에이돌론 분류</h2></div><div class="danger">ORIGIN UNKNOWN // 2134</div></div>
+  <div class="enemyLayout">
+    <div class="elist" id="elist"></div>
+    <article class="card edetail">
+      <div class="ehead"><div><div class="eyebrow danger" id="eid"></div><h3 id="ename"></h3></div><div class="hazard" id="hazard"></div></div>
+      <div class="stats"><div class="stat"><span>ROLE</span><b id="erole"></b></div><div class="stat"><span>SCALE</span><b id="escale"></b></div><div class="stat"><span>TACTICAL RISK</span><b id="erisk"></b></div><div class="stat"><span>CORE</span><b>CONFIRMED</b></div></div>
+      <div class="brief"><div class="eyebrow">FIELD NOTES</div><p id="enote"></p></div>
+      <button class="redacted" id="redacted" type="button">INTELLIGENCE NOTE <span id="weak">████████ CLASSIFIED ████████</span></button>
+    </article>
+  </div>
 </section>
 
 <section class="panel" data-panel="archive">
-<div class="heading"><div><div class="eyebrow">CLASSIFIED ARCHIVE</div><h2>기밀문서</h2></div><div class="muted">문서를 눌러 열람</div></div>
-<div class="docs"><button class="docbtn active" data-doc="seoul"><span>DOCUMENT #KR-074-1138</span><b>서울 방위작전 보고서</b><small>TOP SECRET</small></button><button class="docbtn" data-doc="fall"><span>ARCHIVE // FIRST FALL</span><b>제1강하 초기 관측기록</b><small>PARTIALLY REDACTED</small></button><button class="docbtn" data-doc="academy"><span>ACADEMY // INTERNAL</span><b>중앙사관학교 전투교리</b><small>CLEARANCE 04</small></button></div>
-<article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
+  <div class="heading"><div><div class="eyebrow">CLASSIFIED ARCHIVE</div><h2>전쟁기록</h2></div><div class="muted">향후 이미지·국기·문장·작전지도 삽입 예정</div></div>
+  <div class="docs">
+    <button class="docbtn active" data-doc="seoul"><span>KR // CIVIL DISTURBANCE</span><b>2034 서울 배급폭동</b><small>PARTIALLY REDACTED</small></button>
+    <button class="docbtn" data-doc="pyongyang"><span>KR // RECLAMATION</span><b>2086 평양 탈환전</b><small>MILITARY ARCHIVE</small></button>
+    <button class="docbtn" data-doc="core9"><span>I.D.A. // RESTRICTED</span><b>2108 코어-9 참사</b><small>CLEARANCE 05</small></button>
+  </div>
+  <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST FALL WORLD DATABASE // PROTOTYPE V1</span><span>DATA STATUS: DRAFT</span></footer>
+<footer class="footer"><span># 2134 : 군사시대 // WORLD DATABASE V0.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
 const N={
-"410":{code:"ROK // KOR",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",capital:"SEOUL",status:"FORTIFIED",threat:"LEVEL IV",control:87,color:"#44b9ff",brief:"제1강하 이후 수도권과 주요 군사 거점을 중심으로 방위체계를 재편했다. 중앙사관학교는 통합 장교 양성과 대에네미 전투교리 연구의 핵심기관으로 기능한다.",mil:"대한민국 국군",milEng:"REPUBLIC OF KOREA ARMED FORCES",tree:["합동통합지휘부","지상작전사령부","항공우주작전사령부","특수전사령부","대한민국 중앙사관학교"]},
-"392":{code:"JPN // 392",name:"일본국",eng:"JAPAN",sigil:"JPN",capital:"TOKYO",status:"CONTESTED",threat:"LEVEL III",control:79,color:"#ffb14f",brief:"연안 방위도시와 해상수송망을 중심으로 생존권을 유지하고 있다. 제1강하 이후 기존 자위조직은 통합전투사령부 체제로 확대 개편되었다.",mil:"일본 통합방위군",milEng:"JAPAN INTEGRATED DEFENSE FORCE",tree:["통합방위사령부","열도방위군","항공감시군","해상기동군","특수재해대응단"]},
-"156":{code:"CHN // 156",name:"중화권 통제구역",eng:"CHINESE CONTROL ZONES",sigil:"CHN",capital:"MULTIPLE",status:"FRAGMENTED",threat:"LEVEL V",control:58,color:"#ff5a72",brief:"제1강하 직후 복수의 군정구역으로 분열되었다는 프로토타입 설정. 각 통제구역의 지휘체계와 에네미 대응교리는 상이하다.",mil:"중화권 연합방위군",milEng:"CHINESE JOINT DEFENSE COMMAND",tree:["중앙통제회의","북부전구","동부전구","남부방위망","기동대응군"]},
-"643":{code:"RUS // 643",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",capital:"MOSCOW",status:"RESTRICTED",threat:"LEVEL IV",control:71,color:"#af78ff",brief:"광대한 영토 전체보다 핵심 도시권과 군수회랑을 중심으로 방위구역을 운영한다는 프로토타입 설정이다.",mil:"러시아 통합전략군",milEng:"RUSSIAN STRATEGIC FORCES",tree:["연방전략사령부","서부방위군","시베리아군","항공우주군","심층정찰국"]},
-"840":{code:"USA // 840",name:"미합중국",eng:"UNITED STATES OF AMERICA",sigil:"USA",capital:"WASHINGTON D.C.",status:"ACTIVE",threat:"LEVEL III",control:84,color:"#68d7ae",brief:"대륙 방위망과 궤도감시 자산을 중심으로 다국적 작전을 주도한다는 프로토타입 설정이다.",mil:"미합중국 통합군",milEng:"UNITED STATES JOINT FORCES",tree:["Joint Strategic Command","Continental Defense","Aerospace Command","Expeditionary Force","Entity Response Group"]}
+rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
+afu:{code:"AFU // 2098",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
+jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES",color:"#ffb45e",flag:"jpn",brief:"제1강하 이후에도 국호와 국가체제를 유지했다. 2042년 국방재건령으로 자위대를 일본국방위군으로 재편. 도시요새·해양전·정밀방어·소형 무인체계에 강하다."},
+chn:{code:"CN SUCCESSORS",name:"중국권 3개 후계국",eng:"CHINESE SUCCESSOR STATES",sigil:"3C",status:"FRAGMENTED",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"INDUSTRIAL MASS",color:"#ff5d75",flag:"chn",brief:"구 중화인민공화국은 장기전과 중앙통제 붕괴 끝에 소멸했다. 2134년에는 중화재건연방·화북방위공화국·서부연합공화국이 경쟁하며, 대에이돌론 작전에서는 중화공동방위협정(CMDC)을 통해 협력한다."},
+rus:{code:"RUS // 2134",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",status:"CORRIDOR STATE",pop:"≈ 82M",capital:"MOSCOW",strength:"HEAVY / ARCTIC",color:"#a77bff",flag:"rus",brief:"국경상 영토는 광대하지만 실제 안정통제지역은 도시·자원지대·철도·군사회랑에 집중된다. 2043년 시베리아 대단절 이후 장거리 화력·중기갑·혹한전·철도군수 체계가 발달했다."},
+edc:{code:"EDC // 2052",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",status:"SUPRANATIONAL",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",color:"#d4af7c",flag:"edc",brief:"프랑스·독일·폴란드 등 유럽 각국이 독립국가와 군을 유지한 채 통합전구사령부를 운영하는 초국가 방위공동체. 센서·전자전·정밀병기·다국적 전장네트워크가 강점이다."}
 };
+const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",156:"chn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc"};
+const POP={
+world:{title:"세계",unit:"B",vals:[8.5,7.4,5.0,4.0,4.3,4.7]},
+rok:{title:"한반도 / 대한민국",unit:"M",vals:[76,67,43,36,39,43]},
+afu:{title:"미국권 → AFU",unit:"M",vals:[350,320,280,210,220,240]},
+jpn:{title:"일본",unit:"M",vals:[120,105,77,59,63,68]},
+chn:{title:"중국권",unit:"M",vals:[1400,1200,1020,710,700,740]},
+rus:{title:"러시아",unit:"M",vals:[146,132,115,87,77,82]},
+edc:{title:"유럽권",unit:"M",vals:[740,660,490,410,420,450]}
+};
+const YEARS=["2030","2031","2040","2070","2100","2134"];
 const E=[
-{id:"ENTITY-017",name:"CODENAME: WRAITH",type:"BIOLOGICAL",threat:"CLASS IV",first:"2074.04.██",status:"ACTIVE",hazard:"IV",weak:"광역 고주파 교란에 반응 저하",note:"야간 활동성과 기습 능력이 높다. 일반 보병 화력으로 제압 가능하나 집단 출현 시 위험도가 급상승한다."},
-{id:"ENTITY-041",name:"CODENAME: GOLIATH",type:"ARMORED",threat:"CLASS V",first:"2074.08.19",status:"ACTIVE",hazard:"V",weak:"관절부 외피가 상대적으로 취약",note:"중장갑 외피를 보유한 대형 개체. 도심 구조물을 파괴하며 이동하고 중화기 지원 없이는 저지가 어렵다."},
-{id:"ENTITY-063",name:"CODENAME: SIREN",type:"PSIONIC",threat:"CLASS V",first:"2076.11.02",status:"RESTRICTED",hazard:"V",weak:"[DATA EXPUNGED]",note:"장거리에서 인지 교란을 유발하는 것으로 추정된다. 교전기록 대부분이 보안등급 05로 지정되어 있다."}
+{id:"Ⅰ급",name:"SWARM // 스웜",role:"정찰·침투·집단전",scale:"SMALL",risk:"MASS THREAT",hazard:"I",note:"소형 양산형. 개체 하나의 위협은 낮지만 대량출현·정찰·시설침투에 특화되어 있다.",secret:"군집정보 공유속도가 전술적 위험의 핵심."},
+{id:"Ⅱ급",name:"HUNTER // 헌터",role:"추적·도심근접전",scale:"MEDIUM",risk:"HIGH",hazard:"II",note:"중형 추적개체. 도시와 복잡한 실내환경에서 인간을 추적하는 데 특화되어 있다.",secret:"반복적인 피난경로를 학습할 가능성이 높다."},
+{id:"Ⅲ급",name:"BRUTE // 브루트",role:"중장갑 돌파",scale:"ARMORED",risk:"VERY HIGH",hazard:"III",note:"전차급 중장갑 개체. 방어선을 물리적으로 돌파하며 일반 개인화기로는 제압이 어렵다.",secret:"코어 접근을 위한 관절·장갑 결합부 분석이 중요."},
+{id:"Ⅳ급",name:"DOMINION // 도미니언",role:"전술지휘",scale:"COMMAND",risk:"SEVERE",hazard:"IV",note:"주변 개체들의 행동을 통제하고 전투패턴을 조직하는 지휘형. 발견 즉시 우선제거 대상으로 지정된다.",secret:"주변 에이돌론의 행동변화 자체가 탐지단서."},
+{id:"Ⅴ급",name:"ARK // 아크",role:"전략급 파괴",scale:"10–100M+",risk:"CITY THREAT",hazard:"V",note:"수십~수백 m급 전략개체. 도시급 위협으로 분류되며 국가급 항공·기갑·전략화력이 투입된다.",secret:"단일 국가가 감당하지 못하는 경우 I.D.A. 공동작전 발령."},
+{id:"OUT",name:"SERAPH // 세라프",role:"희귀 특이개체",scale:"VARIABLE",risk:"UNKNOWN",hazard:"S",note:"기존 등급 밖의 희귀 개체. 고유 능력과 압도적인 전투력, 일부 사례에서는 인간의 언어와 사고를 이해하는 정황이 확인되었다.",secret:"2084 세라프 제로 사건 이후 별도 분류. 기원과 목적은 미상."}
 ];
-const D={seoul:{id:"DOCUMENT #KR-074-1138",title:"서울 방위작전 보고서",body:"14:21  제3구역 최초 접촉 보고.\n14:37  통신망 부분 두절.\n14:51  ████████████████\n15:12  방위선 후퇴 승인.\n\n[첨부] 현장 영상·전술지도·피해평가서는 상위 보안등급에서 열람 가능."},fall:{id:"ARCHIVE // FIRST FALL",title:"제1강하 초기 관측기록",body:"2074.04.17 // 04:██\n복수 대륙에서 동시다발적인 이상징후 탐지.\n민간 관측망과 군사감시망의 기록이 일치하지 않음.\n\n최초 분류명: UNKNOWN DESCENT EVENT\n후일 공식 명칭: FIRST FALL / 제1강하"},academy:{id:"ACADEMY // INTERNAL",title:"중앙사관학교 전투교리",body:"목표: 제1강하 이후 등장한 비정규 위협에 대응 가능한 통합 장교 양성.\n\n교육축\n01  통합군 지휘\n02  대에네미 전술\n03  도시전·붕괴지역 생존\n04  정보판단 및 지휘통제\n\n※ 세부 교리는 세계관 설정 확정 후 갱신 예정."}};
+const D={
+seoul:{id:"KR // 2034 // CIVIL DISTURBANCE",title:"서울 배급폭동",body:"수도권 피난민 급증과 물자 부족 속에서 군·중요시설 우선배급 사실이 알려지며 대규모 폭동이 발생했다.\n\n경찰 통제 실패 후 군이 투입되었고 다수의 사상자가 발생했다.\n\n2134년에도 군 특권과 문민통제 논쟁에서 반복적으로 소환되는 사건이다."},
+pyongyang:{id:"KR // 2086 // RECLAMATION",title:"평양 탈환전",body:"작전기간: 43일\n목표: 평양 핵심도시권 및 북부 수송회랑 확보\n\n대한민국군과 I.D.A. 지원전력이 대규모 에이돌론 거점과 교전했다.\n승리 이후 평양은 북부 행정중심·군사도시·전쟁기념도시로 재건되었다."},
+core9:{id:"I.D.A. // 2108 // CLEARANCE 05",title:"코어-9 참사",body:"회수 에이돌론 코어를 활용한 역공학 연구시설에서 통제불능 사고 발생.\n시설 및 인접 연구구역이 봉쇄·소실되었다.\n\n사건 이후 공개 코어 연구에는 국제규제가 도입되었지만 각국의 비공개 연구경쟁은 지속되고 있다.\n\n████████████████████████"}
+};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-["NETWORK HANDSHAKE... OK","ARCHIVE NODE... ONLINE","TACTICAL MAP... READY","CLEARANCE VERIFIED"].forEach((t,i)=>setTimeout(()=>{const d=document.createElement("div");d.textContent=t;$("#log").appendChild(d)},250+i*380));
-$("#enter").onclick=()=>{$("#boot").remove();$("#app").hidden=false;initMap()};
+["NETWORK HANDSHAKE... OK","2134 ARCHIVE NODE... ONLINE","EIDOLON INDEX... VERIFIED","CLEARANCE LEVEL 04... GRANTED"].forEach((t,i)=>setTimeout(()=>{const d=document.createElement("div");d.textContent=t;$("#log").appendChild(d)},220+i*340));
+$("#enter").onclick=()=>{$("#boot").remove();$("#app").hidden=false;initMap();drawAllPopulation()};
 function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
-$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
-let sel="410",g,zoom,svg;
-function nation(id){const n=N[id];if(!n)return;sel=id;$("#ccode").textContent=n.code;$("#cname").textContent=n.name;$("#ceng").textContent=n.eng;$("#csigil").textContent=n.sigil;$("#cstatus").textContent=n.status;$("#cthreat").textContent=n.threat;$("#ccapital").textContent=n.capital;$("#ccontrol").textContent=n.control+"%";$("#mlabel").textContent=n.control+"%";$("#mbar").style.width=n.control+"%";$("#cbrief").textContent=n.brief;$("#milName").textContent=n.mil;$("#milSub").textContent=n.milEng;$("#milEng").textContent=n.milEng;$("#emblem").textContent=n.sigil[0];$("#tree").innerHTML=n.tree.map((x,i)=>'<div class="node"><span style="color:#44a6ff">'+(i?'├─':'◆')+'</span><span>'+x+'</span></div>').join("");if(g)g.selectAll(".country").classed("focus",d=>String(d.id)===id)}
-$("#nationOpen").onclick=()=>tab("nations");$("#milOpen").onclick=()=>tab("military");
-Object.entries(N).forEach(([id,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<i class="state" style="background:'+n.color+'"></i><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="nationmeta">'+n.status+' // CONTROL '+n.control+'% // '+n.threat+'</div>';b.onclick=()=>{nation(id);tab("world")};$("#nationGrid").appendChild(b)});
-let ei=0;E.forEach((e,i)=>{const b=document.createElement("button");b.className="eitem"+(i===0?" active":"");b.innerHTML="<span>"+e.id+" // "+e.threat+"</span><b>"+e.name+"</b>";b.onclick=()=>enemy(i);$("#elist").appendChild(b)});
-function enemy(i){ei=i;const e=E[i];$$(".eitem").forEach((b,j)=>b.classList.toggle("active",i===j));$("#eid").textContent=e.id;$("#ename").textContent=e.name;$("#etype").textContent=e.type;$("#ethreat").textContent=e.threat;$("#efirst").textContent=e.first;$("#estatus").textContent=e.status;$("#hazard").textContent=e.hazard;$("#enote").textContent=e.note;$("#redacted").classList.remove("reveal");$("#weak").textContent="████████ CLASSIFIED ████████"}
-$("#redacted").onclick=()=>{const b=$("#redacted"),r=b.classList.toggle("reveal");$("#weak").textContent=r?E[ei].weak:"████████ CLASSIFIED ████████"};
-function doc(k){const d=D[k];$$(".docbtn").forEach(x=>x.classList.toggle("active",x.dataset.doc===k));$("#docid").textContent=d.id;$("#doctitle").textContent=d.title;$("#docbody").textContent=d.body}$$(".docbtn").forEach(b=>b.onclick=()=>doc(b.dataset.doc));doc("seoul");nation(sel);enemy(0);
-async function initMap(){if(svg)return;try{const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());svg=d3.select("#map");const countries=topojson.feature(w,w.objects.countries).features,p=d3.geoNaturalEarth1().fitExtent([[18,18],[942,502]],{type:"Sphere"}),path=d3.geoPath(p);g=svg.append("g");g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#040a13").attr("stroke","#263d57");g.selectAll("path.country").data(countries).join("path").attr("class","country").attr("d",path).attr("fill",d=>N[String(d.id)]?N[String(d.id)].color:"#111d2c").attr("stroke","#263b52").attr("stroke-width",.45).attr("opacity",d=>N[String(d.id)]?.8:.72).on("click",(ev,d)=>{const id=String(d.id);if(N[id])nation(id)}).append("title").text(d=>N[String(d.id)]?.eng||"Strategic region");zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));svg.call(zoom);$("#loading").remove();nation(sel)}catch(e){$("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능"}}
+$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
+
+let sel="rok",g,zoom,svg;
+function nation(k){const n=N[k];if(!n)return;sel=k;$("#ccode").textContent=n.code;$("#cname").textContent=n.name;$("#ceng").textContent=n.eng;$("#csigil").textContent=n.sigil;$("#cstatus").textContent=n.status;$("#cpop").textContent=n.pop;$("#ccapital").textContent=n.capital;$("#cstrength").textContent=n.strength;$("#cbrief").textContent=n.brief;if(g)g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k)}
+Object.entries(N).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{nation(k);tab("world")};$("#nationGrid").appendChild(b)});
+
+function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
+Object.entries(POP).filter(([k])=>k!=="world").forEach(([k,p])=>sparkCard(k,p));
+
+function drawWorldPop(){const s=d3.select("#worldPop"),w=900,h=300,m={l:48,r:20,t:20,b:40},vals=POP.world.vals;const x=d3.scalePoint().domain(YEARS).range([m.l,w-m.r]),y=d3.scaleLinear().domain([0,9]).range([h-m.b,m.t]);s.selectAll("*").remove();s.append("g").attr("transform","translate(0,"+(h-m.b)+")").call(d3.axisBottom(x).tickSize(0)).call(g=>g.select(".domain").attr("stroke","#29405c")).call(g=>g.selectAll("text").attr("fill","#8392a8"));s.append("g").attr("transform","translate("+m.l+",0)").call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+"B")).call(g=>g.select(".domain").remove()).call(g=>g.selectAll("line").attr("stroke","#1d3149")).call(g=>g.selectAll("text").attr("fill","#8392a8"));s.append("path").datum(vals.map((v,i)=>({year:YEARS[i],v}))).attr("fill","none").attr("stroke","#68e0ff").attr("stroke-width",3).attr("d",d3.line().x(d=>x(d.year)).y(d=>y(d.v)));s.selectAll("circle").data(vals.map((v,i)=>({year:YEARS[i],v}))).join("circle").attr("cx",d=>x(d.year)).attr("cy",d=>y(d.v)).attr("r",5).attr("fill","#68e0ff");s.selectAll(".label").data(vals.map((v,i)=>({year:YEARS[i],v}))).join("text").attr("class","label").attr("x",d=>x(d.year)).attr("y",d=>y(d.v)-12).attr("text-anchor","middle").attr("fill","#d8e8f5").attr("font-size",12).text(d=>d.v+"B")}
+function drawAllPopulation(){drawWorldPop()}
+
+let ei=0;E.forEach((e,i)=>{const b=document.createElement("button");b.className="eitem"+(i===0?" active":"");b.innerHTML="<span>"+e.id+" // "+e.risk+"</span><b>"+e.name+"</b>";b.onclick=()=>enemy(i);$("#elist").appendChild(b)});
+function enemy(i){ei=i;const e=E[i];$$(".eitem").forEach((b,j)=>b.classList.toggle("active",i===j));$("#eid").textContent=e.id;$("#ename").textContent=e.name;$("#erole").textContent=e.role;$("#escale").textContent=e.scale;$("#erisk").textContent=e.risk;$("#hazard").textContent=e.hazard;$("#enote").textContent=e.note;$("#redacted").classList.remove("reveal");$("#weak").textContent="████████ CLASSIFIED ████████"}
+$("#redacted").onclick=()=>{const r=$("#redacted").classList.toggle("reveal");$("#weak").textContent=r?E[ei].secret:"████████ CLASSIFIED ████████"};enemy(0);
+
+function doc(k){const d=D[k];$$(".docbtn").forEach(x=>x.classList.toggle("active",x.dataset.doc===k));$("#docid").textContent=d.id;$("#doctitle").textContent=d.title;$("#docbody").textContent=d.body}
+$$(".docbtn").forEach(b=>b.onclick=()=>doc(b.dataset.doc));doc("seoul");nation(sel);
+
+async function initMap(){if(svg)return;try{const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());svg=d3.select("#map");const countries=topojson.feature(w,w.objects.countries).features,p=d3.geoNaturalEarth1().fitExtent([[18,18],[942,502]],{type:"Sphere"}),path=d3.geoPath(p);g=svg.append("g");g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#040a13").attr("stroke","#263d57");g.selectAll("path.country").data(countries).join("path").attr("class","country").attr("d",path).attr("fill",d=>{const k=MAP[String(d.id)];return k?N[k].color:"#111d2c"}).attr("stroke","#263b52").attr("stroke-width",.45).attr("opacity",d=>MAP[String(d.id)]?.88:.7).on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)}).append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));svg.call(zoom);$("#loading").remove();nation(sel)}catch(e){$("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능"}}
 $("#reset").onclick=()=>{if(svg&&zoom)svg.transition().duration(300).call(zoom.transform,d3.zoomIdentity)};
-const c=$("#fx"),ctx=c.getContext("2d");let pts=[];function resize(){const r=Math.min(devicePixelRatio||1,2);c.width=innerWidth*r;c.height=innerHeight*r;c.style.width=innerWidth+"px";c.style.height=innerHeight+"px";ctx.setTransform(r,0,0,r,0,0);pts=Array.from({length:Math.min(70,Math.max(28,Math.floor(innerWidth/22)))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.4+.25,v:Math.random()*.15+.04,a:Math.random()*.4+.08}))}function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const p of pts){p.y-=p.v;if(p.y<0){p.y=innerHeight;p.x=Math.random()*innerWidth}ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fillStyle="rgba(98,221,255,"+p.a+")";ctx.fill()}requestAnimationFrame(draw)}resize();addEventListener("resize",resize,{passive:true});if(!matchMedia("(prefers-reduced-motion: reduce)").matches)draw();
+
+const c=$("#fx"),ctx=c.getContext("2d");let pts=[];
+function resize(){const r=Math.min(devicePixelRatio||1,2);c.width=innerWidth*r;c.height=innerHeight*r;c.style.width=innerWidth+"px";c.style.height=innerHeight+"px";ctx.setTransform(r,0,0,r,0,0);pts=Array.from({length:Math.min(70,Math.max(28,Math.floor(innerWidth/22)))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.4+.25,v:Math.random()*.15+.04,a:Math.random()*.35+.06}))}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const p of pts){p.y-=p.v;if(p.y<0){p.y=innerHeight;p.x=Math.random()*innerWidth}ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fillStyle="rgba(104,224,255,"+p.a+")";ctx.fill()}requestAnimationFrame(draw)}
+resize();addEventListener("resize",resize,{passive:true});if(!matchMedia("(prefers-reduced-motion: reduce)").matches)draw();
 </script>
 </body>
 </html>
