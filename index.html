@@ -203,14 +203,14 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .selector-head-code{text-align:right;border-left:1px solid #2c373c;padding-left:18px;font:700 .52rem ui-monospace,monospace;letter-spacing:.1em;color:#627078}
 .selector-head-code span,.selector-head-code small{display:block}.selector-head-code b{display:block;margin:5px 0;color:#c9d0cf;font-size:.68rem}
 
-.flag-carousel-card{min-height:154px;display:grid;grid-template-columns:58px minmax(0,650px) 58px;justify-content:center;align-items:center;gap:14px;padding:14px 18px;border:1px solid #313e45;background:
+.flag-carousel-card{min-height:166px;display:grid;grid-template-columns:58px minmax(0,720px) 58px;justify-content:center;align-items:center;gap:14px;padding:18px 22px;border:1px solid #313e45;background:
 radial-gradient(circle at 50% 10%,rgba(119,143,151,.12),transparent 45%),
-linear-gradient(180deg,#101619,#080c0e);box-shadow:0 22px 65px #0008;position:relative;overflow:hidden}
+linear-gradient(180deg,#101619,#080c0e);box-shadow:0 22px 65px #0008;position:relative;overflow:visible}
 .flag-carousel-card:before{content:"NATION SELECT";position:absolute;left:20px;top:13px;color:#4d5a60;font:800 .48rem ui-monospace,monospace;letter-spacing:.17em}
 .flag-arrow{width:52px;height:70px;border:1px solid #3b4b52;background:#0b1114;color:#aeb8bb;font:300 2rem/1 Georgia,serif;cursor:pointer}
 .flag-arrow:hover{border-color:#8c7650;color:#e8e1d4;background:#151713}
-.flag-focus{display:grid;grid-template-columns:190px minmax(0,1fr);align-items:center;gap:24px;cursor:pointer;user-select:none;min-width:0}
-.flag-focus .flag{margin:0!important;width:190px;height:104px!important;border:1px solid #4b5559;box-shadow:0 14px 38px #0009;transform-origin:left center;animation:flagBreathe 4.6s ease-in-out infinite;position:relative}
+.flag-focus{display:grid;grid-template-columns:minmax(170px,210px) minmax(0,1fr);align-items:center;gap:24px;cursor:pointer;user-select:none;min-width:0;padding:4px 0}
+.flag-focus .flag{margin:0!important;width:100%;max-width:210px;aspect-ratio:3/2;height:auto!important;min-height:104px;border:1px solid #4b5559;box-shadow:0 14px 38px #0009;transform-origin:left center;animation:flagBreathe 4.6s ease-in-out infinite;position:relative}
 .flag-focus .flag.selector-neutral{background:linear-gradient(135deg,#182127,#0b1013)}
 .flag-focus .flag.selector-neutral:before{content:"◉";position:absolute;inset:0;display:grid;place-items:center;color:#758992;font-size:2.5rem}
 .fabric-wave{position:absolute;z-index:5;inset:-10%;pointer-events:none;background:
@@ -218,8 +218,14 @@ linear-gradient(100deg,transparent 0 12%,rgba(255,255,255,.16) 22%,transparent 3
 repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15px);mix-blend-mode:soft-light;animation:fabricFlow 3.8s linear infinite}
 @keyframes fabricFlow{0%{transform:translateX(-9%) skewX(-2deg)}50%{transform:translateX(7%) skewX(2deg)}100%{transform:translateX(-9%) skewX(-2deg)}}
 @keyframes flagBreathe{0%,100%{transform:perspective(600px) rotateY(-1.5deg) skewY(.2deg)}50%{transform:perspective(600px) rotateY(2.2deg) skewY(-.35deg)}}
-.flag-focus-copy{min-width:0}.flag-focus-copy span{color:#8c9aa0;font:800 .57rem ui-monospace,monospace;letter-spacing:.14em}.flag-focus-copy h2{margin:5px 0 2px;font-size:clamp(1.55rem,3.2vw,2.65rem);letter-spacing:-.045em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.flag-focus-copy p{margin:0;color:#65737a;font:700 .57rem ui-monospace,monospace;letter-spacing:.1em}
+.flag-focus-copy{min-width:0}.flag-focus-copy span{color:#8c9aa0;font:800 .57rem ui-monospace,monospace;letter-spacing:.14em}.flag-focus-copy h2{margin:5px 0 2px;font-size:clamp(1.55rem,3.2vw,2.65rem);letter-spacing:-.045em;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.05}.flag-focus-copy p{margin:0;color:#65737a;font:700 .57rem ui-monospace,monospace;letter-spacing:.1em}
 
+.region-blocks{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}
+.region-blocks button{min-width:0;min-height:48px;padding:7px 8px;border:1px solid #26343b;background:linear-gradient(180deg,#0a1115,#070b0e);color:#59676d;text-align:left;cursor:pointer;font:900 .5rem ui-monospace,monospace;letter-spacing:.065em;transition:.18s}
+.region-blocks button span{display:block;margin-top:4px;color:#3f4c52;font:700 .48rem system-ui,sans-serif;letter-spacing:0}
+.region-blocks button:hover{border-color:#4c626d;color:#a9b8bf}
+.region-blocks button.active{border-color:#a38a57;color:#f0e8d8;background:linear-gradient(180deg,#211c12,#0d1113);box-shadow:inset 0 2px 0 #b39961,0 0 18px rgba(180,146,82,.08)}
+.region-blocks button.active span{color:#bda97e}
 .selector-main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.65fr);gap:10px;align-items:stretch}
 .selector-map-card{min-width:0}
 .selector-map-card .mapwrap{height:min(61vh,650px);min-height:500px}
@@ -332,17 +338,19 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 }
 
 @media(max-width:950px){
+  .region-blocks{grid-template-columns:repeat(4,minmax(0,1fr))}
   .country-index-list{grid-template-columns:repeat(4,minmax(0,1fr))}
   .selector-main{grid-template-columns:1fr}
   .selector-intel{min-height:0}
 }
 @media(max-width:650px){
   .selector-head{padding:5px 2px 2px;align-items:flex-start}.selector-head h2{font-size:1.25rem}.selector-head p{font-size:.7rem;line-height:1.45}.selector-head-code{display:none}
-  .flag-carousel-card{min-height:124px;grid-template-columns:38px minmax(0,1fr) 38px;gap:7px;padding:11px 7px 9px}
+  .flag-carousel-card{min-height:138px;grid-template-columns:36px minmax(0,1fr) 36px;gap:6px;padding:12px 6px 10px;overflow:visible}
   .flag-carousel-card:before{display:none}.flag-arrow{width:38px;height:58px;font-size:1.65rem}
-  .flag-focus{grid-template-columns:112px minmax(0,1fr);gap:12px}
-  .flag-focus .flag{width:112px;height:68px!important}
-  .flag-focus-copy span{font-size:.45rem}.flag-focus-copy h2{font-size:1.18rem;margin:3px 0 2px}.flag-focus-copy p{font-size:.43rem;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .flag-focus{grid-template-columns:minmax(104px,118px) minmax(0,1fr);gap:10px;padding:4px 0}
+  .flag-focus .flag{width:100%;max-width:118px;min-height:70px!important;height:auto!important;aspect-ratio:3/2}
+  .flag-focus-copy span{font-size:.43rem}.flag-focus-copy h2{font-size:1.08rem;margin:3px 0 2px;white-space:normal;line-height:1.08}.flag-focus-copy p{font-size:.41rem;line-height:1.3;white-space:normal;overflow:visible}
+  .region-blocks{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.region-blocks button{min-height:42px;padding:5px 6px;font-size:.43rem}.region-blocks button span{font-size:.42rem;margin-top:2px}
   .selector-main{display:block}.selector-map-card{margin-top:0}
   .selector-map-card .mapwrap{height:43svh!important;min-height:315px!important;max-height:430px!important}
   .selector-map-title{top:52px!important}.selector-map-title h1{font-size:1.55rem!important}
@@ -404,7 +412,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.7.0</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.7.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -444,6 +452,17 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
       </div>
       <button class="flag-arrow" id="nextNation" type="button" aria-label="다음 국가">›</button>
     </section>
+
+    <div class="region-blocks" id="regionBlocks" aria-label="전략 지역 블록">
+      <button type="button" data-zone="eastasia">EAST ASIA<span>동아시아</span></button>
+      <button type="button" data-zone="northamerica">NORTH AMERICA<span>북미</span></button>
+      <button type="button" data-zone="europe">EUROPE<span>유럽</span></button>
+      <button type="button" data-zone="southasia">SOUTH ASIA<span>남아시아</span></button>
+      <button type="button" data-zone="southeastasia">S.E. ASIA<span>동남아</span></button>
+      <button type="button" data-zone="southamerica">SOUTH AMERICA<span>남미</span></button>
+      <button type="button" data-zone="africa">AFRICA<span>아프리카</span></button>
+      <button type="button" data-zone="oceania">OCEANIA<span>오세아니아</span></button>
+    </div>
 
     <div class="selector-main">
       <section class="card grand-map selector-map-card">
@@ -713,7 +732,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.0</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -884,9 +903,16 @@ $("#intelClose").onclick=()=>$("#mapIntel").classList.add("idle");
 let sel=null,g,zoom,svg,projection;
 const COUNTRY_ORDER=["rok","afu","jpn","chn","rus","edc","ind","bra","aus","can","mex","sea","afr"];
 const COUNTRY_VIEW={
-  rok:{lon:127.7,lat:36.5,k:5.0},afu:{lon:-101,lat:39,k:1.75},jpn:{lon:138,lat:37,k:3.7},chn:{lon:105,lat:35,k:2.0},
-  rus:{lon:90,lat:60,k:1.55},edc:{lon:14,lat:50,k:2.15},ind:{lon:79,lat:22,k:2.55},bra:{lon:-52,lat:-10,k:2.25},
-  aus:{lon:134,lat:-25,k:2.05},can:{lon:-107,lat:57,k:1.75},mex:{lon:-102,lat:23,k:2.8},sea:{lon:108,lat:3,k:2.35},afr:{lon:20,lat:2,k:1.75}
+  rok:{lon:127.7,lat:36.5,k:3.7},afu:{lon:-101,lat:39,k:1.55},jpn:{lon:138,lat:37,k:3.0},chn:{lon:105,lat:35,k:1.75},
+  rus:{lon:90,lat:60,k:1.35},edc:{lon:14,lat:50,k:1.9},ind:{lon:79,lat:22,k:2.15},bra:{lon:-52,lat:-10,k:1.9},
+  aus:{lon:134,lat:-25,k:1.8},can:{lon:-107,lat:57,k:1.5},mex:{lon:-102,lat:23,k:2.25},sea:{lon:108,lat:3,k:2.0},afr:{lon:20,lat:2,k:1.55}
+};
+const COUNTRY_ZONE={
+  rok:"eastasia",jpn:"eastasia",chn:"eastasia",
+  afu:"northamerica",can:"northamerica",mex:"northamerica",
+  rus:"europe",edc:"europe",
+  ind:"southasia",sea:"southeastasia",
+  bra:"southamerica",afr:"africa",aus:"oceania"
 };
 let carouselIndex=-1;
 
@@ -910,6 +936,7 @@ function renderWorldSelection(){
   $("#cbrief").textContent="2031년 제1강하 이후 국가들은 살아남았지만 세계의 국경과 세력권은 크게 달라졌다. 국기 또는 아래 국가 목록을 선택하면 해당 영토와 전략정보를 표시한다.";
   $("#mapIntel").classList.remove("idle");
   $$(".country-index-item").forEach(b=>b.classList.remove("active"));
+  $$(".region-blocks button").forEach(b=>b.classList.remove("active"));
   if(g)g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d").attr("opacity",d=>MAP[String(d.id)]?.78:.66);
 }
 function focusNation(k){
@@ -930,6 +957,12 @@ function nation(k){
   $("#cstatus").textContent=n.status;$("#cpop").textContent=n.pop;$("#ccapital").textContent=n.capital;$("#cstrength").textContent=n.strength;$("#cbrief").textContent=n.brief;
   $("#mapIntel").classList.remove("idle");
   $$(".country-index-item").forEach(b=>b.classList.toggle("active",b.dataset.country===k));
+  const zone=COUNTRY_ZONE[k];
+  $$(".region-blocks button").forEach(b=>b.classList.toggle("active",b.dataset.zone===zone));
+  if(zone){
+    const regionKey=zone==="southasia"?"eastasia":zone==="southeastasia"?"eastasia":zone==="oceania"?"pacific":zone;
+    $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region===regionKey));
+  }
   if(g)g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
     const dk=MAP[String(d.id)];if(!dk)return "#12191d";return dk===k?n.color:"#243138";
   }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.68):.56);
@@ -940,6 +973,12 @@ function stepCountry(dir){
   else carouselIndex=(carouselIndex+dir+COUNTRY_ORDER.length)%COUNTRY_ORDER.length;
   nation(COUNTRY_ORDER[carouselIndex]);
 }
+$$(".region-blocks button").forEach(b=>b.onclick=()=>{
+  const z=b.dataset.zone;
+  $$(".region-blocks button").forEach(x=>x.classList.toggle("active",x===b));
+  const regionKey=z==="southasia"?"eastasia":z==="southeastasia"?"eastasia":z==="oceania"?"pacific":z;
+  focusRegion(regionKey);
+});
 $("#prevNation").onclick=()=>stepCountry(-1);
 $("#nextNation").onclick=()=>stepCountry(1);
 $("#flagFocus").onclick=()=>stepCountry(1);
