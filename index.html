@@ -24,62 +24,103 @@ button{font:inherit}a{color:inherit}
 @media(prefers-reduced-motion:reduce){.scan{display:none}}
 
 .intro-lock{overflow:hidden}
-.boot{position:fixed;inset:0;z-index:1000;overflow:hidden;background:#020304;color:#e8e7e1}
-.boot::after{content:"";position:absolute;inset:0;z-index:12;pointer-events:none;background:
-radial-gradient(circle at center,transparent 0 28%,rgba(0,0,0,.18) 58%,rgba(0,0,0,.72) 100%),
-repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px)}
-.vault-core{position:absolute;inset:0;display:grid;place-items:center;z-index:30;transition:opacity .45s ease,transform .45s ease}
-.access-unit{position:relative;width:min(430px,calc(100vw - 34px));padding:28px 26px 24px;border:1px solid #363c40;background:
-linear-gradient(180deg,rgba(22,25,27,.98),rgba(8,10,11,.99));box-shadow:0 28px 90px #000, inset 0 0 0 1px #08090a;text-align:center}
-.access-unit::before,.access-unit::after{content:"";position:absolute;top:14px;bottom:14px;width:3px;background:repeating-linear-gradient(180deg,#786337 0 8px,#171717 8px 16px)}
-.access-unit::before{left:-4px}.access-unit::after{right:-4px}
-.access-kicker{font:700 .61rem ui-monospace,monospace;letter-spacing:.22em;color:#737a7e}
-.access-title{margin:9px 0 3px;font:900 clamp(1.12rem,4vw,1.7rem)/1.1 ui-monospace,monospace;letter-spacing:.09em;color:#ddd9cd}
-.access-sub{margin:0 0 22px;color:#716f69;font:.69rem/1.6 ui-monospace,monospace;letter-spacing:.08em}
-.reader{position:relative;width:128px;height:152px;margin:0 auto 18px;border:1px solid #444b50;background:linear-gradient(160deg,#16191b,#090b0c);box-shadow:inset 0 0 28px #000}
-.reader::before{content:"";position:absolute;left:21px;right:21px;top:24px;height:46px;border:1px solid #212729;background:#050606;box-shadow:inset 0 0 18px #000}
-.reader-light{position:absolute;left:31px;right:31px;top:82px;height:5px;background:#582323;box-shadow:0 0 10px #6e2222}
-.reader-label{position:absolute;left:0;right:0;bottom:18px;font:800 .55rem ui-monospace,monospace;letter-spacing:.16em;color:#5d6367}
-.access-card{position:relative;width:190px;height:104px;margin:0 auto;display:block;border:1px solid #555c60;background:
-linear-gradient(135deg,#292d30 0 28%,#171a1c 28% 70%,#262a2c 70%);color:#d9d6cb;cursor:pointer;box-shadow:0 16px 42px #000a;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .35s}
-.access-card:hover{transform:translateY(-4px)}
-.access-card::before{content:"";position:absolute;left:18px;top:21px;width:34px;height:25px;border:1px solid #7b6b48;background:linear-gradient(135deg,#9b8759,#4b4029)}
-.access-card::after{content:"IDA";position:absolute;right:16px;bottom:13px;font:900 .75rem ui-monospace,monospace;letter-spacing:.16em;color:#6f7579}
-.card-lines{position:absolute;left:18px;right:64px;bottom:19px;height:18px;border-top:1px solid #555;border-bottom:1px solid #333}
-.card-name{position:absolute;left:18px;top:58px;font:800 .62rem ui-monospace,monospace;letter-spacing:.08em;color:#b9b6ad}
-.access-status{height:22px;margin-top:16px;color:#857456;font:700 .62rem ui-monospace,monospace;letter-spacing:.12em}
-.opening .access-card{transform:translateY(-168px) scale(.72);opacity:.1}
-.opening .vault-core{opacity:0;transform:scale(.98);transition-delay:.45s}
-.opening .reader-light{background:#356249;box-shadow:0 0 18px #4d9a6c}
+.boot{position:fixed;inset:0;z-index:1000;overflow:hidden;background:transparent;color:#e9edf0}
+.boot::after{content:"";position:absolute;inset:0;z-index:45;pointer-events:none;background:
+radial-gradient(circle at 50% 50%,transparent 0 34%,rgba(0,0,0,.08) 65%,rgba(0,0,0,.32) 100%),
+repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px);transition:opacity .75s ease .35s}
+.boot.opening::after{opacity:0}
 
-.door-layer{position:absolute;inset:0;z-index:20;pointer-events:none;perspective:900px}
-.door-layer.layer-2{z-index:19;filter:brightness(.8)}
-.door-layer.layer-3{z-index:18;filter:brightness(.62)}
-.door{position:absolute;top:0;bottom:0;width:50.35%;background:
-linear-gradient(90deg,rgba(255,255,255,.035),transparent 7% 93%,rgba(255,255,255,.025)),
-repeating-linear-gradient(0deg,#171a1c 0 74px,#111315 74px 76px);
-box-shadow:inset 0 0 70px #000;border-color:#30363a;transition:transform 1.05s cubic-bezier(.65,0,.2,1)}
-.door.left{left:0;border-right:3px solid #050606}
-.door.right{right:0;border-left:3px solid #050606}
-.door::before{content:"";position:absolute;top:7%;bottom:7%;width:46px;background:
-repeating-linear-gradient(135deg,#8d6a2a 0 9px,#181818 9px 18px);opacity:.36}
-.door.left::before{right:22px}.door.right::before{left:22px}
-.door::after{content:"";position:absolute;top:50%;width:150px;height:210px;transform:translateY(-50%);border:1px solid #2e3437;background:linear-gradient(180deg,#1e2224,#0d0f10);box-shadow:inset 0 0 45px #000}
-.door.left::after{right:76px}.door.right::after{left:76px}
-.lockbar{position:absolute;left:50%;top:0;bottom:0;z-index:27;width:14px;transform:translateX(-50%);background:linear-gradient(90deg,#080909,#50565a,#080909);box-shadow:0 0 16px #000}
-.lockbar::after{content:"";position:absolute;left:50%;top:50%;width:62px;height:62px;transform:translate(-50%,-50%);border:5px solid #252b2e;border-radius:50%;background:#090a0b;box-shadow:0 0 0 1px #555,inset 0 0 20px #000}
-.layer-2 .door{background:repeating-linear-gradient(90deg,#131719 0 86px,#0c0e0f 86px 89px)}
-.layer-3 .door{background:linear-gradient(90deg,#0c0e10,#181c1e 35%,#0b0d0e)}
-.opening .layer-1 .door.left{transform:translateX(-104%)}.opening .layer-1 .door.right{transform:translateX(104%)}
-.opening .layer-1 .door{transition-delay:.72s}
-.opening .layer-2 .door.left{transform:translateX(-104%)}.opening .layer-2 .door.right{transform:translateX(104%)}
-.opening .layer-2 .door{transition-delay:1.58s}
-.opening .layer-3 .door.left{transform:translateX(-104%)}.opening .layer-3 .door.right{transform:translateX(104%)}
-.opening .layer-3 .door{transition-delay:2.44s}
-.opening .lockbar{opacity:0;transition:opacity .28s ease .45s}
-.gate-status{position:absolute;z-index:40;left:50%;bottom:5.5vh;transform:translateX(-50%);min-width:min(620px,88vw);text-align:center;color:#777d80;font:700 .64rem ui-monospace,monospace;letter-spacing:.16em;text-shadow:0 2px 10px #000}
-.gate-status strong{color:#a48959}
-.boot.finish{opacity:0;transition:opacity .45s ease}
+.vault-core{position:absolute;inset:0;display:grid;place-items:center;z-index:80;transition:opacity .35s ease .36s,transform .4s ease .2s}
+.opening .vault-core{opacity:0;transform:scale(.985);pointer-events:none}
+.access-unit{position:relative;width:min(520px,calc(100vw - 34px));padding:30px 34px 26px;border:1px solid #4b555b;background:
+linear-gradient(180deg,rgba(27,31,34,.985),rgba(11,13,14,.995));box-shadow:
+0 35px 100px #000d,inset 0 0 0 1px #090a0b,inset 0 24px 50px rgba(255,255,255,.025);text-align:center;clip-path:polygon(18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,18px 100%,0 calc(100% - 18px),0 18px)}
+.access-unit::before{content:"";position:absolute;left:14px;right:14px;top:14px;height:2px;background:linear-gradient(90deg,transparent,#687178 18%,#24292c 50%,#687178 82%,transparent)}
+.access-unit::after{content:"SECURITY TERMINAL // VAULT 03";position:absolute;left:24px;right:24px;bottom:9px;color:#555e63;font:700 .5rem ui-monospace,monospace;letter-spacing:.18em}
+.access-kicker{font:700 .58rem ui-monospace,monospace;letter-spacing:.23em;color:#78848b}
+.access-title{margin:10px 0 5px;font:900 clamp(1.08rem,3.7vw,1.58rem)/1.1 ui-monospace,monospace;letter-spacing:.08em;color:#e3e7e8}
+.access-sub{margin:0 0 12px;color:#a8b0b5;font:800 clamp(.8rem,2.4vw,.98rem)/1.55 system-ui,sans-serif}
+.access-sub small{display:block;margin-top:4px;color:#636c71;font:600 .62rem/1.5 ui-monospace,monospace;letter-spacing:.08em}
+
+.reader{position:relative;width:154px;height:184px;margin:20px auto 18px;border:1px solid #59646a;background:
+linear-gradient(145deg,#252a2d 0 10%,#121517 10% 88%,#24292c 88%);box-shadow:inset 0 0 0 5px #090b0c,inset 0 0 40px #000,0 18px 34px #0008;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px)}
+.reader-screen{position:absolute;left:25px;right:25px;top:25px;height:62px;border:1px solid #273137;background:
+radial-gradient(circle at 50% 50%,rgba(92,139,153,.08),transparent 55%),#050809;box-shadow:inset 0 0 20px #000;color:#82949d;display:grid;place-items:center;font:800 .57rem ui-monospace,monospace;letter-spacing:.16em}
+.reader-screen::before{content:"◌";font-size:1.5rem;color:#6d858f;animation:readerPulse 1.7s ease-in-out infinite}
+.reader-screen span{position:absolute;bottom:7px}
+@keyframes readerPulse{0%,100%{opacity:.38;transform:scale(.9)}50%{opacity:1;transform:scale(1.08)}}
+.reader-light{position:absolute;left:30px;right:30px;top:104px;height:4px;background:#7b2c30;box-shadow:0 0 11px #6b2529;transition:.25s}
+.reader-label{position:absolute;left:0;right:0;bottom:27px;font:800 .52rem ui-monospace,monospace;letter-spacing:.17em;color:#6e777c}
+.reader-slot{position:absolute;left:45px;right:45px;bottom:15px;height:3px;background:#030404;box-shadow:0 -1px #343b3f}
+.opening .reader-light{background:#3d7b5a;box-shadow:0 0 18px #55a979}
+
+.access-card{position:relative;width:210px;height:116px;margin:0 auto;display:block;border:1px solid #667178;background:
+linear-gradient(135deg,#343a3e 0 24%,#181c1f 24% 70%,#2b3033 70%);color:#d9ddde;cursor:pointer;box-shadow:0 17px 46px #000b,inset 0 0 25px rgba(255,255,255,.02);transition:transform .48s cubic-bezier(.2,.82,.18,1),opacity .28s}
+.access-card:hover{transform:translateY(-5px)}
+.access-card::before{content:"";position:absolute;left:19px;top:19px;width:39px;height:29px;border:1px solid #a58b55;background:
+linear-gradient(90deg,#8d784c 0 23%,#b8a06a 23% 26%,#79663f 26% 48%,#b8a06a 48% 51%,#8c784b 51%);box-shadow:inset 0 0 8px #40351e}
+.access-card::after{content:"I.D.A.";position:absolute;right:17px;bottom:15px;font:900 .73rem ui-monospace,monospace;letter-spacing:.18em;color:#747d82}
+.card-lines{position:absolute;left:18px;right:70px;bottom:21px;height:19px;border-top:1px solid #555e62;border-bottom:1px solid #333a3d}
+.card-name{position:absolute;left:18px;top:62px;font:800 .6rem ui-monospace,monospace;letter-spacing:.09em;color:#c2c7c8}
+.opening .access-card{transform:translateY(-178px) scale(.68);opacity:.08}
+.access-status{height:21px;margin-top:16px;color:#8f9aa0;font:700 .6rem ui-monospace,monospace;letter-spacing:.12em}
+.touch-hint{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;color:#cbd0d2;font:700 .78rem system-ui,sans-serif}
+.touch-hint i{width:7px;height:7px;border-radius:50%;background:#9b7b45;box-shadow:0 0 14px #9b7b45;animation:hintBlink 1.2s ease-in-out infinite}
+@keyframes hintBlink{50%{opacity:.25}}
+
+.door-layer{position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+.layer-1{z-index:33}.layer-2{z-index:32}.layer-3{z-index:31}
+.door-panel{position:absolute;box-shadow:inset 0 0 80px #000,0 0 22px #000;transition:transform 1.05s cubic-bezier(.65,0,.2,1)}
+.door-panel::before{content:"";position:absolute;inset:18px;border:1px solid rgba(120,132,138,.2);box-shadow:inset 0 0 0 1px #090b0c}
+.door-panel::after{content:"";position:absolute;background:repeating-linear-gradient(135deg,#b88931 0 10px,#191b1c 10px 20px);opacity:.22}
+
+/* Gate 1: horizontal split, beveled blast doors */
+.layer-1 .side{top:0;bottom:0;width:50.4%;background:
+linear-gradient(90deg,rgba(255,255,255,.045),transparent 12% 88%,rgba(255,255,255,.03)),
+repeating-linear-gradient(0deg,#202529 0 92px,#171b1e 92px 95px)}
+.layer-1 .side.left{left:0;border-right:4px solid #080a0b}.layer-1 .side.right{right:0;border-left:4px solid #080a0b}
+.layer-1 .side::after{top:9%;bottom:9%;width:42px}
+.layer-1 .side.left::after{right:28px}.layer-1 .side.right::after{left:28px}
+.layer-1 .side .rib{position:absolute;top:50%;width:154px;height:230px;transform:translateY(-50%);border:1px solid #3a4247;background:linear-gradient(180deg,#242a2e,#0d1012);box-shadow:inset 0 0 45px #000}
+.layer-1 .side.left .rib{right:88px}.layer-1 .side.right .rib{left:88px}
+
+/* Gate 2: vertical armored shutters */
+.layer-2 .vertical{left:0;right:0;height:50.5%;background:
+linear-gradient(180deg,rgba(255,255,255,.035),transparent 13% 87%,rgba(255,255,255,.03)),
+repeating-linear-gradient(90deg,#151a1d 0 118px,#0d1012 118px 122px)}
+.layer-2 .vertical.top{top:0;border-bottom:4px solid #050708}.layer-2 .vertical.bottom{bottom:0;border-top:4px solid #050708}
+.layer-2 .vertical::after{left:8%;right:8%;height:36px}
+.layer-2 .vertical.top::after{bottom:28px}.layer-2 .vertical.bottom::after{top:28px}
+.layer-2 .vertical .vent{position:absolute;left:50%;width:min(420px,58vw);height:86px;transform:translateX(-50%);border:1px solid #333d42;background:
+repeating-linear-gradient(90deg,#07090a 0 8px,#1f2528 8px 13px);box-shadow:inset 0 0 24px #000}
+.layer-2 .top .vent{bottom:88px}.layer-2 .bottom .vent{top:88px}
+
+/* Gate 3: four segmented panels retract diagonally */
+.layer-3 .quad{width:50.3%;height:50.3%;background:
+linear-gradient(135deg,rgba(255,255,255,.035),transparent 28%),#101416;border:1px solid #252c30}
+.layer-3 .q1{left:0;top:0;clip-path:polygon(0 0,100% 0,86% 100%,0 100%)}
+.layer-3 .q2{right:0;top:0;clip-path:polygon(0 0,100% 0,100% 100%,14% 100%)}
+.layer-3 .q3{left:0;bottom:0;clip-path:polygon(0 0,86% 0,100% 100%,0 100%)}
+.layer-3 .q4{right:0;bottom:0;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+.layer-3 .quad::after{width:28px;height:28px;right:26px;bottom:26px;opacity:.18}
+.layer-3 .q2::after,.layer-3 .q4::after{right:auto;left:26px}
+
+.lockbar{position:absolute;left:50%;top:0;bottom:0;z-index:38;width:16px;transform:translateX(-50%);background:linear-gradient(90deg,#060708,#586166,#060708);box-shadow:0 0 20px #000}
+.lockbar::before{content:"";position:absolute;left:50%;top:50%;width:82px;height:82px;transform:translate(-50%,-50%);border:7px solid #2b3236;border-radius:50%;background:#090b0c;box-shadow:0 0 0 1px #6a7479,inset 0 0 25px #000}
+.lockbar::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border-radius:50%;background:#29171a;box-shadow:0 0 15px #642f35}
+
+.opening .layer-1 .side.left{transform:translateX(-104%)}.opening .layer-1 .side.right{transform:translateX(104%)}
+.opening .layer-1 .door-panel{transition-delay:.72s}
+.opening .layer-2 .vertical.top{transform:translateY(-104%)}.opening .layer-2 .vertical.bottom{transform:translateY(104%)}
+.opening .layer-2 .door-panel{transition-delay:1.58s}
+.opening .layer-3 .q1{transform:translate(-108%,-108%)}.opening .layer-3 .q2{transform:translate(108%,-108%)}
+.opening .layer-3 .q3{transform:translate(-108%,108%)}.opening .layer-3 .q4{transform:translate(108%,108%)}
+.opening .layer-3 .door-panel{transition-delay:2.44s}
+.opening .lockbar{opacity:0;transition:opacity .25s ease .44s}
+
+.gate-status{position:absolute;z-index:90;left:50%;bottom:4vh;transform:translateX(-50%);min-width:min(680px,90vw);text-align:center;color:#8d969b;font:700 .62rem ui-monospace,monospace;letter-spacing:.16em;text-shadow:0 2px 10px #000}
+.gate-status strong{color:#c09b58}
+.boot.finish{pointer-events:none}
 .btn{min-height:44px;border:1px solid #376fa9;background:linear-gradient(180deg,#153f70,#0c294b);color:var(--text);padding:0 18px;cursor:pointer;font-weight:800;letter-spacing:.06em}
 .btn:hover{filter:brightness(1.13)}.btn.secondary{background:#091522;border-color:var(--line);color:#bec9d6}.btn.danger{border-color:#7d2a3c;background:#2b0b14}
 
@@ -101,11 +142,20 @@ repeating-linear-gradient(135deg,#8d6a2a 0 9px,#181818 9px 18px);opacity:.36}
 .hero h3{font-size:clamp(1.55rem,4vw,2.6rem);margin:8px 0 12px}.hero p{color:#b7c5d5;line-height:1.8;max-width:830px}.quote{margin-top:24px;padding:15px 16px;border-left:2px solid var(--gold);background:#0b1320;color:#e6dccb;font-weight:700}
 .worldfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}.fact{padding:13px;border:1px solid #1a2d44;background:#07111d}.fact span{display:block;color:var(--muted);font:.61rem ui-monospace,monospace}.fact b{display:block;margin-top:6px;font-size:.88rem}
 
-.mapbar,.mapfoot{min-height:44px;padding:0 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font:700 .64rem ui-monospace,monospace}.mapbar{border-bottom:1px solid var(--line)}.mapfoot{border-top:1px solid var(--line)}
-.mapwrap{height:clamp(390px,52vw,650px);position:relative;overflow:hidden;background:
-linear-gradient(rgba(45,74,106,.08) 1px,transparent 1px),
-linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;background-size:34px 34px}
-#map{width:100%;height:100%;touch-action:none}.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font:800 .75rem ui-monospace,monospace}.country{cursor:pointer;transition:.15s}.country:hover{filter:brightness(1.3)}.country.focus{filter:brightness(1.75) drop-shadow(0 0 5px rgba(104,224,255,.5))}
+.mapbar,.mapfoot{min-height:48px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#7e91a7;font:700 .62rem ui-monospace,monospace;letter-spacing:.09em}.mapbar{border-bottom:1px solid #1b3149;background:linear-gradient(90deg,#07111d,#0b1726)}.mapfoot{border-top:1px solid #1b3149;background:#060d16}
+.grand-map{position:relative;overflow:hidden;border-color:#294a69;box-shadow:0 30px 90px #0009,0 0 0 1px #07101b}
+.grand-map::before{content:"GLOBAL STRATEGIC THEATER";position:absolute;z-index:6;left:26px;top:73px;color:rgba(167,205,236,.11);font:900 clamp(1.6rem,5vw,4.8rem)/1 ui-monospace,monospace;letter-spacing:.05em;pointer-events:none;white-space:nowrap}
+.grand-map::after{content:"2134 // 103 YEARS AFTER THE FIRST DESCENT";position:absolute;z-index:6;left:28px;top:132px;color:rgba(182,202,218,.28);font:700 .59rem ui-monospace,monospace;letter-spacing:.18em;pointer-events:none}
+.mapwrap{height:min(78vh,820px);min-height:560px;position:relative;overflow:hidden;background:
+radial-gradient(circle at 50% 45%,rgba(31,79,115,.16),transparent 43%),
+linear-gradient(rgba(45,74,106,.07) 1px,transparent 1px),
+linear-gradient(90deg,rgba(45,74,106,.07) 1px,transparent 1px),#02070d;background-size:auto,42px 42px,42px 42px}
+.mapwrap::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 42%,rgba(0,0,0,.46) 100%)}
+.mapwrap::after{content:"LIVE DEFENSE NETWORK // I.D.A. STRATEGIC LAYER";position:absolute;left:18px;bottom:16px;z-index:5;color:#60788e;font:700 .57rem ui-monospace,monospace;letter-spacing:.13em}
+#map{position:relative;z-index:2;width:100%;height:100%;touch-action:none;filter:drop-shadow(0 16px 34px #000)}
+.loading{position:absolute;inset:0;z-index:4;display:grid;place-items:center;color:#6e8397;font:800 .7rem ui-monospace,monospace;letter-spacing:.12em}.country{cursor:pointer;transition:.18s}.country:hover{filter:brightness(1.45)}.country.focus{filter:brightness(1.9) drop-shadow(0 0 7px rgba(104,224,255,.7))}
+.map-intel{position:absolute;z-index:7;right:18px;top:72px;width:min(370px,32vw);max-height:calc(100% - 142px);overflow:auto;background:linear-gradient(180deg,rgba(7,17,29,.9),rgba(4,10,18,.88));backdrop-filter:blur(14px);border:1px solid #294764;box-shadow:0 20px 55px #0009}
+.world-entry{display:block;position:relative}
 .intel{padding:20px}.intelhead{display:flex;justify-content:space-between;gap:12px}.intel h3{margin:4px 0;font-size:1.45rem}.sigil{width:66px;height:66px;border:1px solid #31516f;border-radius:50%;display:grid;place-items:center;color:var(--cyan);font:900 .78rem ui-monospace,monospace;position:relative}.sigil:after{content:"";position:absolute;inset:7px;border:1px dashed #2b4a67;border-radius:50%}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.stat{padding:11px;border:1px solid #192a40;background:#07101c}.stat span{display:block;color:var(--muted);font:.61rem ui-monospace,monospace}.stat b{display:block;margin-top:5px;font-size:.79rem}
 .brief{margin-top:20px;color:#b5c2d0;font-size:.86rem;line-height:1.72}.actions{display:flex;gap:8px;margin-top:18px}.actions .btn{flex:1;font-size:.74rem}
@@ -129,42 +179,54 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 .docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.docbtn{min-height:155px;text-align:left;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#0b1727,#07101b);color:var(--text);cursor:pointer}.docbtn.active,.docbtn:hover{border-color:#355678}.docbtn span,.docbtn small{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.docbtn b{display:block;margin:20px 0}.viewer{margin-top:14px;padding:22px;min-height:220px}.viewerbody{white-space:pre-line;color:#b6c5d6;font:.82rem/1.9 ui-monospace,monospace}
 .footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
 
-@media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.mapwrap{height:500px}}
-@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot{padding:0}.access-unit{padding:24px 18px 20px}.door::after{width:90px;height:150px}.door.left::after{right:52px}.door.right::after{left:52px}.statusline .badge{display:none}}
+@media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.map-intel{position:relative;right:auto;top:auto;width:auto;max-height:none;border-left:0;border-right:0;border-bottom:0}.mapwrap{height:62vh;min-height:500px}.grand-map::before{font-size:clamp(1.5rem,8vw,3.8rem)}}
+@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot{padding:0}.access-unit{padding:24px 18px 22px}.reader{width:138px;height:168px}.access-card{width:185px;height:104px}.layer-1 .side .rib{width:80px;height:155px}.layer-1 .side.left .rib{right:56px}.layer-1 .side.right .rib{left:56px}.layer-2 .vertical .vent{width:62vw;height:62px}.mapwrap{min-height:430px;height:58vh}.grand-map::before{left:16px;top:70px}.grand-map::after{left:17px;top:112px}.statusline .badge{display:none}}
 </style>
 </head>
 <body class="intro-lock">
 <canvas id="fx" aria-hidden="true"></canvas><div class="scan" aria-hidden="true"></div>
 
 <section class="boot" id="boot">
-  <div class="door-layer layer-3" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
-  <div class="door-layer layer-2" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
-  <div class="door-layer layer-1" aria-hidden="true"><div class="door left"></div><div class="door right"></div></div>
+  <div class="door-layer layer-3" aria-hidden="true">
+    <div class="door-panel quad q1"></div><div class="door-panel quad q2"></div>
+    <div class="door-panel quad q3"></div><div class="door-panel quad q4"></div>
+  </div>
+  <div class="door-layer layer-2" aria-hidden="true">
+    <div class="door-panel vertical top"><span class="vent"></span></div>
+    <div class="door-panel vertical bottom"><span class="vent"></span></div>
+  </div>
+  <div class="door-layer layer-1" aria-hidden="true">
+    <div class="door-panel side left"><span class="rib"></span></div>
+    <div class="door-panel side right"><span class="rib"></span></div>
+  </div>
   <div class="lockbar" aria-hidden="true"></div>
 
   <div class="vault-core">
     <div class="access-unit">
       <div class="access-kicker">RESTRICTED STRATEGIC ARCHIVE</div>
-      <div class="access-title">IDENTITY VERIFICATION</div>
-      <p class="access-sub">제1강하 이후 통합전략기록 // CLEARANCE REQUIRED</p>
+      <div class="access-title">ACCESS CONTROL</div>
+      <p class="access-sub">카드키를 단말기에 터치해주세요<small>AUTHORIZED PERSONNEL ONLY // CLEARANCE REQUIRED</small></p>
       <div class="reader">
+        <div class="reader-screen"><span>READY</span></div>
         <div class="reader-light"></div>
-        <div class="reader-label">CARD READER 03</div>
+        <div class="reader-label">CONTACTLESS SECURITY READER</div>
+        <div class="reader-slot"></div>
       </div>
-      <button class="access-card" id="enter" type="button" aria-label="카드키 인증">
-        <span class="card-name">AUTHORIZED ACCESS</span>
+      <button class="access-card" id="enter" type="button" aria-label="카드키를 단말기에 터치">
+        <span class="card-name">STRATEGIC ARCHIVE ACCESS</span>
         <span class="card-lines"></span>
       </button>
-      <div class="access-status" id="accessStatus">CARD KEY REQUIRED</div>
+      <div class="touch-hint"><i></i>카드키를 눌러 인증</div>
+      <div class="access-status" id="accessStatus">STANDBY // WAITING FOR KEY</div>
     </div>
   </div>
-  <div class="gate-status" id="gateStatus"><strong>VAULT 03</strong> // SEALED</div>
+  <div class="gate-status" id="gateStatus"><strong>VAULT 03</strong> // ALL SEALS LOCKED</div>
 </section>
 
-<main class="app" id="app" hidden>
+<main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.4</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.5</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -184,23 +246,24 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 <section class="panel active" data-panel="world">
   <div class="heading"><div><div class="eyebrow">GLOBAL STRATEGIC THEATER // 2134</div><h2>세계 전략상황도</h2></div><div class="muted">제1강하 이후 103년</div></div>
 
-  <div class="grid2 world-entry">
-    <section class="card">
-      <div class="mapbar"><span>LIVE STRATEGIC MAP</span><span>CLICK HIGHLIGHTED REGIONS</span></div>
-      <div class="mapwrap" style="height:clamp(470px,64vh,720px)"><svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg><div class="loading" id="loading">STRATEGIC MAP LOADING...</div></div>
+  <div class="world-entry">
+    <section class="card grand-map">
+      <div class="mapbar"><span>I.D.A. GLOBAL DEFENSE NETWORK</span><span>LIVE STRATEGIC OVERVIEW // SELECT REGION</span></div>
+      <div class="mapwrap"><svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg><div class="loading" id="loading">SYNCHRONIZING GLOBAL THEATER...</div></div>
       <div class="mapfoot"><span>POLITICAL / DEFENSE LAYER // WORKING CANON</span><button class="btn secondary" id="reset" type="button">RESET VIEW</button></div>
+
+      <aside class="intel map-intel">
+        <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
+        <div class="stats">
+          <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
+          <div class="stat"><span>POPULATION</span><b id="cpop"></b></div>
+          <div class="stat"><span>CAPITAL / CORE</span><b id="ccapital"></b></div>
+          <div class="stat"><span>STRENGTH</span><b id="cstrength"></b></div>
+        </div>
+        <div class="brief"><div class="eyebrow">STRATEGIC BRIEF</div><p id="cbrief"></p></div>
+        <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
+      </aside>
     </section>
-    <aside class="card intel">
-      <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
-      <div class="stats">
-        <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
-        <div class="stat"><span>POPULATION</span><b id="cpop"></b></div>
-        <div class="stat"><span>CAPITAL / CORE</span><b id="ccapital"></b></div>
-        <div class="stat"><span>STRENGTH</span><b id="cstrength"></b></div>
-      </div>
-      <div class="brief"><div class="eyebrow">STRATEGIC BRIEF</div><p id="cbrief"></p></div>
-      <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
-    </aside>
   </div>
 
   <article class="card hero" style="margin-top:14px">
@@ -400,7 +463,7 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.4</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.5</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -448,22 +511,21 @@ core9:{id:"I.D.A. // 2108 // CLEARANCE 05",title:"코어-9 참사",body:"회수 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const accessStatus=$("#accessStatus"),gateStatus=$("#gateStatus");
 let opening=false;
+setTimeout(()=>{initMap();drawAllPopulation()},0);
 $("#enter").onclick=()=>{
   if(opening)return;
   opening=true;
-  $("#app").hidden=false;
-  initMap();
-  drawAllPopulation();
   const b=$("#boot");
   b.classList.add("opening");
-  accessStatus.textContent="CARD VERIFIED // CLEARANCE ACCEPTED";
-  gateStatus.innerHTML="<strong>VAULT 03</strong> // AUTHORIZATION ACCEPTED";
-  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 01</strong> // RELEASED",850);
-  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 02</strong> // RELEASED",1700);
-  setTimeout(()=>gateStatus.innerHTML="<strong>SEAL 03</strong> // RELEASED",2560);
-  setTimeout(()=>gateStatus.innerHTML="<strong>GLOBAL STRATEGIC MAP</strong> // ONLINE",3350);
-  setTimeout(()=>{b.classList.add("finish");document.body.classList.remove("intro-lock")},3650);
-  setTimeout(()=>b.remove(),4100);
+  accessStatus.textContent="CARD VERIFIED // ACCESS GRANTED";
+  const rs=$(".reader-screen span"); if(rs) rs.textContent="ACCEPTED";
+  gateStatus.innerHTML="<strong>AUTHORIZATION</strong> // ACCEPTED";
+  setTimeout(()=>gateStatus.innerHTML="<strong>HORIZONTAL BULKHEAD</strong> // OPEN",850);
+  setTimeout(()=>gateStatus.innerHTML="<strong>VERTICAL SHUTTER</strong> // OPEN",1700);
+  setTimeout(()=>gateStatus.innerHTML="<strong>INNER SEGMENT SEAL</strong> // OPEN",2560);
+  setTimeout(()=>gateStatus.innerHTML="<strong>GLOBAL STRATEGIC THEATER</strong> // ACCESS GRANTED",3340);
+  setTimeout(()=>{document.body.classList.remove("intro-lock");b.classList.add("finish")},3560);
+  setTimeout(()=>b.remove(),3720);
 };
 function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
 $$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
@@ -485,7 +547,7 @@ $("#redacted").onclick=()=>{const r=$("#redacted").classList.toggle("reveal");$(
 function doc(k){const d=D[k];$$(".docbtn").forEach(x=>x.classList.toggle("active",x.dataset.doc===k));$("#docid").textContent=d.id;$("#doctitle").textContent=d.title;$("#docbody").textContent=d.body}
 $$(".docbtn").forEach(b=>b.onclick=()=>doc(b.dataset.doc));doc("seoul");nation(sel);
 
-async function initMap(){if(svg)return;try{const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());svg=d3.select("#map");const countries=topojson.feature(w,w.objects.countries).features,p=d3.geoNaturalEarth1().fitExtent([[18,18],[942,502]],{type:"Sphere"}),path=d3.geoPath(p);g=svg.append("g");g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#040a13").attr("stroke","#263d57");g.selectAll("path.country").data(countries).join("path").attr("class","country").attr("d",path).attr("fill",d=>{const k=MAP[String(d.id)];return k?N[k].color:"#111d2c"}).attr("stroke","#263b52").attr("stroke-width",.45).attr("opacity",d=>MAP[String(d.id)]?.88:.7).on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)}).append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));svg.call(zoom);$("#loading").remove();nation(sel)}catch(e){$("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능"}}
+async function initMap(){if(svg)return;try{const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());svg=d3.select("#map");const countries=topojson.feature(w,w.objects.countries).features,p=d3.geoNaturalEarth1().fitExtent([[18,18],[942,502]],{type:"Sphere"}),path=d3.geoPath(p);g=svg.append("g");g.append("path").datum({type:"Sphere"}).attr("d",path).attr("fill","#02080e").attr("stroke","#34516b").attr("stroke-width",1.1);g.append("path").datum(d3.geoGraticule10()).attr("d",path).attr("fill","none").attr("stroke","#193149").attr("stroke-width",.38).attr("opacity",.7);g.selectAll("path.country").data(countries).join("path").attr("class","country").attr("d",path).attr("fill",d=>{const k=MAP[String(d.id)];return k?N[k].color:"#111d2c"}).attr("stroke","#263b52").attr("stroke-width",.45).attr("opacity",d=>MAP[String(d.id)]?.88:.7).on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)}).append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});zoom=d3.zoom().scaleExtent([1,7]).on("zoom",ev=>g.attr("transform",ev.transform));svg.call(zoom);$("#loading").remove();nation(sel)}catch(e){$("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능"}}
 $("#reset").onclick=()=>{if(svg&&zoom)svg.transition().duration(300).call(zoom.transform,d3.zoomIdentity)};
 
 const c=$("#fx"),ctx=c.getContext("2d");let pts=[];
