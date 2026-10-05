@@ -213,26 +213,57 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.docbtn{min-height:155px;text-align:left;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#0b1727,#07101b);color:var(--text);cursor:pointer}.docbtn.active,.docbtn:hover{border-color:#355678}.docbtn span,.docbtn small{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.docbtn b{display:block;margin:20px 0}.viewer{margin-top:14px;padding:22px;min-height:220px}.viewerbody{white-space:pre-line;color:#b6c5d6;font:.82rem/1.9 ui-monospace,monospace}
 .footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
 
+.mobile-nav,.mobile-menu-sheet,.mobile-power-strip,.intel-close{display:none}
 @media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.map-intel{position:relative;right:auto;top:auto;width:auto;max-height:none;border-left:0;border-right:0;border-bottom:0;transform:none}.map-intel.idle{display:none}.mapwrap{height:66vh;min-height:520px}.map-titleblock{left:18px;top:65px}.map-command{left:18px;bottom:65px}.map-command div{min-width:90px;padding:9px 10px}}
 @media(max-width:650px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
-  .app{display:block!important;visibility:visible!important;opacity:1!important;width:100%;padding:6px 8px 24px}
-  .top{min-height:60px}.brandtitle{font-size:.76rem}.brandmark{width:36px;height:36px}.statusline{font-size:.5rem}
-  .heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}
+  body{padding-bottom:74px;background:#05080a}
+  .app{display:block!important;visibility:visible!important;opacity:1!important;width:100%;padding:0 8px 22px}
+  .top{position:sticky;top:0;z-index:24;min-height:58px;padding:0 4px;background:rgba(5,8,10,.96);backdrop-filter:blur(14px);border-bottom:1px solid #27343b}
+  .brand{gap:8px}.brandmark{width:34px;height:34px;font-size:.62rem}.top .eyebrow{font-size:.43rem}.brandtitle{font-size:.7rem;letter-spacing:.07em}
+  .statusline{font-size:.45rem;gap:4px}.statusline .badge,.statusline .dot{display:none}
+  .tabs{display:none!important}
+  .panel{padding:10px 0 18px}
+  .heading{align-items:flex-start;flex-direction:column;margin-bottom:10px}.heading h2{font-size:1.35rem}.muted{font-size:.7rem}
+  .grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}
   .world-command-shell{display:block}.world-rail{display:none}
-  .grand-map{width:100%;margin:0;overflow:visible}.mapbar{align-items:flex-start;flex-direction:column;padding:9px 10px;min-height:54px}
-  .mapwrap{width:100%;min-height:360px!important;height:56svh!important;max-height:560px;overflow:hidden}
-  #map{display:block!important;width:100%!important;height:100%!important;min-height:360px}
-  .map-titleblock{left:13px;top:66px}.map-titleblock h1{font-size:clamp(1.55rem,11vw,2.65rem)}.map-titleblock p{font-size:.46rem}
-  .map-command{grid-template-columns:repeat(3,1fr);left:10px;right:10px;bottom:54px}.map-command div{min-width:0;padding:7px 6px}.map-command span{font-size:.4rem}.map-command b{font-size:.58rem}
-  .map-intel{position:relative!important;right:auto!important;top:auto!important;width:100%!important;max-height:none!important;margin:0;border-left:0;border-right:0;transform:none!important}
+  .grand-map{width:100%;margin:0;overflow:visible;box-shadow:0 16px 45px #0008}
+  .mapbar{min-height:47px;align-items:flex-start;flex-direction:column;justify-content:center;padding:7px 9px;font-size:.48rem;line-height:1.5}
+  .mobile-power-strip{display:flex;gap:5px;overflow-x:auto;padding:6px 7px;border-bottom:1px solid #293943;background:#071015;scrollbar-width:none}
+  .mobile-power-strip::-webkit-scrollbar{display:none}
+  .mobile-power-strip button{flex:0 0 auto;min-width:52px;height:33px;border:1px solid #33454e;background:#0c151a;color:#a5b5bd;font:900 .56rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
+  .mapwrap{width:100%;min-height:325px!important;height:47svh!important;max-height:480px!important;overflow:hidden!important}
+  #map{display:block!important;width:100%!important;height:100%!important;min-height:325px!important;touch-action:pan-y!important}
+  .map-titleblock{left:11px!important;top:54px!important}.map-titleblock .overline{font-size:.42rem}.map-titleblock h1{font-size:clamp(1.35rem,10vw,2.25rem)!important}.map-titleblock p{font-size:.4rem!important}
+  .map-command{display:none!important}
+  .grand-map::before,.grand-map::after{inset:47px 0 48px}
+  .mapfoot{min-height:47px;padding:6px 8px}.mapfoot span{font-size:.46rem;max-width:64%}.mapfoot .btn{min-height:35px;padding:0 9px;font-size:.58rem}
+  .map-intel{display:block;position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:78px!important;width:auto!important;max-height:55svh!important;margin:0!important;overflow:auto!important;z-index:140!important;padding:17px 15px 15px!important;border:1px solid #49606b!important;border-radius:8px;background:linear-gradient(180deg,rgba(8,14,18,.99),rgba(4,8,10,.995))!important;box-shadow:0 20px 70px #000e!important;transform:none!important}
   .map-intel.idle{display:none!important}
-  .mapfoot{min-height:48px;padding:7px 9px}.mapfoot span{font-size:.48rem;max-width:58%}.mapfoot .btn{min-height:36px;padding:0 10px;font-size:.62rem}
-  .mobile-map-status{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;padding:8px 10px;border:1px solid #28363e;background:#081014;color:#65757d;font:700 .48rem ui-monospace,monospace;letter-spacing:.08em}.mobile-map-status b{color:#88a795}
-  .timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}
-  .boot{padding:0}.access-unit{width:calc(100vw - 24px);padding:20px 14px 20px}.reader{width:128px;height:154px;margin:14px auto}.access-card{width:174px;height:96px}
-  .layer-1 .side .rib{width:70px;height:140px}.layer-1 .side.left .rib{right:44px}.layer-1 .side.right .rib{left:44px}.layer-2 .vertical .vent{width:60vw;height:54px}
-  .clearance-feed{width:90vw;left:5vw;top:12px}.code-stream{height:92px;font-size:.49rem}.gate-status{bottom:18px;font-size:.48rem}.statusline .badge{display:none}
+  .intel-close{display:grid;place-items:center;position:absolute;right:9px;top:8px;width:31px;height:31px;border:1px solid #3c4d55;background:#0a1115;color:#b5bec1;font-size:1.15rem}
+  .intelhead{padding-right:34px}.intel h3{font-size:1.15rem}.sigil{width:54px;height:54px}.stats{gap:5px;margin-top:12px}.stat{padding:8px}.stat span{font-size:.5rem}.stat b{font-size:.7rem}
+  .brief{margin-top:12px;font-size:.76rem;line-height:1.58}.actions{position:sticky;bottom:-15px;margin:14px -15px -15px;padding:9px 15px 13px;background:linear-gradient(180deg,transparent,#05090b 28%)}.actions .btn{min-height:39px;font-size:.64rem}
+  .mobile-map-status{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;padding:7px 9px;border:1px solid #28373f;background:#081014;color:#65757d;font:700 .46rem ui-monospace,monospace;letter-spacing:.07em}.mobile-map-status b{color:#88a795}
+  .hero{padding:15px}.hero h3{font-size:1.28rem}.hero p{font-size:.77rem;line-height:1.65}.quote{font-size:.75rem;margin-top:13px;padding:11px}
+  .worldfacts{gap:5px}.fact{padding:8px}.fact span{font-size:.48rem}.fact b{font-size:.72rem}
+  .nation{min-height:180px;padding:14px}.nation .meta{font-size:.56rem}.flag{height:50px;margin:-14px -14px 12px}
+  .branch,.tech{min-height:0;padding:15px}.power{padding:14px}
+  .timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:29px}.event:after,.event.major:after{left:4px}.event time{text-align:left}
+  .footer{flex-direction:column;padding-bottom:12px}
+  .mobile-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;z-index:130;left:0;right:0;bottom:0;padding:5px 7px calc(5px + env(safe-area-inset-bottom));background:rgba(5,8,10,.98);backdrop-filter:blur(18px);border-top:1px solid #304049;box-shadow:0 -10px 35px #000b}
+  .mobile-nav-btn{min-width:0;height:53px;border:0;background:transparent;color:#68777e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+  .mobile-nav-btn b{font:900 .88rem ui-monospace,monospace}.mobile-nav-btn span{font:800 .45rem ui-monospace,monospace;letter-spacing:.04em}
+  .mobile-nav-btn.active{color:#dde4e4;background:linear-gradient(180deg,rgba(109,143,160,.12),transparent);box-shadow:inset 0 2px 0 #7594a4}.mobile-nav-btn.enemy.active{box-shadow:inset 0 2px 0 #9f555a;color:#d9b4b6}
+  .mobile-menu-sheet{display:block;position:fixed;z-index:150;left:8px;right:8px;bottom:76px;padding:11px;border:1px solid #40535e;border-radius:9px;background:rgba(7,11,14,.99);box-shadow:0 20px 70px #000e}
+  .mobile-menu-sheet[hidden]{display:none!important}
+  .mobile-menu-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:9px;margin-bottom:8px;border-bottom:1px solid #26353d;color:#8799a2;font:800 .56rem ui-monospace,monospace;letter-spacing:.12em}
+  .mobile-menu-head button{width:31px;height:31px;border:1px solid #35464f;background:#0b1317;color:#b8c1c4}
+  .mobile-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .mobile-menu-grid button{min-height:44px;border:1px solid #293942;background:#0a1216;color:#a9b5ba;font:800 .56rem ui-monospace,monospace;letter-spacing:.06em}
+  .boot{padding:0}.access-unit{width:calc(100vw - 22px);padding:18px 13px 18px}.access-title{font-size:1rem}.access-sub{font-size:.76rem}
+  .reader{width:118px;height:144px;margin:12px auto}.access-card{width:166px;height:91px}.touch-hint{font-size:.7rem}
+  .layer-1 .side .rib{width:64px;height:130px}.layer-1 .side.left .rib{right:40px}.layer-1 .side.right .rib{left:40px}.layer-2 .vertical .vent{width:58vw;height:50px}
+  .clearance-feed{width:90vw;left:5vw;top:10px}.code-stream{height:86px;font-size:.47rem}.gate-status{bottom:16px;font-size:.46rem}
 }
 </style>
 </head>
@@ -283,7 +314,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.6.1a</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.6.2</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -316,6 +347,12 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
     <div class="world-entry">
       <section class="card grand-map">
       <div class="mapbar"><span>I.D.A. // GLOBAL COMMAND NETWORK</span><span>STRATEGIC THEATER OVERVIEW — 2134</span></div>
+      <div class="mobile-power-strip" aria-label="주요 국가 빠른 선택">
+        <button type="button" data-mobile-select="rok">ROK</button><button type="button" data-mobile-select="afu">AFU</button>
+        <button type="button" data-mobile-select="edc">EDC</button><button type="button" data-mobile-select="rus">RUS</button>
+        <button type="button" data-mobile-select="jpn">JPN</button><button type="button" data-mobile-select="ind">IND</button>
+        <button type="button" data-mobile-select="bra">BRA</button><button type="button" data-mobile-select="afr">AU</button>
+      </div>
       <div class="mapwrap">
         <svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg>
         <div class="loading" id="loading">LINKING GLOBAL STRATEGIC GRID...</div>
@@ -333,6 +370,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
         </div>
 
         <aside class="intel map-intel idle" id="mapIntel">
+          <button class="intel-close" id="intelClose" type="button" aria-label="국가 정보 닫기">×</button>
           <div class="intelhead"><div><div class="eyebrow" id="ccode"></div><h3 id="cname"></h3><div class="muted" id="ceng"></div></div><div class="sigil" id="csigil"></div></div>
           <div class="stats">
             <div class="stat"><span>STATUS</span><b id="cstatus"></b></div>
@@ -561,7 +599,22 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.6.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.6.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<div class="mobile-menu-sheet" id="mobileMenu" hidden>
+  <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
+  <div class="mobile-menu-grid">
+    <button type="button" data-go="population">POPULATION</button><button type="button" data-go="diplomacy">DIPLOMACY</button>
+    <button type="button" data-go="society">SOCIETY</button><button type="button" data-go="chronicle">CHRONICLE</button>
+    <button type="button" data-go="korea">ROK</button><button type="button" data-go="military">MILITARY</button>
+  </div>
+</div>
+<nav class="mobile-nav" aria-label="모바일 주요 메뉴">
+  <button type="button" class="mobile-nav-btn active" data-go="world"><b>◉</b><span>WORLD</span></button>
+  <button type="button" class="mobile-nav-btn" data-go="nations"><b>▦</b><span>NATIONS</span></button>
+  <button type="button" class="mobile-nav-btn enemy" data-go="enemy"><b>◇</b><span>EIDOLON</span></button>
+  <button type="button" class="mobile-nav-btn" data-go="archive"><b>▣</b><span>ARCHIVE</span></button>
+  <button type="button" class="mobile-nav-btn" id="mobileMenuOpen"><b>☰</b><span>MENU</span></button>
+</nav>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -696,9 +749,21 @@ $("#enter").onclick=()=>{
   setTimeout(()=>{document.body.classList.remove("intro-lock");b.classList.add("finish")},3510);
   setTimeout(()=>{b.remove();requestAnimationFrame(()=>{window.dispatchEvent(new Event("resize"));if(svg&&zoom)svg.call(zoom)})},3680);
 };
-function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
-$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
-$(".rail-power").forEach(b=>b.onclick=()=>nation(b.dataset.select));
+function tab(x){
+  $$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));
+  $$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));
+  $$(".mobile-nav-btn[data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===x));
+  const mm=$("#mobileMenu");if(mm)mm.hidden=true;
+  scrollTo({top:0,behavior:"smooth"})
+}
+$$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
+$$(".rail-power").forEach(b=>b.onclick=()=>nation(b.dataset.select));
+$$("[data-mobile-select]").forEach(b=>b.onclick=()=>nation(b.dataset.mobileSelect));
+$$(".mobile-nav-btn[data-go]").forEach(b=>b.onclick=()=>tab(b.dataset.go));
+$$(".mobile-menu-grid [data-go]").forEach(b=>b.onclick=()=>tab(b.dataset.go));
+$("#mobileMenuOpen").onclick=()=>{const m=$("#mobileMenu");m.hidden=!m.hidden};
+$("#mobileMenuClose").onclick=()=>$("#mobileMenu").hidden=true;
+$("#intelClose").onclick=()=>$("#mapIntel").classList.add("idle");
 
 let sel=null,g,zoom,svg;
 function nation(k){
