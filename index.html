@@ -165,7 +165,24 @@ radial-gradient(ellipse at 50% 48%,rgba(92,119,133,.11),transparent 36%),
 radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 #map{position:relative;z-index:2;display:block;width:100%;height:100%;touch-action:none;cursor:grab;background:transparent}
 #map:active{cursor:grabbing}
-.loading{position:absolute;inset:0;z-index:8;display:grid;place-items:center;color:#65757d;font:800 .62rem ui-monospace,monospace;letter-spacing:.16em}
+
+.globe-fallback{position:absolute;z-index:1;left:50%;top:50%;width:min(72%,430px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;
+background:
+radial-gradient(circle at 34% 27%,rgba(111,176,201,.35),transparent 27%),
+radial-gradient(circle at 50% 55%,#123342 0,#0a2230 50%,#041018 78%);
+border:2px solid #7594a1;box-shadow:0 0 0 8px rgba(87,133,151,.07),0 0 42px rgba(58,117,141,.28),inset -54px -28px 70px rgba(0,0,0,.55)}
+.globe-fallback:before{content:"";position:absolute;inset:0;border-radius:50%;opacity:.55;background:
+repeating-radial-gradient(ellipse at center,transparent 0 31px,rgba(96,140,156,.22) 32px 33px,transparent 34px 63px),
+linear-gradient(90deg,transparent 49.6%,rgba(96,140,156,.2) 50%,transparent 50.4%)}
+.globe-fallback:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(110deg,rgba(255,255,255,.11),transparent 28% 62%,rgba(0,0,0,.28));pointer-events:none}
+.gf-continent{position:absolute;background:#405d68;opacity:.95;filter:drop-shadow(0 1px 0 rgba(185,207,215,.25))}
+.gf-americas{left:13%;top:22%;width:24%;height:52%;clip-path:polygon(36% 0,77% 9%,91% 24%,69% 37%,79% 51%,57% 61%,64% 77%,43% 100%,25% 78%,32% 63%,8% 48%,17% 28%,0 16%)}
+.gf-eurasia{left:38%;top:19%;width:49%;height:31%;clip-path:polygon(0 28%,12% 8%,31% 0,43% 13%,58% 6%,78% 18%,100% 41%,86% 58%,64% 49%,56% 70%,37% 59%,25% 84%,13% 69%,4% 48%)}
+.gf-africa{left:47%;top:43%;width:23%;height:34%;clip-path:polygon(25% 0,69% 9%,100% 31%,76% 56%,58% 100%,31% 87%,16% 55%,0 25%)}
+.gf-australia{left:74%;top:65%;width:14%;height:11%;clip-path:polygon(13% 19%,50% 0,100% 28%,84% 81%,43% 100%,0 64%)}
+.mapwrap.globe-live .globe-fallback{opacity:.12;transition:opacity .35s ease}
+
+.loading{position:absolute;inset:0;z-index:8;display:grid;place-items:center;color:#65757d;font:800 .62rem ui-monospace,monospace;letter-spacing:.16em;pointer-events:none;background:transparent}
 .country{cursor:pointer;transition:fill .24s ease,filter .18s ease,opacity .18s ease}.country:hover{filter:brightness(1.3)}.country.focus{filter:brightness(1.6) drop-shadow(0 0 5px rgba(164,189,202,.5))}
 .threat-ring{fill:none;stroke:#7f4b4f;stroke-width:1.1;opacity:.68;vector-effect:non-scaling-stroke;animation:threatPulse 2.3s ease-out infinite;transform-box:fill-box;transform-origin:center}
 .threat-dot{fill:#a35b60;opacity:.9}.threat-label{fill:#7f8b8f;font:700 8px ui-monospace,monospace;letter-spacing:.08em;pointer-events:none}
@@ -400,7 +417,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 
 @media(max-width:650px){
   .selector-map-card .mapwrap{height:360px!important;min-height:360px!important;max-height:360px!important;background:#020608!important}
-  #map{height:360px!important;min-height:360px!important;filter:none!important}
+  #map{height:360px!important;min-height:360px!important;filter:none!important}.globe-fallback{width:min(78vw,290px)!important}
   .mobile-zoom-stack{bottom:12px!important}
 }
 
@@ -453,7 +470,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.9.0</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.9.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -514,8 +531,14 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
         <div class="mapwrap">
           <button class="mobile-map-exit" id="mobileMapExit" type="button">×</button>
           <div class="mobile-zoom-stack"><button type="button" id="mobileZoomIn">＋</button><button type="button" id="mobileZoomOut">−</button></div>
+          <div class="globe-fallback" id="globeFallback" aria-hidden="true">
+            <div class="gf-continent gf-americas"></div>
+            <div class="gf-continent gf-eurasia"></div>
+            <div class="gf-continent gf-africa"></div>
+            <div class="gf-continent gf-australia"></div>
+          </div>
           <canvas id="map" aria-label="세계전략지구본"></canvas>
-          <div class="loading" id="loading">LINKING GLOBAL STRATEGIC GRID...</div>
+          <div class="loading" id="loading">INITIALIZING STRATEGIC GLOBE...</div>
 
           <div class="map-titleblock selector-map-title">
             <div class="overline">SELECTED TERRITORY</div>
@@ -773,7 +796,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.9.0</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.9.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1220,6 +1243,8 @@ async function initMap(){
   globeCtx=globeCanvas.getContext("2d");
   svg=globeCanvas;projection=globeState;g=null;
   redrawGlobe();
+  const wrap=globeCanvas.closest(".mapwrap");if(wrap)wrap.classList.add("globe-live");
+  const initialLoading=$("#loading");if(initialLoading)initialLoading.remove();
   try{
     const res=await fetch("./assets/data/world.geojson",{cache:"force-cache"});
     if(!res.ok)throw new Error("WORLD_GEOJSON_"+res.status);
@@ -1232,7 +1257,11 @@ async function initMap(){
     if(sel&&COUNTRY_VIEW[sel])setTimeout(()=>focusNation(sel),60);
   }catch(e){
     console.error("CANVAS GLOBE LOAD FAILED",e);
-    const ld=$("#loading");if(ld)ld.textContent="GLOBE DATA ERROR // RETRY";
+    let ld=$("#loading");
+    if(!ld){
+      ld=document.createElement("div");ld.id="loading";ld.className="loading";ld.textContent="GLOBE DATA ERROR // RETRY";
+      globeCanvas.parentElement.appendChild(ld);
+    }else ld.textContent="GLOBE DATA ERROR // RETRY";
     setTimeout(()=>{globeReady=false;initMap()},1200);
   }
 
@@ -1273,6 +1302,8 @@ const c=$("#fx"),ctx=c.getContext("2d");let pts=[];
 function resize(){const r=Math.min(devicePixelRatio||1,2);c.width=innerWidth*r;c.height=innerHeight*r;c.style.width=innerWidth+"px";c.style.height=innerHeight+"px";ctx.setTransform(r,0,0,r,0,0);pts=Array.from({length:Math.min(70,Math.max(28,Math.floor(innerWidth/22)))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.4+.25,v:Math.random()*.15+.04,a:Math.random()*.35+.06}))}
 function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const p of pts){p.y-=p.v;if(p.y<0){p.y=innerHeight;p.x=Math.random()*innerWidth}ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,7);ctx.fillStyle="rgba(104,224,255,"+p.a+")";ctx.fill()}requestAnimationFrame(draw)}
 resize();addEventListener("resize",()=>{resize();redrawGlobe()},{passive:true});if(!matchMedia("(prefers-reduced-motion: reduce)").matches)draw();
+setTimeout(()=>{try{initMap()}catch(e){console.error("FORCED GLOBE INIT FAILED",e)}},60);
+setTimeout(()=>{if(!globeReady){try{initMap()}catch(e){console.error("SECOND GLOBE INIT FAILED",e)}}},900);
 </script>
 </body>
 </html>
