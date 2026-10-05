@@ -171,7 +171,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .china-sector{cursor:pointer;stroke:#d5c6a5;stroke-width:.75;vector-effect:non-scaling-stroke;transition:opacity .18s,filter .18s;opacity:.62}
 .china-sector:hover{opacity:.92;filter:brightness(1.22)}
 .china-sector.active{opacity:1;filter:brightness(1.35) drop-shadow(0 0 5px rgba(218,191,132,.45))}
-.china-sector-label{fill:#ddd2bc;font:900 7.5px ui-monospace,monospace;letter-spacing:.08em;paint-order:stroke;stroke:#050708;stroke-width:2px;pointer-events:none}
+.china-sector-label{fill:#f0e3c7;font:900 8px ui-monospace,monospace;letter-spacing:.08em;paint-order:stroke;stroke:#050708;stroke-width:2.4px;pointer-events:none}
 
 @keyframes threatPulse{0%{opacity:.68;transform:scale(.72)}70%,100%{opacity:0;transform:scale(1.55)}}
 .map-titleblock{position:absolute;z-index:7;left:26px;top:69px;pointer-events:none}
@@ -201,6 +201,10 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 
 
 /* === V0.7 FIFA-STYLE NATION SELECTOR === */
+.nation-select-shell,.selector-head,.flag-carousel-card,.region-blocks,.selector-main,.selector-map-card,.country-index-card{width:100%;max-width:100%;min-width:0}
+.selector-main>*{min-width:0;max-width:100%}
+.selector-map-card,.selector-map-card .mapwrap{max-width:100%;overflow:hidden}
+
 .nation-select-shell{display:grid;gap:10px}
 .selector-head{display:flex;justify-content:space-between;align-items:end;gap:18px;padding:12px 2px 4px}
 .selector-head h2{margin:5px 0 4px;font-size:clamp(1.45rem,3vw,2.25rem);letter-spacing:-.035em}
@@ -208,13 +212,13 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .selector-head-code{text-align:right;border-left:1px solid #2c373c;padding-left:18px;font:700 .52rem ui-monospace,monospace;letter-spacing:.1em;color:#627078}
 .selector-head-code span,.selector-head-code small{display:block}.selector-head-code b{display:block;margin:5px 0;color:#c9d0cf;font-size:.68rem}
 
-.flag-carousel-card{min-height:166px;display:grid;grid-template-columns:58px minmax(0,720px) 58px;justify-content:center;align-items:center;gap:14px;padding:18px 22px;border:1px solid #313e45;background:
+.flag-carousel-card{min-height:166px;display:block;width:100%;max-width:100%;padding:18px 78px;border:1px solid #313e45;background:
 radial-gradient(circle at 50% 10%,rgba(119,143,151,.12),transparent 45%),
 linear-gradient(180deg,#101619,#080c0e);box-shadow:0 22px 65px #0008;position:relative;overflow:visible}
 .flag-carousel-card:before{content:"NATION SELECT";position:absolute;left:20px;top:13px;color:#4d5a60;font:800 .48rem ui-monospace,monospace;letter-spacing:.17em}
-.flag-arrow{width:52px;height:70px;border:1px solid #3b4b52;background:#0b1114;color:#aeb8bb;font:300 2rem/1 Georgia,serif;cursor:pointer}
+.flag-arrow{position:absolute;z-index:8;top:50%;transform:translateY(-50%);width:52px;height:70px;border:1px solid #3b4b52;background:#0b1114;color:#aeb8bb;font:300 2rem/1 Georgia,serif;cursor:pointer}.flag-arrow#prevNation{left:16px}.flag-arrow#nextNation{right:16px}
 .flag-arrow:hover{border-color:#8c7650;color:#e8e1d4;background:#151713}
-.flag-focus{display:grid;grid-template-columns:minmax(170px,210px) minmax(0,1fr);align-items:center;gap:24px;cursor:pointer;user-select:none;min-width:0;padding:4px 0}
+.flag-focus{display:grid;grid-template-columns:minmax(170px,210px) minmax(0,1fr);align-items:center;gap:24px;cursor:pointer;user-select:none;width:min(720px,100%);max-width:100%;min-width:0;margin:0 auto;padding:4px 0}
 .flag-focus .flag{margin:0!important;width:100%;max-width:210px;aspect-ratio:3/2;height:auto!important;min-height:104px;border:1px solid #4b5559;box-shadow:0 14px 38px #0009;transform-origin:left center;animation:flagBreathe 4.6s ease-in-out infinite;position:relative}
 .flag-focus .flag.selector-neutral{background:linear-gradient(135deg,#182127,#0b1013)}
 .flag-focus .flag.selector-neutral:before{content:"◉";position:absolute;inset:0;display:grid;place-items:center;color:#758992;font-size:2.5rem}
@@ -277,6 +281,8 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 .mobile-nav,.mobile-menu-sheet,.mobile-power-strip,.intel-close,.mobile-map-tools,.mobile-map-exit,.mobile-zoom-stack{display:none}
 @media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.map-intel{position:relative;right:auto;top:auto;width:auto;max-height:none;border-left:0;border-right:0;border-bottom:0;transform:none}.map-intel.idle{display:none}.mapwrap{height:66vh;min-height:520px}.map-titleblock{left:18px;top:65px}.map-command{left:18px;bottom:65px}.map-command div{min-width:90px;padding:9px 10px}}
 @media(max-width:650px){
+  .nation-select-shell,.selector-head,.flag-carousel-card,.region-blocks,.selector-main,.selector-map-card,.country-index-card,.grand-map,.mapwrap{box-sizing:border-box!important;max-width:calc(100vw - 16px)!important;min-width:0!important}
+  .selector-head{overflow:hidden}.selector-head>*{min-width:0}
   html,body{width:100%;max-width:100%;overflow-x:hidden}
   body{padding-bottom:74px;background:#05080a}
   .app{display:block!important;visibility:visible!important;opacity:1!important;width:100%;padding:0 8px 22px}
@@ -293,11 +299,11 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
   .mobile-power-strip{display:flex;gap:5px;overflow-x:auto;padding:6px 7px;border-bottom:1px solid #293943;background:#071015;scrollbar-width:none}
   .mobile-power-strip::-webkit-scrollbar{display:none}
   .mobile-power-strip button{flex:0 0 auto;min-width:52px;height:33px;border:1px solid #33454e;background:#0c151a;color:#a5b5bd;font:900 .56rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
-  .mobile-map-tools{display:flex;align-items:center;gap:6px;padding:6px 7px;border-bottom:1px solid #26343b;background:#060d11}
-  .mobile-region-strip{display:flex;gap:5px;min-width:0;overflow-x:auto;scrollbar-width:none;flex:1}.mobile-region-strip::-webkit-scrollbar{display:none}
-  .mobile-region-strip button{flex:0 0 auto;height:31px;padding:0 9px;border:1px solid #2e3e46;background:#091217;color:#6f8189;font:800 .5rem ui-monospace,monospace;letter-spacing:.06em;border-radius:2px}
+  .mobile-map-tools{display:grid;grid-template-columns:1fr;gap:5px;width:100%;max-width:100%;padding:6px 7px;border-bottom:1px solid #26343b;background:#060d11;overflow:hidden}
+  .mobile-region-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:100%;min-width:0;overflow:hidden}
+  .mobile-region-strip button{width:100%;min-width:0;height:31px;padding:0 4px;border:1px solid #2e3e46;background:#091217;color:#6f8189;font:800 .43rem ui-monospace,monospace;letter-spacing:.035em;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .mobile-region-strip button.active{color:#e0e6e5;border-color:#7894a1;background:#132128}
-  .mobile-map-expand{flex:0 0 auto;height:31px;padding:0 10px;border:1px solid #586b75;background:#111b20;color:#cad4d6;font:900 .5rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
+  .mobile-map-expand{width:100%;height:31px;padding:0 10px;border:1px solid #586b75;background:#111b20;color:#cad4d6;font:900 .5rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
   .mapwrap{width:100%;min-height:325px!important;height:47svh!important;max-height:480px!important;overflow:hidden!important}
   #map{display:block!important;width:100%!important;height:100%!important;min-height:325px!important;touch-action:pan-y pinch-zoom!important}
   .mobile-zoom-stack{display:grid;position:absolute;right:9px;bottom:10px;z-index:12;gap:5px}
@@ -354,16 +360,16 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 }
 @media(max-width:650px){
   .selector-head{padding:5px 2px 2px;align-items:flex-start}.selector-head h2{font-size:1.25rem}.selector-head p{font-size:.7rem;line-height:1.45}.selector-head-code{display:none}
-  .flag-carousel-card{min-height:184px;grid-template-columns:34px minmax(0,1fr) 34px;gap:4px;padding:12px 4px 10px;overflow:visible}
-  .flag-carousel-card:before{display:none}.flag-arrow{width:38px;height:58px;font-size:1.65rem}
-  .flag-focus{grid-template-columns:1fr;justify-items:center;gap:7px;padding:5px 2px;text-align:center;overflow:visible}
-  .flag-focus .flag{width:min(46vw,154px);max-width:154px;min-height:0!important;height:auto!important;aspect-ratio:3/2}
+  .flag-carousel-card{min-height:188px;display:block!important;width:100%!important;max-width:calc(100vw - 16px)!important;padding:12px 42px 10px!important;overflow:hidden!important}
+  .flag-carousel-card:before{display:none}.flag-arrow{width:34px;height:58px;font-size:1.55rem;top:50%}.flag-arrow#prevNation{left:5px}.flag-arrow#nextNation{right:5px}
+  .flag-focus{display:grid!important;grid-template-columns:1fr!important;justify-items:center;gap:7px;width:100%!important;max-width:100%!important;margin:0!important;padding:5px 0;text-align:center;overflow:hidden}
+  .flag-focus .flag{width:min(42vw,146px)!important;max-width:146px!important;min-width:0!important;min-height:0!important;height:auto!important;aspect-ratio:3/2}
   .flag-focus-copy{width:100%;overflow:visible}.flag-focus-copy span{font-size:.41rem}.flag-focus-copy h2{font-size:1.02rem;margin:2px 0;white-space:normal;line-height:1.06;overflow:visible}.flag-focus-copy p{font-size:.39rem;line-height:1.25;white-space:normal;overflow:visible}
-  .region-blocks{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.region-blocks button{min-height:42px;padding:5px 6px;font-size:.43rem}.region-blocks button span{font-size:.42rem;margin-top:2px}
-  .selector-main{display:block}.selector-map-card{margin-top:0}
-  .selector-map-card .mapwrap{height:43svh!important;min-height:315px!important;max-height:430px!important}
+  .region-blocks{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px;width:100%!important;max-width:100%!important;overflow:hidden}.region-blocks button{width:100%;min-width:0;min-height:42px;padding:6px 7px;font-size:.45rem;white-space:normal;overflow:hidden}.region-blocks button span{font-size:.42rem;margin-top:2px}
+  .selector-main{display:block;width:100%!important;max-width:100%!important;overflow:hidden}.selector-map-card{margin-top:0;width:100%!important;max-width:100%!important;overflow:hidden}
+  .selector-map-card .mapwrap{width:100%!important;max-width:100%!important;height:43svh!important;min-height:315px!important;max-height:430px!important;overflow:hidden!important}
   .selector-map-title{top:52px!important}.selector-map-title h1{font-size:1.55rem!important}
-  .map-country-summary{left:8px;right:58px;bottom:8px;width:auto;padding:9px}.map-country-summary h3{font-size:.86rem;margin:2px 0 6px}.summary-grid{grid-template-columns:repeat(2,1fr);gap:3px}.summary-grid div{padding:5px}.summary-grid span{font-size:.39rem}.summary-grid b{font-size:.55rem}
+  .map-country-summary{left:8px!important;right:52px!important;bottom:8px;width:auto!important;max-width:calc(100% - 68px)!important;padding:9px;overflow:hidden}.map-country-summary h3{font-size:.86rem;margin:2px 0 6px}.summary-grid{grid-template-columns:repeat(2,1fr);gap:3px}.summary-grid div{padding:5px}.summary-grid span{font-size:.39rem}.summary-grid b{font-size:.55rem}
   .selector-intel{display:block!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:100%!important;max-height:none!important;margin-top:7px!important;border-radius:0!important;padding:14px!important;box-shadow:0 15px 40px #0007!important}
   .selector-intel .intel-close{display:none}.selector-intel-kicker{margin-bottom:10px}.selector-intel .brief{min-height:0;font-size:.75rem}.selector-intel .actions{position:static!important;margin:12px 0 0!important;padding:0!important;background:none!important}
   .country-index-card{padding:8px}.country-index-head{align-items:flex-start}.country-index-head small{display:none}.country-index-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding-top:7px}
@@ -421,7 +427,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.7.2</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.7.3</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -741,7 +747,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
