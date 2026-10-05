@@ -173,7 +173,7 @@ radial-gradient(circle at 33% 24%,rgba(116,184,211,.22),transparent 31%),
 radial-gradient(circle at 50% 52%,#143746 0,#0a2532 53%,#031019 100%)}
 .globe-webgl-fallback:before{content:"";position:absolute;inset:0;border-radius:50%;background-image:url("./assets/globe/world-silhouette.svg");background-size:200% 100%;background-position:50% center;background-repeat:repeat-x;opacity:.66;filter:brightness(.8) saturate(.72)}
 .globe-webgl-fallback:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(110deg,rgba(255,255,255,.12),transparent 34% 58%,rgba(0,0,0,.52))}
-.globe-stage.canvas-ready .globe-webgl-fallback{opacity:0;transition:opacity .35s ease}
+.globe-stage.canvas-ready .globe-webgl-fallback{opacity:.10;transition:opacity .35s ease}
 .globe-marker{position:absolute;left:50%;top:50%;z-index:7;transform:translate(-50%,-50%);text-align:center;pointer-events:none;display:none}
 .globe-marker i{display:block;width:10px;height:10px;margin:auto;border-radius:50%;background:#d6b06e;border:2px solid #fff2cf;box-shadow:0 0 0 6px rgba(214,176,110,.16),0 0 18px rgba(214,176,110,.7)}
 .globe-marker span{display:block;margin-top:7px;padding:3px 6px;background:rgba(4,9,12,.82);border:1px solid rgba(186,163,119,.48);color:#e8dcc4;font:900 9px ui-monospace,monospace;letter-spacing:.08em;white-space:nowrap}
@@ -647,7 +647,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.0.3</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.0.4</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -973,7 +973,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.4</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1263,7 +1263,19 @@ var globeReady=false,globeAnimToken=0;
 var globeCanvas=null,globeCtx=null,globeStage=null;
 var globeProjection=null,globePath=null,globeGraticule=null;
 var globeSelectedKey=null,globeFocusCoord=null;
-var globeFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))?window.WORLD_GEOJSON.features:[];
+function normalizeD3Geometry(geom){
+  if(!geom)return geom;
+  if(geom.type==="Polygon"){
+    return {type:"Polygon",coordinates:geom.coordinates.map(r=>r.slice().reverse())};
+  }
+  if(geom.type==="MultiPolygon"){
+    return {type:"MultiPolygon",coordinates:geom.coordinates.map(poly=>poly.map(r=>r.slice().reverse()))};
+  }
+  return geom;
+}
+var globeFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))
+  ?window.WORLD_GEOJSON.features.map(f=>({type:"Feature",properties:f.properties||{},geometry:normalizeD3Geometry(f.geometry)}))
+  :[];
 var globeChina=globeFeatures.find(f=>(f.properties?.name||"").toLowerCase()==="china")||null;
 
 function countryKeyByName(name){
@@ -1283,9 +1295,9 @@ function countryKeyByName(name){
   return null;
 }
 const CHINA_SECTORS=[
-  {key:"wur",poly:{type:"Polygon",coordinates:[[[72,17],[105,17],[108,33],[104,54],[72,54],[72,17]]]},label:[91,35]},
-  {key:"ncdr",poly:{type:"Polygon",coordinates:[[[104,33],[136,33],[136,55],[104,55],[104,33]]]},label:[116,42]},
-  {key:"crf",poly:{type:"Polygon",coordinates:[[[104,17],[136,17],[136,34],[108,34],[104,17]]]},label:[118,28]}
+  {key:"wur",poly:{type:"Polygon",coordinates:[[[72,17],[72,54],[104,54],[108,33],[105,17],[72,17]]]},label:[91,35]},
+  {key:"ncdr",poly:{type:"Polygon",coordinates:[[[104,33],[104,55],[136,55],[136,33],[104,33]]]},label:[116,42]},
+  {key:"crf",poly:{type:"Polygon",coordinates:[[[104,17],[108,34],[136,34],[136,17],[104,17]]]},label:[118,28]}
 ];
 
 function resizeGlobeCanvas(){
@@ -1426,6 +1438,7 @@ function initMap(){
   globeProjection=d3.geoOrthographic().clipAngle(90).precision(.35).rotate([-15,-18,0]);
   globeGraticule=d3.geoGraticule10();
   globeReady=true;globeStage.classList.add("canvas-ready");
+  console.log("GLOBE LAND FEATURES",globeFeatures.length);
   bindGlobePointer();resizeGlobeCanvas();
   if(sel&&COUNTRY_VIEW[sel])focusNation(sel);
   else{globeSelectedKey=null;globeFocusCoord=null;setGlobeLabel("",true);redrawGlobe()}
