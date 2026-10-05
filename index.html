@@ -647,7 +647,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.0.2</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.0.3</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -973,7 +973,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1260,48 +1260,15 @@ $(".docbtn").forEach(b=>b.onclick=()=>doc(b.dataset.doc));doc("seoul");
 
 var globeState={lon:15,lat:18,zoom:1};
 var globeReady=false,globeAnimToken=0;
-var globeCanvas=null,globeCtx=null,globeStage=null,globeSelectedKey=null,globeFocusCoord=null;
+var globeCanvas=null,globeCtx=null,globeStage=null;
+var globeProjection=null,globePath=null,globeGraticule=null;
+var globeSelectedKey=null,globeFocusCoord=null;
 var globeFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))?window.WORLD_GEOJSON.features:[];
-if(!globeFeatures.length)console.error("WORLD GEO DATA MISSING");
+var globeChina=globeFeatures.find(f=>(f.properties?.name||"").toLowerCase()==="china")||null;
 
-function d2r(v){return v*Math.PI/180}
-function globeMetrics(){
-  const r=globeCanvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
-  const w=Math.max(280,Math.round(r.width)),h=Math.max(280,Math.round(r.height));
-  const pw=Math.round(w*dpr),ph=Math.round(h*dpr);
-  if(globeCanvas.width!==pw||globeCanvas.height!==ph){globeCanvas.width=pw;globeCanvas.height=ph}
-  globeCtx.setTransform(dpr,0,0,dpr,0,0);
-  return {w,h,cx:w/2,cy:h/2,r:Math.min(w,h)*.43*globeState.zoom};
-}
-function projectLonLat(lon,lat,m){
-  const lam=d2r(lon-globeState.lon),phi=d2r(lat),phi0=d2r(globeState.lat);
-  const cphi=Math.cos(phi),sphi=Math.sin(phi),c0=Math.cos(phi0),s0=Math.sin(phi0),clam=Math.cos(lam);
-  const vis=s0*sphi+c0*cphi*clam;
-  return {x:m.cx+m.r*cphi*Math.sin(lam),y:m.cy-m.r*(c0*sphi-s0*cphi*clam),visible:vis>0,depth:vis};
-}
-function eachGeoRing(geom,fn){
-  if(!geom)return;
-  if(geom.type==="Polygon")geom.coordinates.forEach(fn);
-  else if(geom.type==="MultiPolygon")geom.coordinates.forEach(poly=>poly.forEach(fn));
-}
-function traceRing(ctx,ring,m){
-  let started=false,drawn=0;
-  for(let i=0;i<ring.length;i++){
-    const p=projectLonLat(ring[i][0],ring[i][1],m);
-    if(!p.visible){started=false;continue}
-    if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y);
-    drawn++;
-  }
-  return drawn;
-}
-function traceFeature(ctx,ft,m){
-  ctx.beginPath();
-  eachGeoRing(ft.geometry,ring=>traceRing(ctx,ring,m));
-}
 function countryKeyByName(name){
   const n=(name||"").toLowerCase();
-  if(n.includes("south korea")||n==="korea"||n.includes("republic of korea"))return "rok";
-  if(n.includes("north korea"))return "rok";
+  if(n.includes("south korea")||n==="korea"||n.includes("republic of korea")||n.includes("north korea"))return "rok";
   if(n==="japan")return "jpn";
   if(n.includes("united states"))return "afu";
   if(n==="canada")return "can";
@@ -1315,86 +1282,97 @@ function countryKeyByName(name){
   if(["algeria","angola","benin","botswana","burkina faso","burundi","cameroon","central african republic","chad","congo","democratic republic of the congo","djibouti","egypt","equatorial guinea","eritrea","ethiopia","gabon","gambia","ghana","guinea","guinea-bissau","ivory coast","kenya","lesotho","liberia","libya","madagascar","malawi","mali","mauritania","morocco","mozambique","namibia","niger","nigeria","rwanda","senegal","sierra leone","somalia","south africa","south sudan","sudan","swaziland","tanzania","togo","tunisia","uganda","western sahara","zambia","zimbabwe"].includes(n))return "afr";
   return null;
 }
-function drawGraticule(ctx,m){
-  ctx.strokeStyle="rgba(90,135,151,.30)";ctx.lineWidth=.7;
-  for(let lat=-60;lat<=60;lat+=30){
-    ctx.beginPath();let on=false;
-    for(let lon=-180;lon<=180;lon+=3){
-      const p=projectLonLat(lon,lat,m);
-      if(!p.visible){on=false;continue}
-      if(!on){ctx.moveTo(p.x,p.y);on=true}else ctx.lineTo(p.x,p.y);
-    }
-    ctx.stroke();
-  }
-  for(let lon=-150;lon<=180;lon+=30){
-    ctx.beginPath();let on=false;
-    for(let lat=-85;lat<=85;lat+=3){
-      const p=projectLonLat(lon,lat,m);
-      if(!p.visible){on=false;continue}
-      if(!on){ctx.moveTo(p.x,p.y);on=true}else ctx.lineTo(p.x,p.y);
-    }
-    ctx.stroke();
-  }
+const CHINA_SECTORS=[
+  {key:"wur",poly:{type:"Polygon",coordinates:[[[72,17],[105,17],[108,33],[104,54],[72,54],[72,17]]]},label:[91,35]},
+  {key:"ncdr",poly:{type:"Polygon",coordinates:[[[104,33],[136,33],[136,55],[104,55],[104,33]]]},label:[116,42]},
+  {key:"crf",poly:{type:"Polygon",coordinates:[[[104,17],[136,17],[136,34],[108,34],[104,17]]]},label:[118,28]}
+];
+
+function resizeGlobeCanvas(){
+  if(!globeCanvas||!globeCtx||!globeProjection)return;
+  const rect=globeCanvas.getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=Math.max(280,Math.round(rect.width)),h=Math.max(280,Math.round(rect.height));
+  const pw=Math.max(2,Math.round(w*dpr)),ph=Math.max(2,Math.round(h*dpr));
+  if(globeCanvas.width!==pw||globeCanvas.height!==ph){globeCanvas.width=pw;globeCanvas.height=ph}
+  globeCtx.setTransform(dpr,0,0,dpr,0,0);
+  const r=Math.min(w,h)*.43*globeState.zoom;
+  globeProjection.translate([w/2,h/2]).scale(r);
+  globePath=d3.geoPath(globeProjection,globeCtx);
+  return {w,h,r,cx:w/2,cy:h/2};
 }
-function drawChinaSectors(ctx,m){
-  const sectors=[
-    {key:"wur",pts:[[72,17],[105,17],[108,33],[104,54],[72,54],[72,17]],label:[91,35]},
-    {key:"ncdr",pts:[[104,33],[136,33],[136,55],[104,55],[104,33]],label:[116,42]},
-    {key:"crf",pts:[[104,17],[136,17],[136,34],[108,34],[104,17]],label:[118,28]}
-  ];
-  sectors.forEach(sec=>{
-    ctx.beginPath();let started=false;
-    sec.pts.forEach(([lon,lat])=>{const p=projectLonLat(lon,lat,m);if(!p.visible){started=false;return}if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y)});
-    ctx.closePath();
-    ctx.fillStyle=globeSelectedKey===sec.key?(N[sec.key]?.color||"#8b6f58"):"rgba(108,91,72,.72)";
-    ctx.strokeStyle="rgba(221,204,170,.62)";ctx.lineWidth=.7;ctx.fill();ctx.stroke();
-    const q=projectLonLat(sec.label[0],sec.label[1],m);
-    if(q.visible){ctx.fillStyle="#e8dcc4";ctx.font="700 9px ui-monospace,monospace";ctx.textAlign="center";ctx.fillText(sec.key.toUpperCase(),q.x,q.y)}
+function drawGeo(feature,fill,stroke,lineWidth){
+  globeCtx.beginPath();
+  globePath(feature);
+  if(fill){globeCtx.fillStyle=fill;globeCtx.fill("evenodd")}
+  if(stroke){globeCtx.strokeStyle=stroke;globeCtx.lineWidth=lineWidth||.6;globeCtx.stroke()}
+}
+function drawChinaSuccessors(){
+  if(!globeChina)return;
+  globeCtx.save();
+  globeCtx.beginPath();globePath(globeChina);globeCtx.clip();
+  CHINA_SECTORS.forEach(sec=>{
+    const active=globeSelectedKey===sec.key;
+    drawGeo(sec.poly,active?(N[sec.key]?.color||"#9a795d"):"rgba(111,91,72,.78)","rgba(230,213,178,.8)",.75);
+  });
+  globeCtx.restore();
+  CHINA_SECTORS.forEach(sec=>{
+    const q=globeProjection(sec.label);
+    const center=[-globeProjection.rotate()[0],-globeProjection.rotate()[1]];
+    if(q&&d3.geoDistance(sec.label,center)<Math.PI/2){
+      globeCtx.fillStyle="#eadfc8";globeCtx.font="700 9px ui-monospace,monospace";globeCtx.textAlign="center";globeCtx.fillText(sec.key.toUpperCase(),q[0],q[1]);
+    }
   });
 }
-function updateGlobeMarker(m){
+function updateGlobeMarker(metrics){
   const marker=$("#globeMarker");
   if(!marker||!globeFocusCoord){if(marker)marker.style.display="none";return}
-  const p=projectLonLat(globeFocusCoord.lon,globeFocusCoord.lat,m);
-  if(!p.visible){marker.style.display="none";return}
-  marker.style.left=(p.x/m.w*100)+"%";
-  marker.style.top=(p.y/m.h*100)+"%";
+  const center=[-globeProjection.rotate()[0],-globeProjection.rotate()[1]];
+  if(d3.geoDistance([globeFocusCoord.lon,globeFocusCoord.lat],center)>=Math.PI/2){marker.style.display="none";return}
+  const q=globeProjection([globeFocusCoord.lon,globeFocusCoord.lat]);
+  if(!q){marker.style.display="none";return}
+  marker.style.left=(q[0]/metrics.w*100)+"%";
+  marker.style.top=(q[1]/metrics.h*100)+"%";
   marker.style.display="block";
 }
 function redrawGlobe(){
-  if(!globeCanvas||!globeCtx)return;
-  const ctx=globeCtx,m=globeMetrics();ctx.clearRect(0,0,m.w,m.h);
+  if(!globeCanvas||!globeCtx||!globeProjection||!globePath)return;
+  const m=resizeGlobeCanvas();if(!m)return;
+  const ctx=globeCtx;
+  ctx.clearRect(0,0,m.w,m.h);
 
-  const ocean=ctx.createRadialGradient(m.cx-m.r*.28,m.cy-m.r*.33,m.r*.05,m.cx,m.cy,m.r*1.05);
-  ocean.addColorStop(0,"#255065");ocean.addColorStop(.42,"#0d2c3a");ocean.addColorStop(1,"#04111a");
-  ctx.beginPath();ctx.arc(m.cx,m.cy,m.r,0,Math.PI*2);ctx.fillStyle=ocean;ctx.fill();
-  ctx.lineWidth=2;ctx.strokeStyle="#7f9eab";ctx.stroke();
+  const ocean=ctx.createRadialGradient(m.cx-m.r*.3,m.cy-m.r*.36,m.r*.03,m.cx,m.cy,m.r*1.08);
+  ocean.addColorStop(0,"#2b5970");ocean.addColorStop(.40,"#113443");ocean.addColorStop(1,"#04121b");
+  drawGeo({type:"Sphere"},ocean,"#8aabb8",2);
 
-  ctx.save();ctx.beginPath();ctx.arc(m.cx,m.cy,m.r,0,Math.PI*2);ctx.clip();
-  drawGraticule(ctx,m);
+  ctx.save();
+  ctx.beginPath();globePath({type:"Sphere"});ctx.clip();
+
+  ctx.beginPath();globePath(globeGraticule);
+  ctx.strokeStyle="rgba(104,151,168,.30)";ctx.lineWidth=.65;ctx.stroke();
 
   globeFeatures.forEach(ft=>{
-    const name=ft.properties&&ft.properties.name||"";
+    const name=ft.properties?.name||"";
     if(name.toLowerCase()==="china")return;
     const k=countryKeyByName(name);
-    traceFeature(ctx,ft,m);
-    ctx.fillStyle=k?(globeSelectedKey===k?(N[k]?.color||"#9b7a5f"):"#78919a"):"#607983";
-    ctx.strokeStyle=k?"rgba(222,235,239,.9)":"rgba(164,187,196,.72)";
-    ctx.lineWidth=k?1.05:.65;
-    ctx.fill("evenodd");ctx.stroke();
+    const selected=k&&globeSelectedKey===k;
+    const fill=selected?(N[k]?.color||"#a18a6d"):(k?"#728b95":"#506872");
+    const stroke=selected?"rgba(246,232,200,.95)":(k?"rgba(205,224,231,.78)":"rgba(140,166,176,.62)");
+    drawGeo(ft,fill,stroke,selected?1.15:.58);
   });
-  drawChinaSectors(ctx,m);
+  drawChinaSuccessors();
+
   ctx.restore();
 
-  const shine=ctx.createRadialGradient(m.cx-m.r*.35,m.cy-m.r*.38,0,m.cx-m.r*.35,m.cy-m.r*.38,m.r*.9);
-  shine.addColorStop(0,"rgba(224,245,252,.18)");shine.addColorStop(.33,"rgba(148,199,217,.06)");shine.addColorStop(1,"rgba(0,0,0,0)");
+  const shine=ctx.createRadialGradient(m.cx-m.r*.38,m.cy-m.r*.42,0,m.cx-m.r*.38,m.cy-m.r*.42,m.r*.95);
+  shine.addColorStop(0,"rgba(231,248,255,.18)");shine.addColorStop(.36,"rgba(144,196,216,.05)");shine.addColorStop(1,"rgba(0,0,0,0)");
   ctx.beginPath();ctx.arc(m.cx,m.cy,m.r,0,Math.PI*2);ctx.fillStyle=shine;ctx.fill();
 
   const shade=ctx.createLinearGradient(m.cx-m.r,m.cy,m.cx+m.r,m.cy);
-  shade.addColorStop(0,"rgba(0,0,0,0)");shade.addColorStop(.62,"rgba(0,0,0,.08)");shade.addColorStop(1,"rgba(0,0,0,.48)");
+  shade.addColorStop(0,"rgba(0,0,0,0)");shade.addColorStop(.62,"rgba(0,0,0,.07)");shade.addColorStop(1,"rgba(0,0,0,.50)");
   ctx.beginPath();ctx.arc(m.cx,m.cy,m.r,0,Math.PI*2);ctx.fillStyle=shade;ctx.fill();
 
-  ctx.beginPath();ctx.arc(m.cx,m.cy,m.r+4,0,Math.PI*2);ctx.strokeStyle="rgba(115,171,193,.26)";ctx.lineWidth=8;ctx.stroke();
+  ctx.beginPath();ctx.arc(m.cx,m.cy,m.r+4,0,Math.PI*2);ctx.strokeStyle="rgba(126,183,204,.30)";ctx.lineWidth=8;ctx.stroke();
 
   updateGlobeMarker(m);
 }
@@ -1404,13 +1382,19 @@ function setGlobeLabel(label,isWorld=false){
   if(b)b.textContent=isWorld?"GLOBAL THEATER":(label||"GLOBAL THEATER");
   if(isWorld)globeFocusCoord=null;
 }
-function animateGlobeTo(lon,lat,duration=620){
-  const token=++globeAnimToken,aLon=globeState.lon,aLat=globeState.lat,start=performance.now();
-  let dLon=lon-aLon;while(dLon>180)dLon-=360;while(dLon<-180)dLon+=360;
+function animateGlobeTo(lon,lat,duration=650){
+  if(!globeProjection)return;
+  const token=++globeAnimToken;
+  const start=globeProjection.rotate().slice();
+  const target=[-lon,-lat,0];
+  let dl=target[0]-start[0];while(dl>180)dl-=360;while(dl<-180)dl+=360;
+  const startTime=performance.now();
   function frame(now){
     if(token!==globeAnimToken)return;
-    const t=Math.min(1,(now-start)/duration),e=1-Math.pow(1-t,3);
-    globeState.lon=aLon+dLon*e;globeState.lat=aLat+(lat-aLat)*e;redrawGlobe();
+    const t=Math.min(1,(now-startTime)/duration),e=1-Math.pow(1-t,3);
+    globeProjection.rotate([start[0]+dl*e,start[1]+(target[1]-start[1])*e,0]);
+    globeState.lon=-globeProjection.rotate()[0];globeState.lat=-globeProjection.rotate()[1];
+    redrawGlobe();
     if(t<1)requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -1419,25 +1403,32 @@ function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
   globeSelectedKey=k;globeFocusCoord={lon:r.lon,lat:r.lat};globeState.zoom=1;
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
-  const marker=$("#globeMarker");
-  if(marker){marker.style.display="block";marker.style.left="50%";marker.style.top="50%"}
-  animateGlobeTo(r.lon,r.lat,620);
+  animateGlobeTo(r.lon,r.lat,650);
 }
 function bindGlobePointer(){
   let dragging=false,lx=0,ly=0;
   globeCanvas.addEventListener("pointerdown",e=>{dragging=true;++globeAnimToken;lx=e.clientX;ly=e.clientY;globeCanvas.setPointerCapture?.(e.pointerId)});
-  globeCanvas.addEventListener("pointermove",e=>{if(!dragging)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;globeState.lon-=dx*.34;globeState.lat=Math.max(-78,Math.min(78,globeState.lat+dy*.28));redrawGlobe()});
+  globeCanvas.addEventListener("pointermove",e=>{
+    if(!dragging||!globeProjection)return;
+    const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;
+    const r=globeProjection.rotate();
+    r[0]+=dx*.28;r[1]=Math.max(-80,Math.min(80,r[1]-dy*.28));
+    globeProjection.rotate(r);
+    globeState.lon=-r[0];globeState.lat=-r[1];redrawGlobe();
+  });
   const stop=e=>{dragging=false;try{globeCanvas.releasePointerCapture?.(e.pointerId)}catch(_){}};
   globeCanvas.addEventListener("pointerup",stop);globeCanvas.addEventListener("pointercancel",stop);
   globeCanvas.addEventListener("wheel",e=>{e.preventDefault();globeState.zoom=Math.max(.82,Math.min(1.2,globeState.zoom*(e.deltaY>0?.94:1.06)));redrawGlobe()},{passive:false});
 }
 function initMap(){
-  globeCanvas=$("#globeCanvas");globeStage=$("#globeStage");if(!globeCanvas)return;
+  globeCanvas=$("#globeCanvas");globeStage=$("#globeStage");if(!globeCanvas||!window.d3)return;
   globeCtx=globeCanvas.getContext("2d");if(!globeCtx)return;
-  globeReady=true;globeStage.classList.add("canvas-ready");bindGlobePointer();
-  console.log("STRATEGIC GLOBE FEATURES",globeFeatures.length);
+  globeProjection=d3.geoOrthographic().clipAngle(90).precision(.35).rotate([-15,-18,0]);
+  globeGraticule=d3.geoGraticule10();
+  globeReady=true;globeStage.classList.add("canvas-ready");
+  bindGlobePointer();resizeGlobeCanvas();
   if(sel&&COUNTRY_VIEW[sel])focusNation(sel);
-  else{globeSelectedKey=null;globeFocusCoord=null;globeState={lon:15,lat:18,zoom:1};projection=globeState;setGlobeLabel("",true);redrawGlobe()}
+  else{globeSelectedKey=null;globeFocusCoord=null;setGlobeLabel("",true);redrawGlobe()}
 }
 function focusRegion(key){
   const regions={
@@ -1449,7 +1440,7 @@ function focusRegion(key){
   const r=regions[key]||regions.world;
   $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region===key));
   globeSelectedKey=null;globeFocusCoord=key==="world"?null:{lon:r.lon,lat:r.lat};globeState.zoom=1;
-  setGlobeLabel(r.label,key==="world");animateGlobeTo(r.lon,r.lat,620);
+  setGlobeLabel(r.label,key==="world");animateGlobeTo(r.lon,r.lat,650);
 }
 function mobileZoomBy(factor){globeState.zoom=Math.max(.82,Math.min(1.2,globeState.zoom*factor));redrawGlobe()}
 $$("[data-region]").forEach(b=>b.onclick=()=>focusRegion(b.dataset.region));
@@ -1459,6 +1450,7 @@ $("#mobileMapExpand").onclick=()=>{const gm=$(".grand-map");gm.classList.add("mo
 $("#mobileMapExit").onclick=()=>{const gm=$(".grand-map");gm.classList.remove("mobile-map-full");document.body.classList.remove("intro-lock");setTimeout(redrawGlobe,80)};
 $("#reset").onclick=()=>{
   ++globeAnimToken;globeSelectedKey=null;globeFocusCoord=null;globeState={lon:15,lat:18,zoom:1};projection=globeState;
+  if(globeProjection)globeProjection.rotate([-15,-18,0]);
   renderWorldSelection();setGlobeLabel("",true);redrawGlobe();
   $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region==="world"));
 };
