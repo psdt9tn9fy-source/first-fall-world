@@ -640,7 +640,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.2.0</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.2.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -965,7 +965,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.2.0</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.2.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1355,7 +1355,7 @@ function initMap(){
       .polygonSideColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(31,48,56,.86)":"rgba(21,31,37,.72)")
       .polygonStrokeColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(187,211,220,.68)":"rgba(101,126,136,.42)")
       .polygonAltitude(.004)
-      .polygonTransitionDuration(220)
+      .polygonsTransitionDuration(220)
       .pointsData([])
       .ringsData([]);
 
@@ -1387,7 +1387,7 @@ function initMap(){
     }
   }catch(e){
     console.error("GLOBE.GL INIT FAILED",e);
-    const fail=$("#globeFail");if(fail){fail.hidden=false;fail.textContent="3D GLOBE INITIALIZATION FAILED"}
+    const fail=$("#globeFail");if(fail){fail.hidden=false;fail.textContent="3D GLOBE ERROR // "+(e&&e.message?e.message:"UNKNOWN")}
   }
 }
 function redrawGlobe(){
