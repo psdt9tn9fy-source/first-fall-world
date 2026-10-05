@@ -1255,6 +1255,7 @@ var globeState={lon:15,lat:18,zoom:1};
 var globeReady=false;
 var strategicGlobe=null,globeStage=null,globeMount=null;
 var globeSelectedKey=null,globeFocusCoord=null;
+var globeMoveToken=0;
 var globeInitAttempts=0;
 var globeTextureDataUrl=null,globeTextureLoading=false;
 var globeFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))
@@ -1368,14 +1369,27 @@ function setGlobeMarker(k){
       .ringMaxRadius(3.4).ringPropagationSpeed(2.2).ringRepeatPeriod(820);
   }catch(e){console.warn("GLOBE MARKER LAYER",e)}
 }
-function hardSetGlobeView(view){
+function animateGlobeView(view,duration=720){
   if(!strategicGlobe||!view)return;
+  const token=++globeMoveToken;
   try{
-    const lat=Number(view.lat),lng=Number(view.lng),altitude=Number(view.altitude);
-    const ctl=strategicGlobe.controls&&strategicGlobe.controls();
-    const cam=strategicGlobe.camera&&strategicGlobe.camera();
-    const pos=strategicGlobe.getCoords&&strategicGlobe.getCoords(lat,lng,altitude);
+    const target={
+      lat:Number(view.lat),
+      lng:Number(view.lng),
+      altitude:Number(view.altitude)
+    };
+    const current=strategicGlobe.pointOfView();
+    const from={
+      lat:Number.isFinite(+current.lat)?+current.lat:target.lat,
+      lng:Number.isFinite(+current.lng)?+current.lng:target.lng,
+      altitude:Number.isFinite(+current.altitude)?+current.altitude:target.altitude
+    };
 
+    let dLng=target.lng-from.lng;
+    while(dLng>180)dLng-=360;
+    while(dLng<-180)dLng+=360;
+
+    const ctl=strategicGlobe.controls&&strategicGlobe.controls();
     if(ctl){
       ctl.autoRotate=false;
       ctl.enabled=true;
@@ -1383,22 +1397,36 @@ function hardSetGlobeView(view){
       if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
     }
 
-    // Bypass the old bundled Globe.GL camera setter and place the camera directly.
-    if(cam&&pos){
-      cam.position.set(pos.x,pos.y,pos.z);
-      cam.lookAt(0,0,0);
-      cam.updateMatrixWorld&&cam.updateMatrixWorld(true);
-    }
+    const started=performance.now();
+    const step=now=>{
+      if(token!==globeMoveToken)return;
+      const t=Math.min(1,(now-started)/duration);
+      const ease=t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
 
-    // Keep Globe.GL's own point-of-view/occlusion state in sync too.
-    strategicGlobe.pointOfView({lat,lng,altitude},0);
+      strategicGlobe.pointOfView({
+        lat:from.lat+(target.lat-from.lat)*ease,
+        lng:from.lng+dLng*ease,
+        altitude:from.altitude+(target.altitude-from.altitude)*ease
+      },0);
 
-    if(ctl){
-      if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
-      ctl.update&&ctl.update();
-      ctl.enableDamping=true;
-    }
-  }catch(e){console.warn("GLOBE HARD FOCUS",e)}
+      if(ctl){
+        if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
+        ctl.update&&ctl.update();
+      }
+
+      if(t<1){
+        requestAnimationFrame(step);
+      }else{
+        strategicGlobe.pointOfView(target,0);
+        if(ctl){
+          if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
+          ctl.update&&ctl.update();
+          ctl.enableDamping=true;
+        }
+      }
+    };
+    requestAnimationFrame(step);
+  }catch(e){console.warn("GLOBE ANIMATED FOCUS",e)}
 }
 function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
@@ -1406,6 +1434,7 @@ function focusNation(k){
   globeFocusCoord={lon:r.lon,lat:r.lat};
   globeState.lon=r.lon;globeState.lat=r.lat;
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
+
   if(!strategicGlobe){
     initMap();
     setTimeout(()=>{if(strategicGlobe)focusNation(k)},220);
@@ -1416,15 +1445,13 @@ function focusNation(k){
   setGlobeMarker(k);
   refreshGlobeCountries();
 
-  // Force the selected state's coordinates to the actual center of the globe.
-  // This is intentionally a hard camera placement because the vendored Globe.GL
-  // build can have OrbitControls overwrite pointOfView() immediately after selection.
-  const view={lat:r.lat,lng:r.lon,altitude:globeAltitudeFor(k)};
-  hardSetGlobeView(view);
-
-  // One more sync on the next paint prevents a pending controls tick from restoring
-  // the previous longitude/latitude.
-  requestAnimationFrame(()=>hardSetGlobeView(view));
+  // Country selection uses its own cancellable camera animation.
+  // This avoids the old bundled Globe.GL tween and OrbitControls fighting each other.
+  animateGlobeView({
+    lat:r.lat,
+    lng:r.lon,
+    altitude:globeAltitudeFor(k)
+  },720);
 }
 function buildGlobeTexture(done){
   if(globeTextureDataUrl){done(globeTextureDataUrl);return}
