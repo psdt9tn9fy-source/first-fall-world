@@ -641,7 +641,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.3.0</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.3.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -966,7 +966,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.3.0</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.3.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1256,6 +1256,7 @@ var globeReady=false;
 var strategicGlobe=null,globeStage=null,globeMount=null;
 var globeSelectedKey=null,globeFocusCoord=null;
 var globeInitAttempts=0;
+var globeTextureDataUrl=null,globeTextureLoading=false;
 
 function setGlobeLabel(label,isWorld=false){
   const b=$("#globeCaption");
@@ -1290,7 +1291,7 @@ function setWorldSpin(on){
       ctl.rotateSpeed=.75;
       ctl.zoomSpeed=.8;
       ctl.autoRotate=!!on;
-      ctl.autoRotateSpeed=.28;
+      ctl.autoRotateSpeed=1.15;
     }
   }catch(_){}
 }
@@ -1306,13 +1307,13 @@ function setGlobeMarker(k){
     strategicGlobe
       .pointsData([d])
       .pointLat("lat").pointLng("lng")
-      .pointAltitude(.055).pointRadius(.34)
+      .pointAltitude(.07).pointRadius(.46)
       .pointColor(x=>x.color)
       .pointLabel(x=>'<div style="font:900 12px ui-monospace;color:#f4e7c7;background:#061015ee;border:1px solid #a28a5d;padding:5px 8px">'+x.label+'</div>')
       .ringsData([d])
       .ringLat("lat").ringLng("lng")
       .ringColor(()=>["rgba(226,190,121,.95)","rgba(226,190,121,0)"])
-      .ringMaxRadius(2.6).ringPropagationSpeed(1.8).ringRepeatPeriod(900);
+      .ringMaxRadius(3.4).ringPropagationSpeed(2.2).ringRepeatPeriod(820);
   }catch(e){console.warn("GLOBE MARKER LAYER",e)}
 }
 function focusNation(k){
@@ -1339,6 +1340,42 @@ function focusNation(k){
     },940);
   }catch(e){console.warn("GLOBE FOCUS",e)}
 }
+function buildGlobeTexture(done){
+  if(globeTextureDataUrl){done(globeTextureDataUrl);return}
+  if(globeTextureLoading){setTimeout(()=>buildGlobeTexture(done),80);return}
+  globeTextureLoading=true;
+  const img=new Image();
+  img.onload=()=>{
+    try{
+      const cv=document.createElement("canvas");
+      cv.width=1440;cv.height=720;
+      const cx=cv.getContext("2d");
+      // Opaque ocean base is important: using the transparent SVG directly as a Three texture
+      // leaves only the sphere material visible on some Safari/Chromium builds.
+      const grd=cx.createLinearGradient(0,0,0,720);
+      grd.addColorStop(0,"#123240");grd.addColorStop(.52,"#0a2531");grd.addColorStop(1,"#061720");
+      cx.fillStyle=grd;cx.fillRect(0,0,1440,720);
+      cx.globalAlpha=1;
+      cx.drawImage(img,0,0,1440,720);
+      // subtle latitude/longitude guide baked into the texture so land is always readable
+      cx.strokeStyle="rgba(134,176,191,.13)";cx.lineWidth=1;
+      for(let x=0;x<=1440;x+=120){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,720);cx.stroke()}
+      for(let y=0;y<=720;y+=90){cx.beginPath();cx.moveTo(0,y);cx.lineTo(1440,y);cx.stroke()}
+      globeTextureDataUrl=cv.toDataURL("image/png");
+    }catch(e){
+      console.warn("GLOBE TEXTURE RASTERIZE",e);
+      globeTextureDataUrl="./assets/globe/world-silhouette.svg?v=4";
+    }
+    globeTextureLoading=false;done(globeTextureDataUrl);
+  };
+  img.onerror=()=>{
+    globeTextureLoading=false;
+    globeTextureDataUrl="./assets/globe/world-silhouette.svg?v=4";
+    done(globeTextureDataUrl);
+  };
+  img.src="./assets/globe/world-silhouette.svg?v=4";
+}
+
 function initMap(){
   globeStage=$("#globeStage");globeMount=$("#globeMount");
   if(!globeStage||!globeMount)return;
@@ -1351,38 +1388,38 @@ function initMap(){
   }
 
   const fail=$("#globeFail");if(fail)fail.hidden=true;
-  try{
-    // Minimal known-stable Globe.GL setup. The local SVG is an equirectangular 2:1 map,
-    // so Globe.GL wraps it onto the actual sphere without our previous custom distortion math.
-    strategicGlobe=Globe()(globeMount)
-      .backgroundColor("rgba(0,0,0,0)")
-      .globeImageUrl("./assets/globe/world-silhouette.svg?v=3")
-      .showAtmosphere(true)
-      .atmosphereColor("#6e9bad")
-      .atmosphereAltitude(.15)
-      .showGraticules(true)
-      .pointsData([])
-      .ringsData([]);
+  buildGlobeTexture(textureUrl=>{
+    if(strategicGlobe)return;
+    try{
+      strategicGlobe=Globe()(globeMount)
+        .backgroundColor("rgba(0,0,0,0)")
+        .globeImageUrl(textureUrl)
+        .showAtmosphere(true)
+        .atmosphereColor("#6e9bad")
+        .atmosphereAltitude(.15)
+        .showGraticules(false)
+        .pointsData([])
+        .ringsData([]);
 
-    globeReady=true;
-    resizeGlobe();
-    setWorldSpin(!sel);
+      globeReady=true;
+      resizeGlobe();
+      setWorldSpin(!sel);
 
-    // Keep performance sane on mobile; failure here must never kill the globe.
-    try{strategicGlobe.renderer().setPixelRatio(Math.min(window.devicePixelRatio||1,1.5))}catch(_){}
+      try{strategicGlobe.renderer().setPixelRatio(Math.min(window.devicePixelRatio||1,1.5))}catch(_){}
 
-    if(sel&&COUNTRY_VIEW[sel]){
-      focusNation(sel);
-    }else{
-      globeSelectedKey=null;globeFocusCoord=null;
-      setGlobeLabel("",true);setGlobeMarker(null);
-      strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},0);
+      if(sel&&COUNTRY_VIEW[sel]){
+        focusNation(sel);
+      }else{
+        globeSelectedKey=null;globeFocusCoord=null;
+        setGlobeLabel("",true);setGlobeMarker(null);
+        strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},0);
+      }
+    }catch(e){
+      console.error("GLOBE INIT",e);
+      strategicGlobe=null;
+      if(fail){fail.hidden=false;fail.textContent="3D GLOBE ERROR // "+(e&&e.message?e.message:"UNKNOWN")}
     }
-  }catch(e){
-    console.error("GLOBE INIT",e);
-    strategicGlobe=null;
-    if(fail){fail.hidden=false;fail.textContent="3D GLOBE ERROR // "+(e&&e.message?e.message:"UNKNOWN")}
-  }
+  });
 }
 function redrawGlobe(){resizeGlobe()}
 function focusRegion(key){
