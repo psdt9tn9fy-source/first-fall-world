@@ -1222,9 +1222,9 @@ $$(".region-blocks button").forEach(b=>b.onclick=()=>{
   const regionKey=z==="southasia"?"eastasia":z==="southeastasia"?"eastasia":z==="oceania"?"pacific":z;
   focusRegion(regionKey);
 });
-$("#prevNation").onclick=()=>stepCountry(-1);
-$("#nextNation").onclick=()=>stepCountry(1);
-$("#flagFocus").onclick=()=>stepCountry(1);
+$("#prevNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(-1)};
+$("#nextNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(1)};
+$("#flagFocus").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(1)};
 $("#flagFocus").onkeydown=e=>{if(e.key==="ArrowLeft"){e.preventDefault();stepCountry(-1)}if(e.key==="ArrowRight"||e.key==="Enter"){e.preventDefault();stepCountry(1)}};
 let swipeX=null;
 $("#flagFocus").addEventListener("touchstart",e=>{swipeX=e.touches[0].clientX},{passive:true});
@@ -1433,7 +1433,6 @@ function focusNation(k){
   globeSelectedKey=k;
   globeFocusCoord={lon:r.lon,lat:r.lat};
   globeState.lon=r.lon;globeState.lat=r.lat;
-  setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
 
   if(!strategicGlobe){
     initMap();
@@ -1441,20 +1440,24 @@ function focusNation(k){
     return;
   }
 
+  // Keep nation camera movement deliberately identical to the proven region movement.
+  // Do not touch polygon/point/ring layers before moving: those layers were the only
+  // meaningful difference between a working region click and a non-working nation switch.
   setWorldSpin(false);
-  setGlobeMarker(k);
-  refreshGlobeCountries();
-
-  // Use the exact same built-in Globe.GL tween path as region selection.
-  // Region buttons are known to work reliably in this vendored build.
+  setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
   ++globeMoveToken;
+
+  const view={lat:r.lat,lng:r.lon,altitude:globeAltitudeFor(k)};
   try{
-    strategicGlobe.pointOfView({
-      lat:r.lat,
-      lng:r.lon,
-      altitude:globeAltitudeFor(k)
-    },850);
-  }catch(e){console.warn("GLOBE NATION FOCUS",e)}
+    strategicGlobe.pointOfView(view,850);
+  }catch(e){console.warn("GLOBE NATION FOCUS",e);return}
+
+  // Apply visual highlighting only after the camera has finished moving.
+  setTimeout(()=>{
+    if(globeSelectedKey!==k||!strategicGlobe)return;
+    setGlobeMarker(k);
+    refreshGlobeCountries();
+  },920);
 }
 function buildGlobeTexture(done){
   if(globeTextureDataUrl){done(globeTextureDataUrl);return}
