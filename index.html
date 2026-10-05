@@ -269,7 +269,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 .country-index-item b{display:block;font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.country-index-item small{display:block;margin-top:3px;color:#65747a;font:700 .45rem ui-monospace,monospace;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .world-note-compact{padding:18px 20px}.world-note-compact h3{font-size:1.35rem}.world-note-compact p{font-size:.82rem}
 
-.nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:linear-gradient(90deg,#f7f5ef 0 42%,#0e315a 42% 58%,#f7f5ef 58%)}.flag.rok:after{width:26px;height:26px;border-radius:50%;background:linear-gradient(#d83f4f 0 50%,#315fb3 50%);left:calc(50% - 13px);top:17px}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
+.nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:#ece8e0 url("./assets/flags/rok-2134.jpg") center/cover no-repeat!important}.flag.rok:after{display:none!important}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
 .flag.jpn{background:#f4f2ed}.flag.jpn:before{width:32px;height:32px;border-radius:50%;background:#b92d3e;left:calc(50% - 16px);top:14px}.flag.jpn:after{width:46px;height:46px;border:2px solid #18314e;border-radius:50%;left:calc(50% - 25px);top:5px}
 .flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}
 .flag.crf{background:radial-gradient(circle at 52% 50%,#e3ded2 0 7%,transparent 8%),linear-gradient(135deg,#9b2935,#5e101b)}
@@ -1065,7 +1065,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 
     <div class="selector-main">
       <section class="card grand-map selector-map-card">
-        <div class="mapbar"><span>STRATEGIC TERRITORY DISPLAY</span><span id="mapSelectionLabel">WORLD // 2134</span></div>
+        <div class="mapbar"><span>전략 영토 표시</span><span id="mapSelectionLabel">WORLD // 2134</span></div>
 
         <div class="mobile-map-tools">
           <button type="button" class="mobile-map-expand" id="mobileMapExpand">EXPAND</button>
@@ -1084,37 +1084,37 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
               <path id="mapHudLinkPath" d=""></path>
               <circle id="mapHudLinkNode" cx="0" cy="0" r="3"></circle>
             </svg>
-            <button type="button" class="map-world-view" id="mapWorldView" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">WORLD VIEW</button>
+            <button type="button" class="map-world-view" id="mapWorldView" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">세계 지도</button>
             <div class="map-tactical-hud" id="mapTacticalHud">
-              <div class="hud-topline"><span>LIVE TARGET FEED</span><em id="mapHudState">STANDBY</em></div>
-              <b id="mapTrackCode">GLOBAL THEATER</b>
+              <div class="hud-topline"><span>실시간 표적 정보</span><em id="mapHudState">STANDBY</em></div>
+              <b id="mapTrackCode">세계 전구</b>
               <small id="mapTrackCoord">LAT -- / LON --</small>
               <pre id="mapHudFeed">AWAITING TARGET...</pre>
             </div>
-            <div class="globe-caption"><span>2D STRATEGIC MAP // 2134</span><b id="globeCaption">GLOBAL THEATER</b></div>
+            <div class="globe-caption"><span>2D 전략 지도 // 2134</span><b id="globeCaption">세계 전구</b></div>
           </div>
 
           <div class="map-titleblock selector-map-title">
-            <div class="overline">SELECTED TERRITORY</div>
+            <div class="overline">선택 영토</div>
             <h1 id="mapHeroName">WORLD</h1>
             <p id="mapHeroSub">GLOBAL STRATEGIC THEATER</p>
           </div>
 
           <div class="map-country-summary" id="mapCountrySummary">
-            <div class="eyebrow">CURRENT SELECTION</div>
+            <div class="eyebrow">현재 선택</div>
             <h3 id="summaryName">세계 전구</h3>
             <div class="summary-grid">
-              <div><span>STATUS</span><b id="summaryStatus">103-YEAR WAR</b></div>
-              <div><span>POP.</span><b id="summaryPop">≈ 4.7B</b></div>
-              <div><span>CORE</span><b id="summaryCapital">MULTIPOLAR</b></div>
-              <div><span>ROLE</span><b id="summaryStrength">GLOBAL THEATER</b></div>
+              <div><span>상태</span><b id="summaryStatus">103-YEAR WAR</b></div>
+              <div><span>인구</span><b id="summaryPop">≈ 4.7B</b></div>
+              <div><span>수도</span><b id="summaryCapital">MULTIPOLAR</b></div>
+              <div><span>전력</span><b id="summaryStrength">GLOBAL THEATER</b></div>
             </div>
           </div>
         </div>
 
         <div class="mapfoot">
           <span>FLAG SELECTOR ↔ TERRITORY LINKED</span>
-          <button class="btn secondary" id="reset" type="button" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">WORLD VIEW</button>
+          <button class="btn secondary" id="reset" type="button" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">세계 지도</button>
         </div>
       </section>
 
@@ -1349,11 +1349,11 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   </div>
 </div>
 <nav class="mobile-nav" aria-label="모바일 주요 메뉴">
-  <button type="button" class="mobile-nav-btn active" data-go="world"><b>◉</b><span>WORLD</span></button>
-  <button type="button" class="mobile-nav-btn" data-go="nations"><b>▦</b><span>NATIONS</span></button>
-  <button type="button" class="mobile-nav-btn enemy" data-go="enemy"><b>◇</b><span>EIDOLON</span></button>
-  <button type="button" class="mobile-nav-btn" data-go="archive"><b>▣</b><span>ARCHIVE</span></button>
-  <button type="button" class="mobile-nav-btn" id="mobileMenuOpen"><b>☰</b><span>MENU</span></button>
+  <button type="button" class="mobile-nav-btn active" data-go="world"><b>◉</b><span>세계</span></button>
+  <button type="button" class="mobile-nav-btn" data-go="nations"><b>▦</b><span>국가</span></button>
+  <button type="button" class="mobile-nav-btn enemy" data-go="enemy"><b>◇</b><span>에이돌론</span></button>
+  <button type="button" class="mobile-nav-btn" data-go="archive"><b>▣</b><span>기록</span></button>
+  <button type="button" class="mobile-nav-btn" id="mobileMenuOpen"><b>☰</b><span>메뉴</span></button>
 </nav>
 </main>
 
@@ -1361,7 +1361,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <script src="./assets/vendor/globe.gl.min.js"></script>
 <script>
 const N={
-rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
+rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"요새화 / 교전 중",pop:"약 4,300만",capital:"서울",strength:"적응형 전투체계",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
 afu:{code:"AFU // DRAFT",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
 jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES",color:"#ffb45e",flag:"jpn",brief:"제1강하 이후에도 국호와 국가체제를 유지했다. 2042년 국방재건령으로 자위대를 일본국방위군으로 재편. 도시요새·해양전·정밀방어·소형 무인체계에 강하다."},
 chn:{code:"CN AGGREGATE // DEMOGRAPHY",name:"중국권 합계",eng:"CHINESE REGIONS — AGGREGATE",sigil:"3C",status:"STATISTICAL ONLY",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"DEMOGRAPHIC AGGREGATE",color:"#9b5b60",flag:"chn",hidden:true,brief:"인구통계에서만 사용하는 중국권 3개 후계국 합계."},
@@ -1548,13 +1548,13 @@ function setSelectorFlag(flag){
 function renderWorldSelection(){
   sel=null;carouselIndex=-1;
   setSelectorFlag(null);
-  $("#selectorCode").textContent="GLOBAL THEATER";
+  $("#selectorCode").textContent="세계 전구";
   $("#selectorName").textContent="WORLD";
   $("#selectorEng").textContent="SELECT A STATE OR DEFENSE BLOC";
   $("#mapSelectionLabel").textContent="WORLD // 2134";
   $("#mapHeroName").textContent="WORLD";
   $("#mapHeroSub").textContent="GLOBAL STRATEGIC THEATER";
-  $("#summaryName").textContent="세계 전구";$("#summaryStatus").textContent="103-YEAR WAR";$("#summaryPop").textContent="≈ 4.7B";$("#summaryCapital").textContent="MULTIPOLAR";$("#summaryStrength").textContent="GLOBAL THEATER";
+  $("#summaryName").textContent="세계 전구";$("#summaryStatus").textContent="103-YEAR WAR";$("#summaryPop").textContent="≈ 4.7B";$("#summaryCapital").textContent="MULTIPOLAR";$("#summaryStrength").textContent="세계 전구";
   $("#ccode").textContent="GLOBAL THEATER // 2134";$("#cname").textContent="세계 전구";$("#ceng").textContent="GLOBAL STRATEGIC THEATER";$("#csigil").textContent="IDA";
   $("#cstatus").textContent="ACTIVE WARSPACE";$("#cpop").textContent="≈ 4.7B";$("#ccapital").textContent="MULTIPOLAR";$("#cstrength").textContent="JOINT DEFENSE";
   $("#cbrief").textContent="2031년 제1강하 이후 국가들은 살아남았지만 세계의 국경과 세력권은 크게 달라졌다. 국기 또는 아래 국가 목록을 선택하면 해당 영토와 전략정보를 표시한다.";
@@ -1732,11 +1732,11 @@ function hudPayload(k){
   const n=N[k];
   if(!n)return "";
   return [
-    "STATE   // "+n.name,
-    "STATUS  // "+n.status,
-    "CAPITAL // "+n.capital,
-    "POP.    // "+n.pop,
-    "ROLE    // "+n.strength
+    "국가    // "+n.name,
+    "상태    // "+n.status,
+    "수도    // "+n.capital,
+    "인구    // "+n.pop,
+    "전력    // "+n.strength
   ].join("\n");
 }
 function typeNationHud(k){
@@ -1750,8 +1750,8 @@ function typeNationHud(k){
   const payload=hudPayload(k);
 
   // Critical information is painted synchronously first.
-  if(state)state.textContent="LOCKED";
-  if(code)code.textContent=(n.sigil||k).toUpperCase()+" // TARGET LOCK";
+  if(state)state.textContent="고정 완료";
+  if(code)code.textContent=(n.sigil||k).toUpperCase()+" // 목표 고정";
   if(coord)coord.textContent=formatCoord(r.lat,r.lon);
   if(feed)feed.textContent=payload;
 
@@ -1761,14 +1761,14 @@ function typeNationHud(k){
     if(token!==hudTypeToken||!feed)return;
     let i=0;
     feed.textContent="";
-    if(state)state.textContent="STREAMING";
+    if(state)state.textContent="정보 수신 중";
     hudTypeTimer=setInterval(()=>{
       if(token!==hudTypeToken){
         clearInterval(hudTypeTimer);hudTypeTimer=null;return;
       }
       if(i>=payload.length){
         clearInterval(hudTypeTimer);hudTypeTimer=null;
-        if(state)state.textContent="LOCKED";
+        if(state)state.textContent="고정 완료";
         feed.textContent=payload;
         return;
       }
@@ -1780,10 +1780,10 @@ function resetTacticalHud(){
   ++hudTypeToken;
   if(hudTypeTimer){clearInterval(hudTypeTimer);hudTypeTimer=null}
   const state=$("#mapHudState"),code=$("#mapTrackCode"),coord=$("#mapTrackCoord"),feed=$("#mapHudFeed"),link=$("#mapHudLink");
-  if(state)state.textContent="STANDBY";
-  if(code)code.textContent="GLOBAL THEATER";
-  if(coord)coord.textContent="LAT -- / LON --";
-  if(feed)feed.textContent="AWAITING TARGET...";
+  if(state)state.textContent="대기";
+  if(code)code.textContent="세계 전구";
+  if(coord)coord.textContent="위도 -- / 경도 --";
+  if(feed)feed.textContent="표적 대기 중...";
   if(link)link.classList.remove("active");
   const p=$("#mapHudLinkPath");if(p)p.setAttribute("d","");
 }
@@ -1801,7 +1801,7 @@ function directWorldView(){
   resetTacticalHud();
 
   const caption=$("#globeCaption");
-  if(caption)caption.textContent="GLOBAL THEATER";
+  if(caption)caption.textContent="세계 전구";
 }
 function forceWorldView(e){
   if(e){
@@ -1886,15 +1886,15 @@ function hardMapViewForNation(k){
   try{globeSelectedKey=k;globeFocusCoord={lon:r.lon,lat:r.lat}}catch(_){}
 
   const payload=[
-    "STATE   // "+(n.name||k),
-    "STATUS  // "+(n.status||"—"),
-    "CAPITAL // "+(n.capital||"—"),
-    "POP.    // "+(n.pop||"—"),
-    "ROLE    // "+(n.strength||"—")
+    "국가    // "+(n.name||k),
+    "상태    // "+(n.status||"—"),
+    "수도    // "+(n.capital||"—"),
+    "인구    // "+(n.pop||"—"),
+    "전력    // "+(n.strength||"—")
   ].join("\n");
 
-  if(state)state.textContent="LOCKED";
-  if(code)code.textContent=(n.sigil||k).toUpperCase()+" // TARGET LOCK";
+  if(state)state.textContent="고정 완료";
+  if(code)code.textContent=(n.sigil||k).toUpperCase()+" // 목표 고정";
   if(coord)coord.textContent=formatCoord(r.lat,r.lon);
   if(feed)feed.textContent=payload;
 
@@ -1991,13 +1991,13 @@ function hardMapViewForNation(k){
     setTimeout(()=>{
       if(token!==hudTypeToken||!feed)return;
       let i=0;feed.textContent="";
-      if(state)state.textContent="STREAMING";
+      if(state)state.textContent="정보 수신 중";
       hudTypeTimer=setInterval(()=>{
         if(token!==hudTypeToken){clearInterval(hudTypeTimer);hudTypeTimer=null;return}
         if(i>=payload.length){
           clearInterval(hudTypeTimer);hudTypeTimer=null;
           feed.textContent=payload;
-          if(state)state.textContent="LOCKED";
+          if(state)state.textContent="고정 완료";
           return;
         }
         feed.textContent+=payload[i++];
@@ -2034,11 +2034,11 @@ function hardWorldView(){
   const caption=document.getElementById("globeCaption");
   const link=document.getElementById("mapHudLink");
 
-  if(state)state.textContent="STANDBY";
-  if(code)code.textContent="GLOBAL THEATER";
-  if(coord)coord.textContent="LAT -- / LON --";
-  if(feed)feed.textContent="AWAITING TARGET...";
-  if(caption)caption.textContent="GLOBAL THEATER";
+  if(state)state.textContent="대기";
+  if(code)code.textContent="세계 전구";
+  if(coord)coord.textContent="위도 -- / 경도 --";
+  if(feed)feed.textContent="표적 대기 중...";
+  if(caption)caption.textContent="세계 전구";
   if(link)link.classList.remove("active");
 
   try{renderStrategicMarkers(null)}catch(_){}
@@ -2093,7 +2093,7 @@ function nation(k){
   }catch(e){
     const state=document.getElementById("mapHudState");
     const feed=document.getElementById("mapHudFeed");
-    if(state)state.textContent="MAP ERROR";
+    if(state)state.textContent="지도 오류";
     if(feed)feed.textContent=String(e&&e.message||e);
     console.warn("HARD MAP VIEW",e);
   }
