@@ -1428,67 +1428,75 @@ function animateGlobeView(view,duration=720){
     requestAnimationFrame(step);
   }catch(e){console.warn("GLOBE ANIMATED FOCUS",e)}
 }
-function forceNationCamera(lat,lng,altitude){
+function getGlobeRoot(){
+  if(!strategicGlobe)return null;
+  try{
+    const scene=strategicGlobe.scene();
+    if(!scene||!scene.children)return null;
+    return scene.children.find(o=>o&&o.type==="Group")||null;
+  }catch(_){return null}
+}
+function resetGlobeObjectRotation(){
+  const root=getGlobeRoot();
+  if(!root)return;
+  try{
+    root.quaternion.set(0,0,0,1);
+    root.updateMatrixWorld&&root.updateMatrixWorld(true);
+  }catch(e){console.warn("GLOBE RESET ROTATION",e)}
+}
+function rotateGlobeObjectTo(lat,lng,duration=760){
   if(!strategicGlobe)return;
+  const root=getGlobeRoot();
+  if(!root)return;
+
   try{
     const cam=strategicGlobe.camera();
-    const ctl=strategicGlobe.controls();
-    const current=strategicGlobe.pointOfView();
-
-    // Derive the globe radius from the current camera distance so this works
-    // with this old vendored Globe.GL build without relying on getCoords().
-    const dx=cam.position.x,dy=cam.position.y,dz=cam.position.z;
-    const currentDistance=Math.sqrt(dx*dx+dy*dy+dz*dz);
-    const currentAltitude=Number.isFinite(+current.altitude)?+current.altitude:2.05;
-    const globeRadius=currentDistance/(1+currentAltitude);
-    const distance=globeRadius*(1+Number(altitude));
-
-    // Same spherical -> cartesian convention used internally by three-globe.
     const toRad=Math.PI/180;
-    const theta=(90-Number(lng))*toRad;
     const phi=(90-Number(lat))*toRad;
+    const theta=(90-Number(lng))*toRad;
+    const sinPhi=Math.sin(phi);
 
-    const x=distance*Math.sin(phi)*Math.cos(theta);
-    const y=distance*Math.cos(phi);
-    const z=distance*Math.sin(phi)*Math.sin(theta);
+    // Build the selected nation's outward surface vector using a Vector3
+    // cloned from the camera so no global THREE dependency is required.
+    const local=cam.position.clone();
+    local.set(
+      sinPhi*Math.cos(theta),
+      Math.cos(phi),
+      sinPhi*Math.sin(theta)
+    ).normalize();
 
-    if(ctl){
-      ctl.autoRotate=false;
-      ctl.enableDamping=false;
-      ctl.enabled=false;
-      if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
-    }
+    // Where the selected surface point must face: straight toward the camera.
+    const cameraDir=cam.position.clone().normalize();
 
-    cam.position.set(x,y,z);
-    cam.lookAt(0,0,0);
-    cam.updateMatrix&&cam.updateMatrix();
-    cam.updateMatrixWorld&&cam.updateMatrixWorld(true);
-    cam.updateProjectionMatrix&&cam.updateProjectionMatrix();
+    // Account for any previous nation rotation.
+    const currentWorld=local.clone().applyQuaternion(root.quaternion).normalize();
 
-    if(ctl){
-      if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
-      ctl.enabled=true;
-      ctl.update&&ctl.update();
-      ctl.enableDamping=true;
-    }
+    // Compute a delta quaternion that maps the selected point to camera direction.
+    const delta=root.quaternion.clone();
+    delta.set(0,0,0,1);
+    delta.setFromUnitVectors(currentWorld,cameraDir);
 
-    // A second hard sync after controls.update prevents a stale orbit state
-    // from restoring the previous nation on the next frame.
-    requestAnimationFrame(()=>{
-      if(!strategicGlobe)return;
-      try{
-        const c2=strategicGlobe.camera();
-        const ct2=strategicGlobe.controls();
-        c2.position.set(x,y,z);
-        c2.lookAt(0,0,0);
-        c2.updateMatrixWorld&&c2.updateMatrixWorld(true);
-        if(ct2){
-          if(ct2.target&&ct2.target.set)ct2.target.set(0,0,0);
-          ct2.update&&ct2.update();
-        }
-      }catch(_){}
-    });
-  }catch(e){console.warn("GLOBE DIRECT CAMERA",e)}
+    const startQ=root.quaternion.clone();
+    const targetQ=delta.clone().multiply(startQ);
+    const token=++globeMoveToken;
+    const t0=performance.now();
+
+    const tick=now=>{
+      if(token!==globeMoveToken||!root)return;
+      const t=Math.min(1,(now-t0)/duration);
+      const ease=t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+
+      root.quaternion.copy(startQ).slerp(targetQ,ease);
+      root.updateMatrixWorld&&root.updateMatrixWorld(true);
+
+      if(t<1) requestAnimationFrame(tick);
+      else{
+        root.quaternion.copy(targetQ);
+        root.updateMatrixWorld&&root.updateMatrixWorld(true);
+      }
+    };
+    requestAnimationFrame(tick);
+  }catch(e){console.warn("GLOBE OBJECT ROTATE",e)}
 }
 function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
@@ -1504,16 +1512,16 @@ function focusNation(k){
 
   setWorldSpin(false);
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
-  ++globeMoveToken;
 
-  // Nation selection bypasses Globe.GL's pointOfView tween completely.
-  forceNationCamera(r.lat,r.lon,globeAltitudeFor(k));
+  // Different strategy: keep the camera untouched and rotate the globe model itself
+  // until the selected nation is physically facing the current camera.
+  rotateGlobeObjectTo(r.lat,r.lon,760);
 
   setTimeout(()=>{
     if(globeSelectedKey!==k||!strategicGlobe)return;
     setGlobeMarker(k);
     refreshGlobeCountries();
-  },80);
+  },820);
 }
 function buildGlobeTexture(done){
   if(globeTextureDataUrl){done(globeTextureDataUrl);return}
@@ -1587,6 +1595,7 @@ function initMap(){
       if(sel&&COUNTRY_VIEW[sel]){
         focusNation(sel);
       }else{
+        resetGlobeObjectRotation();
         globeSelectedKey=null;globeFocusCoord=null;
         setGlobeLabel("",true);setGlobeMarker(null);refreshGlobeCountries();
         strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},0);
@@ -1600,6 +1609,7 @@ function initMap(){
 }
 function redrawGlobe(){resizeGlobe()}
 function focusRegion(key){
+  resetGlobeObjectRotation();
   const regions={
     world:{lon:15,lat:18,alt:2.05,label:"GLOBAL"},
     eastasia:{lon:120,lat:30,alt:1.62,label:"EAST ASIA"},
@@ -1636,6 +1646,7 @@ $("#mobileZoomOut").onclick=()=>mobileZoomBy(.9);
 $("#mobileMapExpand").onclick=()=>{const gm=$(".grand-map");gm.classList.add("mobile-map-full");document.body.classList.add("intro-lock");setTimeout(resizeGlobe,120)};
 $("#mobileMapExit").onclick=()=>{const gm=$(".grand-map");gm.classList.remove("mobile-map-full");document.body.classList.remove("intro-lock");setTimeout(resizeGlobe,120)};
 $("#reset").onclick=()=>{
+  resetGlobeObjectRotation();
   globeSelectedKey=null;globeFocusCoord=null;
   renderWorldSelection();setGlobeMarker(null);setGlobeLabel("",true);refreshGlobeCountries();setWorldSpin(true);
   if(strategicGlobe){try{strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},850)}catch(_){}}
