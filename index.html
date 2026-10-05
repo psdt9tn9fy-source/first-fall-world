@@ -165,10 +165,11 @@ radial-gradient(ellipse at 50% 48%,rgba(92,119,133,.11),transparent 36%),
 radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 #map{position:relative;z-index:2;width:100%;height:100%;touch-action:none;filter:drop-shadow(0 26px 50px #000);cursor:grab}
 #map:active{cursor:grabbing}
-.globe-ocean{fill:#071117;stroke:#59717c;stroke-width:1.15}
-.globe-atmosphere{fill:none;stroke:rgba(132,177,196,.28);stroke-width:7;filter:drop-shadow(0 0 18px rgba(86,139,162,.35))}
-.globe-graticule{fill:none;stroke:#29414b;stroke-width:.42;opacity:.8}
-.globe-night{fill:none;stroke:rgba(255,255,255,.025);stroke-width:16}
+.globe-ocean{fill:url(#globeSurface);stroke:#8aa6b3;stroke-width:1.9;filter:drop-shadow(0 0 24px rgba(74,135,160,.32))}
+.globe-atmosphere{fill:none;stroke:rgba(145,199,221,.48);stroke-width:8;filter:drop-shadow(0 0 24px rgba(86,151,179,.5))}
+.globe-graticule{fill:none;stroke:#41616f;stroke-width:.48;opacity:.68}
+.globe-night{fill:none;stroke:rgba(255,255,255,.045);stroke-width:16}
+.globe-shine{fill:url(#globeShine);pointer-events:none;opacity:.8}
 .loading{position:absolute;inset:0;z-index:8;display:grid;place-items:center;color:#65757d;font:800 .62rem ui-monospace,monospace;letter-spacing:.16em}
 .country{cursor:pointer;transition:fill .24s ease,filter .18s ease,opacity .18s ease}.country:hover{filter:brightness(1.3)}.country.focus{filter:brightness(1.6) drop-shadow(0 0 5px rgba(164,189,202,.5))}
 .threat-ring{fill:none;stroke:#7f4b4f;stroke-width:1.1;opacity:.68;vector-effect:non-scaling-stroke;animation:threatPulse 2.3s ease-out infinite;transform-box:fill-box;transform-origin:center}
@@ -450,7 +451,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.8.2</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.8.3</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -770,7 +771,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.8.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.8.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -884,7 +885,9 @@ function streamStage(stage,title,rows,interval=78){
   },i*interval));
 }
 
-window.addEventListener("load",()=>{initMap();drawAllPopulation()},{once:true});
+const bootModules=()=>{initMap();drawAllPopulation()};
+if(document.readyState==="complete")setTimeout(bootModules,0);
+else window.addEventListener("load",bootModules,{once:true});
 
 $("#enter").onclick=()=>{
   if(opening)return;
@@ -980,7 +983,7 @@ function renderWorldSelection(){
   $$(".country-index-item").forEach(b=>b.classList.remove("active"));
   $$(".region-blocks button").forEach(b=>b.classList.remove("active"));
   if(g){
-    g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#263943":"#121b20").attr("opacity",d=>MAP[String(d.id)]?.88:.74);
+    g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#38515d":"#22333b").attr("opacity",d=>MAP[String(d.id)]?.88:.74);
     g.selectAll(".china-sector").classed("active",false).attr("opacity",.62);
   }
 }
@@ -1009,7 +1012,7 @@ function nation(k){
   }
   if(g){
     g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
-      const dk=MAP[String(d.id)];if(!dk)return "#121b20";return dk===k?n.color:"#263943";
+      const dk=MAP[String(d.id)];if(!dk)return "#22333b";return dk===k?n.color:"#38515d";
     }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.68):.56);
     const chinaKeys=["crf","ncdr","wur"];
     g.selectAll(".china-sector").classed("active",d=>d.key===k)
@@ -1065,6 +1068,7 @@ function redrawGlobe(){
   g.select(".globe-ocean").attr("d",path({type:"Sphere"}));
   g.select(".globe-atmosphere").attr("d",path({type:"Sphere"}));
   g.select(".globe-graticule").attr("d",path(d3.geoGraticule10()));
+  g.select(".globe-shine").attr("d",path({type:"Sphere"}));
   g.selectAll("path.country").attr("d",path);
   if(globeChina){
     svg.select("#china-successor-clip path").attr("d",path(globeChina));
@@ -1103,6 +1107,15 @@ async function initMap(){
       w=await remote.json();
     }
     svg=d3.select("#map");
+    const defsBase=svg.append("defs");
+    const oceanGrad=defsBase.append("radialGradient").attr("id","globeSurface").attr("cx","34%").attr("cy","27%").attr("r","72%");
+    oceanGrad.append("stop").attr("offset","0%").attr("stop-color","#193846");
+    oceanGrad.append("stop").attr("offset","48%").attr("stop-color","#0b202b");
+    oceanGrad.append("stop").attr("offset","100%").attr("stop-color","#041018");
+    const shineGrad=defsBase.append("radialGradient").attr("id","globeShine").attr("cx","35%").attr("cy","25%").attr("r","65%");
+    shineGrad.append("stop").attr("offset","0%").attr("stop-color","rgba(190,225,238,.16)");
+    shineGrad.append("stop").attr("offset","42%").attr("stop-color","rgba(120,174,195,.04)");
+    shineGrad.append("stop").attr("offset","100%").attr("stop-color","rgba(0,0,0,0)");
     globeCountries=topojson.feature(w,w.objects.countries).features;
     projection=d3.geoOrthographic().translate([480,260]).scale(globeBaseScale).clipAngle(90).precision(.25).rotate([-15,-18,0]);
     globePath=d3.geoPath(projection);
@@ -1114,10 +1127,10 @@ async function initMap(){
 
     g.selectAll("path.country").data(globeCountries).join("path")
       .attr("class","country")
-      .attr("fill",d=>MAP[String(d.id)]?"#263943":"#121b20")
-      .attr("stroke",d=>MAP[String(d.id)]?"#637b85":"#33434a")
-      .attr("stroke-width",d=>MAP[String(d.id)]?.7:.42)
-      .attr("opacity",d=>MAP[String(d.id)]?.88:.74)
+      .attr("fill",d=>MAP[String(d.id)]?"#38515d":"#22333b")
+      .attr("stroke",d=>MAP[String(d.id)]?"#98aeb7":"#60727a")
+      .attr("stroke-width",d=>MAP[String(d.id)]?.78:.5)
+      .attr("opacity",d=>MAP[String(d.id)]?.98:.9)
       .on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)})
       .append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});
 
@@ -1149,6 +1162,7 @@ async function initMap(){
     hh.append("circle").attr("class","threat-dot").attr("r",2.3);
     hh.append("text").attr("class","threat-label").attr("x",8).attr("y",-7).text(d=>d.name);
 
+    g.append("path").attr("class","globe-shine").datum({type:"Sphere"});
     g.append("path").attr("class","globe-atmosphere").datum({type:"Sphere"});
 
     let dragRot=null;
@@ -1182,10 +1196,14 @@ async function initMap(){
     zoom={};
     redrawGlobe();
     $("#loading")?.remove();
+    if(sel&&COUNTRY_VIEW[sel])setTimeout(()=>focusNation(sel),80);
+    else setTimeout(()=>rotateGlobeTo(105,22,420),80);
   }catch(e){
     console.error("GLOBE INIT FAILED",e);
+    try{svg&&svg.selectAll("*").remove()}catch(_){}
+    svg=null;g=null;projection=null;globePath=null;
     $("#loading").textContent="GLOBE DATA LINK ERROR // RETRY";
-    setTimeout(()=>{ if($("#loading")) $("#loading").textContent="지구본 데이터를 불러오지 못했습니다. 새로고침해 주세요."; },1200);
+    setTimeout(()=>{ if($("#loading")) $("#loading").textContent="지구본 데이터를 다시 연결하는 중..."; initMap(); },900);
   }
 }
 function focusRegion(key){
