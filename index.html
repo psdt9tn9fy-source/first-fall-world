@@ -240,6 +240,8 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 .region-blocks button:hover{border-color:#4c626d;color:#a9b8bf}
 .region-blocks button.active{border-color:#a38a57;color:#f0e8d8;background:linear-gradient(180deg,#211c12,#0d1113);box-shadow:inset 0 2px 0 #b39961,0 0 18px rgba(180,146,82,.08)}
 .region-blocks button.active span{color:#bda97e}
+.map-region-blocks{padding:7px;border-top:1px solid #26353c;background:linear-gradient(180deg,#071014,#050a0d)}
+
 .selector-main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.65fr);gap:10px;align-items:stretch}
 .selector-map-card{min-width:0}
 .selector-map-card .mapwrap{height:min(64vh,680px);min-height:520px;background:
@@ -386,6 +388,19 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   .grand-map.mobile-map-full .map-country-summary{bottom:12px}
 }
 
+
+@media(max-width:650px){
+  .flag-carousel-card{min-height:158px!important;padding:8px 40px 9px!important}
+  .flag-focus{gap:5px!important;padding:2px 0!important}
+  .flag-focus .flag{width:min(36vw,128px)!important;max-width:128px!important}
+  .flag-focus-copy h2{font-size:.96rem!important}
+  .selector-map-card{margin-top:0!important}
+  .selector-map-card .mapwrap{height:42svh!important;min-height:300px!important;max-height:390px!important}
+  .selector-map-card .mapbar,.selector-map-card .mobile-map-tools,.selector-map-card .mapfoot{display:none!important}
+  .map-region-blocks{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;padding:7px!important;border-top:1px solid #2d3c44!important}
+  .map-region-blocks button{min-height:40px!important}
+}
+
 </style>
 </head>
 <body class="intro-lock">
@@ -435,7 +450,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.8.0</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.8.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -476,17 +491,6 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
       <button class="flag-arrow" id="nextNation" type="button" aria-label="다음 국가">›</button>
     </section>
 
-    <div class="region-blocks" id="regionBlocks" aria-label="전략 지역 블록">
-      <button type="button" data-zone="eastasia">EAST ASIA<span>동아시아</span></button>
-      <button type="button" data-zone="northamerica">NORTH AMERICA<span>북미</span></button>
-      <button type="button" data-zone="europe">EUROPE<span>유럽</span></button>
-      <button type="button" data-zone="southasia">SOUTH ASIA<span>남아시아</span></button>
-      <button type="button" data-zone="southeastasia">S.E. ASIA<span>동남아</span></button>
-      <button type="button" data-zone="southamerica">SOUTH AMERICA<span>남미</span></button>
-      <button type="button" data-zone="africa">AFRICA<span>아프리카</span></button>
-      <button type="button" data-zone="oceania">OCEANIA<span>오세아니아</span></button>
-    </div>
-
     <div class="selector-main">
       <section class="card grand-map selector-map-card">
         <div class="mapbar"><span>STRATEGIC TERRITORY DISPLAY</span><span id="mapSelectionLabel">WORLD // 2134</span></div>
@@ -526,6 +530,17 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
               <div><span>ROLE</span><b id="summaryStrength">GLOBAL THEATER</b></div>
             </div>
           </div>
+        </div>
+
+        <div class="region-blocks map-region-blocks" id="regionBlocks" aria-label="전략 지역 블록">
+          <button type="button" data-zone="eastasia">EAST ASIA<span>동아시아</span></button>
+          <button type="button" data-zone="northamerica">NORTH AMERICA<span>북미</span></button>
+          <button type="button" data-zone="europe">EUROPE<span>유럽</span></button>
+          <button type="button" data-zone="southasia">SOUTH ASIA<span>남아시아</span></button>
+          <button type="button" data-zone="southeastasia">S.E. ASIA<span>동남아</span></button>
+          <button type="button" data-zone="southamerica">SOUTH AMERICA<span>남미</span></button>
+          <button type="button" data-zone="africa">AFRICA<span>아프리카</span></button>
+          <button type="button" data-zone="oceania">OCEANIA<span>오세아니아</span></button>
         </div>
 
         <div class="mapfoot">
@@ -755,7 +770,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.8.0</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.8.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1077,7 +1092,16 @@ function rotateGlobeTo(lon,lat,duration=520){
 async function initMap(){
   if(svg)return;
   try{
-    const w=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json").then(r=>r.json());
+    let w;
+    try{
+      const local=await fetch("./assets/data/countries-110m.json",{cache:"force-cache"});
+      if(!local.ok)throw new Error("LOCAL_TOPOLOGY_"+local.status);
+      w=await local.json();
+    }catch(localErr){
+      const remote=await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+      if(!remote.ok)throw localErr;
+      w=await remote.json();
+    }
     svg=d3.select("#map");
     globeCountries=topojson.feature(w,w.objects.countries).features;
     projection=d3.geoOrthographic().translate([480,260]).scale(globeBaseScale).clipAngle(90).precision(.25).rotate([-15,-18,0]);
@@ -1159,7 +1183,8 @@ async function initMap(){
     redrawGlobe();
     $("#loading")?.remove();
   }catch(e){
-    $("#loading").textContent="GLOBE MODULE FAILED // NATIONS 메뉴 사용 가능";
+    console.error("GLOBE INIT FAILED",e);
+    $("#loading").textContent="GLOBE MODULE FAILED // "+(e&&e.message?e.message:"UNKNOWN");
   }
 }
 function focusRegion(key){
