@@ -1831,8 +1831,8 @@ function directNationMap(k){
   const svg=document.querySelector("#globeMount > svg");
   if(svg)svg.setAttribute("viewBox",x+" "+y+" "+w+" "+h);
 
-  // HUD must work even if markers or link rendering later fail.
-  typeNationHud(k);
+  // HUD failure must never break map selection.
+  try{typeNationHud(k)}catch(e){console.warn("HUD TYPE",e)}
 
   const caption=document.getElementById("globeCaption");
   if(caption)caption.textContent=(n.sigil||k).toUpperCase();
@@ -1845,27 +1845,53 @@ function directNationMap(k){
   }catch(e){console.warn("HUD LINK",e)}
 }
 function nation(k){
-  const n=N[k];if(!n)return;
+  const n=N[k];
+  if(!n)return;
 
-  // Critical map/HUD response happens before legacy UI updates.
-  directNationMap(k);
+  // 1) Selection UI is authoritative and must never depend on map/HUD code.
+  sel=k;
+  carouselIndex=COUNTRY_ORDER.indexOf(k);
 
-  sel=k;carouselIndex=COUNTRY_ORDER.indexOf(k);
-  setSelectorFlag(n.flag);
-  $("#selectorCode").textContent=n.code;$("#selectorName").textContent=n.name;$("#selectorEng").textContent=n.eng;
-  $("#mapSelectionLabel").textContent=n.code;$("#mapHeroName").textContent=n.name;$("#mapHeroSub").textContent=n.eng;
-  $("#summaryName").textContent=n.name;$("#summaryStatus").textContent=n.status;$("#summaryPop").textContent=n.pop;$("#summaryCapital").textContent=n.capital;$("#summaryStrength").textContent=n.strength;
-  $("#ccode").textContent=n.code;$("#cname").textContent=n.name;$("#ceng").textContent=n.eng;$("#csigil").textContent=n.sigil;
-  $("#cstatus").textContent=n.status;$("#cpop").textContent=n.pop;$("#ccapital").textContent=n.capital;$("#cstrength").textContent=n.strength;$("#cbrief").textContent=n.brief;
-  $("#mapIntel").classList.remove("idle");
-  $$(".country-index-item").forEach(b=>b.classList.toggle("active",b.dataset.country===k));
-  if(g){
-    g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
-      const dk=MAP[String(d.id)];if(!dk)return "#344a54";return dk===k?n.color:"#56717c";
-    }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.68):.56);
-    const chinaKeys=["crf","ncdr","wur"];
-    g.selectAll(".china-sector").classed("active",d=>d.key===k)
-      .attr("opacity",d=>chinaKeys.includes(k)?(d.key===k?1:.2):.5);
+  try{setSelectorFlag(n.flag)}catch(_){}
+  const setText=(id,val)=>{const el=$(id);if(el)el.textContent=val??""};
+
+  setText("#selectorCode",n.code);
+  setText("#selectorName",n.name);
+  setText("#selectorEng",n.eng);
+
+  setText("#mapSelectionLabel",n.code);
+  setText("#mapHeroName",n.name);
+  setText("#mapHeroSub",n.eng);
+
+  setText("#summaryName",n.name);
+  setText("#summaryStatus",n.status);
+  setText("#summaryPop",n.pop);
+  setText("#summaryCapital",n.capital);
+  setText("#summaryStrength",n.strength);
+
+  setText("#ccode",n.code);
+  setText("#cname",n.name);
+  setText("#ceng",n.eng);
+  setText("#csigil",n.sigil);
+  setText("#cstatus",n.status);
+  setText("#cpop",n.pop);
+  setText("#ccapital",n.capital);
+  setText("#cstrength",n.strength);
+  setText("#cbrief",n.brief);
+
+  const intel=$("#mapIntel");
+  if(intel)intel.classList.remove("idle");
+
+  $$(".country-index-item").forEach(b=>{
+    b.classList.toggle("active",b.dataset.country===k);
+  });
+
+  // 2) Map/HUD enhancement runs only after selection has succeeded.
+  // Any failure here must not cancel country selection.
+  try{
+    directNationMap(k);
+  }catch(e){
+    console.warn("NATION MAP/HUD",e);
   }
 }
 function stepCountry(dir){
