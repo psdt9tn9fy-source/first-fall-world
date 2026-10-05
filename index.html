@@ -213,7 +213,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.docbtn{min-height:155px;text-align:left;padding:18px;border:1px solid var(--line);background:linear-gradient(145deg,#0b1727,#07101b);color:var(--text);cursor:pointer}.docbtn.active,.docbtn:hover{border-color:#355678}.docbtn span,.docbtn small{display:block;color:var(--muted);font:.62rem ui-monospace,monospace}.docbtn b{display:block;margin:20px 0}.viewer{margin-top:14px;padding:22px;min-height:220px}.viewerbody{white-space:pre-line;color:#b6c5d6;font:.82rem/1.9 ui-monospace,monospace}
 .footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
 
-.mobile-nav,.mobile-menu-sheet,.mobile-power-strip,.intel-close{display:none}
+.mobile-nav,.mobile-menu-sheet,.mobile-power-strip,.intel-close,.mobile-map-tools,.mobile-map-exit,.mobile-zoom-stack{display:none}
 @media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.map-intel{position:relative;right:auto;top:auto;width:auto;max-height:none;border-left:0;border-right:0;border-bottom:0;transform:none}.map-intel.idle{display:none}.mapwrap{height:66vh;min-height:520px}.map-titleblock{left:18px;top:65px}.map-command{left:18px;bottom:65px}.map-command div{min-width:90px;padding:9px 10px}}
 @media(max-width:650px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -232,8 +232,27 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
   .mobile-power-strip{display:flex;gap:5px;overflow-x:auto;padding:6px 7px;border-bottom:1px solid #293943;background:#071015;scrollbar-width:none}
   .mobile-power-strip::-webkit-scrollbar{display:none}
   .mobile-power-strip button{flex:0 0 auto;min-width:52px;height:33px;border:1px solid #33454e;background:#0c151a;color:#a5b5bd;font:900 .56rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
+  .mobile-map-tools{display:flex;align-items:center;gap:6px;padding:6px 7px;border-bottom:1px solid #26343b;background:#060d11}
+  .mobile-region-strip{display:flex;gap:5px;min-width:0;overflow-x:auto;scrollbar-width:none;flex:1}.mobile-region-strip::-webkit-scrollbar{display:none}
+  .mobile-region-strip button{flex:0 0 auto;height:31px;padding:0 9px;border:1px solid #2e3e46;background:#091217;color:#6f8189;font:800 .5rem ui-monospace,monospace;letter-spacing:.06em;border-radius:2px}
+  .mobile-region-strip button.active{color:#e0e6e5;border-color:#7894a1;background:#132128}
+  .mobile-map-expand{flex:0 0 auto;height:31px;padding:0 10px;border:1px solid #586b75;background:#111b20;color:#cad4d6;font:900 .5rem ui-monospace,monospace;letter-spacing:.07em;border-radius:2px}
   .mapwrap{width:100%;min-height:325px!important;height:47svh!important;max-height:480px!important;overflow:hidden!important}
-  #map{display:block!important;width:100%!important;height:100%!important;min-height:325px!important;touch-action:pan-y!important}
+  #map{display:block!important;width:100%!important;height:100%!important;min-height:325px!important;touch-action:pan-y pinch-zoom!important}
+  .mobile-zoom-stack{display:grid;position:absolute;right:9px;bottom:10px;z-index:12;gap:5px}
+  .mobile-zoom-stack button,.mobile-map-exit{width:38px;height:38px;border:1px solid #43555f;background:rgba(6,12,15,.92);color:#c7d0d2;font:900 1rem ui-monospace,monospace;border-radius:4px;box-shadow:0 6px 18px #0008}
+  .mobile-map-exit{display:none;position:absolute;right:9px;top:9px;z-index:13;font-size:1.2rem}
+  .grand-map.mobile-map-full{position:fixed!important;inset:0!important;z-index:170!important;margin:0!important;border:0!important;background:#030709!important;display:flex;flex-direction:column;overflow:hidden!important}
+  .grand-map.mobile-map-full .mapbar{display:none!important}
+  .grand-map.mobile-map-full .mobile-power-strip{order:1;padding-top:calc(7px + env(safe-area-inset-top))}
+  .grand-map.mobile-map-full .mobile-map-tools{order:2}
+  .grand-map.mobile-map-full .mapwrap{order:3;flex:1;height:auto!important;max-height:none!important;min-height:0!important}
+  .grand-map.mobile-map-full .mapfoot{display:none!important}
+  .grand-map.mobile-map-full .mobile-map-exit{display:block}
+  .grand-map.mobile-map-full .map-titleblock{top:14px!important;left:12px!important}
+  .grand-map.mobile-map-full .map-titleblock .overline{display:none}
+  .grand-map.mobile-map-full .map-titleblock h1{font-size:1.35rem!important;margin-top:0}
+  .grand-map.mobile-map-full .map-titleblock p{font-size:.42rem!important}
   .map-titleblock{left:11px!important;top:54px!important}.map-titleblock .overline{font-size:.42rem}.map-titleblock h1{font-size:clamp(1.35rem,10vw,2.25rem)!important}.map-titleblock p{font-size:.4rem!important}
   .map-command{display:none!important}
   .grand-map::before,.grand-map::after{inset:47px 0 48px}
@@ -314,7 +333,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.6.2</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.6.3</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -353,7 +372,24 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
         <button type="button" data-mobile-select="jpn">JPN</button><button type="button" data-mobile-select="ind">IND</button>
         <button type="button" data-mobile-select="bra">BRA</button><button type="button" data-mobile-select="afr">AU</button>
       </div>
+      <div class="mobile-map-tools">
+        <div class="mobile-region-strip">
+          <button type="button" data-region="world">WORLD</button>
+          <button type="button" data-region="eastasia">E. ASIA</button>
+          <button type="button" data-region="europe">EUROPE</button>
+          <button type="button" data-region="northamerica">N. AMERICA</button>
+          <button type="button" data-region="africa">AFRICA</button>
+          <button type="button" data-region="southamerica">S. AMERICA</button>
+          <button type="button" data-region="pacific">PACIFIC</button>
+        </div>
+        <button type="button" class="mobile-map-expand" id="mobileMapExpand">EXPAND</button>
+      </div>
       <div class="mapwrap">
+        <button class="mobile-map-exit" id="mobileMapExit" type="button">×</button>
+        <div class="mobile-zoom-stack">
+          <button type="button" id="mobileZoomIn">＋</button>
+          <button type="button" id="mobileZoomOut">−</button>
+        </div>
         <svg id="map" viewBox="0 0 960 520" aria-label="세계전략지도"></svg>
         <div class="loading" id="loading">LINKING GLOBAL STRATEGIC GRID...</div>
 
@@ -599,7 +635,7 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.6.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.6.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -765,7 +801,7 @@ $("#mobileMenuOpen").onclick=()=>{const m=$("#mobileMenu");m.hidden=!m.hidden};
 $("#mobileMenuClose").onclick=()=>$("#mobileMenu").hidden=true;
 $("#intelClose").onclick=()=>$("#mapIntel").classList.add("idle");
 
-let sel=null,g,zoom,svg;
+let sel=null,g,zoom,svg,projection;
 function nation(k){
   const n=N[k];if(!n)return;
   sel=k;
@@ -800,6 +836,7 @@ async function initMap(){
     svg=d3.select("#map");
     const countries=topojson.feature(w,w.objects.countries).features;
     const p=d3.geoNaturalEarth1().fitExtent([[24,24],[936,496]],{type:"Sphere"});
+    projection=p;
     const path=d3.geoPath(p);
     g=svg.append("g");
 
@@ -840,8 +877,43 @@ async function initMap(){
     $("#loading").textContent="MAP MODULE FAILED // NATIONS 메뉴 사용 가능";
   }
 }
+function focusRegion(key){
+  if(!svg||!zoom||!projection)return;
+  const regions={
+    world:null,
+    eastasia:{lon:120,lat:35,k:2.25},
+    europe:{lon:18,lat:51,k:2.35},
+    northamerica:{lon:-101,lat:43,k:1.9},
+    africa:{lon:20,lat:4,k:1.9},
+    southamerica:{lon:-61,lat:-16,k:2.0},
+    pacific:{lon:150,lat:-10,k:1.7}
+  };
+  const r=regions[key];
+  $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region===key));
+  if(!r){svg.transition().duration(320).call(zoom.transform,d3.zoomIdentity);return}
+  const q=projection([r.lon,r.lat]),k=r.k;
+  const t=d3.zoomIdentity.translate(480-k*q[0],260-k*q[1]).scale(k);
+  svg.transition().duration(340).call(zoom.transform,t);
+}
+function mobileZoomBy(factor){
+  if(svg&&zoom)svg.transition().duration(180).call(zoom.scaleBy,factor)
+}
+$$("[data-region]").forEach(b=>b.onclick=()=>focusRegion(b.dataset.region));
+$("#mobileZoomIn").onclick=()=>mobileZoomBy(1.35);
+$("#mobileZoomOut").onclick=()=>mobileZoomBy(.74);
+$("#mobileMapExpand").onclick=()=>{
+  const gm=$(".grand-map");gm.classList.add("mobile-map-full");
+  document.body.classList.add("intro-lock");
+  setTimeout(()=>window.dispatchEvent(new Event("resize")),50);
+};
+$("#mobileMapExit").onclick=()=>{
+  const gm=$(".grand-map");gm.classList.remove("mobile-map-full");
+  document.body.classList.remove("intro-lock");
+  setTimeout(()=>window.dispatchEvent(new Event("resize")),50);
+};
 $("#reset").onclick=()=>{
   if(svg&&zoom)svg.transition().duration(300).call(zoom.transform,d3.zoomIdentity);
+  $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region==="world"));
   sel=null;
   const intel=$("#mapIntel");if(intel)intel.classList.add("idle");
   if(g)g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d").attr("opacity",d=>MAP[String(d.id)]?.78:.66);
