@@ -168,6 +168,11 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .country{cursor:pointer;transition:fill .24s ease,filter .18s ease,opacity .18s ease}.country:hover{filter:brightness(1.3)}.country.focus{filter:brightness(1.6) drop-shadow(0 0 5px rgba(164,189,202,.5))}
 .threat-ring{fill:none;stroke:#7f4b4f;stroke-width:1.1;opacity:.68;vector-effect:non-scaling-stroke;animation:threatPulse 2.3s ease-out infinite;transform-box:fill-box;transform-origin:center}
 .threat-dot{fill:#a35b60;opacity:.9}.threat-label{fill:#7f8b8f;font:700 8px ui-monospace,monospace;letter-spacing:.08em;pointer-events:none}
+.china-sector{cursor:pointer;stroke:#d5c6a5;stroke-width:.75;vector-effect:non-scaling-stroke;transition:opacity .18s,filter .18s;opacity:.62}
+.china-sector:hover{opacity:.92;filter:brightness(1.22)}
+.china-sector.active{opacity:1;filter:brightness(1.35) drop-shadow(0 0 5px rgba(218,191,132,.45))}
+.china-sector-label{fill:#ddd2bc;font:900 7.5px ui-monospace,monospace;letter-spacing:.08em;paint-order:stroke;stroke:#050708;stroke-width:2px;pointer-events:none}
+
 @keyframes threatPulse{0%{opacity:.68;transform:scale(.72)}70%,100%{opacity:0;transform:scale(1.55)}}
 .map-titleblock{position:absolute;z-index:7;left:26px;top:69px;pointer-events:none}
 .map-titleblock .overline{color:#78868d;font:800 .57rem ui-monospace,monospace;letter-spacing:.19em}
@@ -248,7 +253,11 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 
 .nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:linear-gradient(90deg,#f7f5ef 0 42%,#0e315a 42% 58%,#f7f5ef 58%)}.flag.rok:after{width:26px;height:26px;border-radius:50%;background:linear-gradient(#d83f4f 0 50%,#315fb3 50%);left:calc(50% - 13px);top:17px}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
 .flag.jpn{background:#f4f2ed}.flag.jpn:before{width:32px;height:32px;border-radius:50%;background:#b92d3e;left:calc(50% - 16px);top:14px}.flag.jpn:after{width:46px;height:46px;border:2px solid #18314e;border-radius:50%;left:calc(50% - 25px);top:5px}
-.flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.ind{background:linear-gradient(#d77c36 0 33%,#eee 33% 66%,#417e59 66%)}.flag.bra{background:linear-gradient(135deg,#1e6044,#b6a94b)}.flag.aus{background:linear-gradient(135deg,#142c54,#3f76a8)}.flag.can{background:linear-gradient(90deg,#9b3040 0 25%,#eee 25% 75%,#9b3040 75%)}.flag.mex{background:linear-gradient(90deg,#2f6d4d 0 33%,#eee 33% 66%,#8b3140 66%)}.flag.sea{background:linear-gradient(135deg,#145968,#2a8d82)}.flag.afr{background:radial-gradient(circle at 50% 50%,#b99b57 0 7%,transparent 8%),linear-gradient(135deg,#164638,#0d2f29)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
+.flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}
+.flag.crf{background:radial-gradient(circle at 52% 50%,#e3ded2 0 7%,transparent 8%),linear-gradient(135deg,#9b2935,#5e101b)}
+.flag.ncdr{background:linear-gradient(135deg,#5b211e 0 44%,#c18d4f 45% 51%,#241416 52% 100%)}
+.flag.wur{background:radial-gradient(circle at 50% 50%,transparent 0 18%,#b8954d 19% 22%,transparent 23%),linear-gradient(135deg,#0a0d0e,#242019)}
+.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.ind{background:linear-gradient(#d77c36 0 33%,#eee 33% 66%,#417e59 66%)}.flag.bra{background:linear-gradient(135deg,#1e6044,#b6a94b)}.flag.aus{background:linear-gradient(135deg,#142c54,#3f76a8)}.flag.can{background:linear-gradient(90deg,#9b3040 0 25%,#eee 25% 75%,#9b3040 75%)}.flag.mex{background:linear-gradient(90deg,#2f6d4d 0 33%,#eee 33% 66%,#8b3140 66%)}.flag.sea{background:linear-gradient(135deg,#145968,#2a8d82)}.flag.afr{background:radial-gradient(circle at 50% 50%,#b99b57 0 7%,transparent 8%),linear-gradient(135deg,#164638,#0d2f29)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
 
 .popcard{padding:20px}.popchart{width:100%;height:300px;margin-top:8px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font:.66rem ui-monospace,monospace}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
 .populationNote{padding:18px;margin-top:12px;border:1px solid #253951;background:#07111d;color:#aebdcb;line-height:1.75;font-size:.85rem}
@@ -345,11 +354,11 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 }
 @media(max-width:650px){
   .selector-head{padding:5px 2px 2px;align-items:flex-start}.selector-head h2{font-size:1.25rem}.selector-head p{font-size:.7rem;line-height:1.45}.selector-head-code{display:none}
-  .flag-carousel-card{min-height:138px;grid-template-columns:36px minmax(0,1fr) 36px;gap:6px;padding:12px 6px 10px;overflow:visible}
+  .flag-carousel-card{min-height:184px;grid-template-columns:34px minmax(0,1fr) 34px;gap:4px;padding:12px 4px 10px;overflow:visible}
   .flag-carousel-card:before{display:none}.flag-arrow{width:38px;height:58px;font-size:1.65rem}
-  .flag-focus{grid-template-columns:minmax(104px,118px) minmax(0,1fr);gap:10px;padding:4px 0}
-  .flag-focus .flag{width:100%;max-width:118px;min-height:70px!important;height:auto!important;aspect-ratio:3/2}
-  .flag-focus-copy span{font-size:.43rem}.flag-focus-copy h2{font-size:1.08rem;margin:3px 0 2px;white-space:normal;line-height:1.08}.flag-focus-copy p{font-size:.41rem;line-height:1.3;white-space:normal;overflow:visible}
+  .flag-focus{grid-template-columns:1fr;justify-items:center;gap:7px;padding:5px 2px;text-align:center;overflow:visible}
+  .flag-focus .flag{width:min(46vw,154px);max-width:154px;min-height:0!important;height:auto!important;aspect-ratio:3/2}
+  .flag-focus-copy{width:100%;overflow:visible}.flag-focus-copy span{font-size:.41rem}.flag-focus-copy h2{font-size:1.02rem;margin:2px 0;white-space:normal;line-height:1.06;overflow:visible}.flag-focus-copy p{font-size:.39rem;line-height:1.25;white-space:normal;overflow:visible}
   .region-blocks{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.region-blocks button{min-height:42px;padding:5px 6px;font-size:.43rem}.region-blocks button span{font-size:.42rem;margin-top:2px}
   .selector-main{display:block}.selector-map-card{margin-top:0}
   .selector-map-card .mapwrap{height:43svh!important;min-height:315px!important;max-height:430px!important}
@@ -412,7 +421,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.7.1</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.7.2</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -437,7 +446,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
         <h2>국가 · 방위권 선택</h2>
         <p>국기를 넘기면 전략지도가 해당 국가·세력권으로 이동합니다.</p>
       </div>
-      <div class="selector-head-code"><span>DATABASE</span><b>13 MAJOR ENTRIES</b><small>WORKING CANON</small></div>
+      <div class="selector-head-code"><span>DATABASE</span><b>15 MAJOR ENTRIES</b><small>WORKING CANON</small></div>
     </header>
 
     <section class="flag-carousel-card">
@@ -732,7 +741,7 @@ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 15p
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -757,7 +766,10 @@ const N={
 rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
 afu:{code:"AFU // DRAFT",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
 jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES",color:"#ffb45e",flag:"jpn",brief:"제1강하 이후에도 국호와 국가체제를 유지했다. 2042년 국방재건령으로 자위대를 일본국방위군으로 재편. 도시요새·해양전·정밀방어·소형 무인체계에 강하다."},
-chn:{code:"CN SUCCESSORS // DRAFT",name:"중국권 3개 후계국",eng:"CHINESE SUCCESSOR STATES",sigil:"3C",status:"FRAGMENTED",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"INDUSTRIAL MASS",color:"#ff5d75",flag:"chn",brief:"구 중화인민공화국은 장기전과 중앙통제 붕괴 끝에 소멸했다. 2134년에는 중화재건연방·화북방위공화국·서부연합공화국이 경쟁하며, 대에이돌론 작전에서는 중화공동방위협정(CMDC)을 통해 협력한다."},
+chn:{code:"CN AGGREGATE // DEMOGRAPHY",name:"중국권 합계",eng:"CHINESE REGIONS — AGGREGATE",sigil:"3C",status:"STATISTICAL ONLY",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"DEMOGRAPHIC AGGREGATE",color:"#9b5b60",flag:"chn",hidden:true,brief:"인구통계에서만 사용하는 중국권 3개 후계국 합계."},
+crf:{code:"CRF // 2134",name:"중화재건연방",eng:"CHINESE RECONSTRUCTION FEDERATION",sigil:"CRF",status:"SUCCESSOR STATE",pop:"≈ 420M",capital:"NANJING",strength:"INDUSTRY / DRONES",color:"#a54a54",flag:"crf",brief:"구 중국 동부·남부 핵심 산업권을 기반으로 한 최대 후계국. 난징을 중심으로 제조업·드론·해안방위를 재건했으며 스스로를 구 중국의 가장 강한 정통 계승국으로 간주하는 정치세력이 강하다."},
+ncdr:{code:"NCDR // 2134",name:"화북방위공화국",eng:"NORTH CHINA DEFENSE REPUBLIC",sigil:"NCDR",status:"MILITARIZED SUCCESSOR",pop:"≈ 180M",capital:"BEIJING",strength:"FORTRESS / ARTILLERY",color:"#b07b53",flag:"ncdr",brief:"베이징과 화북 방위권을 중심으로 형성된 군사화 후계국. 요새도시·장거리포병·중장갑·북방전선 방어에 강하며 CRF의 영향력 확대를 지속적으로 경계한다."},
+wur:{code:"WUR // 2134",name:"서부연합공화국",eng:"WESTERN UNION REPUBLIC",sigil:"WUR",status:"SUCCESSOR STATE",pop:"≈ 140M",capital:"CHENGDU",strength:"ENERGY / UNDERGROUND",color:"#9e8a58",flag:"wur",brief:"청두 중심의 서부권 후계국. 자원·에너지·지하시설·산악전 능력을 기반으로 독자노선을 유지하며 타림과 서부 고원권의 장기 회복전을 담당한다."},
 rus:{code:"RUS // 2134",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",status:"CORRIDOR STATE",pop:"≈ 82M",capital:"MOSCOW",strength:"HEAVY / ARCTIC",color:"#a77bff",flag:"rus",brief:"국경상 영토는 광대하지만 실제 안정통제지역은 도시·자원지대·철도·군사회랑에 집중된다. 2043년 시베리아 대단절 이후 장거리 화력·중기갑·혹한전·철도군수 체계가 발달했다."},
 edc:{code:"EDC // DRAFT",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",status:"SUPRANATIONAL",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",color:"#d4af7c",flag:"edc",brief:"프랑스·독일·폴란드 등 유럽 각국이 독립국가와 군을 유지한 채 통합전구사령부를 운영하는 초국가 방위공동체. 센서·전자전·정밀병기·다국적 전장네트워크가 강점이다."},
 ind:{code:"IND // 2134",name:"인도공화국",eng:"REPUBLIC OF INDIA",sigil:"IND",status:"MAJOR POWER",pop:"TBD",capital:"NEW DELHI",strength:"ENERGY / AEROSPACE",color:"#f39b55",flag:"ind",brief:"국가체제를 유지한 주요 강대국. 대규모 무인전력·에너지·항공우주·지상전 역량을 보유하며 I.D.A. 내부에서도 독립적인 외교노선을 유지한다."},
@@ -768,7 +780,7 @@ mex:{code:"MEX // 2134",name:"멕시코",eng:"MEXICO",sigil:"MEX",status:"NORTH 
 sea:{code:"SEA COOP",name:"동남아시아 방위협력권",eng:"SOUTHEAST ASIA DEFENCE COOPERATION",sigil:"SEA",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"MARITIME / ARCHIPELAGO",color:"#63c9b9",flag:"sea",brief:"인도네시아·베트남·싱가포르·필리핀·말레이시아·태국 등은 각자 주권을 유지하면서 해양 네스트와 군도전 대응을 공동조율한다."},
 afr:{code:"AU DEFENSE",name:"아프리카 방위협력권",eng:"AFRICAN UNION DEFENCE COOPERATION",sigil:"AU",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"CORRIDOR DEFENSE",color:"#c2a35c",flag:"afr",brief:"아프리카연합의 방위기능이 강화된 형태. 개별국가는 유지되며 도시·항만·철도·광산·하천축 방어를 중심으로 협력한다."}
 };
-const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",156:"chn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr"};
+const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr"};
 const AFRICA_IDS=[12,24,204,72,854,108,132,120,140,148,174,180,178,384,262,818,226,232,748,231,266,270,288,324,624,404,426,430,434,450,454,466,270,478,480,504,508,516,562,566,646,678,686,690,694,706,710,728,729,834,768,788,800,894,716];
 AFRICA_IDS.forEach(id=>MAP[String(id)]="afr");
 const POP={
@@ -901,14 +913,15 @@ $("#mobileMenuClose").onclick=()=>$("#mobileMenu").hidden=true;
 $("#intelClose").onclick=()=>$("#mapIntel").classList.add("idle");
 
 let sel=null,g,zoom,svg,projection;
-const COUNTRY_ORDER=["rok","afu","jpn","chn","rus","edc","ind","bra","aus","can","mex","sea","afr"];
+const COUNTRY_ORDER=["rok","afu","jpn","crf","ncdr","wur","rus","edc","ind","bra","aus","can","mex","sea","afr"];
 const COUNTRY_VIEW={
-  rok:{lon:127.7,lat:36.5,k:3.7},afu:{lon:-101,lat:39,k:1.55},jpn:{lon:138,lat:37,k:3.0},chn:{lon:105,lat:35,k:1.75},
-  rus:{lon:90,lat:60,k:1.35},edc:{lon:14,lat:50,k:1.9},ind:{lon:79,lat:22,k:2.15},bra:{lon:-52,lat:-10,k:1.9},
-  aus:{lon:134,lat:-25,k:1.8},can:{lon:-107,lat:57,k:1.5},mex:{lon:-102,lat:23,k:2.25},sea:{lon:108,lat:3,k:2.0},afr:{lon:20,lat:2,k:1.55}
+  rok:{lon:127.7,lat:36.5,k:3.05},afu:{lon:-101,lat:39,k:1.45},jpn:{lon:138,lat:37,k:2.55},
+  crf:{lon:117,lat:29,k:2.35},ncdr:{lon:116,lat:41,k:2.35},wur:{lon:92,lat:34,k:1.95},
+  rus:{lon:90,lat:60,k:1.28},edc:{lon:14,lat:50,k:1.75},ind:{lon:79,lat:22,k:1.95},bra:{lon:-52,lat:-10,k:1.75},
+  aus:{lon:134,lat:-25,k:1.65},can:{lon:-107,lat:57,k:1.4},mex:{lon:-102,lat:23,k:2.0},sea:{lon:108,lat:3,k:1.85},afr:{lon:20,lat:2,k:1.45}
 };
 const COUNTRY_ZONE={
-  rok:"eastasia",jpn:"eastasia",chn:"eastasia",
+  rok:"eastasia",jpn:"eastasia",crf:"eastasia",ncdr:"eastasia",wur:"eastasia",
   afu:"northamerica",can:"northamerica",mex:"northamerica",
   rus:"europe",edc:"europe",
   ind:"southasia",sea:"southeastasia",
@@ -937,7 +950,10 @@ function renderWorldSelection(){
   $("#mapIntel").classList.remove("idle");
   $$(".country-index-item").forEach(b=>b.classList.remove("active"));
   $$(".region-blocks button").forEach(b=>b.classList.remove("active"));
-  if(g)g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d").attr("opacity",d=>MAP[String(d.id)]?.78:.66);
+  if(g){
+    g.selectAll(".country").classed("focus",false).attr("fill",d=>MAP[String(d.id)]?"#243138":"#12191d").attr("opacity",d=>MAP[String(d.id)]?.78:.66);
+    g.selectAll(".china-sector").classed("active",false).attr("opacity",.62);
+  }
 }
 function focusNation(k){
   if(!svg||!zoom||!projection)return;
@@ -963,9 +979,14 @@ function nation(k){
     const regionKey=zone==="southasia"?"eastasia":zone==="southeastasia"?"eastasia":zone==="oceania"?"pacific":zone;
     $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region===regionKey));
   }
-  if(g)g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
-    const dk=MAP[String(d.id)];if(!dk)return "#12191d";return dk===k?n.color:"#243138";
-  }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.68):.56);
+  if(g){
+    g.selectAll(".country").classed("focus",d=>MAP[String(d.id)]===k).attr("fill",d=>{
+      const dk=MAP[String(d.id)];if(!dk)return "#12191d";return dk===k?n.color:"#243138";
+    }).attr("opacity",d=>MAP[String(d.id)]?(MAP[String(d.id)]===k?.96:.68):.56);
+    const chinaKeys=["crf","ncdr","wur"];
+    g.selectAll(".china-sector").classed("active",d=>d.key===k)
+      .attr("opacity",d=>chinaKeys.includes(k)?(d.key===k?1:.2):.5);
+  }
   focusNation(k);
 }
 function stepCountry(dir){
@@ -993,7 +1014,7 @@ COUNTRY_ORDER.forEach(k=>{
   b.onclick=()=>nation(k);$("#countryIndexList").appendChild(b);
 });
 renderWorldSelection();
-Object.entries(N).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{tab("world");setTimeout(()=>nation(k),40)};$("#nationGrid").appendChild(b)});
+Object.entries(N).filter(([,n])=>!n.hidden).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{tab("world");setTimeout(()=>nation(k),40)};$("#nationGrid").appendChild(b)});
 
 function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
 Object.entries(POP).filter(([k])=>k!=="world").forEach(([k,p])=>sparkCard(k,p));
@@ -1031,6 +1052,26 @@ async function initMap(){
       .attr("opacity",d=>MAP[String(d.id)]?.78:.66)
       .on("click",(ev,d)=>{const k=MAP[String(d.id)];if(k)nation(k)})
       .append("title").text(d=>{const k=MAP[String(d.id)];return k?N[k].name:"Strategic region"});
+
+    // China is no longer a single state in 2134. Draw three provisional successor
+    // control sectors and clip them to the real China outline.
+    const chinaFeature=countries.find(d=>+d.id===156);
+    if(chinaFeature){
+      const defs=svg.append("defs");
+      defs.append("clipPath").attr("id","china-successor-clip").append("path").attr("d",path(chinaFeature));
+      const sectors=[
+        {key:"wur",label:"WUR",color:N.wur.color,poly:{type:"Polygon",coordinates:[[[72,17],[105,17],[108,33],[104,54],[72,54],[72,17]]]},at:[91,35]},
+        {key:"ncdr",label:"NCDR",color:N.ncdr.color,poly:{type:"Polygon",coordinates:[[[104,33],[136,33],[136,55],[104,55],[104,33]]]},at:[116,42]},
+        {key:"crf",label:"CRF",color:N.crf.color,poly:{type:"Polygon",coordinates:[[[104,17],[136,17],[136,34],[108,34],[104,17]]]},at:[118,28]}
+      ];
+      const cg=g.append("g").attr("class","china-successor-layer").attr("clip-path","url(#china-successor-clip)");
+      cg.selectAll("path").data(sectors).join("path")
+        .attr("class","china-sector").attr("data-key",d=>d.key).attr("d",d=>path(d.poly)).attr("fill",d=>d.color)
+        .on("click",(ev,d)=>{ev.stopPropagation();nation(d.key)})
+        .append("title").text(d=>N[d.key].name+" // PROVISIONAL CONTROL SECTOR");
+      const labels=g.append("g").attr("class","china-sector-labels");
+      sectors.forEach(d=>{const q=p(d.at);if(q)labels.append("text").attr("class","china-sector-label").attr("x",q[0]).attr("y",q[1]).attr("text-anchor","middle").text(d.label)});
+    }
 
     const hotspots=[
       {name:"KOREAN N.",lon:128,lat:41.5},
