@@ -641,7 +641,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.3.1</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.3.2</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -966,7 +966,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.3.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.3.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1257,6 +1257,54 @@ var strategicGlobe=null,globeStage=null,globeMount=null;
 var globeSelectedKey=null,globeFocusCoord=null;
 var globeInitAttempts=0;
 var globeTextureDataUrl=null,globeTextureLoading=false;
+var globeFeatures=(window.WORLD_GEOJSON&&Array.isArray(window.WORLD_GEOJSON.features))
+  ?window.WORLD_GEOJSON.features.filter(f=>(f.properties?.name||"").toLowerCase()!=="antarctica")
+  :[];
+
+function globeCountryKey(name){
+  const n=(name||"").toLowerCase();
+  if(n==="south korea"||n.includes("republic of korea")||n==="korea")return "rok";
+  if(n==="japan")return "jpn";
+  if(n.includes("united states"))return "afu";
+  if(n==="canada")return "can";
+  if(n==="mexico")return "mex";
+  if(n==="brazil")return "bra";
+  if(n==="india")return "ind";
+  if(n==="australia")return "aus";
+  if(n==="russia")return "rus";
+  if(n==="china")return ["crf","ncdr","wur"].includes(globeSelectedKey)?globeSelectedKey:null;
+  if(["france","germany","spain","portugal","italy","belgium","netherlands","luxembourg","denmark","sweden","finland","poland","czech republic","slovakia","austria","hungary","romania","bulgaria","greece","ireland","slovenia","croatia","estonia","latvia","lithuania"].includes(n))return "edc";
+  if(["indonesia","vietnam","thailand","malaysia","philippines","singapore","cambodia","laos","myanmar","brunei","timor-leste"].includes(n))return "sea";
+  if(["algeria","angola","benin","botswana","burkina faso","burundi","cameroon","central african republic","chad","congo","democratic republic of the congo","djibouti","egypt","equatorial guinea","eritrea","ethiopia","gabon","gambia","ghana","guinea","guinea-bissau","ivory coast","kenya","lesotho","liberia","libya","madagascar","malawi","mali","mauritania","morocco","mozambique","namibia","niger","nigeria","rwanda","senegal","sierra leone","somalia","south africa","south sudan","sudan","swaziland","tanzania","togo","tunisia","uganda","western sahara","zambia","zimbabwe"].includes(n))return "afr";
+  return null;
+}
+
+function refreshGlobeCountries(){
+  if(!strategicGlobe)return;
+  try{
+    strategicGlobe
+      .polygonsData(globeFeatures)
+      .polygonLabel(f=>f.properties?.name||"")
+      .polygonCapColor(f=>{
+        const k=globeCountryKey(f.properties?.name||"");
+        if(globeSelectedKey&&k===globeSelectedKey)return N[k]?.color||"#d6b06e";
+        return k?"rgba(112,145,157,.92)":"rgba(67,88,97,.78)";
+      })
+      .polygonSideColor(f=>{
+        const k=globeCountryKey(f.properties?.name||"");
+        return globeSelectedKey&&k===globeSelectedKey?"rgba(178,145,88,.85)":"rgba(20,35,42,.72)";
+      })
+      .polygonStrokeColor(f=>{
+        const k=globeCountryKey(f.properties?.name||"");
+        return globeSelectedKey&&k===globeSelectedKey?"rgba(255,229,176,.98)":"rgba(165,191,200,.56)";
+      })
+      .polygonAltitude(f=>{
+        const k=globeCountryKey(f.properties?.name||"");
+        return globeSelectedKey&&k===globeSelectedKey?.018:.003;
+      })
+      .polygonsTransitionDuration(0);
+  }catch(e){console.warn("GLOBE COUNTRY LAYER",e)}
+}
 
 function setGlobeLabel(label,isWorld=false){
   const b=$("#globeCaption");
@@ -1324,20 +1372,26 @@ function focusNation(k){
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
   if(!strategicGlobe){
     initMap();
-    setTimeout(()=>{if(strategicGlobe)focusNation(k)},180);
+    setTimeout(()=>{if(strategicGlobe)focusNation(k)},220);
     return;
   }
   setWorldSpin(false);
   setGlobeMarker(k);
+  refreshGlobeCountries();
+
+  // Reliability first: snap the selected country to the exact camera center.
+  // This avoids controls/tween state from leaving the previous country in view.
   const view={lat:r.lat,lng:r.lon,altitude:globeAltitudeFor(k)};
   try{
-    strategicGlobe.pointOfView(view,900);
-    // Force the exact final target after the tween, so every country ends centered.
-    setTimeout(()=>{
-      if(strategicGlobe&&globeSelectedKey===k){
-        try{strategicGlobe.pointOfView(view,0)}catch(_){}
-      }
-    },940);
+    const ctl=strategicGlobe.controls();
+    if(ctl)ctl.enabled=false;
+    strategicGlobe.pointOfView(view,0);
+    requestAnimationFrame(()=>{
+      try{
+        strategicGlobe.pointOfView(view,0);
+        if(ctl){ctl.enabled=true;ctl.update&&ctl.update()}
+      }catch(_){}
+    });
   }catch(e){console.warn("GLOBE FOCUS",e)}
 }
 function buildGlobeTexture(done){
@@ -1399,10 +1453,12 @@ function initMap(){
         .atmosphereAltitude(.15)
         .showGraticules(false)
         .pointsData([])
-        .ringsData([]);
+        .ringsData([])
+        .polygonsData([]);
 
       globeReady=true;
       resizeGlobe();
+      refreshGlobeCountries();
       setWorldSpin(!sel);
 
       try{strategicGlobe.renderer().setPixelRatio(Math.min(window.devicePixelRatio||1,1.5))}catch(_){}
@@ -1411,7 +1467,7 @@ function initMap(){
         focusNation(sel);
       }else{
         globeSelectedKey=null;globeFocusCoord=null;
-        setGlobeLabel("",true);setGlobeMarker(null);
+        setGlobeLabel("",true);setGlobeMarker(null);refreshGlobeCountries();
         strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},0);
       }
     }catch(e){
@@ -1460,7 +1516,7 @@ $("#mobileMapExpand").onclick=()=>{const gm=$(".grand-map");gm.classList.add("mo
 $("#mobileMapExit").onclick=()=>{const gm=$(".grand-map");gm.classList.remove("mobile-map-full");document.body.classList.remove("intro-lock");setTimeout(resizeGlobe,120)};
 $("#reset").onclick=()=>{
   globeSelectedKey=null;globeFocusCoord=null;
-  renderWorldSelection();setGlobeMarker(null);setGlobeLabel("",true);setWorldSpin(true);
+  renderWorldSelection();setGlobeMarker(null);setGlobeLabel("",true);refreshGlobeCountries();setWorldSpin(true);
   if(strategicGlobe){try{strategicGlobe.pointOfView({lat:18,lng:15,altitude:2.05},850)}catch(_){}}
   $$(".mobile-region-strip button").forEach(b=>b.classList.toggle("active",b.dataset.region==="world"));
 };
