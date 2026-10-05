@@ -23,15 +23,38 @@ button{font:inherit}a{color:inherit}
 @keyframes scan{to{transform:translateY(calc(100vh + 240px))}}
 @media(prefers-reduced-motion:reduce){.scan{display:none}}
 
-.boot{position:relative;z-index:50;min-height:100vh;display:grid;place-items:center;padding:20px}
-.boot-card{width:min(720px,100%);padding:42px 24px;border:1px solid #2b4c6e;background:rgba(4,9,18,.92);backdrop-filter:blur(18px);box-shadow:0 30px 80px #0009;text-align:center}
+.boot{position:relative;z-index:50;min-height:100vh;display:grid;place-items:center;overflow:hidden;padding:22px;background:
+linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.76)),
+radial-gradient(circle at 72% 17%,rgba(190,146,87,.17),transparent 29%),
+radial-gradient(circle at 22% 72%,rgba(105,30,25,.13),transparent 28%),
+linear-gradient(180deg,#191713 0%,#0c0b0a 46%,#050505 100%)}
+.boot:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:
+repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 4px),
+radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,.28) 70%,rgba(0,0,0,.78) 100%);mix-blend-mode:screen;opacity:.5}
+.boot:after{content:"";position:absolute;inset:-15%;z-index:1;pointer-events:none;background:
+radial-gradient(ellipse at 15% 60%,rgba(184,170,142,.08),transparent 22%),
+radial-gradient(ellipse at 75% 72%,rgba(184,170,142,.06),transparent 23%);filter:blur(34px);animation:smoke 12s ease-in-out infinite alternate}
+@keyframes smoke{from{transform:translate3d(-2%,1%,0) scale(1)}to{transform:translate3d(3%,-1%,0) scale(1.07)}}
+.boot.boot-exit{animation:bootExit .7s ease forwards}@keyframes bootExit{to{opacity:0;filter:blur(4px);transform:scale(1.015)}}
+.ruins{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.ruins i{position:absolute;bottom:-5vh;width:clamp(56px,8vw,150px);height:var(--h);left:var(--x);background:linear-gradient(90deg,#080808,#191815 48%,#070707);opacity:.92;clip-path:polygon(0 8%,13% 9%,16% 3%,27% 8%,35% 0,46% 6%,55% 4%,62% 12%,76% 7%,83% 15%,100% 12%,96% 100%,0 100%);box-shadow:0 0 35px #000}
+.ruins i:after{content:"";position:absolute;inset:8% 18% 0;background:repeating-linear-gradient(180deg,transparent 0 15px,rgba(183,147,91,.055) 16px 17px)}
+.ruin-ground{position:absolute;left:-5%;right:-5%;bottom:-4%;height:23%;background:linear-gradient(168deg,transparent 0 27%,#090909 28% 100%);z-index:0;opacity:.96}
+.boot-card{position:relative;z-index:3;width:min(900px,100%);padding:56px 40px 38px;border:1px solid rgba(183,161,125,.24);background:linear-gradient(180deg,rgba(8,8,7,.68),rgba(5,5,5,.89));box-shadow:0 38px 100px #000c, inset 0 0 80px rgba(255,255,255,.015);text-align:left}
+.boot-card:before,.boot-card:after{content:"";position:absolute;width:56px;height:56px;border-color:rgba(176,148,105,.55)}
+.boot-card:before{left:-1px;top:-1px;border-left:2px solid;border-top:2px solid}.boot-card:after{right:-1px;bottom:-1px;border-right:2px solid;border-bottom:2px solid}
 .kicker,.eyebrow{font:700 .66rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
-.seal{width:94px;height:94px;margin:26px auto 22px;border:1px solid #345b82;border-radius:50%;display:grid;place-items:center;color:var(--cyan);font:900 1.2rem ui-monospace,monospace;position:relative}
-.seal:before,.seal:after{content:"";position:absolute;border-radius:50%;border:1px solid #29425f;inset:9px}.seal:after{inset:23px;border-color:#4c92c6}
-.boot h1{margin:0;font:800 clamp(1.7rem,6vw,3.2rem)/1.06 ui-monospace,monospace;letter-spacing:.06em}
-.boot .sub{margin:12px 0 0;color:var(--muted)}
-.log{margin:28px 0 20px;padding:16px;text-align:left;border:1px solid var(--line);background:#020711;min-height:122px;font:.76rem/1.8 ui-monospace,monospace;color:#a5c5e1}
-.log div:before{content:"> ";color:var(--green)}
+.archive-mark{display:flex;align-items:center;gap:12px;margin-bottom:34px;color:#a68f6b;font:700 .63rem ui-monospace,monospace;letter-spacing:.19em}.archive-mark:before{content:"";width:42px;height:1px;background:#8b7656}
+.boot-date{font:800 clamp(.72rem,1.8vw,.88rem) ui-monospace,monospace;letter-spacing:.23em;color:#9f3c3c;margin-bottom:10px}
+.boot h1{margin:0;color:#e8e2d7;font:900 clamp(2.25rem,8vw,5.8rem)/.92 "Arial Narrow","Noto Sans KR",system-ui,sans-serif;letter-spacing:-.055em;text-shadow:0 8px 38px #000}
+.boot h1 span{display:block;margin-top:12px;font:700 clamp(.72rem,1.5vw,.95rem)/1.4 ui-monospace,monospace;letter-spacing:.28em;color:#7f7465}
+.boot-lead{max-width:650px;margin:30px 0 0;padding-left:16px;border-left:2px solid #6d2929;color:#c7bfb1;font-size:clamp(.88rem,1.6vw,1rem);line-height:1.9}
+.boot-lead strong{color:#f0e8da;font-weight:800}
+.boot .sub{margin:14px 0 0;color:#796f63;font:.67rem/1.7 ui-monospace,monospace;letter-spacing:.08em}
+.log{margin:30px 0 22px;padding:16px 18px;text-align:left;border-top:1px solid rgba(173,149,112,.18);border-bottom:1px solid rgba(173,149,112,.18);background:rgba(0,0,0,.2);min-height:104px;font:.72rem/1.85 ui-monospace,monospace;color:#8f8679}
+.log div{opacity:.92}.log div:before{content:"— ";color:#693333}
+.boot .btn{min-width:190px;min-height:48px;border:1px solid #735f43;background:#15120e;color:#d8cbb7;padding:0 22px;cursor:pointer;font:800 .72rem ui-monospace,monospace;letter-spacing:.16em;box-shadow:none}
+.boot .btn:hover{background:#211a12;border-color:#a3885e;color:#fff0d8}
 .btn{min-height:44px;border:1px solid #376fa9;background:linear-gradient(180deg,#153f70,#0c294b);color:var(--text);padding:0 18px;cursor:pointer;font-weight:800;letter-spacing:.06em}
 .btn:hover{filter:brightness(1.13)}.btn.secondary{background:#091522;border-color:var(--line);color:#bec9d6}.btn.danger{border-color:#7d2a3c;background:#2b0b14}
 
@@ -82,20 +105,26 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 .footer{display:flex;justify-content:space-between;gap:16px;margin-top:18px;padding:16px 0;border-top:1px solid var(--line);color:#55667b;font:.61rem ui-monospace,monospace}
 
 @media(max-width:1050px){.grid2,.korea,.enemyLayout{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}.intel{order:-1}.mapwrap{height:500px}}
-@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot-card{padding:32px 18px}.statusline .badge{display:none}}
+@media(max-width:650px){.app{padding:8px 10px 28px}.heading{align-items:flex-start;flex-direction:column}.grid3,.docs{grid-template-columns:1fr}.grid4,.worldfacts{grid-template-columns:1fr 1fr}.mapbar{align-items:flex-start;flex-direction:column;padding:10px 12px}.mapwrap{height:390px}.timeline:before{left:9px}.event,.event.major{grid-template-columns:1fr;gap:5px;padding-left:30px}.event:after,.event.major:after{left:4px}.event time{text-align:left}.footer{flex-direction:column}.boot{padding:12px}.boot-card{padding:38px 20px 28px}.boot h1{font-size:clamp(2.25rem,15vw,4rem)}.boot-lead{margin-top:24px}.archive-mark{margin-bottom:28px}.statusline .badge{display:none}}
 </style>
 </head>
 <body>
 <canvas id="fx" aria-hidden="true"></canvas><div class="scan" aria-hidden="true"></div>
 
 <section class="boot" id="boot">
+  <div class="ruins" aria-hidden="true">
+    <i style="--x:2%;--h:54vh"></i><i style="--x:13%;--h:34vh"></i><i style="--x:24%;--h:61vh"></i>
+    <i style="--x:39%;--h:43vh"></i><i style="--x:56%;--h:70vh"></i><i style="--x:72%;--h:47vh"></i><i style="--x:87%;--h:59vh"></i>
+    <div class="ruin-ground"></div>
+  </div>
   <div class="boot-card">
-    <div class="kicker">KOREA CENTRAL STRATEGIC NETWORK</div>
-    <div class="seal">2134</div>
-    <h1>군사시대 // STRATEGIC ARCHIVE</h1>
-    <p class="sub">POST–FIRST DESCENT WORLD DATABASE // CLEARANCE LEVEL 04</p>
+    <div class="archive-mark">RECOVERED WAR ARCHIVE // 2134</div>
+    <div class="boot-date">2031.04 — THE FIRST DESCENT</div>
+    <h1># 2134 : 군사시대 <span>ONE HUNDRED AND THREE YEARS OF WAR</span></h1>
+    <p class="boot-lead">하늘이 갈라진 뒤, 세계는 한 번 무너졌다.<br><strong>인류는 살아남았다. 전쟁도 살아남았다.</strong></p>
+    <p class="sub">문명은 다시 세워졌고, 도시에는 다시 불이 켜졌다. 그러나 국경 밖의 땅은 아직 돌아오지 않았다.</p>
     <div class="log" id="log" aria-live="polite"></div>
-    <button class="btn" id="enter" type="button">ACCESS DATABASE</button>
+    <button class="btn" id="enter" type="button">기록 열람</button>
   </div>
 </section>
 
@@ -383,8 +412,8 @@ pyongyang:{id:"KR // 2086 // RECLAMATION",title:"평양 탈환전",body:"작전�
 core9:{id:"I.D.A. // 2108 // CLEARANCE 05",title:"코어-9 참사",body:"회수 에이돌론 코어를 활용한 역공학 연구시설에서 통제불능 사고 발생.\n시설 및 인접 연구구역이 봉쇄·소실되었다.\n\n사건 이후 공개 코어 연구에는 국제규제가 도입되었지만 각국의 비공개 연구경쟁은 지속되고 있다.\n\n████████████████████████"}
 };
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-["NETWORK HANDSHAKE... OK","2134 ARCHIVE NODE... ONLINE","EIDOLON INDEX... VERIFIED","CLEARANCE LEVEL 04... GRANTED"].forEach((t,i)=>setTimeout(()=>{const d=document.createElement("div");d.textContent=t;$("#log").appendChild(d)},220+i*340));
-$("#enter").onclick=()=>{$("#boot").remove();$("#app").hidden=false;initMap();drawAllPopulation()};
+["2031.04 // 제1강하 — 세계 동시다발적 침공","2040 // 대혼란기 종료 — 인류 생존권 재편","2071 // 인류 반격기 — 영토 탈환 개시","2134 // 전쟁 103년째 — 기록은 계속된다"].forEach((t,i)=>setTimeout(()=>{const d=document.createElement("div");d.textContent=t;$("#log").appendChild(d)},260+i*430));
+$("#enter").onclick=()=>{const b=$("#boot");b.classList.add("boot-exit");setTimeout(()=>{b.remove();$("#app").hidden=false;initMap();drawAllPopulation()},650)};
 function tab(x){$$(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===x));$$(".panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===x));scrollTo({top:0,behavior:"smooth"})}
 $$(".tab").forEach(b=>b.onclick=()=>tab(b.dataset.tab));$("#nationOpen").onclick=()=>tab("nations");$("#popOpen").onclick=()=>tab("population");
 
