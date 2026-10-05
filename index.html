@@ -1300,9 +1300,13 @@ function refreshGlobeCountries(){
       })
       .polygonAltitude(f=>{
         const k=globeCountryKey(f.properties?.name||"");
-        return globeSelectedKey&&k===globeSelectedKey?.018:.003;
+        return globeSelectedKey&&k===globeSelectedKey ? .018 : .003;
       })
-      .polygonsTransitionDuration(0);
+      .polygonsTransitionDuration(0)
+      .onPolygonClick(f=>{
+        const k=globeCountryKey(f?.properties?.name||"");
+        if(k) nation(k);
+      });
   }catch(e){console.warn("GLOBE COUNTRY LAYER",e)}
 }
 
@@ -1364,6 +1368,38 @@ function setGlobeMarker(k){
       .ringMaxRadius(3.4).ringPropagationSpeed(2.2).ringRepeatPeriod(820);
   }catch(e){console.warn("GLOBE MARKER LAYER",e)}
 }
+function hardSetGlobeView(view){
+  if(!strategicGlobe||!view)return;
+  try{
+    const lat=Number(view.lat),lng=Number(view.lng),altitude=Number(view.altitude);
+    const ctl=strategicGlobe.controls&&strategicGlobe.controls();
+    const cam=strategicGlobe.camera&&strategicGlobe.camera();
+    const pos=strategicGlobe.getCoords&&strategicGlobe.getCoords(lat,lng,altitude);
+
+    if(ctl){
+      ctl.autoRotate=false;
+      ctl.enabled=true;
+      ctl.enableDamping=false;
+      if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
+    }
+
+    // Bypass the old bundled Globe.GL camera setter and place the camera directly.
+    if(cam&&pos){
+      cam.position.set(pos.x,pos.y,pos.z);
+      cam.lookAt(0,0,0);
+      cam.updateMatrixWorld&&cam.updateMatrixWorld(true);
+    }
+
+    // Keep Globe.GL's own point-of-view/occlusion state in sync too.
+    strategicGlobe.pointOfView({lat,lng,altitude},0);
+
+    if(ctl){
+      if(ctl.target&&ctl.target.set)ctl.target.set(0,0,0);
+      ctl.update&&ctl.update();
+      ctl.enableDamping=true;
+    }
+  }catch(e){console.warn("GLOBE HARD FOCUS",e)}
+}
 function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
   globeSelectedKey=k;
@@ -1375,24 +1411,20 @@ function focusNation(k){
     setTimeout(()=>{if(strategicGlobe)focusNation(k)},220);
     return;
   }
+
   setWorldSpin(false);
   setGlobeMarker(k);
   refreshGlobeCountries();
 
-  // Reliability first: snap the selected country to the exact camera center.
-  // This avoids controls/tween state from leaving the previous country in view.
+  // Force the selected state's coordinates to the actual center of the globe.
+  // This is intentionally a hard camera placement because the vendored Globe.GL
+  // build can have OrbitControls overwrite pointOfView() immediately after selection.
   const view={lat:r.lat,lng:r.lon,altitude:globeAltitudeFor(k)};
-  try{
-    const ctl=strategicGlobe.controls();
-    if(ctl)ctl.enabled=false;
-    strategicGlobe.pointOfView(view,0);
-    requestAnimationFrame(()=>{
-      try{
-        strategicGlobe.pointOfView(view,0);
-        if(ctl){ctl.enabled=true;ctl.update&&ctl.update()}
-      }catch(_){}
-    });
-  }catch(e){console.warn("GLOBE FOCUS",e)}
+  hardSetGlobeView(view);
+
+  // One more sync on the next paint prevents a pending controls tick from restoring
+  // the previous longitude/latitude.
+  requestAnimationFrame(()=>hardSetGlobeView(view));
 }
 function buildGlobeTexture(done){
   if(globeTextureDataUrl){done(globeTextureDataUrl);return}
