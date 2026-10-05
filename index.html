@@ -328,7 +328,7 @@ background-size:auto,34px 34px,34px 34px!important}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.7</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.7.1</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -623,7 +623,7 @@ background-size:auto,34px 34px,34px 34px!important}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V0.7.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -829,7 +829,16 @@ Object.entries(N).forEach(([k,n])=>{
 const QUICK=["rok","afu","edc","rus","jpn","afr","ind","bra"];
 QUICK.forEach(k=>{const n=N[k],b=document.createElement("button");b.className="quick-nation";b.innerHTML='<span class="qcrest crest-mini crest-'+n.crest+'"></span><span class="qname">'+n.name+'</span><small>'+n.code+'</small>';b.onclick=()=>selectNation(k);$("#quickNations").appendChild(b)});
 $$(".power-link").forEach(b=>b.onclick=()=>selectNation(b.dataset.power));
-function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
+function sparkCard(k,p){
+  const card=document.createElement("article");card.className="card popcard";
+  const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;
+  const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);
+  const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");
+  const meta=N[k]||{code:k==="chn"?"CHINA REGIONS // AGGREGATE":k.toUpperCase(),color:k==="chn"?"#8d5557":"#7693a2"};
+  const lineColor=meta.color||fillFor(k)||"#7693a2";
+  card.innerHTML='<div class="eyebrow">'+meta.code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+lineColor+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+lineColor+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';
+  $("#popGrid").appendChild(card)
+}
 Object.entries(POP).filter(([k])=>k!=="world").forEach(([k,p])=>sparkCard(k,p));
 
 function drawWorldPop(){const s=d3.select("#worldPop"),w=900,h=300,m={l:48,r:20,t:20,b:40},vals=POP.world.vals;const x=d3.scalePoint().domain(YEARS).range([m.l,w-m.r]),y=d3.scaleLinear().domain([0,9]).range([h-m.b,m.t]);s.selectAll("*").remove();s.append("g").attr("transform","translate(0,"+(h-m.b)+")").call(d3.axisBottom(x).tickSize(0)).call(g=>g.select(".domain").attr("stroke","#29405c")).call(g=>g.selectAll("text").attr("fill","#8392a8"));s.append("g").attr("transform","translate("+m.l+",0)").call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+"B")).call(g=>g.select(".domain").remove()).call(g=>g.selectAll("line").attr("stroke","#1d3149")).call(g=>g.selectAll("text").attr("fill","#8392a8"));s.append("path").datum(vals.map((v,i)=>({year:YEARS[i],v}))).attr("fill","none").attr("stroke","#68e0ff").attr("stroke-width",3).attr("d",d3.line().x(d=>x(d.year)).y(d=>y(d.v)));s.selectAll("circle").data(vals.map((v,i)=>({year:YEARS[i],v}))).join("circle").attr("cx",d=>x(d.year)).attr("cy",d=>y(d.v)).attr("r",5).attr("fill","#68e0ff");s.selectAll(".label").data(vals.map((v,i)=>({year:YEARS[i],v}))).join("text").attr("class","label").attr("x",d=>x(d.year)).attr("y",d=>y(d.v)-12).attr("text-anchor","middle").attr("fill","#d8e8f5").attr("font-size",12).text(d=>d.v+"B")}
