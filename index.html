@@ -173,7 +173,7 @@ radial-gradient(circle at 33% 24%,rgba(116,184,211,.22),transparent 31%),
 radial-gradient(circle at 50% 52%,#143746 0,#0a2532 53%,#031019 100%)}
 .globe-webgl-fallback:before{content:"";position:absolute;inset:0;border-radius:50%;background-image:url("./assets/globe/world-silhouette.svg");background-size:200% 100%;background-position:50% center;background-repeat:repeat-x;opacity:.66;filter:brightness(.8) saturate(.72)}
 .globe-webgl-fallback:after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(110deg,rgba(255,255,255,.12),transparent 34% 58%,rgba(0,0,0,.52))}
-.globe-stage.canvas-ready .globe-webgl-fallback{opacity:.10;transition:opacity .35s ease}
+.globe-stage.canvas-ready .globe-webgl-fallback{opacity:0;transition:opacity .2s ease;pointer-events:none}
 .globe-marker{position:absolute;left:50%;top:50%;z-index:7;transform:translate(-50%,-50%);text-align:center;pointer-events:none;display:none}
 .globe-marker i{display:block;width:10px;height:10px;margin:auto;border-radius:50%;background:#d6b06e;border:2px solid #fff2cf;box-shadow:0 0 0 6px rgba(214,176,110,.16),0 0 18px rgba(214,176,110,.7)}
 .globe-marker span{display:block;margin-top:7px;padding:3px 6px;background:rgba(4,9,12,.82);border:1px solid rgba(186,163,119,.48);color:#e8dcc4;font:900 9px ui-monospace,monospace;letter-spacing:.08em;white-space:nowrap}
@@ -647,7 +647,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.0.4</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.0.5</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -973,7 +973,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.4</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.0.5</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -991,8 +991,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 </nav>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="./assets/vendor/d3.v7.min.js"></script>
 <script>
 const N={
 rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
@@ -1368,8 +1367,8 @@ function redrawGlobe(){
     if(name.toLowerCase()==="china")return;
     const k=countryKeyByName(name);
     const selected=k&&globeSelectedKey===k;
-    const fill=selected?(N[k]?.color||"#a18a6d"):(k?"#728b95":"#506872");
-    const stroke=selected?"rgba(246,232,200,.95)":(k?"rgba(205,224,231,.78)":"rgba(140,166,176,.62)");
+    const fill=selected?(N[k]?.color||"#b08c68"):(k?"#8ca5ae":"#6f8791");
+    const stroke=selected?"rgba(255,239,204,.98)":(k?"rgba(222,238,244,.92)":"rgba(180,202,210,.78)");
     drawGeo(ft,fill,stroke,selected?1.15:.58);
   });
   drawChinaSuccessors();
@@ -1415,6 +1414,7 @@ function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
   globeSelectedKey=k;globeFocusCoord={lon:r.lon,lat:r.lat};globeState.zoom=1;
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
+  redrawGlobe();
   animateGlobeTo(r.lon,r.lat,650);
 }
 function bindGlobePointer(){
@@ -1433,7 +1433,8 @@ function bindGlobePointer(){
   globeCanvas.addEventListener("wheel",e=>{e.preventDefault();globeState.zoom=Math.max(.82,Math.min(1.2,globeState.zoom*(e.deltaY>0?.94:1.06)));redrawGlobe()},{passive:false});
 }
 function initMap(){
-  globeCanvas=$("#globeCanvas");globeStage=$("#globeStage");if(!globeCanvas||!window.d3)return;
+  globeCanvas=$("#globeCanvas");globeStage=$("#globeStage");if(!globeCanvas)return;
+  if(!window.d3){setTimeout(initMap,120);return}
   globeCtx=globeCanvas.getContext("2d");if(!globeCtx)return;
   globeProjection=d3.geoOrthographic().clipAngle(90).precision(.35).rotate([-15,-18,0]);
   globeGraticule=d3.geoGraticule10();
