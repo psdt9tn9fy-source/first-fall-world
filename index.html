@@ -507,77 +507,66 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   }
 }
 
-/* === HTML NATION MAP MARKER === */
-.nation-map-marker{
-  --marker-color:#e2be79;
+
+/* === FIXED CENTER RETICLE === */
+.map-center-reticle{
+  --marker-color:#7f9cab;
   position:absolute!important;
-  z-index:30!important;
-  width:54px;
-  height:54px;
-  transform:translate(-50%,-50%);
+  left:50%!important;
+  top:50%!important;
+  z-index:999!important;
+  width:70px!important;
+  height:70px!important;
+  transform:translate(-50%,-50%)!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
   pointer-events:none!important;
-  filter:drop-shadow(0 0 8px color-mix(in srgb,var(--marker-color) 55%,transparent))
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.22))
 }
-.nation-map-marker[hidden]{display:none!important}
-.nation-map-marker .nm-ring{
-  position:absolute;
-  left:50%;top:50%;
-  width:28px;height:28px;
+.map-center-reticle .mcr-ring{
+  position:absolute;left:50%;top:50%;
+  width:34px;height:34px;
   transform:translate(-50%,-50%);
-  border:2px solid var(--marker-color);
+  border:3px solid var(--marker-color);
   border-radius:50%;
-  box-shadow:0 0 0 3px rgba(0,0,0,.3),0 0 14px var(--marker-color)
+  box-shadow:0 0 0 2px #020608,0 0 18px var(--marker-color)
 }
-.nation-map-marker .nm-h,
-.nation-map-marker .nm-v{
-  position:absolute;
-  left:50%;top:50%;
+.map-center-reticle .mcr-h,
+.map-center-reticle .mcr-v{
+  position:absolute;left:50%;top:50%;
   background:var(--marker-color);
   box-shadow:0 0 8px var(--marker-color)
 }
-.nation-map-marker .nm-h{
-  width:46px;height:2px;
-  transform:translate(-50%,-50%)
-}
-.nation-map-marker .nm-v{
-  width:2px;height:46px;
-  transform:translate(-50%,-50%)
-}
-.nation-map-marker .nm-dot{
-  position:absolute;
-  left:50%;top:50%;
-  width:7px;height:7px;
+.map-center-reticle .mcr-h{width:58px;height:2px;transform:translate(-50%,-50%)}
+.map-center-reticle .mcr-v{width:2px;height:58px;transform:translate(-50%,-50%)}
+.map-center-reticle .mcr-dot{
+  position:absolute;left:50%;top:50%;
+  width:8px;height:8px;
   transform:translate(-50%,-50%);
   border-radius:50%;
   background:#fff4d8;
   border:2px solid var(--marker-color)
 }
-.nation-map-marker b{
+.map-center-reticle b{
   position:absolute;
-  left:36px;
-  top:1px;
-  min-width:44px;
-  padding:4px 7px;
+  left:48px;top:5px;
+  min-width:54px;
+  padding:5px 8px;
   border:1px solid var(--marker-color);
-  background:rgba(3,9,12,.94);
-  color:#f1eadb;
-  font:900 10px/1 ui-monospace,monospace;
+  background:#03090cee;
+  color:#f2ead8;
+  font:900 11px/1 ui-monospace,monospace;
   letter-spacing:.08em;
-  white-space:nowrap
+  white-space:nowrap;
+  box-shadow:0 0 12px #000
 }
 @media(max-width:650px){
-  .nation-map-marker{
-    width:48px;height:48px
-  }
-  .nation-map-marker .nm-ring{width:24px;height:24px}
-  .nation-map-marker .nm-h{width:40px}
-  .nation-map-marker .nm-v{height:40px}
-  .nation-map-marker b{
-    left:31px;
-    top:0;
-    font-size:9px;
-    padding:4px 6px
-  }
+  .map-center-reticle{width:58px!important;height:58px!important}
+  .map-center-reticle .mcr-ring{width:28px;height:28px;border-width:2px}
+  .map-center-reticle .mcr-h{width:48px}
+  .map-center-reticle .mcr-v{height:48px}
+  .map-center-reticle b{left:39px;top:3px;font-size:9px;padding:4px 6px}
 }
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
@@ -873,12 +862,12 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
               <div id="globeMount" class="globe-mount" aria-label="이동 가능한 2D 전략지도"></div>
               <div id="globeFail" class="globe-fail" hidden>3D GLOBE INITIALIZATION FAILED</div>
             </div>
-            <div id="nationMapMarker" class="nation-map-marker" hidden>
-              <i class="nm-ring"></i>
-              <i class="nm-h"></i>
-              <i class="nm-v"></i>
-              <i class="nm-dot"></i>
-              <b id="nationMapMarkerLabel">ROK</b>
+            <div id="mapCenterReticle" class="map-center-reticle">
+              <i class="mcr-ring"></i>
+              <i class="mcr-h"></i>
+              <i class="mcr-v"></i>
+              <i class="mcr-dot"></i>
+              <b id="mapCenterReticleLabel">GLOBAL</b>
             </div>
             <div class="globe-caption"><span>2D STRATEGIC MAP // 2134</span><b id="globeCaption">GLOBAL THEATER</b></div>
           </div>
@@ -1512,7 +1501,6 @@ function clampFlatView(v){
 function applyFlatView(v){
   flatView=clampFlatView({x:v.x,y:v.y,w:v.w,h:v.h||v.w/2});
   if(flatMapSvg)flatMapSvg.setAttribute("viewBox",flatView.x+" "+flatView.y+" "+flatView.w+" "+flatView.h);
-  positionFlatOverlayMarker();
 }
 function animateFlatView(target,duration=650){
   if(!flatMapSvg)return;
@@ -1547,41 +1535,15 @@ function flatZoomForNation(k){
   return 2.5;
 }
 function refreshGlobeCountries(){updateFlatMarker()}
-function positionFlatOverlayMarker(){
-  const marker=$("#nationMapMarker");
-  const k=globeSelectedKey;
-  if(!marker||!k||!COUNTRY_VIEW[k]||!flatMapSvg){
-    if(marker)marker.hidden=true;
-    return;
-  }
-  const p=flatXY(COUNTRY_VIEW[k].lon,COUNTRY_VIEW[k].lat);
-  const px=(p[0]-flatView.x)/flatView.w;
-  const py=(p[1]-flatView.y)/flatView.h;
-
-  // Hide if the selected coordinate is outside the visible view.
-  if(px<0||px>1||py<0||py>1){
-    marker.hidden=true;
-    return;
-  }
-
-  marker.hidden=false;
-  marker.style.left=(px*100)+"%";
-  marker.style.top=(py*100)+"%";
-}
 function updateFlatMarker(){
-  const marker=$("#nationMapMarker");
-  const label=$("#nationMapMarkerLabel");
+  const label=$("#mapCenterReticleLabel");
+  if(!label)return;
   const k=globeSelectedKey;
-
-  if(!marker||!k||!COUNTRY_VIEW[k]){
-    if(marker)marker.hidden=true;
-    return;
+  label.textContent=(k&&N[k])?(N[k].sigil||k).toUpperCase():"GLOBAL";
+  const reticle=$("#mapCenterReticle");
+  if(reticle){
+    reticle.style.setProperty("--marker-color",(k&&N[k]?.color)||"#7f9cab");
   }
-
-  const color=N[k]?.color||"#e2be79";
-  marker.style.setProperty("--marker-color",color);
-  if(label)label.textContent=(N[k]?.sigil||k).toUpperCase();
-  positionFlatOverlayMarker();
 }
 function setGlobeMarker(k){
   globeSelectedKey=k||globeSelectedKey;
@@ -1593,12 +1555,13 @@ function setWorldSpin(){}
 
 function focusNation(k){
   const r=COUNTRY_VIEW[k];if(!r)return;
+  ++globeMoveToken;
   globeSelectedKey=k;
   globeFocusCoord={lon:r.lon,lat:r.lat};
   globeState.lon=r.lon;globeState.lat=r.lat;globeState.zoom=flatZoomForNation(k);
   setGlobeLabel((N[k]?.sigil||k).toUpperCase(),false);
+  applyFlatView(flatTarget(r.lon,r.lat,flatZoomForNation(k)));
   refreshGlobeCountries();
-  animateFlatView(flatTarget(r.lon,r.lat,flatZoomForNation(k)),650);
 }
 
 function initMap(){
@@ -1740,7 +1703,10 @@ function focusRegion(key){
   };
   const r=regions[key]||regions.world;
   globeSelectedKey=null;globeFocusCoord=null;
-  updateFlatMarker();
+  const reticleLabel=$("#mapCenterReticleLabel");
+  if(reticleLabel)reticleLabel.textContent=r.label;
+  const reticle=$("#mapCenterReticle");
+  if(reticle)reticle.style.setProperty("--marker-color","#7f9cab");
   setGlobeLabel(r.label,key==="world");
   if(key==="world")animateFlatView({x:0,y:0,w:1000,h:500},600);
   else animateFlatView(flatTarget(r.lon,r.lat,r.zoom),600);
