@@ -64,7 +64,7 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 
 .nation{min-height:235px;text-align:left;padding:17px;color:var(--text);border:1px solid var(--line);background:linear-gradient(150deg,#0d1a2c,#060d17);cursor:pointer;position:relative;overflow:hidden}.nation:hover{border-color:#3b648a;transform:translateY(-1px)}.nation h3{margin:8px 0 4px}.nation .meta{margin-top:16px;color:var(--muted);font:.68rem/1.7 ui-monospace,monospace}.flag{height:60px;margin:-17px -17px 15px;position:relative;border-bottom:1px solid #26384d;overflow:hidden}.flag:before,.flag:after{content:"";position:absolute}.flag.rok{background:linear-gradient(90deg,#f7f5ef 0 42%,#0e315a 42% 58%,#f7f5ef 58%)}.flag.rok:after{width:26px;height:26px;border-radius:50%;background:linear-gradient(#d83f4f 0 50%,#315fb3 50%);left:calc(50% - 13px);top:17px}.flag.afu{background:#0a1a32}.flag.afu:before{inset:0;background:repeating-linear-gradient(0deg,transparent 0 12px,#7d1c2d 12px 17px)}.flag.afu:after{width:18px;height:18px;background:#f4f4f0;clip-path:polygon(50% 0,61% 36%,100% 36%,69% 57%,80% 100%,50% 73%,20% 100%,31% 57%,0 36%,39% 36%);left:calc(50% - 9px);top:20px}
 .flag.jpn{background:#f4f2ed}.flag.jpn:before{width:32px;height:32px;border-radius:50%;background:#b92d3e;left:calc(50% - 16px);top:14px}.flag.jpn:after{width:46px;height:46px;border:2px solid #18314e;border-radius:50%;left:calc(50% - 25px);top:5px}
-.flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
+.flag.chn{background:linear-gradient(90deg,#711e2b,#121a27,#1c5a5e)}.flag.rus{background:linear-gradient(#eee 0 33%,#21395f 33% 66%,#8d2637 66%)}.flag.ind{background:linear-gradient(#d77c36 0 33%,#eee 33% 66%,#417e59 66%)}.flag.bra{background:linear-gradient(135deg,#1e6044,#b6a94b)}.flag.aus{background:linear-gradient(135deg,#142c54,#3f76a8)}.flag.can{background:linear-gradient(90deg,#9b3040 0 25%,#eee 25% 75%,#9b3040 75%)}.flag.mex{background:linear-gradient(90deg,#2f6d4d 0 33%,#eee 33% 66%,#8b3140 66%)}.flag.sea{background:linear-gradient(135deg,#145968,#2a8d82)}.flag.afr{background:linear-gradient(135deg,#5a4824,#967a3a)}.flag.edc{background:#0e2343}.flag.edc:before{width:32px;height:32px;border:2px solid #d4af7c;border-radius:50%;left:calc(50% - 18px);top:12px}.flag.edc:after{width:15px;height:20px;border:1px solid #d4af7c;left:calc(50% - 8px);top:18px}
 
 .popcard{padding:20px}.popchart{width:100%;height:300px;margin-top:8px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font:.66rem ui-monospace,monospace}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
 .populationNote{padding:18px;margin-top:12px;border:1px solid #253951;background:#07111d;color:#aebdcb;line-height:1.75;font-size:.85rem}
@@ -102,13 +102,16 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 <main class="app" id="app" hidden>
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle"># 2134 : 군사시대</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V0.2</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V0.3</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
   <button class="tab active" data-tab="world">WORLD</button>
   <button class="tab" data-tab="nations">NATIONS</button>
   <button class="tab" data-tab="population">POPULATION</button>
+  <button class="tab" data-tab="frontlines">FRONTLINES</button>
+  <button class="tab" data-tab="diplomacy">DIPLOMACY</button>
+  <button class="tab" data-tab="society">SOCIETY</button>
   <button class="tab" data-tab="chronicle">CHRONICLE</button>
   <button class="tab" data-tab="korea">ROK</button>
   <button class="tab" data-tab="military">MILITARY</button>
@@ -126,9 +129,10 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
     <div class="worldfacts">
       <div class="fact"><span>CURRENT YEAR</span><b>2134</b></div>
       <div class="fact"><span>WAR DURATION</span><b>103 YEARS</b></div>
-      <div class="fact"><span>WORLD POP.</span><b>≈ 4.7 BILLION</b></div>
+      <div class="fact"><span>WORLD POP. // PROVISIONAL</span><b>≈ 4.7 BILLION*</b></div>
       <div class="fact"><span>PRIMARY THREAT</span><b>EIDOLON</b></div>
     </div>
+    <div class="muted" style="margin-top:10px">* 인구·일부 국가명·사건연도는 최종 정합성 검토 전의 작업 수치.</div>
   </article>
 
   <div class="grid2" style="margin-top:14px">
@@ -166,8 +170,73 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
   <div class="populationNote"><b>해석:</b> 감소분은 단순 전투 사망자만을 뜻하지 않는다. 제1강하 직접 피해, 도시 붕괴, 기근·질병, 피난 실패, 장기전 사망, 해외 이주와 출산 붕괴가 함께 누적된 결과다. 주요 지역은 21세기 중반 최저점을 찍은 뒤 2134년에야 완만하게 회복하고 있다.</div>
 </section>
 
+
+<section class="panel" data-panel="frontlines">
+  <div class="heading"><div><div class="eyebrow">ACTIVE THEATERS // 2134</div><h2>현재 주요 전선과 통제구역</h2></div><div class="muted">SAFE → RECLAIMED → CONTESTED → LOST → BLACK</div></div>
+  <div class="grid3">
+    <article class="card branch"><div class="code">KOREAN NORTHERN FRONT</div><h3>한반도 북부전선</h3><p>개마고원·함경 산악권의 잔존 네스트 제거, 재정착지 방어와 회랑 확보가 핵심. 대한민국 육상군과 전술기동군의 대표 장기전선.</p></article>
+    <article class="card branch"><div class="code">WEST SEA FRONT</div><h3>서해 전선</h3><p>2132년 제5차 서해 네스트 공세 이후 해저·도서지역 활동이 계속된다. 수도권과 가까워 대한민국이 가장 민감하게 감시하는 전선 중 하나.</p></article>
+    <article class="card branch"><div class="code">EAST CHINA SEA</div><h3>동중국해–일본 남서제도</h3><p>한국·일본·중국권의 작전권이 맞닿는 해양전선. 수중 에이돌론과 도서 네스트를 상대하면서 인간 국가들끼리도 정보와 영향력을 경쟁한다.</p></article>
+    <article class="card branch"><div class="code">SIBERIAN CORRIDOR</div><h3>시베리아 회랑전선</h3><p>러시아의 도시·철도·자원거점을 잇는 생명선. 영토 전체보다 전략회랑을 지켜내는 것이 우선되는 특수한 전장.</p></article>
+    <article class="card branch"><div class="code">BALTIC–EASTERN EUROPE</div><h3>발트–동유럽 전선</h3><p>EDC와 I.D.A.의 다국적 작전이 빈번한 오래된 전선. 세라프 목격보고와 대형 네스트가 반복적으로 기록된다.</p></article>
+    <article class="card branch"><div class="code">GREAT BASIN</div><h3>북미 내륙전선</h3><p>AFU가 전장AI와 대규모 무인전력을 집중 투입하는 지하 네스트 전장. 지상을 탈환한 뒤에도 재침투가 반복된다.</p></article>
+    <article class="card branch"><div class="code">AMAZON DEEP</div><h3>아마존 심층전선</h3><p>브라질을 중심으로 특수전·탐사전이 지속된다. 밀림과 네스트 변질지형이 뒤섞여 정확한 지도 자체가 부족하다.</p></article>
+    <article class="card branch"><div class="code">SAHARA NULL BELT</div><h3>사하라 봉쇄전선</h3><p>전면 탈환보다 네스트권이 도시·항로·에너지 회랑으로 확산되는 것을 막는 봉쇄전이 중심이다.</p></article>
+    <article class="card branch"><div class="code">MARIANA ABYSS</div><h3>마리아나 심해금지구역</h3><p>심해에서 아크급으로 추정되는 대형 신호가 반복 탐지된다. 인류가 가장 이해하지 못하는 해양 BLACK ZONE 중 하나.</p></article>
+  </div>
+  <div class="notice"><b>지도 원칙:</b> 핵심 도시·산업권은 대부분 인간 통제 아래 있으나, 넓은 비거주지역과 오래된 네스트권에는 LOST/BLACK ZONE이 남아 있다. 세계 전체를 빈틈없이 고정하지 않고 미확인 전선과 전초기지를 남겨 플레이 공간을 확보한다.</div>
+</section>
+
+<section class="panel" data-panel="diplomacy">
+  <div class="heading"><div><div class="eyebrow">INTERNATIONAL ORDER</div><h2>동맹과 경쟁이 동시에 존재하는 세계</h2></div><div class="muted">“에이돌론 앞에서는 동맹, 그 뒤에서는 경쟁자.”</div></div>
+  <article class="card hero">
+    <span class="badge">I.D.A.</span>
+    <h3>International Defense Alliance</h3>
+    <p>I.D.A.는 세계정부가 아니다. 각국은 정부·외교·군 지휘권을 유지하고, I.D.A.는 초국가적 위협에 대한 공동작전·전선정보·에이돌론 연구·전략감시를 조율한다. 제네바 국제방위구역의 통합중앙사령부가 핵심이며, 공동작전에 배속된 병력만 제한적으로 통합지휘를 받는다.</p>
+  </article>
+  <div class="grid3" style="margin-top:12px">
+    <article class="card branch"><div class="code">ROK ↔ JAPAN</div><h3>협력과 경쟁</h3><p>해양·대에이돌론 작전에서는 긴밀히 협력하지만 방산시장·해양권·I.D.A. 영향력에서는 경쟁한다.</p></article>
+    <article class="card branch"><div class="code">ROK ↔ AFU</div><h3>전략 파트너</h3><p>항공우주·AI와 적응전·대코어 기술을 상호 보완한다. 22세기 대한민국은 일방적 의존국이 아니라 독자적 군사강국이다.</p></article>
+    <article class="card branch"><div class="code">ROK ↔ CN SUCCESSORS</div><h3>복합적 이웃</h3><p>에이돌론 대응에는 협력하지만 서해·접경·난민·탈환지역·군사기술 문제에서는 지속적으로 이해가 충돌한다.</p></article>
+    <article class="card branch"><div class="code">AFU ↔ EDC</div><h3>기술동맹의 균열</h3><p>핵심 동맹이면서 전장AI 규제, 코어 역공학, 방산시장에서는 경쟁. 코어-9 이후 기술통제 철학의 차이가 커졌다.</p></article>
+    <article class="card branch"><div class="code">EDC ↔ RUSSIA</div><h3>긴장 속 공조</h3><p>정치적으로 거리가 있지만 연결된 동유럽 전선 때문에 서로의 정찰망과 중화력이 필요하다.</p></article>
+    <article class="card branch"><div class="code">CRF / NCDR / WUR</div><h3>중국권 3국</h3><p>세 국가는 경쟁하지만 대규모 에이돌론 위협 시 CMDC 공동방위체계 아래 협력한다.</p></article>
+  </div>
+  <div class="grid3" style="margin-top:12px">
+    <article class="card branch"><div class="code">INDIA</div><h3>인도공화국</h3><p>대규모 무인전력·에너지·항공우주 역량을 가진 독립적 강대국. 어느 한 진영에 완전히 종속되지 않는다.</p></article>
+    <article class="card branch"><div class="code">SOUTHEAST ASIA</div><h3>동남아시아 방위협력권</h3><p>각국 주권을 유지하며 해양 네스트·군도전 대응을 위해 협력. 싱가포르는 군수·금융·물류 허브 역할을 한다.</p></article>
+    <article class="card branch"><div class="code">AFRICAN UNION</div><h3>아프리카 협력권</h3><p>AU의 방위기능이 강화됐다. 도시·항만·철도·광산·하천축을 강하게 방어하고 광대한 저밀도 지역은 선택적으로 관리한다.</p></article>
+    <article class="card branch"><div class="code">SOUTH AMERICA</div><h3>브라질 중심 남미권</h3><p>브라질은 아마존 BLACK ZONE 대응의 핵심국. 남미 각국은 아마존·안데스·남대서양 감시에서 협력한다.</p></article>
+    <article class="card branch"><div class="code">PACIFIC</div><h3>호주·뉴질랜드·태평양권</h3><p>후방 생산·훈련·광물자원의 중요성이 크며 AFU·일본과 군사적으로 가까운 태평양 방위망을 형성한다.</p></article>
+    <article class="card branch"><div class="code">NORTH AMERICA</div><h3>캐나다·AFU·멕시코</h3><p>세 국가는 별개의 주권국가로 북미공동방위체계를 운영한다. 북극·내륙·중미 회랑의 역할이 서로 다르다.</p></article>
+  </div>
+</section>
+
+<section class="panel" data-panel="society">
+  <div class="heading"><div><div class="eyebrow">CIVILIZATION // DAILY LIFE</div><h2>전쟁을 삶 속에 집어넣고 살아가는 사회</h2></div><div class="muted">일상은 존재한다. 전쟁도 일상이다.</div></div>
+  <div class="grid3">
+    <article class="card branch"><div class="code">DAILY LIFE</div><h3>민간생활</h3><p>대학·기업·카페·여행·연애·스포츠·연예산업은 정상적으로 존재한다. 학교와 지하철, 대형상업시설은 동시에 대피시설이기도 하다.</p></article>
+    <article class="card branch"><div class="code">TECH</div><h3>생활기술</h3><p>개인 단말기·생활AI·AR·자율교통·재생의료가 보편화. 도시에는 분산형 전력망과 에이돌론 감지·비상경보체계가 기본 인프라로 깔린다.</p></article>
+    <article class="card branch"><div class="code">CULTURE</div><h3>문화와 미디어</h3><p>전쟁뉴스 옆에서 스포츠와 아이돌 방송이 재생된다. 유명 장교·전술기동군 에이스에게 팬덤이 생기기도 하고 반군사문화도 공존한다.</p></article>
+    <article class="card branch"><div class="code">ECONOMY</div><h3>전쟁경제</h3><p>방산·에너지·AI·의료·재건산업의 비중이 크다. 탈환지역 재건과 에이돌론 소재 연구는 거대한 시장이지만 코어 거래는 강한 규제를 받는다.</p></article>
+    <article class="card branch"><div class="code">UNDERWORLD</div><h3>암시장과 회색지대</h3><p>LOST ZONE 회수품, 군수품, 코어 파편, 불법 개조장비가 거래된다. 폐쇄구역 전문 탐사자와 PMC도 존재한다.</p></article>
+    <article class="card branch"><div class="code">SOCIAL CONFLICT</div><h3>군사엘리트 vs 민간사회</h3><p>군은 존경받지만 중앙사관학교 학맥·전쟁영웅·군인가문의 사회적 영향력이 과도하다는 비판도 강하다. 2129년 3·18 군특권 사태가 대표적인 충돌이다.</p></article>
+  </div>
+  <div class="heading" style="margin-top:28px"><div><div class="eyebrow">REPRESENTATIVE CORPORATIONS</div><h2>대표 방산·기술기업</h2></div><div class="muted">세계 전체 기업의 일부만 공개</div></div>
+  <div class="grid4">
+    <article class="card tech"><div class="eyebrow">ROK</div><h3>한성 디펜스 시스템즈</h3><p>전술제복·개인화기·대코어탄.</p></article>
+    <article class="card tech"><div class="eyebrow">ROK</div><h3>청람 테크놀로지</h3><p>전장AI·센서·통신·전술네트워크.</p></article>
+    <article class="card tech"><div class="eyebrow">AFU</div><h3>Aegis Dynamics</h3><p>전장AI와 대규모 무인전력.</p></article>
+    <article class="card tech"><div class="eyebrow">JAPAN</div><h3>Kagutsuchi Heavy Industries</h3><p>해양전력·도시방위망·중공업.</p></article>
+    <article class="card tech"><div class="eyebrow">EDC</div><h3>Rhein-Voss Systems</h3><p>전자전·센서·다국적 전장네트워크.</p></article>
+    <article class="card tech"><div class="eyebrow">RUSSIA</div><h3>Volkov Strategic Works</h3><p>중기갑·장거리화력·극한환경 장비.</p></article>
+    <article class="card tech"><div class="eyebrow">TRANSNATIONAL</div><h3>Meridian Recovery Group</h3><p>탈환지역 정화·도시복구·재건.</p></article>
+    <article class="card tech"><div class="eyebrow">TRANSNATIONAL</div><h3>Helix Core Research</h3><p>에이돌론 소재·코어 연구. 비밀연구 의혹이 끊이지 않는다.</p></article>
+  </div>
+</section>
+
 <section class="panel" data-panel="chronicle">
-  <div class="heading"><div><div class="eyebrow">103-YEAR CHRONICLE</div><h2>제1강하 이후 주요 사건</h2></div><div class="muted">사건명·연도는 작업 중 정본</div></div>
+  <div class="heading"><div><div class="eyebrow">103-YEAR CHRONICLE</div><h2>제1강하 이후 주요 사건</h2></div><div class="muted">CORE CANON + EXPANSION DRAFT 혼합 — 최종 정합성 검토 예정</div></div>
   <div class="timeline">
     <article class="event major"><time>2031.04</time><div><h3>제1강하</h3><p>전 세계 동시다발적 에이돌론 출현. 주요 도시·군사시설·전력·통신·교통망이 공격받으며 백년전쟁이 시작된다.</p></div></article>
     <article class="event"><time>2031–33</time><div><h3>검은 겨울</h3><p>물류·농업·의료체계가 붕괴하며 전투 이외의 기근·질병·동사로 막대한 민간 피해가 발생한다.</p></div></article>
@@ -244,6 +313,18 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
       <button class="redacted" id="redacted" type="button">INTELLIGENCE NOTE <span id="weak">████████ CLASSIFIED ████████</span></button>
     </article>
   </div>
+  <div class="heading" style="margin-top:28px"><div><div class="eyebrow danger">HUMANOID / STRATEGIC ENTITIES</div><h2>인간형 에이돌론과 대표 개체</h2></div><div class="muted">남성형·여성형·중성형 모두 존재</div></div>
+  <div class="grid3">
+    <article class="card branch"><div class="code">HUMANOID-TYPE</div><h3>인간형 에이돌론</h3><p>일부 고위개체는 인간과 유사한 외형을 가진다. 남성형·여성형·중성형·판별불가형이 모두 존재하며 외형상의 성별이 실제 생물학적 성별인지는 불명이다. 인간형 외형은 우호성을 의미하지 않는다.</p></article>
+    <article class="card branch"><div class="code">SERAPH-01</div><h3>ZERO</h3><p>2084년 첫 공식 세라프. 중성적 인간형으로 보고되며 인간의 기만·매복을 비정상적으로 빠르게 간파했다. 현재 행방불명.</p></article>
+    <article class="card branch"><div class="code">SERAPH-03</div><h3>REGINA</h3><p>여성형 인간형. 주변 다수 에이돌론을 하나의 의지처럼 움직이게 하는 광역 지휘능력으로 알려져 있다.</p></article>
+    <article class="card branch"><div class="code">SERAPH-05</div><h3>PALADIN</h3><p>남성형 인간형. 장교·기사 갑주를 연상시키는 외피와 극단적인 근접전 능력을 보인다.</p></article>
+    <article class="card branch"><div class="code">SERAPH-08</div><h3>MIRROR</h3><p>성별 판별 불가. 상대의 이동·사격·엄폐습관과 음성패턴까지 모방한다는 보고가 있다.</p></article>
+    <article class="card branch"><div class="code">SERAPH-11</div><h3>ORPHEUS</h3><p>남성형에 가까운 인간형. 통신·감각교란 사례와 관련되며 가짜 구조요청·아군음성 보고가 반복된다.</p></article>
+    <article class="card branch"><div class="code">ARK-07</div><h3>LEVIATHAN</h3><p>태평양의 초대형 해양형 아크. 마리아나 심해금지구역의 대형 신호와 동일개체일 가능성이 제기된다.</p></article>
+    <article class="card branch"><div class="code">ARK-12</div><h3>CATHEDRAL</h3><p>유럽 전선의 육상형 아크. 성당 첨탑과 유사한 구조를 가지며 하위개체와 네스트 방어망을 통제한다.</p></article>
+    <article class="card branch"><div class="code">UNNUMBERED</div><h3>WHITE LADY</h3><p>여성형으로 묘사되는 미확인 개체. 여러 전선에서 ‘먼저 공격하지 않았다’는 유사 증언이 존재하지만 동일개체 여부는 확인되지 않았다.</p></article>
+  </div>
 </section>
 
 <section class="panel" data-panel="archive">
@@ -256,7 +337,7 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span># 2134 : 군사시대 // WORLD DATABASE V0.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span># 2134 : 군사시대 // WORLD DATABASE V0.3</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -264,13 +345,20 @@ linear-gradient(90deg,rgba(45,74,106,.08) 1px,transparent 1px),#040a13;backgroun
 <script>
 const N={
 rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"FORTIFIED / ACTIVE",pop:"≈ 43M",capital:"SEOUL",strength:"ADAPTIVE WARFARE",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
-afu:{code:"AFU // 2098",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
+afu:{code:"AFU // DRAFT",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"RECONSTITUTED",pop:"≈ 240M",capital:"WASHINGTON F.D.",strength:"AI / AEROSPACE",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
 jpn:{code:"JPN // 2134",name:"일본국",eng:"JAPAN",sigil:"JPN",status:"CONTINUITY STATE",pop:"≈ 68M",capital:"TOKYO",strength:"FORTIFIED CITIES",color:"#ffb45e",flag:"jpn",brief:"제1강하 이후에도 국호와 국가체제를 유지했다. 2042년 국방재건령으로 자위대를 일본국방위군으로 재편. 도시요새·해양전·정밀방어·소형 무인체계에 강하다."},
-chn:{code:"CN SUCCESSORS",name:"중국권 3개 후계국",eng:"CHINESE SUCCESSOR STATES",sigil:"3C",status:"FRAGMENTED",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"INDUSTRIAL MASS",color:"#ff5d75",flag:"chn",brief:"구 중화인민공화국은 장기전과 중앙통제 붕괴 끝에 소멸했다. 2134년에는 중화재건연방·화북방위공화국·서부연합공화국이 경쟁하며, 대에이돌론 작전에서는 중화공동방위협정(CMDC)을 통해 협력한다."},
+chn:{code:"CN SUCCESSORS // DRAFT",name:"중국권 3개 후계국",eng:"CHINESE SUCCESSOR STATES",sigil:"3C",status:"FRAGMENTED",pop:"≈ 740M",capital:"NANJING / BEIJING / CHENGDU",strength:"INDUSTRIAL MASS",color:"#ff5d75",flag:"chn",brief:"구 중화인민공화국은 장기전과 중앙통제 붕괴 끝에 소멸했다. 2134년에는 중화재건연방·화북방위공화국·서부연합공화국이 경쟁하며, 대에이돌론 작전에서는 중화공동방위협정(CMDC)을 통해 협력한다."},
 rus:{code:"RUS // 2134",name:"러시아 연방",eng:"RUSSIAN FEDERATION",sigil:"RUS",status:"CORRIDOR STATE",pop:"≈ 82M",capital:"MOSCOW",strength:"HEAVY / ARCTIC",color:"#a77bff",flag:"rus",brief:"국경상 영토는 광대하지만 실제 안정통제지역은 도시·자원지대·철도·군사회랑에 집중된다. 2043년 시베리아 대단절 이후 장거리 화력·중기갑·혹한전·철도군수 체계가 발달했다."},
-edc:{code:"EDC // 2052",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",status:"SUPRANATIONAL",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",color:"#d4af7c",flag:"edc",brief:"프랑스·독일·폴란드 등 유럽 각국이 독립국가와 군을 유지한 채 통합전구사령부를 운영하는 초국가 방위공동체. 센서·전자전·정밀병기·다국적 전장네트워크가 강점이다."}
+edc:{code:"EDC // DRAFT",name:"유럽방위공동체",eng:"EUROPEAN DEFENCE COMMUNITY",sigil:"EDC",status:"SUPRANATIONAL",pop:"≈ 450M",capital:"BRUSSELS DEFENSE ZONE",strength:"NETWORK / EW",color:"#d4af7c",flag:"edc",brief:"프랑스·독일·폴란드 등 유럽 각국이 독립국가와 군을 유지한 채 통합전구사령부를 운영하는 초국가 방위공동체. 센서·전자전·정밀병기·다국적 전장네트워크가 강점이다."},
+ind:{code:"IND // 2134",name:"인도공화국",eng:"REPUBLIC OF INDIA",sigil:"IND",status:"MAJOR POWER",pop:"TBD",capital:"NEW DELHI",strength:"ENERGY / AEROSPACE",color:"#f39b55",flag:"ind",brief:"국가체제를 유지한 주요 강대국. 대규모 무인전력·에너지·항공우주·지상전 역량을 보유하며 I.D.A. 내부에서도 독립적인 외교노선을 유지한다."},
+bra:{code:"BRA // 2134",name:"브라질",eng:"BRAZIL",sigil:"BRA",status:"AMAZON FRONT",pop:"TBD",capital:"BRASILIA",strength:"JUNGLE / EXPLORATION",color:"#69b86f",flag:"bra",brief:"남미의 핵심 군사·산업국. 아마존 BLACK ZONE 때문에 세계 최고 수준의 밀림전·네스트 탐사 경험을 축적했다."},
+aus:{code:"AUS // 2134",name:"호주",eng:"AUSTRALIA",sigil:"AUS",status:"PACIFIC REAR BASE",pop:"TBD",capital:"CANBERRA",strength:"LOGISTICS / MINERALS",color:"#6ab7d6",flag:"aus",brief:"태평양권의 주요 후방 생산·훈련기지이자 광물자원 공급국. 해안 대도시권 방어에 집중하고 대륙 내부 일부는 감시 중심으로 관리한다."},
+can:{code:"CAN // 2134",name:"캐나다",eng:"CANADA",sigil:"CAN",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"OTTAWA",strength:"ARCTIC / SURVEILLANCE",color:"#cf6b72",flag:"can",brief:"AFU와 별개의 주권국가. 북극권 감시·자원·극지전 능력이 강하며 북미공동방위체계에 참여한다."},
+mex:{code:"MEX // 2134",name:"멕시코",eng:"MEXICO",sigil:"MEX",status:"NORTH AMERICAN DEFENSE",pop:"TBD",capital:"MEXICO CITY",strength:"URBAN / MANUFACTURING",color:"#8ab57b",flag:"mex",brief:"AFU와 별개의 주권국가. 중미 연결회랑과 산악·도시전, 대규모 제조업에서 중요한 역할을 한다."},
+sea:{code:"SEA COOP",name:"동남아시아 방위협력권",eng:"SOUTHEAST ASIA DEFENCE COOPERATION",sigil:"SEA",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"MARITIME / ARCHIPELAGO",color:"#63c9b9",flag:"sea",brief:"인도네시아·베트남·싱가포르·필리핀·말레이시아·태국 등은 각자 주권을 유지하면서 해양 네스트와 군도전 대응을 공동조율한다."},
+afr:{code:"AU DEFENSE",name:"아프리카 방위협력권",eng:"AFRICAN UNION DEFENCE COOPERATION",sigil:"AU",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"CORRIDOR DEFENSE",color:"#c2a35c",flag:"afr",brief:"아프리카연합의 방위기능이 강화된 형태. 개별국가는 유지되며 도시·항만·철도·광산·하천축 방어를 중심으로 협력한다."}
 };
-const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",156:"chn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc"};
+const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",156:"chn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr"};
 const POP={
 world:{title:"세계",unit:"B",vals:[8.5,7.4,5.0,4.0,4.3,4.7]},
 rok:{title:"한반도 / 대한민국",unit:"M",vals:[76,67,43,36,39,43]},
