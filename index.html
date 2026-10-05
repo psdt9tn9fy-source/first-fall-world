@@ -169,7 +169,8 @@ radial-gradient(ellipse at 50% 50%,#0b1115 0,#06090b 56%,#020304 100%)}
 .globe-mount{position:absolute;z-index:2;inset:0;width:100%;height:100%;overflow:hidden;border-radius:50%;touch-action:none}
 .globe-mount>div,.globe-mount canvas{width:100%!important;height:100%!important;display:block!important;outline:none}
 .globe-mount canvas{cursor:grab}.globe-mount canvas:active{cursor:grabbing}
-.globe-fail{position:absolute;z-index:5;inset:0;display:grid;place-items:center;color:#89979d;font:800 .56rem ui-monospace,monospace;letter-spacing:.12em;text-align:center}
+.globe-fail{position:absolute;z-index:5;inset:0;display:grid;place-items:center;color:#89979d;font:800 .56rem ui-monospace,monospace;letter-spacing:.12em;text-align:center;background:rgba(3,9,12,.78)}
+.globe-fail[hidden]{display:none!important}
 .globe-caption{position:absolute;left:16px;bottom:14px;z-index:8;padding:9px 11px;border-left:2px solid #7b91a0;background:rgba(4,9,12,.72);backdrop-filter:blur(8px);pointer-events:none}
 .globe-caption span{display:block;color:#61747e;font:800 .46rem ui-monospace,monospace;letter-spacing:.13em}.globe-caption b{display:block;margin-top:3px;color:#cbd3d4;font:800 .66rem ui-monospace,monospace;letter-spacing:.05em}
 
@@ -640,7 +641,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 <main class="app" id="app">
 <header class="top">
   <div class="brand"><div class="brandmark">K</div><div><div class="eyebrow">KC-SNET // 2134</div><div class="brandtitle">FIRST DESCENT ARCHIVE</div></div></div>
-  <div class="statusline"><span class="badge">WORKING CANON V1.2.1</span><i class="dot"></i>SYSTEM ONLINE</div>
+  <div class="statusline"><span class="badge">WORKING CANON V1.2.2</span><i class="dot"></i>SYSTEM ONLINE</div>
 </header>
 
 <nav class="tabs">
@@ -965,7 +966,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
   <article class="card viewer"><div class="eyebrow" id="docid"></div><h3 id="doctitle"></h3><div class="viewerbody" id="docbody"></div></article>
 </section>
 
-<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.2.1</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
+<footer class="footer"><span>FIRST DESCENT ARCHIVE // WORLD DATABASE V1.2.2</span><span>WORKING CANON — 상세 설정은 지속 갱신</span></footer>
 <div class="mobile-menu-sheet" id="mobileMenu" hidden>
   <div class="mobile-menu-head"><span>ARCHIVE MENU</span><button type="button" id="mobileMenuClose">×</button></div>
   <div class="mobile-menu-grid">
@@ -1285,14 +1286,14 @@ function globeAltitudeFor(k){
 function polygonColor(feature){
   const k=countryKeyByName(feature.properties?.name||"");
   if(globeSelectedKey&&k===globeSelectedKey)return N[k]?.color||"#c0a477";
-  return k?"rgba(100,132,144,.92)":"rgba(58,78,87,.86)";
+  return k?"rgba(121,157,169,.98)":"rgba(78,103,113,.96)";
 }
 function refreshGlobeLayers(){
   if(!strategicGlobe)return;
   strategicGlobe
     .polygonCapColor(polygonColor)
-    .polygonSideColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(31,48,56,.86)":"rgba(21,31,37,.72)")
-    .polygonStrokeColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(187,211,220,.68)":"rgba(101,126,136,.42)")
+    .polygonSideColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(40,60,69,.92)":"rgba(27,41,48,.86)")
+    .polygonStrokeColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(213,231,237,.86)":"rgba(139,164,174,.64)")
     .polygonAltitude(f=>{
       const k=countryKeyByName(f.properties?.name||"");
       return globeSelectedKey&&k===globeSelectedKey?.012:.004;
@@ -1352,8 +1353,8 @@ function initMap(){
       .polygonsData(globeFeatures)
       .polygonLabel(f=>f.properties?.name||"")
       .polygonCapColor(polygonColor)
-      .polygonSideColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(31,48,56,.86)":"rgba(21,31,37,.72)")
-      .polygonStrokeColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(187,211,220,.68)":"rgba(101,126,136,.42)")
+      .polygonSideColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(40,60,69,.92)":"rgba(27,41,48,.86)")
+      .polygonStrokeColor(f=>countryKeyByName(f.properties?.name||"")?"rgba(213,231,237,.86)":"rgba(139,164,174,.64)")
       .polygonAltitude(.004)
       .polygonsTransitionDuration(220)
       .pointsData([])
