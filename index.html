@@ -1803,6 +1803,24 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 }
 /* === END ROK ARCHIVE V2 === */
 
+
+/* === FULL WIDTH NATIONAL DOSSIER === */
+.flag-focus{cursor:default!important}
+.nation-dossier{position:relative;margin:14px 0 18px;padding:28px;overflow:hidden;border:1px solid #394b52;background:linear-gradient(135deg,#0a1013 0%,#06090b 58%,#0a1114 100%);box-shadow:0 24px 70px #0008;isolation:isolate}
+.nation-dossier:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(#7fc2d50a 1px,transparent 1px),linear-gradient(90deg,#7fc2d507 1px,transparent 1px);background-size:32px 32px;z-index:-2}
+.nation-dossier:after{content:"";position:absolute;width:420px;height:420px;right:-160px;top:-230px;border:1px solid #7bb5c51f;border-radius:50%;box-shadow:0 0 0 45px #7bb5c508,0 0 0 90px #7bb5c505;z-index:-1}
+.dossier-watermark{position:absolute;right:24px;top:6px;color:#dff8ff09;font:1000 clamp(5rem,12vw,10rem)/1 sans-serif;letter-spacing:-.08em;pointer-events:none}
+.dossier-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;padding-bottom:19px;border-bottom:1px solid #34454c}
+.dossier-id small,.dossier-code span{color:#78949d;font:800 .52rem ui-monospace,monospace;letter-spacing:.16em}.dossier-id h2{margin:6px 0 1px;font-size:clamp(2.2rem,5vw,4.5rem);line-height:.95;letter-spacing:-.065em}.dossier-id p{margin:7px 0 0;color:#799099;font:700 .65rem ui-monospace,monospace;letter-spacing:.13em}
+.dossier-code{text-align:right}.dossier-code b{display:block;margin-top:5px;color:#d7edf3;font:900 .82rem ui-monospace,monospace}.dossier-code em{display:inline-block;margin-top:8px;padding:4px 7px;border:1px solid #68483a;color:#dc9c72;font:800 .5rem ui-monospace,monospace;font-style:normal;letter-spacing:.12em}
+.dossier-grid{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(230px,.8fr);gap:10px;margin-top:12px}.dossier-hero{position:relative;min-height:360px;overflow:hidden;border:1px solid #344b54;background:radial-gradient(circle at 33% 48%,#315764 0 1px,transparent 2px),linear-gradient(120deg,#162b33,#071014 62%,#101d22)}
+.dossier-scan{position:absolute;inset:0;background:linear-gradient(#9ed8e10a 1px,transparent 1px);background-size:100% 5px;opacity:.65}.dossier-crosshair{position:absolute;left:15%;top:24%;width:150px;height:150px;border:1px solid #8dc8d95c;border-radius:50%;box-shadow:0 0 0 18px #8dc8d908}.dossier-crosshair:before,.dossier-crosshair:after{content:"";position:absolute;background:#8dc8d977}.dossier-crosshair:before{width:190px;height:1px;left:-20px;top:74px}.dossier-crosshair:after{width:1px;height:190px;left:74px;top:-20px}
+.dossier-label{position:absolute;left:16px;top:14px;color:#8ab0bc;font:800 .5rem ui-monospace,monospace;letter-spacing:.14em}.dossier-placeholder{position:absolute;left:16px;bottom:20px}.dossier-placeholder b{display:block;font-size:1.25rem;letter-spacing:-.02em}.dossier-placeholder small{display:block;margin-top:5px;color:#77919a;font:700 .5rem ui-monospace,monospace;letter-spacing:.12em}.dossier-coord{position:absolute;right:14px;top:14px;text-align:right;color:#74909a;font:700 .5rem/1.6 ui-monospace,monospace;letter-spacing:.08em}
+.dossier-side{display:grid;grid-template-rows:repeat(4,1fr);gap:7px}.dossier-mini{position:relative;padding:16px;border:1px solid #2b414a;background:#081217;overflow:hidden}.dossier-mini span{color:#6e8b95;font:800 .48rem ui-monospace,monospace;letter-spacing:.12em}.dossier-mini b{display:block;margin-top:9px;font-size:.92rem}.dossier-mini i{position:absolute;left:0;bottom:0;height:2px;width:76%;background:#76b1c3;box-shadow:0 0 14px #76b1c3}.dossier-mini.warning i{width:91%;background:#c98658;box-shadow:0 0 14px #c98658}
+.dossier-bottom{display:grid;grid-template-columns:.75fr .75fr 1.5fr;gap:8px;margin-top:8px}.dossier-photo-slot,.dossier-brief{min-height:130px;border:1px solid #293e46;background:linear-gradient(145deg,#0c171b,#070d10);padding:14px;position:relative}.dossier-photo-slot span,.dossier-brief span{color:#76949e;font:800 .48rem ui-monospace,monospace;letter-spacing:.12em}.dossier-photo-slot b{display:block;position:absolute;left:14px;bottom:29px;font-size:.7rem}.dossier-photo-slot small{position:absolute;left:14px;bottom:13px;color:#536a72;font:700 .45rem ui-monospace,monospace}.dossier-brief p{margin:9px 0 22px;color:#9aabb1;font-size:.72rem;line-height:1.6}.dossier-bars{position:absolute;left:14px;right:14px;bottom:12px;display:flex;gap:4px}.dossier-bars i{height:3px;flex:1;background:#36515a}.dossier-bars i:nth-child(-n+3){background:#78adbd}
+@media(max-width:760px){.nation-dossier{padding:16px;margin-top:9px}.dossier-top{align-items:flex-start}.dossier-id h2{font-size:2.2rem}.dossier-code span{display:none}.dossier-grid{grid-template-columns:1fr}.dossier-hero{min-height:250px}.dossier-side{grid-template-columns:1fr 1fr;grid-template-rows:auto}.dossier-mini{min-height:84px;padding:12px}.dossier-bottom{grid-template-columns:1fr 1fr}.dossier-brief{grid-column:1/-1}.dossier-crosshair{width:90px;height:90px}.dossier-crosshair:before{width:120px;left:-15px;top:44px}.dossier-crosshair:after{height:120px;left:44px;top:-15px}}
+/* === END FULL WIDTH NATIONAL DOSSIER === */
+
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
 {"type":"Feature","properties":{"name":"Angola"},"geometry":{"type":"MultiPolygon","coordinates":[[[[16.326528,-5.87747],[16.57318,-6.622645],[16.860191,-7.222298],[17.089996,-7.545689],[17.47297,-8.068551],[18.134222,-7.987678],[18.464176,-7.847014],[19.016752,-7.988246],[19.166613,-7.738184],[19.417502,-7.155429],[20.037723,-7.116361],[20.091622,-6.94309],[20.601823,-6.939318],[20.514748,-7.299606],[21.728111,-7.290872],[21.746456,-7.920085],[21.949131,-8.305901],[21.801801,-8.908707],[21.875182,-9.523708],[22.208753,-9.894796],[22.155268,-11.084801],[22.402798,-10.993075],[22.837345,-11.017622],[23.456791,-10.867863],[23.912215,-10.926826],[24.017894,-11.237298],[23.904154,-11.722282],[24.079905,-12.191297],[23.930922,-12.565848],[24.016137,-12.911046],[21.933886,-12.898437],[21.887843,-16.08031],[22.562478,-16.898451],[23.215048,-17.523116],[21.377176,-17.930636],[18.956187,-17.789095],[18.263309,-17.309951],[14.209707,-17.353101],[14.058501,-17.423381],[13.462362,-16.971212],[12.814081,-16.941343],[12.215461,-17.111668],[11.734199,-17.301889],[11.640096,-16.673142],[11.778537,-15.793816],[12.123581,-14.878316],[12.175619,-14.449144],[12.500095,-13.5477],[12.738479,-13.137906],[13.312914,-12.48363],[13.633721,-12.038645],[13.738728,-11.297863],[13.686379,-10.731076],[13.387328,-10.373578],[13.120988,-9.766897],[12.87537,-9.166934],[12.929061,-8.959091],[13.236433,-8.562629],[12.93304,-7.596539],[12.728298,-6.927122],[12.227347,-6.294448],[12.322432,-6.100092],[12.735171,-5.965682],[13.024869,-5.984389],[13.375597,-5.864241],[16.326528,-5.87747]]],[[[12.436688,-5.684304],[12.182337,-5.789931],[11.914963,-5.037987],[12.318608,-4.60623],[12.62076,-4.438023],[12.995517,-4.781103],[12.631612,-4.991271],[12.468004,-5.248362],[12.436688,-5.684304]]]]},"id":"AGO"},
@@ -2061,7 +2079,7 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 
     <section class="flag-carousel-card">
       <button class="flag-arrow" id="prevNation" type="button" aria-label="이전 국가">‹</button>
-      <div class="flag-focus" id="flagFocus" role="button" tabindex="0" aria-label="국가 선택">
+      <div class="flag-focus" id="flagFocus" aria-label="현재 선택 국가">
         <div class="flag flag-display selector-neutral" id="selectorFlag"><span class="fabric-wave"></span></div>
         <div class="flag-focus-copy">
           <span id="selectorCode">GLOBAL THEATER</span>
@@ -2149,6 +2167,38 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
         <div class="actions"><button class="btn" id="nationOpen" type="button">국가 데이터 목록</button><button class="btn secondary" id="popOpen" type="button">인구 변화</button></div>
       </aside>
     </div>
+
+    <section class="nation-dossier" id="nationDossier">
+      <div class="dossier-watermark" id="dossierWatermark">ROK</div>
+      <div class="dossier-top">
+        <div class="dossier-id">
+          <small>I.D.A. // NATIONAL STRATEGIC DOSSIER</small>
+          <h2 id="dossierName">대한민국</h2>
+          <p id="dossierEng">REPUBLIC OF KOREA</p>
+        </div>
+        <div class="dossier-code"><span>ARCHIVE ACCESS</span><b id="dossierCode">ROK // 2134</b><em>LEVEL 04</em></div>
+      </div>
+      <div class="dossier-grid">
+        <div class="dossier-hero">
+          <div class="dossier-scan"></div>
+          <div class="dossier-crosshair"></div>
+          <span class="dossier-label">VISUAL RECORD // 01</span>
+          <div class="dossier-placeholder"><b>STRATEGIC VISUAL ARCHIVE</b><small>WORLDVIEW IMAGE SLOT // NO IMAGE ASSIGNED</small></div>
+          <div class="dossier-coord">37°34'N / 126°58'E<br>SEOUL DEFENSE DISTRICT</div>
+        </div>
+        <div class="dossier-side">
+          <div class="dossier-mini"><span>STATUS</span><b id="dossierStatus">전시체제 유지</b><i></i></div>
+          <div class="dossier-mini"><span>POPULATION</span><b id="dossierPop">약 4,800만</b><i></i></div>
+          <div class="dossier-mini"><span>CAPITAL / CENTER</span><b id="dossierCapital">서울</b><i></i></div>
+          <div class="dossier-mini warning"><span>COMBAT POWER</span><b id="dossierStrength">최상위권</b><i></i></div>
+        </div>
+      </div>
+      <div class="dossier-bottom">
+        <div class="dossier-photo-slot"><span>ARCHIVE // 02</span><b>CITY / CIVILIAN LIFE</b><small>IMAGE SLOT</small></div>
+        <div class="dossier-photo-slot"><span>ARCHIVE // 03</span><b>MILITARY / FRONTLINE</b><small>IMAGE SLOT</small></div>
+        <div class="dossier-brief"><span>STRATEGIC BRIEF</span><p id="dossierBrief">국가를 선택하면 해당 국가의 전략 브리핑이 이곳에 표시됩니다.</p><div class="dossier-bars"><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </section>
 
     <section class="country-index-card">
       <div class="country-index-head">
@@ -3094,6 +3144,15 @@ function nation(k){
   setText("#ccapital",n.capital);
   setText("#cstrength",n.strength);
   setText("#cbrief",n.brief);
+  setText("#dossierName",n.name);
+  setText("#dossierEng",n.eng);
+  setText("#dossierCode",n.code);
+  setText("#dossierStatus",n.status);
+  setText("#dossierPop",n.pop);
+  setText("#dossierCapital",n.capital);
+  setText("#dossierStrength",n.strength);
+  setText("#dossierBrief",n.brief);
+  setText("#dossierWatermark",n.sigil||n.code.split(" ")[0]);
 
   const intel=$("#mapIntel");
   if(intel){
@@ -3123,11 +3182,7 @@ function stepCountry(dir){
 }
 $("#prevNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(-1)};
 $("#nextNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(1)};
-$("#flagFocus").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(1)};
-$("#flagFocus").onkeydown=e=>{if(e.key==="ArrowLeft"){e.preventDefault();stepCountry(-1)}if(e.key==="ArrowRight"||e.key==="Enter"){e.preventDefault();stepCountry(1)}};
-let swipeX=null;
-$("#flagFocus").addEventListener("touchstart",e=>{swipeX=e.touches[0].clientX},{passive:true});
-$("#flagFocus").addEventListener("touchend",e=>{if(swipeX===null)return;const dx=e.changedTouches[0].clientX-swipeX;swipeX=null;if(Math.abs(dx)>35)stepCountry(dx<0?1:-1)},{passive:true});
+
 
 COUNTRY_ORDER.forEach(k=>{
   const n=N[k],b=document.createElement("button");b.type="button";b.className="country-index-item";b.dataset.country=k;
