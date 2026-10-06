@@ -1872,6 +1872,17 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 #map.flat-strategic-map .globe-mount{inset:0!important;width:100%!important;height:100%!important;border-radius:0!important;overflow:hidden!important}
 #map.flat-strategic-map .map-tactical-hud{display:block!important;visibility:visible!important;opacity:1!important;z-index:60!important}
 
+
+/* === INDEPENDENT NATIONS DATABASE === */
+.nation-db-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:14px;align-items:start}
+.nation-db-detail{position:sticky;top:82px;padding:22px}
+.nation-db-hero{display:flex;align-items:center;gap:18px;margin-top:14px;padding-bottom:18px;border-bottom:1px solid #29343a}
+.nation-db-hero .flag{width:112px;height:68px;flex:0 0 auto}
+.nation-db-hero h2{margin:0 0 5px;font-size:1.35rem}
+.nation-db-stats{margin-top:18px}
+#nationGrid .nation.active{border-color:#7896a3;box-shadow:inset 3px 0 #91b6c3}
+@media(max-width:900px){.nation-db-layout{grid-template-columns:1fr}.nation-db-detail{position:static;order:-1}}
+
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
 {"type":"Feature","properties":{"name":"Angola"},"geometry":{"type":"MultiPolygon","coordinates":[[[[16.326528,-5.87747],[16.57318,-6.622645],[16.860191,-7.222298],[17.089996,-7.545689],[17.47297,-8.068551],[18.134222,-7.987678],[18.464176,-7.847014],[19.016752,-7.988246],[19.166613,-7.738184],[19.417502,-7.155429],[20.037723,-7.116361],[20.091622,-6.94309],[20.601823,-6.939318],[20.514748,-7.299606],[21.728111,-7.290872],[21.746456,-7.920085],[21.949131,-8.305901],[21.801801,-8.908707],[21.875182,-9.523708],[22.208753,-9.894796],[22.155268,-11.084801],[22.402798,-10.993075],[22.837345,-11.017622],[23.456791,-10.867863],[23.912215,-10.926826],[24.017894,-11.237298],[23.904154,-11.722282],[24.079905,-12.191297],[23.930922,-12.565848],[24.016137,-12.911046],[21.933886,-12.898437],[21.887843,-16.08031],[22.562478,-16.898451],[23.215048,-17.523116],[21.377176,-17.930636],[18.956187,-17.789095],[18.263309,-17.309951],[14.209707,-17.353101],[14.058501,-17.423381],[13.462362,-16.971212],[12.814081,-16.941343],[12.215461,-17.111668],[11.734199,-17.301889],[11.640096,-16.673142],[11.778537,-15.793816],[12.123581,-14.878316],[12.175619,-14.449144],[12.500095,-13.5477],[12.738479,-13.137906],[13.312914,-12.48363],[13.633721,-12.038645],[13.738728,-11.297863],[13.686379,-10.731076],[13.387328,-10.373578],[13.120988,-9.766897],[12.87537,-9.166934],[12.929061,-8.959091],[13.236433,-8.562629],[12.93304,-7.596539],[12.728298,-6.927122],[12.227347,-6.294448],[12.322432,-6.100092],[12.735171,-5.965682],[13.024869,-5.984389],[13.375597,-5.864241],[16.326528,-5.87747]]],[[[12.436688,-5.684304],[12.182337,-5.789931],[11.914963,-5.037987],[12.318608,-4.60623],[12.62076,-4.438023],[12.995517,-4.781103],[12.631612,-4.991271],[12.468004,-5.248362],[12.436688,-5.684304]]]]},"id":"AGO"},
@@ -2256,8 +2267,19 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 </section>
 
 <section class="panel" data-panel="nations">
-  <div class="heading"><div><div class="eyebrow">국가 / 권역 정보BASE</div><h2>2134년 주요 국가·세력권</h2></div><div class="muted">2134 군사시대 국가·세력 식별기</div></div>
-  <div class="grid3" id="nationGrid"></div>
+  <div class="heading"><div><div class="eyebrow">NATION ARCHIVE // 2134</div><h2>국가 · 세력권 데이터베이스</h2></div><div class="muted">WORLD 전구와 독립된 국가 설정 아카이브</div></div>
+  <div class="nation-db-layout">
+    <div class="grid3" id="nationGrid"></div>
+    <article class="card nation-db-detail" id="nationDbDetail">
+      <div class="eyebrow" id="nationDbCode">NATION ARCHIVE</div>
+      <div class="nation-db-hero"><div class="flag selector-neutral" id="nationDbFlag"><span class="fabric-wave"></span></div><div><h2 id="nationDbName">국가를 선택하세요</h2><div class="muted" id="nationDbEng">SELECT A STATE OR DEFENSE BLOC</div></div></div>
+      <div class="summary-grid nation-db-stats">
+        <div><span>상태</span><b id="nationDbStatus">—</b></div><div><span>인구</span><b id="nationDbPop">—</b></div>
+        <div><span>수도</span><b id="nationDbCapital">—</b></div><div><span>전력</span><b id="nationDbStrength">—</b></div>
+      </div>
+      <p class="brief" id="nationDbBrief">왼쪽의 국가·세력권 카드를 선택하면 설정 정보가 이곳에 표시됩니다. 이 화면은 WORLD 전략지도와 상태를 공유하지 않습니다.</p>
+    </article>
+  </div>
 </section>
 
 <section class="panel" data-panel="population">
@@ -3260,7 +3282,21 @@ COUNTRY_ORDER.forEach(k=>{
   b.onclick=()=>nation(k);$("#countryIndexList").appendChild(b);
 });
 renderWorldSelection();
-Object.entries(N).filter(([,n])=>!n.hidden).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{tab("world");setTimeout(()=>nation(k),40)};$("#nationGrid").appendChild(b)});
+function nationArchive(k){
+  const n=N[k];if(!n||n.hidden)return;
+  const flag=$("#nationDbFlag");if(flag){flag.className="flag "+n.flag;flag.innerHTML='<span class="fabric-wave"></span>'}
+  const put=(id,v)=>{const el=$(id);if(el)el.textContent=v||"—"};
+  put("#nationDbCode",n.code);put("#nationDbName",n.name);put("#nationDbEng",n.eng);
+  put("#nationDbStatus",n.status);put("#nationDbPop",n.pop);put("#nationDbCapital",n.capital);
+  put("#nationDbStrength",n.strength);put("#nationDbBrief",n.brief);
+  $("#nationGrid .nation").forEach(b=>b.classList.toggle("active",b.dataset.nation===k));
+}
+Object.entries(N).filter(([,n])=>!n.hidden).forEach(([k,n])=>{
+  const b=document.createElement("button");b.className="nation";b.dataset.nation=k;
+  b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';
+  b.onclick=()=>nationArchive(k);
+  $("#nationGrid").appendChild(b)
+});
 
 function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
 Object.entries(POP).filter(([k])=>k!=="world").forEach(([k,p])=>sparkCard(k,p));
