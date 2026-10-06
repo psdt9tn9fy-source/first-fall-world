@@ -84,7 +84,7 @@ export function initWorld(){
   const countryByName=new Map();
   const pathByIso=new Map();
   const sectorNode=new Map();
-  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false,mapTx=0,mapTy=0,acquireTimer=0,sheetStartY=null;
+  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false,mapTx=0,mapTy=0,drawTx=0,drawTy=0,drawZoom=1,mapAnim=0,acquireTimer=0,sheetStartY=null,sheetDragged=false;
 
   function isMobile(){return mobileQuery.matches}
   function showAcquire(label){
@@ -117,7 +117,20 @@ export function initWorld(){
   function applyTransform(){
     const [cx,cy]=focus;
     mapTx=W/2-cx*zoom;mapTy=H/2-cy*zoom;
-    mapGroup.setAttribute("transform",`translate(${mapTx} ${mapTy}) scale(${zoom})`);
+    cancelAnimationFrame(mapAnim);
+    const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduced){
+      drawTx=mapTx;drawTy=mapTy;drawZoom=zoom;
+      mapGroup.setAttribute("transform",`translate(${drawTx} ${drawTy}) scale(${drawZoom})`);return;
+    }
+    const sx=drawTx,sy=drawTy,sz=drawZoom,start=performance.now(),duration=isMobile()?430:360;
+    const tick=now=>{
+      const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3);
+      drawTx=sx+(mapTx-sx)*e;drawTy=sy+(mapTy-sy)*e;drawZoom=sz+(zoom-sz)*e;
+      mapGroup.setAttribute("transform",`translate(${drawTx} ${drawTy}) scale(${drawZoom})`);
+      if(p<1)mapAnim=requestAnimationFrame(tick);
+    };
+    mapAnim=requestAnimationFrame(tick);
   }
   function resetFocus(){
     clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();closeSheet();
@@ -240,13 +253,17 @@ export function initWorld(){
   viewport.addEventListener("click",e=>{if(e.target===viewport||e.target.id==="worldSvg"||e.target.classList.contains("map-grid-fill"))resetFocus()});
 
   sheetGrabber?.addEventListener("click",()=>{
+    if(sheetDragged){sheetDragged=false;return}
     const expand=!sectorPanel.classList.contains("expanded");openSheet(expand);
   });
-  sheetGrabber?.addEventListener("pointerdown",e=>{sheetStartY=e.clientY;sheetGrabber.setPointerCapture?.(e.pointerId)});
+  sheetGrabber?.addEventListener("pointerdown",e=>{sheetStartY=e.clientY;sheetDragged=false;sheetGrabber.setPointerCapture?.(e.pointerId)});
   sheetGrabber?.addEventListener("pointerup",e=>{
     if(sheetStartY===null)return;
     const dy=e.clientY-sheetStartY;sheetStartY=null;
-    if(dy<-28)openSheet(true);else if(dy>28)openSheet(false);
+    if(Math.abs(dy)>28){
+      sheetDragged=true;
+      if(dy<0)openSheet(true);else openSheet(false);
+    }
   });
 
   scanToggle.addEventListener("click",()=>{
