@@ -1879,24 +1879,6 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 @media(max-width:760px){[data-panel="world"].map-only-country .selector-main{display:block!important}}
 /* === END MAP ONLY COUNTRY MODE === */
 
-/* === ROK LOCAL THEATER === */
-#globeMount{position:relative}
-.rok-local-theater{position:absolute;inset:0;z-index:18;width:100%;height:100%;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 40%,#102b34 0,#07151c 52%,#030a0e 100%);transition:opacity .32s ease}
-.rok-local-theater.active{opacity:1;pointer-events:auto}
-.rok-local-theater .sea-grid{fill:url(#rokGrid)}
-.rok-local-theater .pen-base{fill:#172b31;stroke:#8aa4ac;stroke-width:1.5;vector-effect:non-scaling-stroke}
-.rok-local-theater .old-dmz{fill:none;stroke:#77878d;stroke-width:1;stroke-dasharray:5 5;opacity:.55;vector-effect:non-scaling-stroke}
-.rok-local-theater .city-dot{fill:#dbe7e9;stroke:#071014;stroke-width:1.4;vector-effect:non-scaling-stroke}
-.rok-local-theater .city-label{fill:#dce5e7;font:700 11px ui-monospace,monospace;paint-order:stroke;stroke:#071014;stroke-width:3px;stroke-linejoin:round}
-.rok-local-theater .zone-label{font:900 10px ui-monospace,monospace;letter-spacing:.13em;paint-order:stroke;stroke:#061016;stroke-width:3px}
-.rok-local-theater .theater-title{fill:#e7eeee;font:900 17px ui-monospace,monospace;letter-spacing:.1em}
-.rok-local-theater .theater-sub{fill:#81979e;font:700 9px ui-monospace,monospace;letter-spacing:.14em}
-.rok-local-theater .nest{fill:none;stroke:#c75e63;stroke-width:2;vector-effect:non-scaling-stroke}
-.rok-local-theater .nest-core{fill:#c75e63}
-.rok-local-theater .scanline{animation:rokScan 2.2s linear infinite}
-@keyframes rokScan{from{transform:translateY(-30px)}to{transform:translateY(560px)}}
-@media(max-width:760px){.rok-local-theater .city-label{font-size:9px}.rok-local-theater .theater-title{font-size:13px}}
-/* === END ROK LOCAL THEATER === */
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
 {"type":"Feature","properties":{"name":"Angola"},"geometry":{"type":"MultiPolygon","coordinates":[[[[16.326528,-5.87747],[16.57318,-6.622645],[16.860191,-7.222298],[17.089996,-7.545689],[17.47297,-8.068551],[18.134222,-7.987678],[18.464176,-7.847014],[19.016752,-7.988246],[19.166613,-7.738184],[19.417502,-7.155429],[20.037723,-7.116361],[20.091622,-6.94309],[20.601823,-6.939318],[20.514748,-7.299606],[21.728111,-7.290872],[21.746456,-7.920085],[21.949131,-8.305901],[21.801801,-8.908707],[21.875182,-9.523708],[22.208753,-9.894796],[22.155268,-11.084801],[22.402798,-10.993075],[22.837345,-11.017622],[23.456791,-10.867863],[23.912215,-10.926826],[24.017894,-11.237298],[23.904154,-11.722282],[24.079905,-12.191297],[23.930922,-12.565848],[24.016137,-12.911046],[21.933886,-12.898437],[21.887843,-16.08031],[22.562478,-16.898451],[23.215048,-17.523116],[21.377176,-17.930636],[18.956187,-17.789095],[18.263309,-17.309951],[14.209707,-17.353101],[14.058501,-17.423381],[13.462362,-16.971212],[12.814081,-16.941343],[12.215461,-17.111668],[11.734199,-17.301889],[11.640096,-16.673142],[11.778537,-15.793816],[12.123581,-14.878316],[12.175619,-14.449144],[12.500095,-13.5477],[12.738479,-13.137906],[13.312914,-12.48363],[13.633721,-12.038645],[13.738728,-11.297863],[13.686379,-10.731076],[13.387328,-10.373578],[13.120988,-9.766897],[12.87537,-9.166934],[12.929061,-8.959091],[13.236433,-8.562629],[12.93304,-7.596539],[12.728298,-6.927122],[12.227347,-6.294448],[12.322432,-6.100092],[12.735171,-5.965682],[13.024869,-5.984389],[13.375597,-5.864241],[16.326528,-5.87747]]],[[[12.436688,-5.684304],[12.182337,-5.789931],[11.914963,-5.037987],[12.318608,-4.60623],[12.62076,-4.438023],[12.995517,-4.781103],[12.631612,-4.991271],[12.468004,-5.248362],[12.436688,-5.684304]]]]},"id":"AGO"},
@@ -2674,7 +2656,6 @@ function setSelectorFlag(flag){
   el.innerHTML='<span class="fabric-wave"></span>';
 }
 function renderWorldSelection(){
-  try{hideKoreaLocalTheater()}catch(_){}
   const worldPanel=document.querySelector('[data-panel="world"]');if(worldPanel)worldPanel.classList.remove("map-only-country");
   try{nationApproachToken++}catch(_){}
   const mapEl=document.getElementById("map");if(mapEl)mapEl.classList.remove("country-approach");
@@ -2923,6 +2904,7 @@ function resetTacticalHud(){
   const p=$("#mapHudLinkPath");if(p)p.setAttribute("d","");
 }
 function directWorldView(){
+  try{nationApproachToken++}catch(_){}
   ++globeMoveToken;
   globeSelectedKey=null;
   globeFocusCoord=null;
@@ -2995,46 +2977,6 @@ function directNationMap(k){
     setTimeout(updateHudLink,260);
   }catch(e){console.warn("HUD LINK",e)}
 }
-let rokLocalTheater=null;
-function hideKoreaLocalTheater(){
-  if(rokLocalTheater){rokLocalTheater.classList.remove("active");setTimeout(()=>{if(rokLocalTheater&&!rokLocalTheater.classList.contains("active"))rokLocalTheater.remove();rokLocalTheater=null},340)}
-}
-function showKoreaLocalTheater(){
-  const mount=document.getElementById("globeMount");if(!mount||!window.d3||!window.WORLD_GEOJSON)return;
-  hideKoreaLocalTheater();
-  const feats=window.WORLD_GEOJSON.features.filter(x=>x.id==="KOR"||x.id==="PRK");
-  if(!feats.length)return;
-  const fc={type:"FeatureCollection",features:feats},ns="http://www.w3.org/2000/svg";
-  const svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox","0 0 1000 560");svg.setAttribute("preserveAspectRatio","xMidYMid meet");svg.classList.add("rok-local-theater");
-  const proj=d3.geoMercator().fitExtent([[285,34],[715,530]],fc),path=d3.geoPath(proj);
-  const defs=document.createElementNS(ns,"defs");
-  defs.innerHTML='<pattern id="rokGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#31505a" stroke-opacity=".22" stroke-width=".8"/></pattern><clipPath id="rokPenClip"></clipPath>';
-  const clip=defs.querySelector("#rokPenClip");feats.forEach(ft=>{const p=document.createElementNS(ns,"path");p.setAttribute("d",path(ft));clip.appendChild(p)});svg.appendChild(defs);
-  const bg=document.createElementNS(ns,"rect");bg.setAttribute("width","1000");bg.setAttribute("height","560");bg.setAttribute("class","sea-grid");svg.appendChild(bg);
-  feats.forEach(ft=>{const p=document.createElementNS(ns,"path");p.setAttribute("d",path(ft));p.setAttribute("class","pen-base");svg.appendChild(p)});
-  const zones=document.createElementNS(ns,"g");zones.setAttribute("clip-path","url(#rokPenClip)");
-  const bands=[
-    {y:34,h:318,fill:"#4f8170",op:.42,label:"SAFE ZONE"},
-    {y:352,h:78,fill:"#b18d4e",op:.50,label:"CONTESTED"},
-    {y:430,h:76,fill:"#8b4e50",op:.56,label:"LOST ZONE"},
-    {y:490,h:70,fill:"#34191d",op:.90,label:"BLACK ZONE"}
-  ];
-  bands.forEach(z=>{const r=document.createElementNS(ns,"rect");r.setAttribute("x","250");r.setAttribute("y",z.y);r.setAttribute("width","500");r.setAttribute("height",z.h);r.setAttribute("fill",z.fill);r.setAttribute("opacity",z.op);zones.appendChild(r)});svg.appendChild(zones);
-  // Re-outline peninsula over the zone wash.
-  feats.forEach(ft=>{const p=document.createElementNS(ns,"path");p.setAttribute("d",path(ft));p.setAttribute("fill","none");p.setAttribute("stroke","#a9bdc2");p.setAttribute("stroke-width","1.2");svg.appendChild(p)});
-  const line=d3.geoPath(proj)({type:"LineString",coordinates:[[126.0,38.05],[127.0,38.1],[128.0,38.3],[129.1,38.55]]});
-  const dmz=document.createElementNS(ns,"path");dmz.setAttribute("d",line);dmz.setAttribute("class","old-dmz");svg.appendChild(dmz);
-  const cities=[["서울",126.978,37.5665],["부산",129.0756,35.1796],["대전",127.3845,36.3504],["광주",126.8526,35.1595],["평양",125.7625,39.0392],["원산",127.446,39.1536],["함흥",127.536,39.918]];
-  cities.forEach(([name,lon,lat])=>{const [x,y]=proj([lon,lat]);const c=document.createElementNS(ns,"circle");c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r",name==="서울"||name==="평양"?"5":"3.5");c.setAttribute("class","city-dot");svg.appendChild(c);const t=document.createElementNS(ns,"text");t.setAttribute("x",x+8);t.setAttribute("y",y+4);t.setAttribute("class","city-label");t.textContent=name;svg.appendChild(t)});
-  const [nx,ny]=proj([128.08,41.95]);const nest=document.createElementNS(ns,"circle");nest.setAttribute("cx",nx);nest.setAttribute("cy",ny);nest.setAttribute("r","17");nest.setAttribute("class","nest");svg.appendChild(nest);const core=document.createElementNS(ns,"circle");core.setAttribute("cx",nx);core.setAttribute("cy",ny);core.setAttribute("r","4");core.setAttribute("class","nest-core");svg.appendChild(core);
-  const title=document.createElementNS(ns,"text");title.setAttribute("x","28");title.setAttribute("y","42");title.setAttribute("class","theater-title");title.textContent="KOREAN PENINSULA // 2134";svg.appendChild(title);
-  const sub=document.createElementNS(ns,"text");sub.setAttribute("x","29");sub.setAttribute("y","61");sub.setAttribute("class","theater-sub");sub.textContent="I.D.A. LOCAL THEATER DATA // ROK DEFENSE NETWORK";svg.appendChild(sub);
-  [["SAFE",34,"#91c7ae"],["CONTESTED",352,"#d3b36e"],["LOST",430,"#d37b7e"],["BLACK",500,"#d65c63"]].forEach(([tx,y,col])=>{const t=document.createElementNS(ns,"text");t.setAttribute("x","770");t.setAttribute("y",+y+20);t.setAttribute("fill",col);t.setAttribute("class","zone-label");t.textContent=tx;t.setAttribute("text-anchor","end");svg.appendChild(t)});
-  const scan=document.createElementNS(ns,"rect");scan.setAttribute("x","0");scan.setAttribute("y","0");scan.setAttribute("width","1000");scan.setAttribute("height","2");scan.setAttribute("fill","#9bd8e6");scan.setAttribute("opacity",".22");scan.setAttribute("class","scanline");svg.appendChild(scan);
-  mount.appendChild(svg);rokLocalTheater=svg;requestAnimationFrame(()=>requestAnimationFrame(()=>svg.classList.add("active")));
-  const label=document.getElementById("mapApproachLabel");if(label)label.textContent="ROK // LOCAL THEATER ONLINE";
-  const cap=document.getElementById("globeCaption");if(cap)cap.textContent="한반도 전략 전구";
-}
 let nationApproachToken=0;
 function animateViewBox(svg,from,to,duration,token,done){
   const start=performance.now(),ease=t=>1-Math.pow(1-t,3);
@@ -3061,7 +3003,6 @@ function animateNationApproach(k){
     animateViewBox(svg,mid,fin,700,token,()=>{
       globeSelectedKey=k;globeFocusCoord={lon:+r.lon,lat:+r.lat};globeState.lon=vl;globeState.lat=va;globeState.zoom=k==="rok"?5.4:Math.max(3.2,+r.z||3.2);
       try{typeNationHud(k)}catch(_){} try{renderStrategicMarkers(k)}catch(_){}
-      if(k==="rok")setTimeout(()=>{if(token===nationApproachToken)showKoreaLocalTheater()},180);else hideKoreaLocalTheater();
       if(map)map.classList.remove("country-approach");if(label)label.textContent="TARGET ACQUISITION";
       try{requestAnimationFrame(updateHudLink)}catch(_){}
     });
@@ -3221,6 +3162,7 @@ function hardMapViewForNation(k){
 }
 
 function hardWorldView(){
+  try{nationApproachToken++}catch(_){}
   try{renderWorldSelection()}catch(_){}
   ++hudTypeToken;
   if(hudTypeTimer){clearInterval(hudTypeTimer);hudTypeTimer=null}
@@ -3314,7 +3256,10 @@ function nation(k){
 function stepCountry(dir){
   if(carouselIndex<0)carouselIndex=dir>0?0:COUNTRY_ORDER.length-1;
   else carouselIndex=(carouselIndex+dir+COUNTRY_ORDER.length)%COUNTRY_ORDER.length;
-  nation(COUNTRY_ORDER[carouselIndex]);
+  const k=COUNTRY_ORDER[carouselIndex],n=N[k];if(!n)return;
+  setSelectorFlag(n.flag);
+  const setText=(id,val)=>{const el=$(id);if(el)el.textContent=val??""};
+  setText("#selectorCode",n.code);setText("#selectorName",n.name);setText("#selectorEng",n.eng);
 }
 $("#prevNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(-1)};
 $("#nextNation").onclick=e=>{e.preventDefault();e.stopPropagation();stepCountry(1)};
@@ -3676,11 +3621,10 @@ function goWorldView(e){
 document.addEventListener("click",e=>{
   const b=e.target&&e.target.closest?e.target.closest("[data-hard-world-view]"):null;
   if(!b)return;
-  e.preventDefault();
-  e.stopPropagation();
-  e.stopImmediatePropagation&&e.stopImmediatePropagation();
+  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation&&e.stopImmediatePropagation();
+  try{nationApproachToken++}catch(_){}
   try{renderWorldSelection()}catch(_){}
-  hardWorldView();
+  try{directWorldView()}catch(_){}
 },true);
 
 const c=$("#fx"),ctx=c.getContext("2d");let pts=[];
