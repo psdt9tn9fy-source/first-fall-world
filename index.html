@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title># 2134</title>
-<link rel="stylesheet" href="./css/base.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/intro.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/site.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/access.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/world.css?v=20261006-mobile-terminal-3"></head><body>
+<link rel="stylesheet" href="./css/base.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/intro.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/site.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/access.css?v=20261006-situation-room-1"><link rel="stylesheet" href="./css/world.css?v=20261007-field-terminal-1"><link rel="stylesheet" href="./css/world-mobile.css?v=20261007-field-terminal-1"></head><body>
 <section class="intro" id="intro"><div class="intro-noise"></div><div class="intro-grid"></div><div class="intro-corner tl">I.D.A. // HISTORICAL RECORD<br>ARCHIVE NODE 07</div><div class="intro-corner tr">SIGNAL // STABLE<br>ERA INDEX // 2134</div><div class="intro-corner bl">FIRST DESCENT + 103 YEARS<br>ACCESS CLASS // PUBLIC ARCHIVE</div><div class="intro-stage intro-first"><div><div class="first-date">I.D.A. // HISTORICAL SEQUENCE</div><div class="first-title">2000<br>— 2134</div><div class="first-sub">134 YEARS OF RECORDED HISTORY // ACCESSING TIMELINE</div></div></div><div class="intro-stage intro-years"><div class="chronology"><div class="era-title" id="eraTitle"></div><div class="timeline-now"></div><div class="timeline-year" id="timelineYear">2000</div><div class="record-window" id="recordWindow"><div class="record-status" id="recordStatus">CIVIL RECORD // NORMAL</div><div class="record-event" id="recordEvent">NO MAJOR RECORD</div><div class="record-eng" id="recordEng">I.D.A. HISTORICAL INDEX</div></div><div class="timeline-era" id="timelineEra">PRE-DESCENT ERA</div><div class="rupture-note"><span>HISTORICAL DISCONTINUITY // 2031</span><b>FIRST DESCENT</b></div><i class="signal-fault f1"></i><i class="signal-fault f2"></i><i class="signal-fault f3"></i><div class="timeline-rail"><div class="timeline-track" id="timelineTrack"></div></div><div class="final-blackout" id="finalBlackout"><div class="final-lock"><span>103 YEARS AFTER FIRST DESCENT</span><b>2134</b><em>I.D.A. // CURRENT WORLD RECORD</em></div></div></div></div><div class="intro-stage intro-final" id="accessStage"><div class="access-gate" aria-hidden="true"><i class="gate-top"></i><i class="gate-bottom"></i></div><svg class="access-frame" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><rect class="access-frame-base" x="1" y="1" width="98" height="98" pathLength="100"></rect><rect class="access-frame-progress" id="accessFrameProgress" x="1" y="1" width="98" height="98" pathLength="100"></rect></svg><div class="access-divider" aria-hidden="true"></div><div class="final-wrap"><div class="final-code">CURRENT ERA // WORLD RECORD</div><div class="final-title">2134</div><div class="final-rule"></div><div class="final-bottom"><div class="final-copy">인류는 멸망하지 않았다.<br>하지만 세계의 모든 곳이 살아남은 것도 아니다.<small>I.D.A. WORLD ARCHIVE // AUTHORIZATION REQUIRED</small></div><div class="access-console"><div class="access-status" id="accessStatus">ARCHIVE SEAL // LOCKED</div><button class="access-control" id="accessControl" type="button" aria-label="Press and hold to unseal the world archive"><span class="hold-pulse" aria-hidden="true"><i></i></span><span class="access-percent" id="accessPercent">000%</span><span class="hold-copy"><b id="accessHintPrimary">PRESS & HOLD</b><small id="accessHintSecondary">길게 눌러 기록을 해제하세요</small></span></button><div class="access-hint" id="accessHint">HOLD CONTROL // RELEASE TO CANCEL</div></div></div></div><div class="access-granted" id="accessGranted" hidden><span>I.D.A. AUTHORIZATION</span><b>ACCESS GRANTED</b><em>ARCHIVE SEAL // RELEASED</em></div></div><button class="intro-skip" id="introSkip">SKIP INTRO →</button></section><div class="shell archive-shell" id="archiveShell">
 <div class="archive-frame" aria-hidden="true">
   <div class="frame-meta frame-left"><span>ACCESS // PUBLIC ARCHIVE</span><b id="frameRecord">RECORD 01 / 06</b></div>
@@ -20,10 +20,86 @@
 </header><main class="main">
 <section class="view active world-view" data-view="world">
   <div class="situation-room" id="situationRoom" data-zone="all" data-era="2134">
-    <div class="mobile-world-bar" aria-label="World field terminal">
-      <div><span>I.D.A. // FIELD TERMINAL</span><b>WORLD <i>//</i> <em id="mobileEraReadout">2134</em></b></div>
-      <strong><i></i> LIVE</strong>
-    </div>
+
+    <section class="field-terminal" id="fieldTerminal" aria-label="I.D.A. mobile field terminal">
+      <header class="ft-header">
+        <div><span>I.D.A. // FIELD TERMINAL</span><b>WORLD / <em>2134</em></b></div>
+        <strong class="ft-link"><i></i>LINK</strong>
+      </header>
+
+      <nav class="ft-modules" aria-label="Terminal modules">
+        <button class="active" data-ft-module="theater">THEATER</button>
+        <button data-ft-module="timeline">TIMELINE</button>
+        <button data-ft-module="status">STATUS</button>
+      </nav>
+
+      <section class="ft-panel active" data-ft-panel="theater">
+        <div class="ft-theater-head">
+          <span>CURRENT THEATER</span>
+          <b id="ftTheaterName">EAST ASIA / PACIFIC</b>
+          <em id="ftTheaterIndex">01 / 04</em>
+          <small id="ftTheaterCaption">동아시아 · 태평양 전구</small>
+        </div>
+        <div class="ft-world-index" id="ftWorldIndex" aria-label="Theater index"></div>
+        <div class="ft-theater-deck" id="ftTheaterDeck"></div>
+        <div class="ft-theater-dots" id="ftTheaterDots" aria-label="Theater pages"></div>
+      </section>
+
+      <section class="ft-panel ft-timeline" data-ft-panel="timeline">
+        <div class="ft-era-row" aria-label="Historical era">
+          <button data-ft-era="2031">2031</button>
+          <button data-ft-era="2041">2041</button>
+          <button data-ft-era="2071">2071</button>
+          <button data-ft-era="2101">2101</button>
+          <button class="active" data-ft-era="2134">2134</button>
+        </div>
+        <div class="ft-timeline-list" id="ftTimelineList"></div>
+      </section>
+
+      <section class="ft-panel ft-status" data-ft-panel="status">
+        <div class="ft-status-hero"><span>CURRENT WORLD RECORD</span><b>103</b><strong>YEARS OF WAR // ONGOING</strong></div>
+        <div class="ft-zone-list">
+          <article><b>SAFE</b><p>국가 행정과 민간 생활이 안정적으로 유지되는 통제지역.</p></article>
+          <article><b>CONTESTED</b><p>통제권이 유동적이며 교전·회복작전이 진행되는 지역.</p></article>
+          <article><b>LOST</b><p>인류의 지속적인 상시 통제가 상실된 지역.</p></article>
+          <article><b>BLACK</b><p>대규모 네스트와 제한된 정찰 데이터가 기록되는 최고위험 구역.</p></article>
+        </div>
+        <div class="ft-status-actions">
+          <button data-ft-open="nations">OPEN NATIONS →</button>
+          <button data-ft-open="eidolon">OPEN EIDOLON →</button>
+        </div>
+      </section>
+
+      <aside class="ft-dossier" id="ftDossier" data-state="closed">
+        <div class="ft-dossier-head">
+          <button class="ft-dossier-grab" id="ftDossierGrabber" type="button" aria-expanded="false"><i></i><span>DETAIL RECORD</span></button>
+          <button class="ft-dossier-close" id="ftDossierClose" type="button" aria-label="Close dossier">×</button>
+        </div>
+        <div class="ft-dossier-code" id="ftDossierCode">I.D.A. // DOSSIER</div>
+        <h3 id="ftDossierTitle">NO TARGET</h3>
+        <div class="ft-dossier-class" id="ftDossierClass">SELECT A NODE</div>
+        <p id="ftDossierBody">전구의 노드를 선택하면 관련 기록이 이곳에 연결된다.</p>
+        <div class="ft-dossier-data">
+          <div><span id="ftDossierKey1">STATUS</span><b id="ftDossierVal1">---</b></div>
+          <div><span id="ftDossierKey2">ACCESS</span><b id="ftDossierVal2">---</b></div>
+        </div>
+        <button class="ft-dossier-open" id="ftDossierOpen" type="button">OPEN RECORD →</button>
+      </aside>
+
+      <div class="ft-more-menu" id="ftMoreMenu">
+        <button data-ft-more="military">04 // MILITARY</button>
+        <button data-ft-more="academy">05 // ACADEMY</button>
+        <button data-ft-more="archive">06 // ARCHIVE</button>
+      </div>
+
+      <nav class="ft-record-nav" aria-label="Archive records">
+        <button class="active" data-ft-open="world"><span>01</span><b>WORLD</b></button>
+        <button data-ft-open="nations"><span>02</span><b>NATIONS</b></button>
+        <button data-ft-open="eidolon"><span>03</span><b>EIDOLON</b></button>
+        <button data-ft-open="more"><span>•••</span><b>MORE</b></button>
+      </nav>
+    </section>
+
     <header class="situation-head">
       <div>
         <div class="kicker">I.D.A. // GLOBAL THEATER CONTROL</div>
@@ -61,7 +137,6 @@
             <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
             <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
             <button type="button" id="zoomReset">RESET</button>
-            <button type="button" id="scanToggle" aria-pressed="false">SCAN</button>
           </div>
         </div>
 
@@ -82,16 +157,7 @@
               <g class="world-sectors" id="worldSectors"></g>
             </g>
           </svg>
-
           <div class="map-scanline" aria-hidden="true"></div>
-          <div class="scan-lens" id="scanLens" aria-hidden="true">
-            <i></i><b>SCAN</b><span id="scanTarget">NO TARGET</span>
-          </div>
-          
-          <div class="target-acquire" id="targetAcquire" aria-hidden="true">
-            <i class="ta-corner tl"></i><i class="ta-corner tr"></i><i class="ta-corner bl"></i><i class="ta-corner br"></i>
-            <span>TARGET ACQUIRED</span><b id="targetAcquireLabel">---</b>
-          </div>
           <div class="map-loading" id="mapLoading"><span>WORLD DATA // LOADING</span><i></i></div>
           <div class="map-coordinate" id="mapCoordinate">LAT --.-- // LON --.--</div>
           <div class="map-legend"><span><i class="safe"></i>SAFE</span><span><i class="contested"></i>CONTESTED</span><span><i class="lost"></i>LOST</span><span><i class="black"></i>BLACK</span></div>
@@ -111,9 +177,6 @@
       </section>
 
       <aside class="sector-panel" id="sectorPanel">
-        <button class="sheet-grabber" id="sheetGrabber" type="button" aria-expanded="false" aria-label="Toggle detail record">
-          <i></i><span>DETAIL RECORD</span>
-        </button>
         <div class="panel-overline" id="panelOverline">GLOBAL THEATER // 2134</div>
         <div class="panel-index" id="panelIndex">00</div>
         <h3 id="panelTitle">WORLD OVERVIEW</h3>
@@ -136,7 +199,6 @@
     </div>
   </div>
 </section>
-
 <section class="view" data-view="nations"><div class="pagehead"><div><div class="kicker">NATION ARCHIVE</div><h2>국가 · 세력권</h2></div><p>세계 전구의 주요 국가와 공동방위체. 목록을 선택하면 하나의 기록을 크게 열람한다.</p></div><div class="nation-browser"><div class="nation-list" id="nationList"></div><article class="nation-display"><img id="nf" alt=""><div class="kicker nation-code" id="nc"></div><h3 id="nn"></h3><div class="nation-eng" id="ne"></div><div class="nation-meta"><div><span>STATUS</span><b id="ns"></b></div><div><span>POPULATION</span><b id="np"></b></div><div><span>CAPITAL / COMMAND</span><b id="nca"></b></div><div><span>STRENGTH</span><b id="nst"></b></div></div><p class="nation-brief" id="nb"></p></article></div></section>
 <section class="view" data-view="eidolon"><div class="pagehead"><div><div class="kicker">HOSTILE ENTITY</div><h2>EIDOLON</h2></div><p>제1강하 이후 인류가 103년 동안 상대해 온 적대 존재.</p></div><div class="editorial"><div><div class="kicker">THREAT // UNKNOWN ORIGIN</div><h3>적은 아직<br>사라지지<br>않았다.</h3><p class="copy">에이돌론은 단순한 개체 단위의 위협이 아니다. 네스트를 형성하고 영토를 잠식하며, 인간의 지속적인 통제를 불가능하게 만든다. 2134년에도 전쟁이 끝나지 않은 가장 직접적인 이유다.</p></div><div class="index"><div class="index-row"><span>01</span><b>ENTITY // 개체</b></div><div class="index-row"><span>02</span><b>NEST // 네스트</b></div><div class="index-row"><span>03</span><b>LOST TERRITORY // 상실지역</b></div><div class="index-row"><span>04</span><b>BLACK ZONE // 접근제한권</b></div></div></div></section>
 <section class="view" data-view="military"><div class="pagehead"><div><div class="kicker">MILITARY SOCIETY</div><h2>군과 사회</h2></div><p>군은 사회 전체를 대체하지 않는다. 그러나 103년의 전쟁은 군 경력과 계급을 가장 강력한 사회적 자산 중 하나로 만들었다.</p></div><div class="editorial"><div><div class="kicker">A SOCIETY AT WAR</div><h3>전쟁은<br>일상이<br>되었다.</h3><p class="copy">안전권의 시민들은 평범한 삶을 살아간다. 동시에 전선에서는 매일 영토를 두고 싸운다. 각국은 서로 다른 군사제도와 전투교리를 발전시켰으며, 군인과 군 교육기관의 사회적 위상은 과거보다 훨씬 높다.</p></div><div class="index"><div class="index-row"><span>01</span><b>장교 / OFFICER</b></div><div class="index-row"><span>02</span><b>부사관 / NCO</b></div><div class="index-row"><span>03</span><b>병 / ENLISTED</b></div><div class="index-row"><span>04</span><b>국가별 전투교리</b></div></div></div></section>
@@ -152,4 +214,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261006-mobile-terminal-3"></script></body></html>
+<script type="module" src="./js/main.js?v=20261007-field-terminal-1"></script></body></html>
