@@ -20,47 +20,30 @@ export function initNavigation(){
   let busy=false;
 
   function activate(key,button){
-    const meta=RECORDS[key];
+    const meta=RECORDS[key];if(!meta||!button)return;
     tabs.forEach(tab=>{
-      const active=tab===button;
-      tab.classList.toggle("active",active);
-      if(active)tab.setAttribute("aria-current","page");
-      else tab.removeAttribute("aria-current");
+      const active=tab===button;tab.classList.toggle("active",active);
+      active?tab.setAttribute("aria-current","page"):tab.removeAttribute("aria-current");
     });
     views.forEach(view=>view.classList.toggle("active",view.dataset.view===key));
-    recordCode.textContent=`RECORD ${meta.no} // ${meta.code}`;
-    recordTitle.textContent=meta.title;
-    frameRecord.textContent=`RECORD ${meta.no} / 06`;
-    document.title=`# 2134 // ${meta.title}`;
+    recordCode.textContent=`RECORD ${meta.no} // ${meta.code}`;recordTitle.textContent=meta.title;
+    frameRecord.textContent=`RECORD ${meta.no} / 06`;document.title=`# 2134 // ${meta.title}`;
+    window.dispatchEvent(new CustomEvent("archive:record-opened",{detail:{key}}));
   }
 
-  tabs.forEach(button=>button.addEventListener("click",()=>{
-    if(busy||button.classList.contains("active"))return;
-    const key=button.dataset.tab;
-    const meta=RECORDS[key];
-
-    if(reduced){
-      activate(key,button);
-      window.scrollTo(0,0);
-      return;
-    }
-
-    busy=true;
-    target.textContent=`${meta.no} // ${meta.title}`;
-    transitionState.textContent=`${meta.code} // LOADING RECORD`;
+  function openRecord(key){
+    const button=tabs.find(tab=>tab.dataset.tab===key),meta=RECORDS[key];
+    if(!button||!meta||busy||button.classList.contains("active"))return;
+    if(reduced){activate(key,button);window.scrollTo(0,0);return}
+    busy=true;target.textContent=`${meta.no} // ${meta.title}`;transitionState.textContent=`${meta.code} // LOADING RECORD`;
     transition.classList.add("engaged");
     requestAnimationFrame(()=>requestAnimationFrame(()=>transition.classList.add("cover")));
-
     setTimeout(()=>{
-      activate(key,button);
-      window.scrollTo(0,0);
-      transitionState.textContent="RECORD VERIFIED // OPEN";
-      transition.classList.remove("cover");
-
-      setTimeout(()=>{
-        transition.classList.remove("engaged");
-        busy=false;
-      },360);
+      activate(key,button);window.scrollTo(0,0);transitionState.textContent="RECORD VERIFIED // OPEN";transition.classList.remove("cover");
+      setTimeout(()=>{transition.classList.remove("engaged");busy=false},360);
     },320);
-  }));
+  }
+
+  tabs.forEach(button=>button.addEventListener("click",()=>openRecord(button.dataset.tab)));
+  window.addEventListener("archive:open-record",e=>openRecord(e.detail?.key));
 }
