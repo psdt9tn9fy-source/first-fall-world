@@ -121,7 +121,7 @@ function hero(ev,i){
   if(ev[0]===2031&&i<3){recordWindow.classList.remove("impact");void recordWindow.offsetWidth;recordWindow.classList.add("impact")}
   heroTimer=setTimeout(()=>eventEls[i].classList.remove("active"),520);
 }
-const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint"),accessGranted=document.querySelector("#accessGranted");
+const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint"),accessHintPrimary=document.querySelector("#accessHintPrimary"),accessHintSecondary=document.querySelector("#accessHintSecondary"),accessGranted=document.querySelector("#accessGranted");
 document.body.classList.add("intro-lock");
 let introSkipped=false,chronologyRAF=0,eventTimers=[];
 function finishChronology(){
@@ -185,6 +185,12 @@ setTimeout(()=>{
   }
   chronologyRAF=requestAnimationFrame(tick);
 },2100);
+const isTouchDevice=matchMedia("(pointer:coarse)").matches||navigator.maxTouchPoints>0;
+function setIdleAccessHint(){
+  accessHintPrimary.textContent=isTouchDevice?"TOUCH & HOLD ANYWHERE":"PRESS & HOLD ANYWHERE";
+  accessHintSecondary.textContent="화면을 길게 눌러 기록을 해제하세요";
+}
+setIdleAccessHint();
 const ACCESS_HOLD_MS=1400;
 let accessRAF=0,accessStart=0,accessProgress=0,accessActive=false,accessComplete=false,resetRAF=0;
 function paintAccess(p){
@@ -208,14 +214,15 @@ function resetAccess(){
     const t=Math.min(1,(now-start)/dur),e=1-Math.pow(1-t,3);
     paintAccess(from*(1-e));
     if(t<1)resetRAF=requestAnimationFrame(back);
-    else{accessHint.textContent="PRESS & HOLD ANYWHERE TO UNSEAL";accessStatus.textContent="ARCHIVE SEAL // LOCKED"}
+    else{accessStatus.textContent="ARCHIVE SEAL // LOCKED";setTimeout(()=>{if(!accessActive&&!accessComplete)setIdleAccessHint()},520)}
   }
   resetRAF=requestAnimationFrame(back);
 }
 function completeAccess(){
   accessComplete=true;accessActive=false;paintAccess(1);
   accessStage.classList.remove("holding");
-  accessHint.textContent="AUTHORIZATION COMPLETE";
+  accessHintPrimary.textContent="AUTHORIZATION COMPLETE";
+  accessHintSecondary.textContent="기록 봉인이 해제되었습니다";
   accessStatus.textContent="ARCHIVE SEAL // RELEASED";
   setTimeout(()=>{
     accessGranted.hidden=false;
@@ -242,10 +249,17 @@ function beginAccess(e){
   cancelAnimationFrame(resetRAF);
   accessActive=true;accessStart=performance.now()-accessProgress*ACCESS_HOLD_MS;
   accessStage.classList.add("holding");
-  accessHint.textContent="KEEP HOLDING // DO NOT RELEASE";
+  accessHintPrimary.textContent="KEEP HOLDING // DO NOT RELEASE";
+  accessHintSecondary.textContent="손을 떼지 마세요";
   accessRAF=requestAnimationFrame(accessTick);
 }
-function endAccess(){if(accessActive&&!accessComplete)resetAccess()}
+function endAccess(){
+  if(accessActive&&!accessComplete){
+    accessHintPrimary.textContent="HOLD INTERRUPTED";
+    accessHintSecondary.textContent="길게 눌러 다시 시도하세요";
+    resetAccess();
+  }
+}
 accessStage.addEventListener("pointerdown",beginAccess);
 ["pointerup","pointercancel","pointerleave"].forEach(x=>accessStage.addEventListener(x,endAccess));
 accessStage.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.repeat)beginAccess(e)});
