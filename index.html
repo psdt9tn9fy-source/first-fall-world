@@ -2187,37 +2187,7 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
       </aside>
     </div>
 
-    <section class="nation-dossier" id="nationDossier" hidden>
-      <div class="dossier-watermark" id="dossierWatermark">ROK</div>
-      <div class="dossier-top">
-        <div class="dossier-id">
-          <small>I.D.A. // 국가 전략 기록</small>
-          <h2 id="dossierName">대한민국</h2>
-          <p id="dossierEng">REPUBLIC OF KOREA</p>
-        </div>
-        <div class="dossier-code"><span>ARCHIVE ACCESS</span><b id="dossierCode">ROK // 2134</b><em>보안등급 04</em></div>
-      </div>
-      <div class="dossier-grid">
-        <div class="dossier-hero">
-          <div class="dossier-scan"></div>
-          <div class="dossier-crosshair"></div>
-          <span class="dossier-label">시각 기록 // 01</span>
-          <div class="dossier-placeholder"><b>전략 시각자료</b><small>세계관 이미지 슬롯 // 미지정</small></div>
-          <div class="dossier-coord">37°34'N / 126°58'E<br>SEOUL DEFENSE DISTRICT</div>
-        </div>
-        <div class="dossier-side">
-          <div class="dossier-mini"><span>상태</span><b id="dossierStatus">전시체제 유지</b><i></i></div>
-          <div class="dossier-mini"><span>인구</span><b id="dossierPop">약 4,800만</b><i></i></div>
-          <div class="dossier-mini"><span>수도 / 중심</span><b id="dossierCapital">서울</b><i></i></div>
-          <div class="dossier-mini warning"><span>전력</span><b id="dossierStrength">최상위권</b><i></i></div>
-        </div>
-      </div>
-      <div class="dossier-bottom">
-        <div class="dossier-photo-slot"><span>기록 // 02</span><b>도시 / 민간생활</b><small>이미지 슬롯</small></div>
-        <div class="dossier-photo-slot"><span>기록 // 03</span><b>군사 / 전선</b><small>이미지 슬롯</small></div>
-        <div class="dossier-brief"><span>전략 브리핑</span><p id="dossierBrief">국가를 선택하면 해당 국가의 전략 브리핑이 이곳에 표시됩니다.</p><div class="dossier-bars"><i></i><i></i><i></i><i></i></div></div>
-      </div>
-    </section>
+    <div id="nationDossierMount"></div>
 
     <section class="country-index-card">
       <div class="country-index-head">
@@ -2439,6 +2409,7 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
 <script src="./assets/vendor/d3.v7.min.js"></script>
 <script src="./assets/vendor/globe.gl.min.js"></script>
 <script>
+const NATION_DOSSIER_HTML="<section class=\"nation-dossier\" id=\"nationDossier\">\n      <div class=\"dossier-watermark\" id=\"dossierWatermark\">ROK</div>\n      <div class=\"dossier-top\">\n        <div class=\"dossier-id\">\n          <small>I.D.A. // 국가 전략 기록</small>\n          <h2 id=\"dossierName\">대한민국</h2>\n          <p id=\"dossierEng\">REPUBLIC OF KOREA</p>\n        </div>\n        <div class=\"dossier-code\"><span>ARCHIVE ACCESS</span><b id=\"dossierCode\">ROK // 2134</b><em>보안등급 04</em></div>\n      </div>\n      <div class=\"dossier-grid\">\n        <div class=\"dossier-hero\">\n          <div class=\"dossier-scan\"></div>\n          <div class=\"dossier-crosshair\"></div>\n          <span class=\"dossier-label\">시각 기록 // 01</span>\n          <div class=\"dossier-placeholder\"><b>전략 시각자료</b><small>세계관 이미지 슬롯 // 미지정</small></div>\n          <div class=\"dossier-coord\">37°34'N / 126°58'E<br>SEOUL DEFENSE DISTRICT</div>\n        </div>\n        <div class=\"dossier-side\">\n          <div class=\"dossier-mini\"><span>상태</span><b id=\"dossierStatus\">전시체제 유지</b><i></i></div>\n          <div class=\"dossier-mini\"><span>인구</span><b id=\"dossierPop\">약 4,800만</b><i></i></div>\n          <div class=\"dossier-mini\"><span>수도 / 중심</span><b id=\"dossierCapital\">서울</b><i></i></div>\n          <div class=\"dossier-mini warning\"><span>전력</span><b id=\"dossierStrength\">최상위권</b><i></i></div>\n        </div>\n      </div>\n      <div class=\"dossier-bottom\">\n        <div class=\"dossier-photo-slot\"><span>기록 // 02</span><b>도시 / 민간생활</b><small>이미지 슬롯</small></div>\n        <div class=\"dossier-photo-slot\"><span>기록 // 03</span><b>군사 / 전선</b><small>이미지 슬롯</small></div>\n        <div class=\"dossier-brief\"><span>전략 브리핑</span><p id=\"dossierBrief\">국가를 선택하면 해당 국가의 전략 브리핑이 이곳에 표시됩니다.</p><div class=\"dossier-bars\"><i></i><i></i><i></i><i></i></div></div>\n      </div>\n    </section>";
 const N={
 rok:{code:"ROK // 2134",name:"대한민국",eng:"REPUBLIC OF KOREA",sigil:"ROK",status:"요새화 / 교전 중",pop:"약 4,300만",capital:"서울",strength:"적응형 전투체계",color:"#4aa8ff",flag:"rok",brief:"제1강하 이후 국가체제를 유지한 한반도 핵심국가. 북부 붕괴와 수십 년의 회복전쟁을 거쳐 한반도 대부분을 통합했다. 평시 징병제는 없으며 완전지원제 직업군을 운영한다. 군인은 가장 강력한 사회적 권력·명예·신분상승 경로 중 하나다."},
 afu:{code:"AFU // 2134",name:"아메리카 연방연합",eng:"AMERICAN FEDERAL UNION",sigil:"AFU",status:"재편 연방국",pop:"약 2억 4,000만",capital:"워싱턴 연방구",strength:"전장 AI / 항공우주",color:"#69d6a9",flag:"afu",brief:"구 미합중국의 후계국. 2093~2098년 북미 연방위기 이후 신헌법으로 재편되었다. 항공우주·전장AI·무인전력 분야의 세계적 강국이며 기존 주 체계와 전략방위권이 병존한다."},
@@ -2643,7 +2614,7 @@ function renderWorldSelection(){
   $("#cstatus").textContent="교전 전구";$("#cpop").textContent="약 47억";$("#ccapital").textContent="다극 중심";$("#cstrength").textContent="연합 방위";
   $("#cbrief").textContent="2031년 제1강하 이후 국가들은 살아남았지만 세계의 국경과 세력권은 크게 달라졌다. 국기 또는 아래 국가 목록을 선택하면 해당 영토와 전략정보를 표시한다.";
   const d=$("#nationDossier");
-  if(d)d.hidden=true;
+  if(d)d.remove();
   $("#mapIntel").classList.remove("idle");
   $$(".country-index-item").forEach(b=>b.classList.remove("active"));
   $$(".region-blocks button").forEach(b=>b.classList.remove("active"));
@@ -3134,8 +3105,11 @@ function hardWorldView(){
 function nation(k){
   const n=N[k];
   if(!n)return;
-  const dossier=$("#nationDossier");
-  if(dossier)dossier.hidden=false;
+  let dossier=$("#nationDossier");
+  if(!dossier){
+    const mount=$("#nationDossierMount");
+    if(mount){mount.innerHTML=NATION_DOSSIER_HTML;dossier=$("#nationDossier");}
+  }
 
   // 1) Selection UI is authoritative and must never depend on map/HUD code.
   sel=k;
