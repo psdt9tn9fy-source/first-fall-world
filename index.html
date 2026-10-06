@@ -2881,14 +2881,15 @@ function resetTacticalHud(){
   ++hudTypeToken;
   if(hudTypeTimer){clearInterval(hudTypeTimer);hudTypeTimer=null}
   const state=$("#mapHudState"),code=$("#mapTrackCode"),coord=$("#mapTrackCoord"),feed=$("#mapHudFeed"),link=$("#mapHudLink");
-  if(state)state.textContent="대기";
-  if(code)code.textContent="세계 전구";
-  if(coord)coord.textContent="위도 -- / 경도 --";
-  if(feed)feed.textContent="표적 대기 중...";
+  if(state)state.textContent="전구 감시";
+  if(code)code.textContent="IDA // GLOBAL THEATER";
+  if(coord)coord.textContent="전 세계 전략 핀 활성";
+  if(feed)feed.textContent="17개 주요 국가·방위권 추적 중\n국기 선택 또는 지도 핀 선택 시 목표 HUD로 전환";
   if(link)link.classList.remove("active");
   const p=$("#mapHudLinkPath");if(p)p.setAttribute("d","");
 }
 function directWorldView(){
+  try{nationApproachToken++}catch(_){}
   ++globeMoveToken;
   globeSelectedKey=null;
   globeFocusCoord=null;
@@ -3146,7 +3147,8 @@ function hardMapViewForNation(k){
 }
 
 function hardWorldView(){
-  try{renderWorldSelection()}catch(_){}
+  try{nationApproachToken++}catch(_){}
+  const mapEl=document.getElementById("map");if(mapEl)mapEl.classList.remove("country-approach");
   ++hudTypeToken;
   if(hudTypeTimer){clearInterval(hudTypeTimer);hudTypeTimer=null}
 
@@ -3167,10 +3169,10 @@ function hardWorldView(){
   const caption=document.getElementById("globeCaption");
   const link=document.getElementById("mapHudLink");
 
-  if(state)state.textContent="대기";
-  if(code)code.textContent="세계 전구";
-  if(coord)coord.textContent="위도 -- / 경도 --";
-  if(feed)feed.textContent="표적 대기 중...";
+  if(state)state.textContent="전구 감시";
+  if(code)code.textContent="IDA // GLOBAL THEATER";
+  if(coord)coord.textContent="전 세계 전략 핀 활성";
+  if(feed)feed.textContent="17개 주요 국가·방위권 추적 중\n국기 선택 또는 지도 핀 선택 시 목표 HUD로 전환";
   if(caption)caption.textContent="세계 전구";
   if(link)link.classList.remove("active");
 
@@ -3540,7 +3542,7 @@ function initMap(){
     if(sel&&COUNTRY_VIEW[sel])focusNation(sel);
     else{
       globeSelectedKey=null;globeFocusCoord=null;
-      setGlobeLabel("",true);updateFlatMarker();
+      setGlobeLabel("",true);updateFlatMarker();renderStrategicMarkers(null);
     }
   }catch(e){
     console.error("FLAT MAP INIT",e);
