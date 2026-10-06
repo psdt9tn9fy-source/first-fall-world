@@ -2163,6 +2163,7 @@ linear-gradient(90deg,rgba(125,207,231,.06) 1px,transparent 1px)!important;backg
               <circle id="mapHudLinkNode" cx="0" cy="0" r="3"></circle>
             </svg>
             <button type="button" class="map-world-view" id="mapWorldView" data-hard-world-view onclick="event.preventDefault();event.stopPropagation();hardWorldView();return false">세계 지도</button>
+            
             <div class="map-tactical-hud" id="mapTacticalHud">
               <div class="hud-topline"><span>실시간 표적 정보</span><em id="mapHudState">대기</em></div>
               <b id="mapTrackCode">세계 전구</b>
@@ -2553,7 +2554,7 @@ function streamStage(stage,title,rows,interval=78){
   },i*interval));
 }
 
-const bootModules=()=>{initMap();drawAllPopulation()};
+const bootModules=()=>{initMap();drawAllPopulation();requestAnimationFrame(()=>{try{directWorldView()}catch(_){}})};
 if(document.readyState==="complete")setTimeout(bootModules,0);
 else window.addEventListener("load",bootModules,{once:true});
 
@@ -3259,7 +3260,6 @@ COUNTRY_ORDER.forEach(k=>{
   b.onclick=()=>nation(k);$("#countryIndexList").appendChild(b);
 });
 renderWorldSelection();
-requestAnimationFrame(()=>{try{resetTacticalHud()}catch(_){};try{renderStrategicMarkers(null)}catch(_){}});
 Object.entries(N).filter(([,n])=>!n.hidden).forEach(([k,n])=>{const b=document.createElement("button");b.className="nation";b.innerHTML='<div class="flag '+n.flag+'"></div><div class="eyebrow">'+n.code+'</div><h3>'+n.name+'</h3><div class="muted">'+n.eng+'</div><div class="meta">'+n.status+'<br>'+n.pop+' // '+n.strength+'</div>';b.onclick=()=>{tab("world");setTimeout(()=>nation(k),40)};$("#nationGrid").appendChild(b)});
 
 function sparkCard(k,p){const card=document.createElement("article");card.className="card popcard";const max=Math.max(...p.vals),min=Math.min(...p.vals),w=520,h=170,pad=24;const pts=p.vals.map((v,i)=>[pad+i*(w-pad*2)/(p.vals.length-1),h-pad-(v-min)/(max-min||1)*(h-pad*2)]);const path=pts.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join(" ");card.innerHTML='<div class="eyebrow">'+N[k].code+'</div><h3 style="margin:7px 0">'+p.title+'</h3><div class="muted">2030 '+p.vals[0]+p.unit+' → 2134 '+p.vals[p.vals.length-1]+p.unit+'</div><svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:150px;margin-top:10px"><path d="'+path+'" fill="none" stroke="'+N[k].color+'" stroke-width="3"/>'+pts.map((q,i)=>'<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4" fill="'+N[k].color+'"/><text x="'+q[0]+'" y="'+(h-5)+'" fill="#708197" font-size="11" text-anchor="middle">'+YEARS[i]+'</text>').join("")+'</svg>';$("#popGrid").appendChild(card)}
@@ -3495,8 +3495,9 @@ function initMap(){
     flatMapMarker.setAttribute("pointer-events","all");
     flatMapMarker.style.pointerEvents="all";
     flatMapSvg.appendChild(flatMapMarker);
+    globeSelectedKey=null;
     renderStrategicMarkers(null);
-    requestAnimationFrame(()=>renderStrategicMarkers(globeSelectedKey));
+    resetTacticalHud();
 
     flatMapSvg.addEventListener("pointerdown",e=>{
       ++globeMoveToken;
