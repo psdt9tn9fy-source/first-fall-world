@@ -1,0 +1,236 @@
+/* ACCESS mobile hardening */
+body.intro-lock{overflow:hidden;height:100dvh;overscroll-behavior:none}
+.access-granted[hidden]{display:none!important}
+.intro.final-visible .intro-corner.bl{opacity:0;pointer-events:none}
+@media(max-width:650px){
+  .intro{height:100dvh;max-height:100dvh}
+  .intro-stage.intro-final{
+    display:block;
+    padding:calc(env(safe-area-inset-top) + 54px) 22px calc(env(safe-area-inset-bottom) + 28px);
+    overflow:hidden;
+  }
+  .intro-final .final-wrap{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0;
+  }
+  .intro-final .final-code{
+    font-size:8px;
+    letter-spacing:.22em;
+  }
+  .intro-final .final-title{
+    font-size:clamp(100px,32vw,148px);
+    line-height:.72;
+    margin:24px 0 26px;
+  }
+  .intro-final .final-rule{flex:0 0 1px}
+  .intro-final .final-bottom{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:18px;
+    padding-top:19px;
+  }
+  .intro-final .final-copy{
+    font-size:clamp(14px,4.1vw,17px);
+    line-height:1.48;
+  }
+  .intro-final .final-copy small{
+    margin-top:10px;
+    font-size:7px;
+    line-height:1.45;
+    letter-spacing:.13em;
+  }
+  .intro-final .access-console{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:end;
+    gap:3px 14px;
+    padding-top:13px;
+    border-top:1px solid #2a3134;
+    text-align:left;
+  }
+  .intro-final .access-status{
+    align-self:center;
+    font-size:7px;
+    letter-spacing:.16em;
+  }
+  .intro-final .access-percent{
+    grid-column:2;
+    grid-row:1;
+    margin:0;
+    font-size:26px;
+    line-height:.9;
+  }
+  .intro-final .access-hint{
+    grid-column:1 / -1;
+    font-size:7px;
+    line-height:1.4;
+    letter-spacing:.14em;
+    white-space:normal;
+  }
+  .intro-final .access-frame{
+    inset:8px;
+    width:calc(100% - 16px);
+    height:calc(100% - 16px);
+  }
+  .access-granted{
+    padding:24px;
+  }
+  .access-granted span,.access-granted em{
+    font-size:7px;
+    line-height:1.5;
+    letter-spacing:.22em;
+  }
+  .access-granted b{
+    width:min(88vw,520px);
+    margin:14px auto 12px;
+    font-size:clamp(30px,9vw,52px);
+    line-height:.92;
+    overflow-wrap:anywhere;
+  }
+  .intro.final-visible .intro-corner.tl{opacity:.55}
+  .intro.final-visible .intro-corner.bl{display:none}
+}
+
+@media(max-width:650px){
+  .intro-final .access-hint{justify-content:flex-start;gap:10px}
+  .intro-final .hold-copy b{font-size:7px;letter-spacing:.14em}
+  .intro-final .hold-copy small{font-size:9px}
+  .intro-final .hold-pulse{width:22px;height:22px;flex-basis:22px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hold-pulse:before,.hold-pulse:after{animation:none;opacity:.28;transform:scale(1)}
+}
+
+/* Central archive seal control */
+.intro-final,.intro-final *{
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-touch-callout:none!important;
+}
+.intro-final{cursor:default}
+.final-bottom{grid-template-columns:1fr;gap:28px}
+.access-console{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  text-align:center;
+}
+.access-status{
+  min-height:1.4em;
+  font-size:8px;
+  letter-spacing:.22em;
+}
+.access-control{
+  --hold:0%;
+  position:relative;
+  width:clamp(170px,18vw,220px);
+  aspect-ratio:1;
+  border:1px solid #526067;
+  border-radius:50%;
+  background:#050708;
+  color:#eaf5f7;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:22px;
+  cursor:pointer;
+  touch-action:none;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+  appearance:none;
+  -webkit-appearance:none;
+  outline:none;
+  box-shadow:inset 0 0 0 1px #ffffff05,0 0 0 1px #000;
+  overflow:visible;
+}
+.access-control::before{
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border-radius:50%;
+  background:conic-gradient(#d9eef3 var(--hold),#263034 0);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));
+  filter:drop-shadow(0 0 5px #d9f6ff3b);
+  pointer-events:none;
+}
+.access-control::after{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px solid #70808730;
+  border-radius:50%;
+  pointer-events:none;
+}
+.access-control:focus-visible{box-shadow:0 0 0 2px #d9edf355,inset 0 0 0 1px #ffffff08}
+.access-control .hold-pulse{
+  width:34px;height:34px;flex:0 0 34px;
+  margin-bottom:1px;
+}
+.access-control .access-percent{
+  margin:0;
+  font-size:clamp(30px,3.3vw,44px);
+  line-height:.9;
+}
+.access-control .hold-copy{
+  align-items:center;
+  gap:5px;
+}
+.access-control .hold-copy b{
+  font-size:9px;
+  letter-spacing:.18em;
+}
+.access-control .hold-copy small{
+  font-size:10px;
+  text-align:center;
+}
+.access-hint{
+  display:block;
+  min-height:1.3em;
+  font:600 7px/1.3 ui-monospace,SFMono-Regular,monospace;
+  letter-spacing:.16em;
+  color:#5f6c71;
+}
+.intro-final.holding .access-control{
+  border-color:#9ab2ba;
+  background:#070a0b;
+  box-shadow:inset 0 0 28px #dff8ff08,0 0 32px #dff8ff08;
+}
+.intro-final.holding .access-control .hold-pulse:before,
+.intro-final.holding .access-control .hold-pulse:after{animation-duration:.72s}
+
+@media(max-width:650px){
+  .intro-final .final-bottom{gap:18px}
+  .intro-final .access-console{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    padding-top:8px;
+    border-top:0;
+    text-align:center;
+  }
+  .intro-final .access-control{
+    width:clamp(145px,40vw,176px);
+    padding:17px;
+  }
+  .intro-final .access-control .hold-pulse{
+    width:30px;height:30px;flex-basis:30px;
+  }
+  .intro-final .access-control .access-percent{font-size:32px}
+  .intro-final .access-control .hold-copy b{font-size:8px}
+  .intro-final .access-control .hold-copy small{font-size:9px}
+  .intro-final .access-status{font-size:7px}
+  .intro-final .access-hint{font-size:6.5px}
+}
