@@ -58,8 +58,10 @@
 .world-handoff{z-index:8;opacity:0}
 .world-handoff i{position:absolute;left:0;right:0;top:0;height:1px;background:#dff8ff;box-shadow:0 0 16px #dff8ff,0 0 36px #b9eaff55;transform:translateY(-4px)}
 .world-stage.booted .world-handoff{animation:worldHandoff 1.25s .1s both}
+.world-stage.booted .world-handoff i{animation:worldScanLine 1.05s .14s cubic-bezier(.18,.72,.2,1) both}
 .world-stage.booted .world-map{animation:worldMapBoot 1.2s .16s both}
-@keyframes worldHandoff{0%{opacity:0}10%{opacity:1}85%{opacity:.75}100%{opacity:0}.1%,100%{transform:none}}
+@keyframes worldHandoff{0%{opacity:0}10%{opacity:1}85%{opacity:.75}100%{opacity:0}}
+@keyframes worldScanLine{from{top:0}to{top:100%}}
 @keyframes worldMapBoot{0%{opacity:0;transform:scale(.89)}100%{opacity:.17;transform:scale(.95)}}
 .world-stage-meta{
   position:absolute;z-index:5;top:22px;
