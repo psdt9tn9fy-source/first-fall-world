@@ -19,98 +19,112 @@
   <div class="system-state"><i></i><span>NODE 07</span><b>SIGNAL // STABLE</b></div>
 </header><main class="main">
 <section class="view active world-view" data-view="world">
-  <div class="world-experience" id="worldExperience" data-scene="current">
-    <div class="world-stage" id="worldStage">
-      <canvas class="world-field" id="worldField" aria-hidden="true"></canvas>
-      <div class="world-map" aria-hidden="true"></div>
-      <div class="world-map-glow" aria-hidden="true"></div>
-      <div class="world-handoff" aria-hidden="true"><i></i></div>
-      <div class="world-reticle" aria-hidden="true"><i></i><i></i></div>
-
-      <div class="world-stage-meta world-meta-left">
-        <span>GLOBAL THEATER // LIVE</span>
-        <b id="worldSceneIndex">01 / 08</b>
+  <div class="situation-room" id="situationRoom" data-zone="all" data-era="2134">
+    <header class="situation-head">
+      <div>
+        <div class="kicker">I.D.A. // GLOBAL THEATER CONTROL</div>
+        <h2>GLOBAL<br><span>SITUATION ROOM.</span></h2>
       </div>
-      <div class="world-stage-meta world-meta-right">
-        <span id="worldSignal">SIGNAL // STABLE</span>
-        <b>SYNC // 2134.10.06</b>
+      <div class="situation-summary">
+        <div><span>CURRENT ERA</span><b id="worldEraReadout">2134</b></div>
+        <div><span>WAR DURATION</span><b>103 YEARS</b></div>
+        <div><span>PUBLIC NODES</span><b id="worldNodeCount">08 TRACKED</b></div>
       </div>
+    </header>
 
-      <div class="world-scene world-current">
-        <div class="world-eyebrow">CURRENT WORLD RECORD // ERA 2134</div>
-        <div class="world-year">2134</div>
-        <div class="world-subline"><span>103 YEARS AFTER FIRST DESCENT</span><i></i><span>STATUS // ONGOING</span></div>
-        <p>문명은 살아남았다. 전쟁도 끝나지 않았다.</p>
-      </div>
+    <div class="situation-layout">
+      <aside class="zone-rail" aria-label="Zone filters">
+        <div class="rail-label">ZONE FILTER</div>
+        <button class="zone-filter active" data-zone-filter="all"><span>00</span><b>ALL</b><em id="countAll">08</em></button>
+        <button class="zone-filter" data-zone-filter="safe"><span>01</span><b>SAFE</b><em id="countSafe">06</em></button>
+        <button class="zone-filter" data-zone-filter="contested"><span>02</span><b>CONTESTED</b><em id="countContested">00</em></button>
+        <button class="zone-filter" data-zone-filter="lost"><span>03</span><b>LOST</b><em id="countLost">00</em></button>
+        <button class="zone-filter" data-zone-filter="black"><span>04</span><b>BLACK</b><em id="countBlack">02</em></button>
+      </aside>
 
-      <div class="world-scene world-war">
-        <div class="world-eyebrow">GLOBAL CONDITION // CENTURY WAR</div>
-        <h2>THE WAR<br><span>NEVER ENDED.</span></h2>
-        <p>전선과 일상은 더 이상 서로 다른 세계가 아니다.</p>
-      </div>
-
-      <div class="world-scene world-zone" data-zone="safe">
-        <div class="zone-code">ZONE // 01</div>
-        <h2>SAFE</h2>
-        <div class="zone-rule"></div>
-        <p><b>안정 통제 · 도시 생활권</b><span>국가 행정과 민간 생활이 정상적으로 유지되는 통제지역.</span></p>
-      </div>
-
-      <div class="world-scene world-zone" data-zone="contested">
-        <div class="zone-code">ZONE // 02</div>
-        <h2>CONTESTED</h2>
-        <div class="zone-rule"></div>
-        <p><b>교전 · 회복 작전권</b><span>통제권이 유동적이며 군사작전과 민간 회복이 동시에 진행된다.</span></p>
-      </div>
-
-      <div class="world-scene world-zone" data-zone="lost">
-        <div class="zone-code">ZONE // 03</div>
-        <h2>LOST</h2>
-        <div class="zone-rule"></div>
-        <p><b>지속 통제 상실 지역</b><span>인류의 상시 통제가 붕괴한 지역. 접근과 체류는 제한된다.</span></p>
-      </div>
-
-      <div class="world-scene world-zone" data-zone="black">
-        <div class="zone-code">ZONE // 04</div>
-        <h2>BLACK</h2>
-        <div class="zone-rule"></div>
-        <p><b>대규모 네스트 · 접근 제한</b><span>신뢰 가능한 정찰 데이터조차 유지되지 않는 최고위험 구역.</span></p>
-      </div>
-
-      <div class="world-scene world-duration">
-        <div class="world-eyebrow">WAR DURATION // VERIFIED</div>
-        <div class="duration-number">103</div>
-        <div class="duration-label">YEARS OF WAR</div>
-        <div class="duration-years"><span>2031</span><span>2041</span><span>2071</span><span>2101</span><span>2134</span></div>
-      </div>
-
-      <div class="world-scene world-survived">
-        <div class="world-eyebrow">HUMAN CONDITION // ADAPTATION</div>
-        <h2>HUMANITY<br><span>SURVIVED.</span></h2>
-        <p>인류는 멸망하지 않았다.<br>대신 전쟁을 일상으로 받아들인 문명을 만들었다.</p>
-        <div class="world-record-links">
-          <button data-open-record="nations"><span>02</span>NATIONS</button>
-          <button data-open-record="eidolon"><span>03</span>EIDOLON</button>
-          <button data-open-record="military"><span>04</span>MILITARY</button>
-          <button data-open-record="academy"><span>05</span>ACADEMY</button>
+      <section class="map-console" aria-label="Interactive world situation map">
+        <div class="map-toolbar">
+          <div class="map-status">
+            <span>MAP // STRATEGIC OVERVIEW</span>
+            <b id="mapHover">SELECT A SECTOR OR NATION</b>
+          </div>
+          <div class="map-search">
+            <label for="worldSearch">SEARCH</label>
+            <input id="worldSearch" list="worldSearchList" autocomplete="off" placeholder="COUNTRY / SECTOR">
+            <datalist id="worldSearchList"></datalist>
+          </div>
+          <div class="map-tools">
+            <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
+            <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
+            <button type="button" id="zoomReset">RESET</button>
+            <button type="button" id="scanToggle" aria-pressed="false">SCAN</button>
+          </div>
         </div>
-      </div>
 
-      <div class="world-progress" aria-hidden="true"><i id="worldProgressBar"></i></div>
-    </div>
+        <div class="map-viewport" id="mapViewport">
+          <svg class="world-svg" id="worldSvg" viewBox="0 0 1000 500" role="img" aria-label="Interactive map of the 2134 world archive">
+            <defs>
+              <pattern id="mapGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                <path d="M 25 0 L 0 0 0 25" fill="none" stroke="currentColor" stroke-width=".45"></path>
+              </pattern>
+              <filter id="sectorGlow" x="-200%" y="-200%" width="400%" height="400%">
+                <feGaussianBlur stdDeviation="2.5" result="blur"></feGaussianBlur>
+                <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+              </filter>
+            </defs>
+            <rect class="map-grid-fill" width="1000" height="500" fill="url(#mapGrid)"></rect>
+            <g id="worldMapViewport">
+              <g class="world-land" id="worldLand"></g>
+              <g class="world-sectors" id="worldSectors"></g>
+            </g>
+          </svg>
 
-    <div class="world-steps" aria-hidden="true">
-      <div class="world-step" data-world-scene="current"></div>
-      <div class="world-step" data-world-scene="war"></div>
-      <div class="world-step" data-world-scene="safe"></div>
-      <div class="world-step" data-world-scene="contested"></div>
-      <div class="world-step" data-world-scene="lost"></div>
-      <div class="world-step" data-world-scene="black"></div>
-      <div class="world-step" data-world-scene="duration"></div>
-      <div class="world-step" data-world-scene="survived"></div>
+          <div class="map-scanline" aria-hidden="true"></div>
+          <div class="scan-lens" id="scanLens" aria-hidden="true">
+            <i></i><b>SCAN</b><span id="scanTarget">NO TARGET</span>
+          </div>
+          <div class="map-loading" id="mapLoading"><span>WORLD DATA // LOADING</span><i></i></div>
+          <div class="map-coordinate" id="mapCoordinate">LAT --.-- // LON --.--</div>
+          <div class="map-legend"><span><i class="safe"></i>SAFE</span><span><i class="contested"></i>CONTESTED</span><span><i class="lost"></i>LOST</span><span><i class="black"></i>BLACK</span></div>
+        </div>
+
+        <div class="era-strip">
+          <div class="era-strip-head"><span>HISTORICAL OVERLAY</span><b id="eraState">CURRENT RECORD // STALEMATE</b></div>
+          <div class="era-track" role="group" aria-label="Historical era">
+            <button data-era="2031"><span>2031</span><b>FIRST DESCENT</b></button>
+            <button data-era="2041"><span>2041</span><b>GREAT WAR</b></button>
+            <button data-era="2071"><span>2071</span><b>COUNTEROFFENSIVE</b></button>
+            <button data-era="2101"><span>2101</span><b>RECONSTRUCTION</b></button>
+            <button class="active" data-era="2134"><span>2134</span><b>CURRENT</b></button>
+          </div>
+          <p id="eraNote">현재 세계 기록. 국가와 도시의 일상은 존속하지만 전쟁은 103년째 계속되고 있다.</p>
+        </div>
+      </section>
+
+      <aside class="sector-panel" id="sectorPanel">
+        <div class="panel-overline" id="panelOverline">GLOBAL THEATER // 2134</div>
+        <div class="panel-index" id="panelIndex">00</div>
+        <h3 id="panelTitle">WORLD OVERVIEW</h3>
+        <div class="panel-class" id="panelClass">I.D.A. PUBLIC ARCHIVE</div>
+        <p id="panelBody">지도의 국가 또는 전략 노드를 선택하면 현재 기록과 연결된 아카이브를 열람할 수 있다.</p>
+        <div class="panel-data">
+          <div><span>ERA</span><b id="panelEra">2134</b></div>
+          <div><span>STATUS</span><b id="panelStatus">ONGOING WAR</b></div>
+          <div><span>ACCESS</span><b id="panelAccess">PUBLIC</b></div>
+        </div>
+        <div class="panel-actions">
+          <button id="panelOpen" type="button" disabled>OPEN RELATED RECORD <span>→</span></button>
+          <button id="panelReset" type="button">RESET FOCUS</button>
+        </div>
+        <div class="panel-feed">
+          <span>LIVE ARCHIVE FEED</span>
+          <div id="panelFeed">NODE 07 // WORLD DATA SYNCHRONIZED</div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
+
 <section class="view" data-view="nations"><div class="pagehead"><div><div class="kicker">NATION ARCHIVE</div><h2>국가 · 세력권</h2></div><p>세계 전구의 주요 국가와 공동방위체. 목록을 선택하면 하나의 기록을 크게 열람한다.</p></div><div class="nation-browser"><div class="nation-list" id="nationList"></div><article class="nation-display"><img id="nf" alt=""><div class="kicker nation-code" id="nc"></div><h3 id="nn"></h3><div class="nation-eng" id="ne"></div><div class="nation-meta"><div><span>STATUS</span><b id="ns"></b></div><div><span>POPULATION</span><b id="np"></b></div><div><span>CAPITAL / COMMAND</span><b id="nca"></b></div><div><span>STRENGTH</span><b id="nst"></b></div></div><p class="nation-brief" id="nb"></p></article></div></section>
 <section class="view" data-view="eidolon"><div class="pagehead"><div><div class="kicker">HOSTILE ENTITY</div><h2>EIDOLON</h2></div><p>제1강하 이후 인류가 103년 동안 상대해 온 적대 존재.</p></div><div class="editorial"><div><div class="kicker">THREAT // UNKNOWN ORIGIN</div><h3>적은 아직<br>사라지지<br>않았다.</h3><p class="copy">에이돌론은 단순한 개체 단위의 위협이 아니다. 네스트를 형성하고 영토를 잠식하며, 인간의 지속적인 통제를 불가능하게 만든다. 2134년에도 전쟁이 끝나지 않은 가장 직접적인 이유다.</p></div><div class="index"><div class="index-row"><span>01</span><b>ENTITY // 개체</b></div><div class="index-row"><span>02</span><b>NEST // 네스트</b></div><div class="index-row"><span>03</span><b>LOST TERRITORY // 상실지역</b></div><div class="index-row"><span>04</span><b>BLACK ZONE // 접근제한권</b></div></div></div></section>
 <section class="view" data-view="military"><div class="pagehead"><div><div class="kicker">MILITARY SOCIETY</div><h2>군과 사회</h2></div><p>군은 사회 전체를 대체하지 않는다. 그러나 103년의 전쟁은 군 경력과 계급을 가장 강력한 사회적 자산 중 하나로 만들었다.</p></div><div class="editorial"><div><div class="kicker">A SOCIETY AT WAR</div><h3>전쟁은<br>일상이<br>되었다.</h3><p class="copy">안전권의 시민들은 평범한 삶을 살아간다. 동시에 전선에서는 매일 영토를 두고 싸운다. 각국은 서로 다른 군사제도와 전투교리를 발전시켰으며, 군인과 군 교육기관의 사회적 위상은 과거보다 훨씬 높다.</p></div><div class="index"><div class="index-row"><span>01</span><b>장교 / OFFICER</b></div><div class="index-row"><span>02</span><b>부사관 / NCO</b></div><div class="index-row"><span>03</span><b>병 / ENLISTED</b></div><div class="index-row"><span>04</span><b>국가별 전투교리</b></div></div></div></section>
