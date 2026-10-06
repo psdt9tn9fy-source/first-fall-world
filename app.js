@@ -121,7 +121,7 @@ function hero(ev,i){
   if(ev[0]===2031&&i<3){recordWindow.classList.remove("impact");void recordWindow.offsetWidth;recordWindow.classList.add("impact")}
   heroTimer=setTimeout(()=>eventEls[i].classList.remove("active"),520);
 }
-const intro=document.querySelector("#intro"),hold=document.querySelector("#enter"),skip=document.querySelector("#introSkip");
+const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint");
 let introSkipped=false,chronologyRAF=0,eventTimers=[];
 function finishChronology(){
   if(introSkipped)return;
@@ -136,8 +136,7 @@ function skipIntro(){
   introSkipped=true;
   cancelAnimationFrame(chronologyRAF);
   eventTimers.forEach(clearTimeout);
-  intro.classList.add("opening","final-visible");
-  setTimeout(()=>intro.classList.add("hide"),260);
+  intro.classList.add("hide");
 }
 skip.addEventListener("click",skipIntro);
 setTimeout(()=>{
@@ -183,7 +182,68 @@ setTimeout(()=>{
     }
   }
   chronologyRAF=requestAnimationFrame(tick);
-},2100);let holdTimer;function release(){clearTimeout(holdTimer);hold.classList.remove("holding")}function begin(e){e.preventDefault();if(intro.classList.contains("opening"))return;hold.classList.add("holding");holdTimer=setTimeout(()=>{intro.classList.add("opening");setTimeout(()=>intro.classList.add("hide"),720)},850)}hold.addEventListener("pointerdown",begin);["pointerup","pointerleave","pointercancel"].forEach(x=>hold.addEventListener(x,release));
+},2100);
+const ACCESS_HOLD_MS=1400;
+let accessRAF=0,accessStart=0,accessProgress=0,accessActive=false,accessComplete=false,resetRAF=0;
+function paintAccess(p){
+  accessProgress=Math.max(0,Math.min(1,p));
+  const pct=Math.round(accessProgress*100);
+  accessFrameProgress.style.strokeDashoffset=String(100-pct);
+  accessPercent.textContent=String(pct).padStart(3,"0")+"%";
+  const title=accessStage.querySelector(".final-title");
+  title.style.transform="scale("+(1+accessProgress*.035)+")";
+  title.style.filter="brightness("+(1+accessProgress*.18)+")";
+  if(pct<25)accessStatus.textContent="ARCHIVE SEAL // LOCKED";
+  else if(pct<55)accessStatus.textContent="AUTHORIZATION // IDENTITY CHECK";
+  else if(pct<82)accessStatus.textContent="ARCHIVE NODE 07 // VERIFYING";
+  else if(pct<100)accessStatus.textContent="SEAL RELEASE // STANDBY";
+}
+function resetAccess(){
+  cancelAnimationFrame(accessRAF);cancelAnimationFrame(resetRAF);
+  accessActive=false;accessStage.classList.remove("holding");
+  const from=accessProgress,start=performance.now(),dur=260;
+  function back(now){
+    const t=Math.min(1,(now-start)/dur),e=1-Math.pow(1-t,3);
+    paintAccess(from*(1-e));
+    if(t<1)resetRAF=requestAnimationFrame(back);
+    else{accessHint.textContent="PRESS & HOLD ANYWHERE TO UNSEAL";accessStatus.textContent="ARCHIVE SEAL // LOCKED"}
+  }
+  resetRAF=requestAnimationFrame(back);
+}
+function completeAccess(){
+  accessComplete=true;accessActive=false;paintAccess(1);
+  accessStage.classList.remove("holding");
+  accessHint.textContent="AUTHORIZATION COMPLETE";
+  accessStatus.textContent="ARCHIVE SEAL // RELEASED";
+  setTimeout(()=>{
+    accessStage.classList.add("granted");
+    setTimeout(()=>{
+      intro.classList.add("unsealing");
+      accessStage.classList.add("unsealed");
+      setTimeout(()=>intro.classList.add("hide"),820);
+    },520);
+  },150);
+}
+function accessTick(now){
+  if(!accessActive||accessComplete)return;
+  const p=Math.min(1,(now-accessStart)/ACCESS_HOLD_MS);
+  paintAccess(p);
+  if(p>=1)completeAccess();else accessRAF=requestAnimationFrame(accessTick);
+}
+function beginAccess(e){
+  if(e)e.preventDefault();
+  if(accessComplete||accessActive||!intro.classList.contains("final-visible"))return;
+  cancelAnimationFrame(resetRAF);
+  accessActive=true;accessStart=performance.now()-accessProgress*ACCESS_HOLD_MS;
+  accessStage.classList.add("holding");
+  accessHint.textContent="KEEP HOLDING // DO NOT RELEASE";
+  accessRAF=requestAnimationFrame(accessTick);
+}
+function endAccess(){if(accessActive&&!accessComplete)resetAccess()}
+accessStage.addEventListener("pointerdown",beginAccess);
+["pointerup","pointercancel","pointerleave"].forEach(x=>accessStage.addEventListener(x,endAccess));
+accessStage.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.repeat)beginAccess(e)});
+accessStage.addEventListener("keyup",e=>{if(e.key==="Enter"||e.key===" ")endAccess()});
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===b.dataset.tab))});
 const list=document.querySelector("#nationList");
 function show(n){document.querySelectorAll(".nation-btn").forEach(x=>x.classList.toggle("active",x.dataset.k===n[0]));document.querySelector("#nf").src="./assets/flags-hq/"+n[0]+"-2134."+(ext[n[0]]||"jpg");document.querySelector("#nf").onerror=function(){this.style.visibility="hidden"};document.querySelector("#nf").style.visibility="visible";["nc","nn","ne","ns","np","nca","nst","nb"].forEach((id,i)=>document.querySelector("#"+id).textContent=n[i+1])}
