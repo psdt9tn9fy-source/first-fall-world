@@ -121,7 +121,7 @@ function hero(ev,i){
   if(ev[0]===2031&&i<3){recordWindow.classList.remove("impact");void recordWindow.offsetWidth;recordWindow.classList.add("impact")}
   heroTimer=setTimeout(()=>eventEls[i].classList.remove("active"),520);
 }
-const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint"),accessHintPrimary=document.querySelector("#accessHintPrimary"),accessHintSecondary=document.querySelector("#accessHintSecondary"),accessGranted=document.querySelector("#accessGranted");
+const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessControl=document.querySelector("#accessControl"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint"),accessHintPrimary=document.querySelector("#accessHintPrimary"),accessHintSecondary=document.querySelector("#accessHintSecondary"),accessGranted=document.querySelector("#accessGranted");
 document.body.classList.add("intro-lock");
 let introSkipped=false,chronologyRAF=0,eventTimers=[];
 function finishChronology(){
@@ -187,8 +187,9 @@ setTimeout(()=>{
 },2100);
 const isTouchDevice=matchMedia("(pointer:coarse)").matches||navigator.maxTouchPoints>0;
 function setIdleAccessHint(){
-  accessHintPrimary.textContent=isTouchDevice?"TOUCH & HOLD ANYWHERE":"PRESS & HOLD ANYWHERE";
-  accessHintSecondary.textContent="화면을 길게 눌러 기록을 해제하세요";
+  accessHintPrimary.textContent=isTouchDevice?"TOUCH & HOLD":"PRESS & HOLD";
+  accessHintSecondary.textContent="길게 눌러 기록을 해제하세요";
+  accessHint.textContent="HOLD CONTROL // RELEASE TO CANCEL";
 }
 setIdleAccessHint();
 const ACCESS_HOLD_MS=1400;
@@ -197,6 +198,7 @@ function paintAccess(p){
   accessProgress=Math.max(0,Math.min(1,p));
   const pct=Math.round(accessProgress*100);
   accessFrameProgress.style.strokeDashoffset=String(100-pct);
+  accessControl.style.setProperty("--hold",pct+"%");
   accessPercent.textContent=String(pct).padStart(3,"0")+"%";
   const title=accessStage.querySelector(".final-title");
   title.style.transform="scale("+(1+accessProgress*.035)+")";
@@ -223,6 +225,7 @@ function completeAccess(){
   accessStage.classList.remove("holding");
   accessHintPrimary.textContent="AUTHORIZATION COMPLETE";
   accessHintSecondary.textContent="기록 봉인이 해제되었습니다";
+  accessHint.textContent="ARCHIVE SEAL // RELEASED";
   accessStatus.textContent="ARCHIVE SEAL // RELEASED";
   setTimeout(()=>{
     accessGranted.hidden=false;
@@ -249,21 +252,31 @@ function beginAccess(e){
   cancelAnimationFrame(resetRAF);
   accessActive=true;accessStart=performance.now()-accessProgress*ACCESS_HOLD_MS;
   accessStage.classList.add("holding");
-  accessHintPrimary.textContent="KEEP HOLDING // DO NOT RELEASE";
+  accessHintPrimary.textContent="KEEP HOLDING";
   accessHintSecondary.textContent="손을 떼지 마세요";
+  accessHint.textContent="AUTHORIZATION IN PROGRESS";
   accessRAF=requestAnimationFrame(accessTick);
 }
 function endAccess(){
   if(accessActive&&!accessComplete){
     accessHintPrimary.textContent="HOLD INTERRUPTED";
     accessHintSecondary.textContent="길게 눌러 다시 시도하세요";
+    accessHint.textContent="AUTHORIZATION CANCELLED";
     resetAccess();
   }
 }
-accessStage.addEventListener("pointerdown",beginAccess);
-["pointerup","pointercancel","pointerleave"].forEach(x=>accessStage.addEventListener(x,endAccess));
-accessStage.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.repeat)beginAccess(e)});
-accessStage.addEventListener("keyup",e=>{if(e.key==="Enter"||e.key===" ")endAccess()});
+accessControl.addEventListener("pointerdown",e=>{
+  e.preventDefault();
+  try{accessControl.setPointerCapture(e.pointerId)}catch(_){}
+  beginAccess(e);
+});
+["pointerup","pointercancel","lostpointercapture"].forEach(x=>accessControl.addEventListener(x,endAccess));
+accessControl.addEventListener("pointerleave",e=>{if(e.pointerType==="mouse")endAccess()});
+accessControl.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.repeat)beginAccess(e)});
+accessControl.addEventListener("keyup",e=>{if(e.key==="Enter"||e.key===" ")endAccess()});
+["contextmenu","selectstart","dragstart"].forEach(x=>accessControl.addEventListener(x,e=>e.preventDefault()));
+accessControl.addEventListener("touchstart",e=>e.preventDefault(),{passive:false});
+accessControl.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===b.dataset.tab))});
 const list=document.querySelector("#nationList");
 function show(n){document.querySelectorAll(".nation-btn").forEach(x=>x.classList.toggle("active",x.dataset.k===n[0]));document.querySelector("#nf").src="./assets/flags-hq/"+n[0]+"-2134."+(ext[n[0]]||"jpg");document.querySelector("#nf").onerror=function(){this.style.visibility="hidden"};document.querySelector("#nf").style.visibility="visible";["nc","nn","ne","ns","np","nca","nst","nb"].forEach((id,i)=>document.querySelector("#"+id).textContent=n[i+1])}
