@@ -80,7 +80,7 @@ export function initWorld(){
   const countryByName=new Map();
   const pathByIso=new Map();
   const sectorNode=new Map();
-  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false;
+  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false,mapTx=0,mapTy=0;
 
   function setPanel({overline="GLOBAL THEATER // 2134",index="00",title="WORLD OVERVIEW",className="I.D.A. PUBLIC ARCHIVE",body="지도의 국가 또는 전략 노드를 선택하면 현재 기록과 연결된 아카이브를 열람할 수 있다.",status="ONGOING WAR",access="PUBLIC",record=null,nation=null,feed="NODE 07 // WORLD DATA SYNCHRONIZED"}={}){
     panel.overline.textContent=overline;panel.index.textContent=index;panel.title.textContent=title;panel.class.textContent=className;
@@ -94,8 +94,8 @@ export function initWorld(){
   }
   function applyTransform(){
     const [cx,cy]=focus;
-    const tx=W/2-cx*zoom,ty=H/2-cy*zoom;
-    mapGroup.style.transform=`translate(${tx}px,${ty}px) scale(${zoom})`;
+    mapTx=W/2-cx*zoom;mapTy=H/2-cy*zoom;
+    mapGroup.setAttribute("transform",`translate(${mapTx} ${mapTy}) scale(${zoom})`);
   }
   function resetFocus(){
     clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();
@@ -223,7 +223,9 @@ export function initWorld(){
   });
   viewport.addEventListener("pointermove",e=>{
     const r=viewport.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;
-    const lon=px/r.width*360-180,lat=90-py/r.height*180;
+    const vx=px/r.width*W,vy=py/r.height*H;
+    const bx=(vx-mapTx)/zoom,by=(vy-mapTy)/zoom;
+    const lon=bx/W*360-180,lat=90-by/H*180;
     coordinate.textContent=`LAT ${Math.abs(lat).toFixed(2)}°${lat>=0?"N":"S"} // LON ${Math.abs(lon).toFixed(2)}°${lon>=0?"E":"W"}`;
     if(scan){
       lens.style.left=px+"px";lens.style.top=py+"px";
