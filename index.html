@@ -2962,36 +2962,35 @@ function directNationMap(k){
   }catch(e){console.warn("HUD LINK",e)}
 }
 let nationApproachToken=0;
+function animateViewBox(svg,from,to,duration,token,done){
+  const start=performance.now(),ease=t=>1-Math.pow(1-t,3);
+  function frame(now){
+    if(token!==nationApproachToken)return;
+    const t=Math.min(1,(now-start)/duration),q=ease(t);
+    const v={x:from.x+(to.x-from.x)*q,y:from.y+(to.y-from.y)*q,w:from.w+(to.w-from.w)*q,h:from.h+(to.h-from.h)*q};
+    svg.setAttribute("viewBox",v.x+" "+v.y+" "+v.w+" "+v.h);flatView=v;
+    if(t<1)requestAnimationFrame(frame);else if(done)done();
+  }
+  requestAnimationFrame(frame);
+}
 function animateNationApproach(k){
   const r=COUNTRY_VIEW[k],n=N[k],svg=document.querySelector("#globeMount > svg");
-  if(!r||!n||!svg){hardMapViewForNation(k);return;}
+  if(!r||!n||!svg)return;
   const token=++nationApproachToken,map=document.getElementById("map"),label=document.getElementById("mapApproachLabel");
-  const finalZoom=Math.max(Number(r.z)||2.5,k==="rok"?5.2:3.2);
-  const vl=Number.isFinite(Number(r.viewLon))?Number(r.viewLon):Number(r.lon);
-  const va=Number.isFinite(Number(r.viewLat))?Number(r.viewLat):Number(r.lat);
-  const calc=z=>{const cx=(vl+180)/360*1000,cy=(90-va)/180*500,w=1000/z,h=w/2;return{x:Math.max(0,Math.min(1000-w,cx-w/2)),y:Math.max(0,Math.min(500-h,cy-h/2)),w,h}};
-  if(map)map.classList.add("country-approach");
-  if(label)label.textContent=(n.sigil||k).toUpperCase()+" // 위성 접근";
-  svg.style.transition="viewBox .72s cubic-bezier(.2,.75,.2,1),filter .35s ease";
-  svg.setAttribute("viewBox","0 0 1000 500");flatView={x:0,y:0,w:1000,h:500};
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    if(token!==nationApproachToken)return;
-    const mid=calc(2.15);svg.setAttribute("viewBox",mid.x+" "+mid.y+" "+mid.w+" "+mid.h);flatView=mid;
-    setTimeout(()=>{
-      if(token!==nationApproachToken)return;
-      if(label)label.textContent=(n.sigil||k).toUpperCase()+" // 목표 지역 확대";
-      const v=calc(finalZoom);svg.setAttribute("viewBox",v.x+" "+v.y+" "+v.w+" "+v.h);flatView=v;
-      setTimeout(()=>{
-        if(token!==nationApproachToken)return;
-        globeSelectedKey=k;globeFocusCoord={lon:r.lon,lat:r.lat};globeState.lon=vl;globeState.lat=va;globeState.zoom=finalZoom;
-        try{typeNationHud(k)}catch(_){}
-        try{renderStrategicMarkers(k)}catch(_){}
-        if(map)map.classList.remove("country-approach");
-        if(label)label.textContent="TARGET ACQUISITION";
-        try{requestAnimationFrame(updateHudLink)}catch(_){}
-      },760);
-    },760);
-  }));
+  const vl=Number.isFinite(+r.viewLon)?+r.viewLon:+r.lon,va=Number.isFinite(+r.viewLat)?+r.viewLat:+r.lat;
+  const target=z=>{const cx=(vl+180)/360*1000,cy=(90-va)/180*500,w=1000/z,h=w/2;return{x:Math.max(0,Math.min(1000-w,cx-w/2)),y:Math.max(0,Math.min(500-h,cy-h/2)),w,h}};
+  const world={x:0,y:0,w:1000,h:500},mid=target(2.15),fin=target(k==="rok"?5.4:Math.max(3.2,+r.z||3.2));
+  if(map)map.classList.add("country-approach");if(label)label.textContent=(n.sigil||k).toUpperCase()+" // 위성 접근";
+  svg.setAttribute("viewBox","0 0 1000 500");flatView=world;
+  animateViewBox(svg,world,mid,650,token,()=>{
+    if(label)label.textContent=(n.sigil||k).toUpperCase()+" // 목표 지역 확대";
+    animateViewBox(svg,mid,fin,700,token,()=>{
+      globeSelectedKey=k;globeFocusCoord={lon:+r.lon,lat:+r.lat};globeState.lon=vl;globeState.lat=va;globeState.zoom=k==="rok"?5.4:Math.max(3.2,+r.z||3.2);
+      try{typeNationHud(k)}catch(_){} try{renderStrategicMarkers(k)}catch(_){}
+      if(map)map.classList.remove("country-approach");if(label)label.textContent="TARGET ACQUISITION";
+      try{requestAnimationFrame(updateHudLink)}catch(_){}
+    });
+  });
 }
 function hardMapViewForNation(k){
   const r=COUNTRY_VIEW[k],n=N[k];
@@ -3183,11 +3182,6 @@ function nation(k){
   const worldDossier=$("#worldDossier");if(worldDossier)worldDossier.style.display="none";
   const n=N[k];
   if(!n)return;
-  let dossier=$("#nationDossier");
-  if(!dossier){
-    const mount=$("#nationDossierMount");
-    if(mount){mount.innerHTML=NATION_DOSSIER_HTML;dossier=$("#nationDossier");}
-  }
 
   // 1) Selection UI is authoritative and must never depend on map/HUD code.
   sel=k;
@@ -3219,15 +3213,6 @@ function nation(k){
   setText("#ccapital",n.capital);
   setText("#cstrength",n.strength);
   setText("#cbrief",n.brief);
-  setText("#dossierName",n.name);
-  setText("#dossierEng",n.eng);
-  setText("#dossierCode",n.code);
-  setText("#dossierStatus",n.status);
-  setText("#dossierPop",n.pop);
-  setText("#dossierCapital",n.capital);
-  setText("#dossierStrength",n.strength);
-  setText("#dossierBrief",n.brief);
-  setText("#dossierWatermark",n.sigil||n.code.split(" ")[0]);
 
   const intel=$("#mapIntel");
   if(intel){
