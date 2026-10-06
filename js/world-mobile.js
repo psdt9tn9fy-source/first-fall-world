@@ -17,10 +17,10 @@ export function initWorldMobile(){
   const theaterCaption=document.querySelector("#ftTheaterCaption");
   const theaterIndex=document.querySelector("#ftTheaterIndex");
   const theaterDots=document.querySelector("#ftTheaterDots");
+  const worldIndex=document.querySelector("#ftWorldIndex");
   const dossier=document.querySelector("#ftDossier");
   const grabber=document.querySelector("#ftDossierGrabber");
   const close=document.querySelector("#ftDossierClose");
-  const targetLabel=document.querySelector("#ftTargetLabel");
   const moduleButtons=[...terminal.querySelectorAll("[data-ft-module]")];
   const modulePanels=[...terminal.querySelectorAll("[data-ft-panel]")];
   const timelineButtons=[...terminal.querySelectorAll("[data-ft-era]")];
@@ -72,11 +72,13 @@ export function initWorldMobile(){
   }
 
   function renderDeck(){
-    deck.innerHTML="";theaterDots.innerHTML="";
+    deck.innerHTML="";theaterDots.innerHTML="";worldIndex.innerHTML="";
     THEATERS.forEach((theater,index)=>{
       deck.appendChild(makeCard(theater,index));
       const dot=document.createElement("button");dot.type="button";dot.dataset.index=index;dot.setAttribute("aria-label",theater.name);
       dot.addEventListener("click",()=>goTheater(index));theaterDots.appendChild(dot);
+      const tab=document.createElement("button");tab.type="button";tab.dataset.index=index;tab.textContent=theater.short;
+      tab.addEventListener("click",()=>goTheater(index));worldIndex.appendChild(tab);
     });
     updateTheater(0);
   }
@@ -87,12 +89,13 @@ export function initWorldMobile(){
     theaterName.textContent=t.name;theaterCaption.textContent=t.caption;
     theaterIndex.textContent=String(activeTheater+1).padStart(2,"0")+" / "+String(THEATERS.length).padStart(2,"0");
     [...theaterDots.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
+    [...worldIndex.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     terminal.style.setProperty("--theater-index",activeTheater);
   }
 
   function goTheater(index){
     const card=deck.children[index];if(!card)return;
-    card.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",inline:"start",block:"nearest"});
+    deck.scrollTo({left:index*deck.clientWidth,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
     updateTheater(index);
   }
 
@@ -131,7 +134,7 @@ export function initWorldMobile(){
   function selectNode(theater,button){
     const node=theater.nodes.find(n=>n.id===button.dataset.node),meta=nodeMeta(node);
     deck.querySelectorAll(".ft-node.selected").forEach(n=>n.classList.remove("selected"));button.classList.add("selected");
-    targetLabel.textContent=meta.code;showTarget(button.closest(".ft-theater-card"),button,meta.code);
+    showTarget(button.closest(".ft-theater-card"),button,meta.code);
     fillDossier(meta);
     setTimeout(()=>setSheetState("peek"),240);
   }
