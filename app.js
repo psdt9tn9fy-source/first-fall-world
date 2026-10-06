@@ -121,7 +121,8 @@ function hero(ev,i){
   if(ev[0]===2031&&i<3){recordWindow.classList.remove("impact");void recordWindow.offsetWidth;recordWindow.classList.add("impact")}
   heroTimer=setTimeout(()=>eventEls[i].classList.remove("active"),520);
 }
-const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint");
+const intro=document.querySelector("#intro"),skip=document.querySelector("#introSkip"),accessStage=document.querySelector("#accessStage"),accessFrameProgress=document.querySelector("#accessFrameProgress"),accessPercent=document.querySelector("#accessPercent"),accessStatus=document.querySelector("#accessStatus"),accessHint=document.querySelector("#accessHint"),accessGranted=document.querySelector("#accessGranted");
+document.body.classList.add("intro-lock");
 let introSkipped=false,chronologyRAF=0,eventTimers=[];
 function finishChronology(){
   if(introSkipped)return;
@@ -137,6 +138,7 @@ function skipIntro(){
   cancelAnimationFrame(chronologyRAF);
   eventTimers.forEach(clearTimeout);
   intro.classList.add("hide");
+  document.body.classList.remove("intro-lock");
 }
 skip.addEventListener("click",skipIntro);
 setTimeout(()=>{
@@ -216,11 +218,15 @@ function completeAccess(){
   accessHint.textContent="AUTHORIZATION COMPLETE";
   accessStatus.textContent="ARCHIVE SEAL // RELEASED";
   setTimeout(()=>{
+    accessGranted.hidden=false;
     accessStage.classList.add("granted");
     setTimeout(()=>{
       intro.classList.add("unsealing");
       accessStage.classList.add("unsealed");
-      setTimeout(()=>intro.classList.add("hide"),820);
+      setTimeout(()=>{
+        intro.classList.add("hide");
+        document.body.classList.remove("intro-lock");
+      },820);
     },520);
   },150);
 }
