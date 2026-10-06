@@ -34,7 +34,7 @@ const N=[
 ["sea","SEA COOP","동남아시아 방위협력권","SOUTHEAST ASIA DEFENCE COOPERATION","지역 방위협력체","약 8억 3,000만","다국적 사령체계","해양전 / 군도방어","동남아 각국이 주권을 유지하면서 해양 방위를 공동조율한다."],
 ["afr","AU // 2134","아프리카 방위협력권","AFRICAN UNION DEFENCE COOPERATION","지역 방위협력체","약 24억","다국적 사령체계","회랑 방어","아프리카연합의 방위기능이 강화된 협력체."]
 ];
-const ext={rok:"jpg",afu:"jpg",jpn:"jpg",crf:"jpg",ncdr:"jpg",wur:"jpg",rus:"jpg",edc:"jpg",cadc:"webp",medc:"webp",ind:"jpg",bra:"jpg",aus:"jpg",can:"jpg",mex:"jpg",sea:"jpg",afr:"jpg"};
+const ext={rok:"jpg",afu:"jpg",jpn:"jpg",crf:"jpg",ncdr:"jpg",wur:"jpg",rus:"jpg",edc:"jpg",cadc:"jpg",medc:"jpg",ind:"jpg",bra:"jpg",aus:"jpg",can:"jpg",mex:"jpg",sea:"jpg",afr:"png"};
 document.querySelector("#enter").onclick=()=>document.querySelector("#intro").classList.add("hide");
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===b.dataset.tab))});
 const list=document.querySelector("#nationList");
