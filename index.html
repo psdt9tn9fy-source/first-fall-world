@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050914">
 <title>FIRST DESCENT ARCHIVE // WORLD STRATEGIC RECORDS</title>
+<link rel="preload" as="image" href="./assets/flags-hq/cadc-2134.jpg?v=2134-hq01" fetchpriority="high">
+<link rel="preload" as="image" href="./assets/flags-hq/medc-2134.jpg?v=2134-hq01" fetchpriority="high">
 <!-- Priority-load the larger HQ flag assets that otherwise arrive late as CSS backgrounds. -->
 <link rel="preload" as="image" href="./assets/flags-hq/bra-2134.jpg?v=2134-hq01" fetchpriority="high">
 <link rel="preload" as="image" href="./assets/flags-hq/ind-2134.jpg?v=2134-hq01" fetchpriority="high">
@@ -1701,6 +1703,50 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
 }
 /* === END FORCE HQ ARTWORK === */
 
+
+/* === NEW DEFENSE BLOCS // CADC + MEDC === */
+.flag.cadc{
+  background:#0b4f70 url("./assets/flags-hq/cadc-2134.jpg?v=2134-hq01") center/cover no-repeat!important;
+}
+.flag.medc{
+  background:#063d2b url("./assets/flags-hq/medc-2134.jpg?v=2134-hq01") center/cover no-repeat!important;
+}
+.flag.cadc::before,.flag.cadc::after,.flag.medc::before,.flag.medc::after{
+  display:none!important;content:none!important;
+}
+.flag-focus .flag:is(.cadc,.medc){
+  width:min(330px,42vw)!important;max-width:330px!important;height:auto!important;
+  aspect-ratio:3/2!important;min-height:0!important;margin:0!important;border:0!important;
+  border-radius:0!important;overflow:visible!important;clip-path:none!important;
+  -webkit-mask-image:none!important;mask-image:none!important;background-size:contain!important;
+  background-position:center!important;background-repeat:no-repeat!important;background-color:transparent!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 18px 20px rgba(0,0,0,.72)) drop-shadow(0 0 9px rgba(133,166,181,.12))!important;
+  animation:flagFloat2134 5.2s ease-in-out infinite!important;
+}
+.country-index-item .flag.cadc{
+  background:#11171a url("./assets/flags-hq/cadc-2134.jpg?v=2134-hq01") center/contain no-repeat!important;
+}
+.country-index-item .flag.medc{
+  background:#11171a url("./assets/flags-hq/medc-2134.jpg?v=2134-hq01") center/contain no-repeat!important;
+}
+.country-index-item .flag:is(.cadc,.medc){
+  width:54px!important;height:36px!important;aspect-ratio:3/2!important;border:0!important;border-radius:2px!important;
+  overflow:visible!important;clip-path:none!important;-webkit-mask-image:none!important;mask-image:none!important;
+  box-shadow:0 5px 12px rgba(0,0,0,.44)!important;filter:none!important;animation:none!important;
+}
+.nation .flag.cadc{
+  background:#11171a url("./assets/flags-hq/cadc-2134.jpg?v=2134-hq01") center/cover no-repeat!important;
+}
+.nation .flag.medc{
+  background:#11171a url("./assets/flags-hq/medc-2134.jpg?v=2134-hq01") center/cover no-repeat!important;
+}
+@media(max-width:650px){
+  .flag-focus .flag:is(.cadc,.medc){width:min(64vw,230px)!important;max-width:230px!important}
+  .country-index-item .flag:is(.cadc,.medc){width:46px!important;height:31px!important}
+}
+/* === END NEW DEFENSE BLOCS === */
+
 </style>
 <script>window.WORLD_GEOJSON={"type":"FeatureCollection","features":[ {"type":"Feature","properties":{"name":"Afghanistan"},"geometry":{"type":"Polygon","coordinates":[[[61.210817,35.650072],[62.230651,35.270664],[62.984662,35.404041],[63.193538,35.857166],[63.982896,36.007957],[64.546479,36.312073],[64.746105,37.111818],[65.588948,37.305217],[65.745631,37.661164],[66.217385,37.39379],[66.518607,37.362784],[67.075782,37.356144],[67.83,37.144994],[68.135562,37.023115],[68.859446,37.344336],[69.196273,37.151144],[69.518785,37.608997],[70.116578,37.588223],[70.270574,37.735165],[70.376304,38.138396],[70.806821,38.486282],[71.348131,38.258905],[71.239404,37.953265],[71.541918,37.905774],[71.448693,37.065645],[71.844638,36.738171],[72.193041,36.948288],[72.63689,37.047558],[73.260056,37.495257],[73.948696,37.421566],[74.980002,37.41999],[75.158028,37.133031],[74.575893,37.020841],[74.067552,36.836176],[72.920025,36.720007],[71.846292,36.509942],[71.262348,36.074388],[71.498768,35.650563],[71.613076,35.153203],[71.115019,34.733126],[71.156773,34.348911],[70.881803,33.988856],[69.930543,34.02012],[70.323594,33.358533],[69.687147,33.105499],[69.262522,32.501944],[69.317764,31.901412],[68.926677,31.620189],[68.556932,31.71331],[67.792689,31.58293],[67.683394,31.303154],[66.938891,31.304911],[66.381458,30.738899],[66.346473,29.887943],[65.046862,29.472181],[64.350419,29.560031],[64.148002,29.340819],[63.550261,29.468331],[62.549857,29.318572],[60.874248,29.829239],[61.781222,30.73585],[61.699314,31.379506],[60.941945,31.548075],[60.863655,32.18292],[60.536078,32.981269],[60.9637,33.528832],[60.52843,33.676446],[60.803193,34.404102],[61.210817,35.650072]]]},"id":"AFG"},
 {"type":"Feature","properties":{"name":"Angola"},"geometry":{"type":"MultiPolygon","coordinates":[[[[16.326528,-5.87747],[16.57318,-6.622645],[16.860191,-7.222298],[17.089996,-7.545689],[17.47297,-8.068551],[18.134222,-7.987678],[18.464176,-7.847014],[19.016752,-7.988246],[19.166613,-7.738184],[19.417502,-7.155429],[20.037723,-7.116361],[20.091622,-6.94309],[20.601823,-6.939318],[20.514748,-7.299606],[21.728111,-7.290872],[21.746456,-7.920085],[21.949131,-8.305901],[21.801801,-8.908707],[21.875182,-9.523708],[22.208753,-9.894796],[22.155268,-11.084801],[22.402798,-10.993075],[22.837345,-11.017622],[23.456791,-10.867863],[23.912215,-10.926826],[24.017894,-11.237298],[23.904154,-11.722282],[24.079905,-12.191297],[23.930922,-12.565848],[24.016137,-12.911046],[21.933886,-12.898437],[21.887843,-16.08031],[22.562478,-16.898451],[23.215048,-17.523116],[21.377176,-17.930636],[18.956187,-17.789095],[18.263309,-17.309951],[14.209707,-17.353101],[14.058501,-17.423381],[13.462362,-16.971212],[12.814081,-16.941343],[12.215461,-17.111668],[11.734199,-17.301889],[11.640096,-16.673142],[11.778537,-15.793816],[12.123581,-14.878316],[12.175619,-14.449144],[12.500095,-13.5477],[12.738479,-13.137906],[13.312914,-12.48363],[13.633721,-12.038645],[13.738728,-11.297863],[13.686379,-10.731076],[13.387328,-10.373578],[13.120988,-9.766897],[12.87537,-9.166934],[12.929061,-8.959091],[13.236433,-8.562629],[12.93304,-7.596539],[12.728298,-6.927122],[12.227347,-6.294448],[12.322432,-6.100092],[12.735171,-5.965682],[13.024869,-5.984389],[13.375597,-5.864241],[16.326528,-5.87747]]],[[[12.436688,-5.684304],[12.182337,-5.789931],[11.914963,-5.037987],[12.318608,-4.60623],[12.62076,-4.438023],[12.995517,-4.781103],[12.631612,-4.991271],[12.468004,-5.248362],[12.436688,-5.684304]]]]},"id":"AGO"},
@@ -1954,7 +2000,7 @@ radial-gradient(circle at 50% 50%,#071015 0,#04080b 58%,#020405 100%)}
         <h2>국가 · 방위권 선택</h2>
         <p>국기를 넘기면 전략지도가 해당 국가·세력권으로 이동합니다.</p>
       </div>
-      <div class="selector-head-code"><span>DATABASE</span><b>15 MAJOR ENTRIES</b><small>WORKING CANON</small></div>
+      <div class="selector-head-code"><span>DATABASE</span><b>17 MAJOR ENTRIES</b><small>WORKING CANON</small></div>
     </header>
 
     <section class="flag-carousel-card">
@@ -2283,9 +2329,11 @@ aus:{code:"AUS // 2134",name:"호주",eng:"AUSTRALIA",sigil:"AUS",status:"PACIFI
 can:{code:"CAN // 2134",name:"캐나다",eng:"CANADA",sigil:"CAN",status:"북미 공동방위",pop:"자료 갱신 중",capital:"오타와",strength:"북극권 / 감시",color:"#cf6b72",flag:"can",brief:"AFU와 별개의 주권국가. 북극권 감시·자원·극지전 능력이 강하며 북미공동방위체계에 참여한다."},
 mex:{code:"MEX // 2134",name:"멕시코",eng:"MEXICO",sigil:"MEX",status:"북미 공동방위",pop:"자료 갱신 중",capital:"멕시코시티",strength:"도시전 / 제조",color:"#8ab57b",flag:"mex",brief:"AFU와 별개의 주권국가. 중미 연결회랑과 산악·도시전, 대규모 제조업에서 중요한 역할을 한다."},
 sea:{code:"SEA COOP",name:"동남아시아 방위협력권",eng:"SOUTHEAST ASIA DEFENCE COOPERATION",sigil:"SEA",status:"REGIONAL COOPERATION",pop:"TBD",capital:"MULTINATIONAL",strength:"MARITIME / ARCHIPELAGO",color:"#63c9b9",flag:"sea",brief:"인도네시아·베트남·싱가포르·필리핀·말레이시아·태국 등은 각자 주권을 유지하면서 해양 네스트와 군도전 대응을 공동조율한다."},
+cadc:{code:"CADC // 2134",name:"중앙아시아 공동방위체",eng:"CENTRAL ASIA DEFENSE COMPACT",sigil:"CADC",status:"REGIONAL DEFENSE COMPACT",pop:"자료 갱신 중",capital:"다국적 사령체계",strength:"STEPPE / MOUNTAIN / LAND CORRIDOR",color:"#38b9e8",flag:"cadc",brief:"카자흐스탄·우즈베키스탄·키르기스스탄·타지키스탄·투르크메니스탄과 몽골이 참여하는 공동방위체. 각국은 주권과 군을 유지하며 유라시아 육상회랑·초원·산악 전선과 에이돌론 대응을 공동조율한다."},
+medc:{code:"MEDC // 2134",name:"중동 공동방위체",eng:"MIDDLE EAST DEFENSE COMPACT",sigil:"MEDC",status:"REGIONAL DEFENSE COMPACT",pop:"자료 갱신 중",capital:"다국적 사령체계",strength:"DESERT / AIR DEFENSE / ENERGY CORRIDOR",color:"#c7a34d",flag:"medc",brief:"중동 각국이 주권과 독자 군사체계를 유지한 채 에이돌론 대응·통합방공·에너지 및 해상회랑 방어를 위해 구성한 느슨한 공동방위체. 종교·정치적 갈등은 여전히 존재하며 국가통합체가 아닌 전시 협력기구다."},
 afr:{code:"AU // 2134",name:"아프리카 방위협력권",eng:"AFRICAN UNION DEFENCE COOPERATION",sigil:"AU",status:"지역 방위협력체",pop:"자료 갱신 중",capital:"다국적 사령체계",strength:"회랑 방어",color:"#c2a35c",flag:"afr",brief:"아프리카연합의 방위기능이 강화된 형태. 개별국가는 유지되며 도시·항만·철도·광산·하천축 방어를 중심으로 협력한다."}
 };
-const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr"};
+const MAP={410:"rok",408:"rok",840:"afu",392:"jpn",643:"rus",250:"edc",276:"edc",616:"edc",380:"edc",724:"edc",528:"edc",56:"edc",208:"edc",752:"edc",246:"edc",203:"edc",703:"edc",40:"edc",348:"edc",642:"edc",100:"edc",300:"edc",620:"edc",356:"ind",76:"bra",36:"aus",124:"can",484:"mex",360:"sea",704:"sea",608:"sea",458:"sea",764:"sea",702:"sea",818:"afr",566:"afr",710:"afr",404:"afr",231:"afr",398:"cadc",860:"cadc",417:"cadc",762:"cadc",795:"cadc",496:"cadc",682:"medc",784:"medc",512:"medc",634:"medc",414:"medc",48:"medc",400:"medc",368:"medc",364:"medc",376:"medc",422:"medc",760:"medc",887:"medc",792:"medc"};
 const AFRICA_IDS=[12,24,204,72,854,108,132,120,140,148,174,180,178,384,262,818,226,232,748,231,266,270,288,324,624,404,426,430,434,450,454,466,270,478,480,504,508,516,562,566,646,678,686,690,694,706,710,728,729,834,768,788,800,894,716];
 AFRICA_IDS.forEach(id=>MAP[String(id)]="afr");
 const POP={
@@ -2420,7 +2468,7 @@ $("#mobileMenuClose").onclick=()=>$("#mobileMenu").hidden=true;
 $("#intelClose").onclick=()=>$("#mapIntel").classList.add("idle");
 
 let sel=null,g,zoom,svg,projection;
-const COUNTRY_ORDER=["rok","afu","jpn","crf","ncdr","wur","rus","edc","ind","bra","aus","can","mex","sea","afr"];
+const COUNTRY_ORDER=["rok","afu","jpn","crf","ncdr","wur","rus","edc","cadc","medc","ind","bra","aus","can","mex","sea","afr"];
 const COUNTRY_VIEW={
   rok:{lon:126.98,lat:37.57,viewLon:127.4,viewLat:36.8,z:5.2},
   afu:{lon:-77.04,lat:38.90,viewLon:-98,viewLat:38,z:2.0},
@@ -2436,6 +2484,8 @@ const COUNTRY_VIEW={
   can:{lon:-75.70,lat:45.42,viewLon:-103,viewLat:56,z:1.72},
   mex:{lon:-99.13,lat:19.43,viewLon:-102,viewLat:23,z:2.95},
   sea:{lon:106.0,lat:8.0,viewLon:108,viewLat:7,z:2.35},
+  cadc:{lon:67.0,lat:43.5,viewLon:72,viewLat:43,z:2.05},
+  medc:{lon:45.0,lat:26.5,viewLon:46,viewLat:28,z:2.15},
   afr:{lon:20.0,lat:2.0,viewLon:20,viewLat:3,z:1.75}
 };
 const COUNTRY_ZONE={
@@ -2443,6 +2493,7 @@ const COUNTRY_ZONE={
   afu:"northamerica",can:"northamerica",mex:"northamerica",
   rus:"europe",edc:"europe",
   ind:"southasia",sea:"southeastasia",
+  cadc:"centralasia",medc:"middleeast",
   bra:"southamerica",afr:"africa",aus:"oceania"
 };
 let carouselIndex=-1;
@@ -3329,6 +3380,8 @@ function focusRegion(key){
     eastasia:{lon:120,lat:30,zoom:2.35,label:"EAST ASIA"},
     europe:{lon:18,lat:48,zoom:2.5,label:"EUROPE"},
     northamerica:{lon:-100,lat:38,zoom:2.15,label:"NORTH AMERICA"},
+    centralasia:{lon:68,lat:43,zoom:2.2,label:"CENTRAL ASIA"},
+    middleeast:{lon:45,lat:28,zoom:2.25,label:"MIDDLE EAST"},
     africa:{lon:20,lat:2,zoom:2.0,label:"AFRICA"},
     southamerica:{lon:-61,lat:-16,zoom:2.15,label:"SOUTH AMERICA"},
     pacific:{lon:160,lat:-5,zoom:1.65,label:"PACIFIC"}
