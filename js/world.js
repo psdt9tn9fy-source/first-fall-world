@@ -69,6 +69,10 @@ export function initWorld(){
   const coordinate=document.querySelector("#mapCoordinate"),search=document.querySelector("#worldSearch"),searchList=document.querySelector("#worldSearchList");
   const lens=document.querySelector("#scanLens"),scanTarget=document.querySelector("#scanTarget"),scanToggle=document.querySelector("#scanToggle");
   const eraReadout=document.querySelector("#worldEraReadout"),eraState=document.querySelector("#eraState"),eraNote=document.querySelector("#eraNote");
+  const mobileQuery=matchMedia("(max-width: 820px)");
+  const mobileEraReadout=document.querySelector("#mobileEraReadout");
+  const targetAcquire=document.querySelector("#targetAcquire"),targetAcquireLabel=document.querySelector("#targetAcquireLabel");
+  const sectorPanel=document.querySelector("#sectorPanel"),sheetGrabber=document.querySelector("#sheetGrabber");
   const panel={
     overline:document.querySelector("#panelOverline"),index:document.querySelector("#panelIndex"),
     title:document.querySelector("#panelTitle"),class:document.querySelector("#panelClass"),
@@ -80,7 +84,25 @@ export function initWorld(){
   const countryByName=new Map();
   const pathByIso=new Map();
   const sectorNode=new Map();
-  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false,mapTx=0,mapTy=0;
+  let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],scan=false,mapTx=0,mapTy=0,acquireTimer=0,sheetStartY=null;
+
+  function isMobile(){return mobileQuery.matches}
+  function showAcquire(label){
+    if(!isMobile()||!targetAcquire)return;
+    clearTimeout(acquireTimer);targetAcquireLabel.textContent=label||"TARGET";
+    targetAcquire.classList.remove("acquiring");void targetAcquire.offsetWidth;targetAcquire.classList.add("acquiring");
+    if(navigator.vibrate)navigator.vibrate(12);
+    acquireTimer=setTimeout(()=>targetAcquire.classList.remove("acquiring"),820);
+  }
+  function openSheet(expand=false){
+    if(!isMobile()||!sectorPanel)return;
+    sectorPanel.classList.add("mobile-open");sectorPanel.classList.toggle("expanded",expand);
+    sheetGrabber?.setAttribute("aria-expanded",String(expand));
+  }
+  function closeSheet(){
+    if(!sectorPanel)return;
+    sectorPanel.classList.remove("mobile-open","expanded");sheetGrabber?.setAttribute("aria-expanded","false");
+  }
 
   function setPanel({overline="GLOBAL THEATER // 2134",index="00",title="WORLD OVERVIEW",className="I.D.A. PUBLIC ARCHIVE",body="지도의 국가 또는 전략 노드를 선택하면 현재 기록과 연결된 아카이브를 열람할 수 있다.",status="ONGOING WAR",access="PUBLIC",record=null,nation=null,feed="NODE 07 // WORLD DATA SYNCHRONIZED"}={}){
     panel.overline.textContent=overline;panel.index.textContent=index;panel.title.textContent=title;panel.class.textContent=className;
@@ -98,7 +120,7 @@ export function initWorld(){
     mapGroup.setAttribute("transform",`translate(${mapTx} ${mapTy}) scale(${zoom})`);
   }
   function resetFocus(){
-    clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();
+    clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();closeSheet();
     setPanel({overline:`GLOBAL THEATER // ${era}`});
   }
   function focusAt(x,y,z=1.55){focus=[x,y];zoom=Math.max(1,Math.min(2.35,z));applyTransform()}
@@ -107,7 +129,7 @@ export function initWorld(){
     clearSelected();
     pathByIso.get(iso)?.classList.add("selected");
     selected={type:"nation",key,iso};
-    const [x,y]=centroid(feature);focusAt(x,y,1.55);
+    const [x,y]=centroid(feature);focusAt(x,y,1.55);showAcquire(iso);openSheet(false);
     if(n){
       setPanel({overline:`NATION LINK // ${iso}`,index:"N",title:n[2],className:n[3],body:n[8],status:n[4],access:"PUBLIC",record:"nations",nation:key,feed:`${n[1]} // ARCHIVE LINK READY`});
     }else{
@@ -117,12 +139,12 @@ export function initWorld(){
   function genericCountryPanel(feature){
     const iso=feature.id||"---",name=feature.properties?.name||"UNKNOWN";
     clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"country",iso};
-    const [x,y]=centroid(feature);focusAt(x,y,1.42);
+    const [x,y]=centroid(feature);focusAt(x,y,1.42);showAcquire(iso);openSheet(false);
     setPanel({overline:`GEOGRAPHIC REFERENCE // ${iso}`,index:"G",title:name,className:"WORLD MAP REFERENCE",body:"지리 정보는 확인되지만 현재 공개 아카이브에 별도 국가 기록이 연결되어 있지 않다.",status:"REFERENCE ONLY",access:"PUBLIC",feed:"MAP NODE // NO DEDICATED RECORD"});
   }
   function sectorPanelData(s,node){
     clearSelected();node.classList.add("selected");selected={type:"sector",id:s.id};
-    const [x,y]=project(s.lon,s.lat);focusAt(x,y,1.72);
+    const [x,y]=project(s.lon,s.lat);focusAt(x,y,1.72);showAcquire(s.id);openSheet(false);
     setPanel({overline:`STRATEGIC NODE // ${s.id}`,index:s.id,title:s.ko,className:`${ZONE_LABEL[s.zone]} // ${s.name}`,body:s.body,status:ZONE_LABEL[s.zone],access:s.zone==="black"?"RESTRICTED":"PUBLIC",record:s.record,nation:s.nation||null,feed:`${s.name} // RECORD LINK READY`});
   }
 
@@ -135,7 +157,7 @@ export function initWorld(){
       const g=document.createElementNS("http://www.w3.org/2000/svg","g");
       g.setAttribute("class","sector-marker");g.dataset.zone=s.zone;g.dataset.id=s.id;g.setAttribute("transform",`translate(${x} ${y})`);
       g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",`${s.ko}, ${ZONE_LABEL[s.zone]}`);
-      g.innerHTML='<circle class="sector-pulse" r="8"></circle><circle class="sector-ring" r="8"></circle><circle class="sector-core" r="2.6"></circle><text x="12" y="-8">'+s.id+'</text>';
+      g.innerHTML='<circle class="sector-hit" r="20"></circle><circle class="sector-pulse" r="8"></circle><circle class="sector-ring" r="8"></circle><circle class="sector-core" r="2.6"></circle><text x="12" y="-8">'+s.id+'</text>';
       g.addEventListener("mouseenter",()=>hover.textContent=`${s.id} // ${s.name}`);
       g.addEventListener("mouseleave",()=>hover.textContent="SELECT A SECTOR OR NATION");
       g.addEventListener("click",e=>{e.stopPropagation();sectorPanelData(s,g)});
@@ -208,7 +230,7 @@ export function initWorld(){
   document.querySelectorAll("[data-era]").forEach(btn=>btn.addEventListener("click",()=>{
     era=btn.dataset.era;room.dataset.era=era;
     document.querySelectorAll("[data-era]").forEach(x=>x.classList.toggle("active",x===btn));
-    eraReadout.textContent=era;eraState.textContent=ERA[era].state;eraNote.textContent=ERA[era].note;panel.era.textContent=era;
+    eraReadout.textContent=era;if(mobileEraReadout)mobileEraReadout.textContent=era;eraState.textContent=ERA[era].state;eraNote.textContent=ERA[era].note;panel.era.textContent=era;
   }));
 
   document.querySelector("#zoomIn").addEventListener("click",()=>{zoom=Math.min(2.35,zoom+.3);applyTransform()});
@@ -216,6 +238,16 @@ export function initWorld(){
   document.querySelector("#zoomReset").addEventListener("click",resetFocus);
   document.querySelector("#panelReset").addEventListener("click",resetFocus);
   viewport.addEventListener("click",e=>{if(e.target===viewport||e.target.id==="worldSvg"||e.target.classList.contains("map-grid-fill"))resetFocus()});
+
+  sheetGrabber?.addEventListener("click",()=>{
+    const expand=!sectorPanel.classList.contains("expanded");openSheet(expand);
+  });
+  sheetGrabber?.addEventListener("pointerdown",e=>{sheetStartY=e.clientY;sheetGrabber.setPointerCapture?.(e.pointerId)});
+  sheetGrabber?.addEventListener("pointerup",e=>{
+    if(sheetStartY===null)return;
+    const dy=e.clientY-sheetStartY;sheetStartY=null;
+    if(dy<-28)openSheet(true);else if(dy>28)openSheet(false);
+  });
 
   scanToggle.addEventListener("click",()=>{
     scan=!scan;scanToggle.setAttribute("aria-pressed",String(scan));viewport.classList.toggle("scan-active",scan);
@@ -243,11 +275,13 @@ export function initWorld(){
   search.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();selectSearch(search.value)}});
 
   panel.open.addEventListener("click",()=>{
-    const record=panel.open.dataset.record;if(!record)return;
+    const record=panel.open.dataset.record;if(!record)return;closeSheet();
     const nation=panel.open.dataset.nation;
     if(nation)window.dispatchEvent(new CustomEvent("archive:select-nation",{detail:{key:nation}}));
     window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:record}}));
   });
+
+  mobileQuery.addEventListener?.("change",e=>{if(!e.matches)closeSheet()});
 
   const introObserver=new MutationObserver(()=>{
     if(intro.classList.contains("hide"))loadMap();
