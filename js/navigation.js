@@ -17,6 +17,8 @@ export function initNavigation(){
   const recordTitle=document.querySelector("#recordTitle");
   const frameRecord=document.querySelector("#frameRecord");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const shell=document.querySelector("#archiveShell");
+  if(shell)shell.dataset.activeRecord=tabs.find(tab=>tab.classList.contains("active"))?.dataset.tab||"world";
   let busy=false;
 
   function activate(key,button){
@@ -26,6 +28,7 @@ export function initNavigation(){
       active?tab.setAttribute("aria-current","page"):tab.removeAttribute("aria-current");
     });
     views.forEach(view=>view.classList.toggle("active",view.dataset.view===key));
+    if(shell)shell.dataset.activeRecord=key;
     recordCode.textContent=`RECORD ${meta.no} // ${meta.code}`;recordTitle.textContent=meta.title;
     frameRecord.textContent=`RECORD ${meta.no} / 06`;document.title=`# 2134 // ${meta.title}`;
     window.dispatchEvent(new CustomEvent("archive:record-opened",{detail:{key}}));
