@@ -157,7 +157,9 @@
   .ft-dossier-open{width:100%;min-height:45px;margin-top:16px;border:1px solid #56676d;background:#0d1315;color:#d5e3e6;text-align:left;padding:0 13px;font:750 8px ui-monospace,SFMono-Regular,monospace;letter-spacing:.09em}
   .ft-dossier[data-state="peek"] p,.ft-dossier[data-state="peek"] .ft-dossier-data,.ft-dossier[data-state="peek"] .ft-dossier-open{visibility:hidden}
 
-  @media(prefers-reduced-motion:reduce){
-    .ft-target-lock.lock{animation:none;display:none}.ft-dossier,.ft-more-menu{transition:none}
-  }
+}
+
+@media(max-width:820px) and (prefers-reduced-motion:reduce){
+  .ft-target-lock.lock{animation:none;display:none}
+  .ft-dossier,.ft-more-menu{transition:none}
 }
