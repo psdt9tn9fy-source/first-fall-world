@@ -67,3 +67,22 @@
 .ei-engage{display:grid;grid-template-columns:330px 1fr;gap:24px;margin-top:18px}.ei-risk-buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.ei-risk-buttons button{height:66px;border:1px solid #293438;background:#080c0d;color:#68777c;font:850 16px ui-monospace,SFMono-Regular,monospace;cursor:pointer}.ei-risk-buttons button.active{border-color:#8da8ae;color:#dce7e9;background:#101719}.ei-risk-buttons button[data-ei-risk="S"].active{border-color:#8e4b47;background:#251312;color:#e0b4b0}
 .ei-risk-detail{border-left:1px solid #293438;padding-left:20px}.ei-risk-detail span{font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;color:#66767b}.ei-risk-detail h4{margin:7px 0 0;font-size:20px}.ei-risk-detail p{margin:11px 0 0;font-size:11px;line-height:1.7;color:#849297}
 @media(prefers-reduced-motion:reduce){.ei-panel.active,.scanning .ei-scanline,.scanning .ei-specimen{animation:none!important}.ei-specimen,.ei-class-btn:after{transition:none}}
+
+/* BRUTE 3D specimen — loaded only after RECORD 03 is opened */
+.ei-model-stage{position:absolute;z-index:4;inset:46px 10px 38px;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
+.ei-model-stage[hidden]{display:none}
+.ei-model-viewer{width:100%;height:100%;min-height:390px;background:transparent;--poster-color:transparent;touch-action:pan-y;outline:0}
+.ei-model-status{position:absolute;z-index:3;left:13px;bottom:12px;display:grid;gap:3px;pointer-events:none}
+.ei-model-status span,.ei-model-status b,.ei-model-status em{font:650 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;font-style:normal;color:#607277}
+.ei-model-status b{color:#a9bec3}.ei-model-status em{color:#72868b}
+.ei-model-loading{position:absolute;z-index:5;inset:0;display:none;place-content:center;text-align:center;gap:6px;background:radial-gradient(circle,#0c1417cc 0,#050809d9 58%,#050809 100%);pointer-events:none}
+.ei-model-loading i{width:54px;height:54px;margin:0 auto 7px;border:1px solid #6f8b9145;border-top-color:#b5d2d8;border-radius:50%;animation:eiModelSpin 1.15s linear infinite}
+.ei-model-loading span,.ei-model-loading b{font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#9eb2b7}.ei-model-loading b{font-size:5px;color:#607176}
+.ei-model-pending[data-ei-class="brute"] .ei-model-loading{display:grid}
+.ei-model-ready[data-ei-class="brute"] .ei-specimen{opacity:0;visibility:hidden}
+.ei-model-ready[data-ei-class="brute"] .ei-orbit{opacity:.5}
+.ei-model-error[data-ei-class="brute"] .ei-model-stage{display:none}
+.ei-model-error[data-ei-class="brute"] .ei-specimen{opacity:1;visibility:visible}
+@keyframes eiModelSpin{to{transform:rotate(360deg)}}
+@media(max-width:760px){.ei-model-stage{inset:42px 4px 38px}.ei-model-viewer{min-height:330px}.ei-model-status{left:10px;bottom:8px}}
+@media(prefers-reduced-motion:reduce){.ei-model-loading i{animation:none}}
