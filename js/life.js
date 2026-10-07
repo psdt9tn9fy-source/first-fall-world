@@ -1,9 +1,9 @@
 const SCENES=[
-  {key:"commute",time:"07:42",title:"출근길",sub:"서울 · 평일 아침",body:"전쟁은 103년째지만 오전 8시의 도시는 여전히 붐빈다. 지하철과 간선철도는 평시 시간표로 움직이고, 학생과 직장인은 각자의 하루를 시작한다.",place:"서울 생활권",state:"정상 운행",note:"민간 교통망 가동"},
-  {key:"education",time:"10:20",title:"수업이 시작된다",sub:"대학가 · 교육",body:"일반 대학과 전문교육기관은 전시체제 속에서도 운영된다. 군 관련 진로의 위상은 높지만 모든 청년이 군인이 되는 사회는 아니다.",place:"대학 교육지구",state:"정상 수업",note:"민간·군 교육 병존"},
-  {key:"work",time:"13:05",title:"일과 직업",sub:"도심 업무지구",body:"산업·행정·서비스업은 장기전에 맞춰 재편되었지만 일상적인 직장생활 자체는 사라지지 않았다. 군 경력과 출신 기관은 일부 분야에서 강한 경력 자산으로 작용한다.",place:"서울 업무권",state:"정상 업무",note:"민간경제 유지"},
-  {key:"evening",time:"18:40",title:"저녁의 도시",sub:"상업지구 · 문화",body:"사람들은 퇴근 후 식당과 카페를 찾고, 쇼핑하고, 공연과 스포츠를 즐긴다. 전쟁은 삶의 배경이지만 삶 전체를 대신하지는 않는다.",place:"도심 상업지구",state:"야간 영업",note:"문화생활 지속"},
-  {key:"alert",time:"22:13",title:"민방위 알림",sub:"백두권역 · 주의",body:"휴대 단말에 짧은 경보가 표시된다. 시민들은 내용을 확인하고 필요한 경우 지정 대피시설과 교통 안내를 따른다. 경보는 특별하지만, 공포 그 자체는 더 이상 낯선 일이 아니다.",place:"백두 감시권역",state:"주의 단계",note:"도시 기능 유지"}
+  {key:"commute",time:"07:42",title:"출근길",sub:"서울 · 평일 아침",body:"전쟁은 103년째지만 오전 8시의 도시는 여전히 붐빈다. 지하철과 간선철도는 평시 시간표로 움직이고, 학생과 직장인은 각자의 하루를 시작한다.",place:"서울 생활권",state:"정상 운행",note:"민간 교통망 가동",cards:["08:30 도착 예정","대중교통 정상 운행","일상 유지"]},
+  {key:"education",time:"10:20",title:"수업이 시작된다",sub:"대학가 · 교육",body:"일반 대학과 전문교육기관은 전시체제 속에서도 운영된다. 군 관련 진로의 위상은 높지만 모든 청년이 군인이 되는 사회는 아니다.",place:"대학 교육지구",state:"정상 수업",note:"민간·군 교육 병존",cards:["2교시 진행 중","캠퍼스 출입 정상","학생 생활 유지"]},
+  {key:"work",time:"13:05",title:"일과 직업",sub:"도심 업무지구",body:"산업·행정·서비스업은 장기전에 맞춰 재편되었지만 일상적인 직장생활 자체는 사라지지 않았다. 군 경력과 출신 기관은 일부 분야에서 강한 경력 자산으로 작용한다.",place:"서울 업무권",state:"정상 업무",note:"민간경제 유지",cards:["오후 업무 시작","상업·행정 정상","민간경제 유지"]},
+  {key:"evening",time:"18:40",title:"저녁의 도시",sub:"상업지구 · 문화",body:"사람들은 퇴근 후 식당과 카페를 찾고, 쇼핑하고, 공연과 스포츠를 즐긴다. 전쟁은 삶의 배경이지만 삶 전체를 대신하지는 않는다.",place:"도심 상업지구",state:"야간 영업",note:"문화생활 지속",cards:["저녁 약속 시간","상권 정상 영업","문화생활 지속"]},
+  {key:"alert",time:"22:13",title:"민방위 알림",sub:"백두권역 · 주의",body:"휴대 단말에 짧은 경보가 표시된다. 시민들은 내용을 확인하고 필요한 경우 지정 대피시설과 교통 안내를 따른다. 경보는 특별하지만, 공포 그 자체는 더 이상 낯선 일이 아니다.",place:"백두 감시권역",state:"주의 단계",note:"도시 기능 유지",cards:["주의 알림 수신","교통 일부 조정","도시 기능 유지"]}
 ];
 
 const TOPICS={
@@ -21,6 +21,7 @@ export function initLife(){
   const topicButtons=[...root.querySelectorAll("[data-life-topic]")];
   const scene=root.querySelector("#lifeScene"),time=root.querySelector("#lifeTime"),sub=root.querySelector("#lifeSub"),title=root.querySelector("#lifeTitle"),body=root.querySelector("#lifeBody");
   const place=root.querySelector("#lifePlace"),state=root.querySelector("#lifeState"),note=root.querySelector("#lifeNote");
+  const cardA=root.querySelector("#lifeSceneCardA"),cardB=root.querySelector("#lifeSceneCardB"),cardC=root.querySelector("#lifeSceneCardC");
   const featureTitle=root.querySelector("#lifeFeatureTitle"),featureCopy=root.querySelector("#lifeFeatureCopy"),featureList=root.querySelector("#lifeFeatureList");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -29,7 +30,8 @@ export function initLife(){
     sceneButtons.forEach(b=>b.classList.toggle("active",b.dataset.lifeScene===d.key));
     time.textContent=d.time;sub.textContent=d.sub;title.textContent=d.title;body.textContent=d.body;
     place.textContent=d.place;state.textContent=d.state;note.textContent=d.note;scene.dataset.scene=d.key;
-    scene.querySelector(".life-scene-word").textContent=d.key==="alert"?"ALERT":"2134";
+    if(d.cards){cardA.textContent=d.cards[0];cardB.textContent=d.cards[1];cardC.textContent=d.cards[2];}
+    scene.querySelector(".life-scene-word").textContent=d.key==="alert"?"주의":"2134";
     scene.querySelector(".life-scene-tag span").textContent=d.key==="alert"?"민방위 기록":"생활 기록";
     scene.querySelector(".life-scene-tag b").textContent=d.key==="alert"?"주의 단계":"정상 생활권";
     if(!reduced){scene.animate([{opacity:.35,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:260,easing:"cubic-bezier(.2,.75,.2,1)"})}
