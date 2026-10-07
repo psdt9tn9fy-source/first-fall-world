@@ -233,9 +233,11 @@ export function initNations(){
   window.addEventListener("keydown",e=>{if(e.key==="Escape")setIndexOpen(false)});
   mobileQuery.addEventListener?.("change",()=>{setIndexOpen(false);renderIndex(search.value)});
   list.addEventListener("scroll",()=>{
-    if(!mobileQuery.matches||root.classList.contains("index-open"))return;
+    if(!mobileQuery.matches)return;
+    const near=nearestPickerButton();
+    if(root.classList.contains("index-open")){hydrateAround(near,3);return}
     clearTimeout(pickerTimer);
-    const near=nearestPickerButton();hydrateAround(near,2);
+    hydrateAround(near,2);
     pickerTimer=setTimeout(settlePicker,105);
   },{passive:true});
 
