@@ -9,7 +9,12 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const traceStatus=root.querySelector("[data-ei-trace-status]");
   const traceNodes=[...root.querySelectorAll("[data-ei-trace-node]")];
   const traceRun=root.querySelector("[data-ei-run-trace]");
-  let traceToken=0;
+  const nestTopology=root.querySelector("[data-ei-nest-topology]");
+  const nestStatus=root.querySelector("[data-ei-nest-status]");
+  const nestCore=root.querySelector("[data-ei-nest-core]");
+  const nestScan=root.querySelector("[data-ei-scan-nest]");
+  const nestButtons=[...root.querySelectorAll("[data-ei-nest]")];
+  let traceToken=0,nestToken=0;
   if(!buttons.length||!panels.length)return null;
 
   function runTrace(){
@@ -28,6 +33,18 @@ export function initEidolonRecords(root,{onTabChange}={}){
     traceNodes.forEach((node,index)=>setTimeout(()=>{if(token!==traceToken)return;node.classList.add("active");if(index===traceNodes.length-1){trace.classList.remove("running");trace.classList.add("complete");if(traceStatus)traceStatus.textContent="ADAPTED"}},180+index*360));
   }
 
+  function scanNest(level=root.dataset.eiNest||"small"){
+    if(!nestTopology)return;
+    const token=++nestToken;
+    nestTopology.dataset.level=level;
+    nestTopology.classList.remove("scanned");
+    nestTopology.classList.add("scanning");
+    if(nestStatus)nestStatus.textContent="MAPPING";
+    if(nestCore)nestCore.textContent=level.toUpperCase();
+    const finish=()=>{if(token!==nestToken)return;nestTopology.classList.remove("scanning");nestTopology.classList.add("scanned");if(nestStatus)nestStatus.textContent="LINKED"};
+    if(reduced)finish();else setTimeout(finish,1150);
+  }
+
   function setTab(key,{silent=false}={}){
     if(!MODULES.includes(key))return;
     root.dataset.eiTab=key;
@@ -39,11 +56,15 @@ export function initEidolonRecords(root,{onTabChange}={}){
     panels.forEach(panel=>panel.classList.toggle("active",panel.dataset.eiPanel===key));
     if(key==="behavior")requestAnimationFrame(runTrace);
     else traceToken++;
+    if(key==="nest")requestAnimationFrame(()=>scanNest());
+    else nestToken++;
     if(!silent)onTabChange?.(key);
   }
 
   buttons.forEach(button=>button.addEventListener("click",()=>setTab(button.dataset.eiTabBtn)));
   traceRun?.addEventListener("click",runTrace);
+  nestScan?.addEventListener("click",()=>scanNest());
+  nestButtons.forEach(button=>button.addEventListener("click",()=>setTimeout(()=>scanNest(button.dataset.eiNest),0)));
   setTab(root.dataset.eiTab||"profile",{silent:true});
   return {setTab};
 }
