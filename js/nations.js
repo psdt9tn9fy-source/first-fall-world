@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-nations-picker-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-nations-mainpicker-1";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
