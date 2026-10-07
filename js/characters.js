@@ -22,6 +22,7 @@ export function initCharacters(){
   const panelBlocks=root.querySelector("#characterPanelBlocks");
   const recordNo=root.querySelector("#characterRecordNo");
   const counter=root.querySelector("#characterCounter");
+  const visualCode=root.querySelector("#characterVisualCode");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let activeId=CHARACTER_ORDER[0];
@@ -76,12 +77,14 @@ export function initCharacters(){
     watermark.textContent=character.name;
     romanGhost.textContent=character.roman;
     name.textContent=character.name;
-    hanja.textContent=character.hanja;
+    hanja.textContent=character.hanja||"";
+    hanja.hidden=!character.hanja;
     roman.textContent=character.roman;
     affiliation.textContent=character.affiliation;
     position.textContent=character.position;
     summary.textContent=character.summary;
-    portraitName.textContent=character.hanja;
+    portraitName.textContent=character.name;
+    visualCode.textContent=character.visualCode||"PERSONNEL // ACTIVE";
 
     facts.innerHTML=character.facts.map(([label,value])=>
       `<div><span>${label}</span><b>${value}</b></div>`
