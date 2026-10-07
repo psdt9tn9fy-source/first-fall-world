@@ -26,8 +26,6 @@ export function initEidolon(){
   if(!root)return;
 
   const classButtons=[...root.querySelectorAll("[data-ei-class-btn]")];
-  const tabButtons=[...root.querySelectorAll("[data-ei-tab-btn]")];
-  const panels=[...root.querySelectorAll("[data-ei-panel]")];
   const focusButtons=[...root.querySelectorAll("[data-ei-focus]")];
   const nestButtons=[...root.querySelectorAll("[data-ei-nest]")];
   const riskButtons=[...root.querySelectorAll("[data-ei-risk]")];
@@ -35,11 +33,20 @@ export function initEidolon(){
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   let classIndex=2,scanTimer=0,pointerX=null;
   const textRuns=new WeakMap();
-  let threeDModulePromise=null,threeDController=null,dossierPromise=null,dossier=null;
+  let threeDModulePromise=null,threeDController=null,dossierPromise=null,dossier=null,recordsPromise=null,records=null;
 
   const q=id=>root.querySelector(id);
   const field=(name,value)=>root.querySelectorAll('[data-ei-field="'+name+'"]').forEach(el=>el.textContent=value);
   const current=()=>CLASSES[classIndex];
+
+  function loadRecords(){
+    if(recordsPromise)return recordsPromise;
+    recordsPromise=import("./eidolon-records.js?v=20261007-records-1").then(mod=>{
+      records=mod.initEidolonRecords(root);
+      return records;
+    }).catch(err=>{console.warn("EIDOLON records unavailable",err);return null});
+    return recordsPromise;
+  }
 
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
@@ -191,12 +198,6 @@ export function initEidolon(){
     selectClass(CLASSES[classIndex].key);
   }
 
-  function setTab(key){
-    root.dataset.eiTab=key;
-    tabButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiTabBtn===key));
-    panels.forEach(p=>p.classList.toggle("active",p.dataset.eiPanel===key));
-  }
-
   function setNest(key){
     const n=NESTS[key];if(!n)return;
     nestButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiNest===key));
@@ -238,7 +239,6 @@ export function initEidolon(){
   root.querySelector("[data-ei-open-info]")?.addEventListener("click",()=>showLiveDossier(root.dataset.eiFocus||"morphology"));
 
   classButtons.forEach(b=>b.addEventListener("click",()=>selectClass(b.dataset.eiClassBtn)));
-  tabButtons.forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.eiTabBtn)));
   focusButtons.forEach(b=>b.addEventListener("click",()=>focusAnalysis(b.dataset.eiFocus)));
   nestButtons.forEach(b=>b.addEventListener("click",()=>setNest(b.dataset.eiNest)));
   riskButtons.forEach(b=>b.addEventListener("click",()=>setRisk(b.dataset.eiRisk)));
@@ -259,7 +259,7 @@ export function initEidolon(){
   window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="eidolon"){setTimeout(pulseScan,90);sync3D()}});
 
   selectClass("brute",{animate:false});
-  setTab("profile");
+  loadRecords();
   setNest("small");
   riskButtons.forEach(b=>b.classList.remove("active"));
 }
