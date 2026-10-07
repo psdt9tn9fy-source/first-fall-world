@@ -1,4 +1,5 @@
 import { initIntro } from "./intro.js?v=20261007-nations-final-2";
+import {initMilitary} from "./military.js?v=20261007-command-1";
 import { initAccess } from "./access.js?v=20261007-nations-final-2";
 import { initNavigation } from "./navigation.js?v=20261007-nations-final-2";
 import { initNations } from "./nations.js?v=20261007-nations-final-2";
@@ -11,5 +12,6 @@ initAccess();
 initNavigation();
 initNations();
 initEidolon();
+initMilitary();
 initWorld();
 initWorldMobile();
