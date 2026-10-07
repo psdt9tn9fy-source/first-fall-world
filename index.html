@@ -319,12 +319,12 @@
     <div class="ei-grid">
       <aside class="ei-class-nav" aria-label="Eidolon classification">
         <div class="ei-class-head"><span>CLASS INDEX</span><b>06 RECORDS</b></div>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="swarm" role="option"><span>I</span><div><b>SWARM</b><small>RECON / INFILTRATION</small></div></button>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="hunter" role="option"><span>II</span><div><b>HUNTER</b><small>TRACKING / URBAN</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="swarm" role="option"><span class="ei-class-mark">I</span><div><b>SWARM</b><small>RECON / INFILTRATION</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="hunter" role="option"><span class="ei-class-mark">II</span><div><b>HUNTER</b><small>TRACKING / URBAN</small></div></button>
         <button class="ei-class-btn active" type="button" data-ei-class-btn="brute" role="option" aria-selected="true"><span>III</span><div><b>BRUTE</b><small>HEAVY ARMOR</small></div></button>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="dominion" role="option"><span>IV</span><div><b>DOMINION</b><small>COMMAND TYPE</small></div></button>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="ark" role="option"><span>V</span><div><b>ARK</b><small>STRATEGIC ENTITY</small></div></button>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="seraph" role="option"><span>?</span><div><b>SERAPH</b><small>OUTLIER CLASS</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="dominion" role="option"><span class="ei-class-mark">IV</span><div><b>DOMINION</b><small>COMMAND TYPE</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="ark" role="option"><span class="ei-class-mark">V</span><div><b>ARK</b><small>STRATEGIC ENTITY</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="seraph" role="option"><span class="ei-class-mark">?</span><div><b>SERAPH</b><small>OUTLIER CLASS</small></div></button>
       </aside>
 
       <section class="ei-scanner" id="eiScanner" tabindex="0" aria-label="Eidolon classification reference scanner. Swipe or use arrow keys to change class.">
@@ -345,7 +345,7 @@
 
       <aside class="ei-assessment">
         <header><span>HOSTILE REFERENCE</span><b>CLASSIFIED // PUBLIC</b></header>
-        <div class="ei-assess-primary"><span>CLASSIFICATION</span><b><i data-ei-field="mark">III</i> // <i data-ei-field="name">BRUTE</i></b><em data-ei-field="ko">브루트</em></div>
+        <div class="ei-assess-primary"><span>CLASSIFICATION</span><b class="ei-class-lockup"><i class="ei-class-mark" data-ei-field="mark">III</i><u>//</u><i class="ei-class-name" data-ei-field="name">BRUTE</i></b><em data-ei-field="ko">브루트</em></div>
         <dl class="ei-assess-list">
           <div><dt>ROLE</dt><dd data-ei-field="role">HEAVY ARMOR / DIRECT ASSAULT</dd></div>
           <div><dt>OPERATIONAL RISK</dt><dd data-ei-field="risk">CONTEXTUAL</dd></div>
@@ -369,7 +369,7 @@
       <div class="ei-panels">
         <section class="ei-panel active" data-ei-panel="profile">
           <div class="ei-panel-overline">HOSTILE PROFILE // REFERENCE CLASS</div>
-          <h3 id="eiProfileTitle">III // BRUTE</h3>
+          <h3 id="eiProfileTitle" class="ei-class-lockup"><span class="ei-class-mark" data-ei-profile-mark>III</span><i>//</i><b data-ei-profile-name>BRUTE</b></h3>
           <p class="ei-panel-copy" id="eiProfileBody">전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.</p>
           <div class="ei-fact-grid">
             <article><span>ORIGIN</span><b>UNKNOWN // 2134</b></article>
