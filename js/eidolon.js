@@ -13,112 +13,32 @@ const NESTS={
   grand:{code:"N-03",name:"GRAND NEST",ko:"대형 네스트",sub:"REGIONAL FRONT HUB / STRATEGIC",body:"광역 전선을 지배하는 초대형 거점. 주변 네스트에 병력과 정보를 공급하며 국가급 또는 I.D.A. 연합작전이 요구될 수 있다."}
 };
 
-const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";
-const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
+let threeDModulePromise=null;
+  let threeDController=null;
 
-const RISKS={
-  D:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
-  C:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
-  B:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",
-  A:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",
-  S:"ARK·SERAPH 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다."
-};
-
-export function initEidolon(){
-  const root=document.querySelector("#eidolonLab");
-  if(!root)return;
-
-  const classButtons=[...root.querySelectorAll("[data-ei-class-btn]")];
-  const tabButtons=[...root.querySelectorAll("[data-ei-tab-btn]")];
-  const panels=[...root.querySelectorAll("[data-ei-panel]")];
-  const focusButtons=[...root.querySelectorAll("[data-ei-focus]")];
-  const nestButtons=[...root.querySelectorAll("[data-ei-nest]")];
-  const riskButtons=[...root.querySelectorAll("[data-ei-risk]")];
-  const scanner=root.querySelector("#eiScanner");
-  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let classIndex=2,scanTimer=0,pointerX=null,viewerPromise=null,modelStage=null,modelViewer=null;
-
-  const q=id=>root.querySelector(id);
-  const field=(name,value)=>root.querySelectorAll('[data-ei-field="'+name+'"]').forEach(el=>el.textContent=value);
-  const current=()=>CLASSES[classIndex];
-
-  function buildModelStage(){
-    if(modelStage)return modelStage;
-    const target=root.querySelector(".ei-target");
-    if(!target)return null;
-    modelStage=document.createElement("div");
-    modelStage.className="ei-model-stage";
-    modelStage.hidden=true;
-    modelStage.innerHTML='<div class="ei-model-status"><span>III // BRUTE</span><b>3D SPECIMEN // STANDBY</b><em>DRAG TO ORBIT</em></div><div class="ei-model-loading"><i></i><span>RETRIEVING 3D SPECIMEN</span><b>MODEL DATA // ON DEMAND</b></div>';
-    target.appendChild(modelStage);
-    return modelStage;
-  }
-
-  function loadModelViewer(){
-    if(customElements.get("model-viewer"))return Promise.resolve();
-    if(viewerPromise)return viewerPromise;
-    viewerPromise=new Promise((resolve,reject)=>{
-      const existing=document.querySelector('script[data-ei-model-viewer]');
-      if(existing){
-        customElements.whenDefined("model-viewer").then(resolve).catch(reject);
-        return;
-      }
-      const script=document.createElement("script");
-      script.type="module";
-      script.src=MODEL_VIEWER_SRC;
-      script.dataset.eiModelViewer="1";
-      script.onload=()=>customElements.whenDefined("model-viewer").then(resolve).catch(reject);
-      script.onerror=reject;
-      document.head.appendChild(script);
-    });
-    return viewerPromise;
-  }
-
-  async function ensureBruteModel(){
-    if(current().key!=="brute")return;
-    const stage=buildModelStage();if(!stage)return;
-    stage.hidden=false;
-    root.classList.add("ei-model-pending");
-    if(modelViewer){root.classList.add("ei-model-ready");root.classList.remove("ei-model-pending");return}
-    try{
-      await loadModelViewer();
-      if(current().key!=="brute")return;
-      modelViewer=document.createElement("model-viewer");
-      modelViewer.className="ei-model-viewer";
-      modelViewer.setAttribute("src",BRUTE_MODEL_URL);
-      modelViewer.setAttribute("alt","BRUTE class EIDOLON 3D reference model");
-      modelViewer.setAttribute("camera-controls","");
-      modelViewer.setAttribute("interaction-prompt","none");
-      modelViewer.setAttribute("shadow-intensity","0.65");
-      modelViewer.setAttribute("exposure","0.85");
-      modelViewer.setAttribute("camera-orbit","35deg 72deg auto");
-      modelViewer.setAttribute("min-camera-orbit","auto 35deg auto");
-      modelViewer.setAttribute("max-camera-orbit","auto 105deg auto");
-      if(!reduced){
-        modelViewer.setAttribute("auto-rotate","");
-        modelViewer.setAttribute("rotation-per-second","10deg");
-        modelViewer.setAttribute("auto-rotate-delay","900");
-      }
-      modelViewer.addEventListener("load",()=>{
-        root.classList.remove("ei-model-pending","ei-model-error");
-        root.classList.add("ei-model-ready");
-      },{once:true});
-      modelViewer.addEventListener("error",()=>{
-        root.classList.remove("ei-model-pending","ei-model-ready");
-        root.classList.add("ei-model-error");
+  function load3DController(){
+    if(threeDController)return Promise.resolve(threeDController);
+    if(threeDModulePromise)return threeDModulePromise;
+    threeDModulePromise=import("./eidolon-3d.js?v=20261007-3d-isolation-1")
+      .then(mod=>{
+        threeDController=mod.initEidolon3D(root,{reduced});
+        threeDController.setClass(current().key);
+        return threeDController;
+      })
+      .catch(error=>{
+        console.warn("EIDOLON 3D unavailable; continuing with 2D fallback.",error);
+        threeDModulePromise=null;
+        return null;
       });
-      stage.prepend(modelViewer);
-    }catch(_){
-      root.classList.remove("ei-model-pending","ei-model-ready");
-      root.classList.add("ei-model-error");
-    }
+    return threeDModulePromise;
   }
 
-  function syncModelStage(){
-    const isBrute=current().key==="brute";
-    if(modelStage)modelStage.hidden=!isBrute;
-    root.classList.toggle("ei-has-3d",isBrute&&!!modelStage);
-    if(!isBrute)root.classList.remove("ei-model-pending","ei-model-ready","ei-model-error");
+  function sync3D(){
+    threeDController?.setClass(current().key);
+    const view=root.closest(".view");
+    if(current().key==="brute"&&view?.classList.contains("active")){
+      load3DController();
+    }
   }
 
   function setRiskScale(key=""){
@@ -177,6 +97,7 @@ export function initEidolon(){
     q("#eiTaxonomyState").textContent=c.key==="seraph"?"STANDARD TAXONOMY // NOT APPLICABLE":"PUBLIC TAXONOMY // CLASS VERIFIED";
     setRiskScale(c.riskKey);
     focusAnalysis("morphology");
+    sync3D();
     if(animate)pulseScan();
   }
 
@@ -239,7 +160,7 @@ export function initEidolon(){
   });
 
   window.addEventListener("archive:eidolon-context",e=>setSource(e.detail));
-  window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="eidolon"){setTimeout(pulseScan,90);if(current().key==="brute")ensureBruteModel()}});
+  window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="eidolon"){setTimeout(pulseScan,90);sync3D()}});
 
   selectClass("brute",{animate:false});
   setTab("profile");
