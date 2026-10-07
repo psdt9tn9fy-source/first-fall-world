@@ -17,6 +17,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const threatMatrix=root.querySelector("[data-ei-threat-matrix]");
   const threatTier=root.querySelector("#eiRiskTier");
   const threatDirective=root.querySelector("#eiRiskDirective");
+  const viewRiskLabel=root.querySelector("[data-ei-view-risk]");
   const riskDetailCode=root.querySelector("#eiRiskDetailCode");
   const riskDetailBody=root.querySelector("#eiRiskDetailBody");
   const riskButtons=[...root.querySelectorAll(".ei-threat-matrix [data-ei-risk]")];
@@ -57,6 +58,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
     threatMatrix.dataset.viewRisk=key;
     riskButtons.forEach(button=>button.classList.toggle("active",button.dataset.eiRisk===key));
     if(riskDetailCode)riskDetailCode.textContent=`RISK ${key}`;
+    if(viewRiskLabel)viewRiskLabel.textContent=`${key} // ${data.tier}`;
     if(riskDetailBody)riskDetailBody.textContent=data.body;
     if(threatTier)threatTier.textContent=data.tier;
     if(threatDirective)threatDirective.textContent=data.directive;
