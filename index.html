@@ -380,15 +380,17 @@
         </section>
 
         <section class="ei-panel" data-ei-panel="behavior">
-          <div class="ei-panel-overline">BEHAVIORAL ANALYSIS // SHARED CHARACTERISTICS</div>
-          <h3>학습하는 적.</h3>
-          <p class="ei-panel-copy">에이돌론의 가장 위험한 특징은 전투학습과 정보공유다. 인간에게 당한 전투정보를 공유하며 반복되는 무기와 전술에 적응한다.</p>
-          <div class="ei-behavior-grid">
-            <article><b>COMBAT LEARNING</b><p>반복되는 인간의 무기·전술을 분석하고 대응수단을 발전시킨다.</p></article>
-            <article><b>INFORMATION SHARING</b><p>개체 단위 경험이 다른 에이돌론의 대응 방식에 반영될 수 있다.</p></article>
-            <article><b>CORE REACTIVATION</b><p>일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 가능성이 있다.</p></article>
-            <article><b id="eiBehaviorClass">BRUTE // HEAVY ARMOR / DIRECT ASSAULT</b><p>현재 선택한 분류의 역할 정보. 정확한 외형과 세부 능력은 개체별로 달라질 수 있다.</p></article>
+          <div class="ei-panel-overline">BEHAVIORAL ANALYSIS // ADAPTATION TRACE</div>
+          <div class="ei-behavior-head"><div><h3>학습하는 적.</h3><p class="ei-panel-copy">전투 경험은 관측·학습·공유를 거쳐 다음 교전의 대응 방식에 반영된다.</p></div><div class="ei-trace-state"><span>TRACE STATUS</span><b data-ei-trace-status>READY</b></div></div>
+          <div class="ei-adaptation-trace" data-ei-adaptation-trace>
+            <div class="ei-trace-line" aria-hidden="true"><i></i></div>
+            <article data-ei-trace-node="0"><span>01</span><b>OBSERVED</b><em>HUMAN ATTACK</em><p>인간의 무기와 전술, 교전 결과를 관측한다.</p></article>
+            <article data-ei-trace-node="1"><span>02</span><b>LEARNED</b><em>COMBAT DATA</em><p>반복되는 공격 패턴을 분석하고 대응수단을 발전시킨다.</p></article>
+            <article data-ei-trace-node="2"><span>03</span><b>SHARED</b><em>NETWORK LINK</em><p>개체의 전투 경험이 다른 에이돌론의 대응 방식에 반영될 수 있다.</p></article>
+            <article data-ei-trace-node="3"><span>04</span><b>ADAPTED</b><em>RESPONSE UPDATE</em><p>동일한 무기와 전술의 반복은 점차 효과를 잃을 수 있다.</p></article>
           </div>
+          <div class="ei-trace-footer"><span id="eiBehaviorClass">BRUTE // HEAVY ARMOR / DIRECT ASSAULT</span><button type="button" data-ei-run-trace>RUN TRACE ↻</button></div>
+          <div class="ei-behavior-warning"><b>FIELD NOTE</b><p>에이돌론의 전투학습과 정보공유는 확인된 공통 위협 특성이다. 정확한 적응 양상은 개체와 교전 상황에 따라 달라질 수 있다.</p></div>
         </section>
 
         <section class="ei-panel" data-ei-panel="nest">
