@@ -20,6 +20,42 @@ const HISTORY_TERMS={
   afr:["아프리카","AFRICA"]
 };
 
+
+const STATE_RECORDS={
+  rok:{
+    governance:{
+      type:"REPUBLIC / CIVIL GOVERNMENT",
+      ko:"공화국 · 민간정부",
+      note:"제1강하 이후에도 민간 국가체제를 유지했다. 장기전으로 군의 영향력은 커졌지만 행정부·입법부·사법부가 국가 운영의 기본 축으로 존속한다.",
+      executive:"대통령 · 행정부",
+      legislature:"국회",
+      judiciary:"사법부",
+      balance:"BALANCED CIVIL AUTHORITY"
+    },
+    society:{
+      civil:"민간행정 유지",
+      military:"높음",
+      zone:"서울 SAFE ZONE",
+      note:"안전권에서는 민간의 일상과 교육·산업·행정이 지속된다. 동시에 군 경력·계급·출신 교육기관은 중요한 사회적 자산으로 기능한다."
+    },
+    defense:{
+      doctrine:"적응형 전투체계",
+      command:"NATIONAL → JOINT → THEATER → FIELD",
+      status:"ACTIVE WAR / 103 YEARS",
+      note:"국가 지휘부에서 합동·전구·현장 지휘로 이어지는 다층 구조를 운용한다. 세부 편제는 작전 환경과 전선에 따라 조정된다."
+    },
+    institution:{
+      name:"중앙사관학교",
+      eng:"CENTRAL MILITARY ACADEMY",
+      class:"제76기",
+      location:"서울",
+      role:"정예 장교 양성",
+      status:"NATIONAL ELITE",
+      note:"대한민국 장교 교육의 최상위 엘리트 코스. 학교와 출신 기수는 장기전 시대의 군 경력에서 강한 영향력을 가진다."
+    }
+  }
+};
+
 export function initNations(){
   const root=document.querySelector("#nationsArchive");
   if(!root)return;
@@ -39,6 +75,7 @@ export function initNations(){
   const next=root.querySelector("#nationNext");
   const tabButtons=[...root.querySelectorAll("[data-na-tab]")];
   const panels=[...root.querySelectorAll("[data-na-panel]")];
+  const militaryLink=root.querySelector("[data-na-open-military]");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const byKey=new Map(N.map(n=>[n[0],n]));
   let currentIndex=0,currentKey=N[0][0],pendingHandoff=false,swapTimer=0,handoffTimer=0,pickerTimer=0,pickerLock=false;
@@ -175,6 +212,27 @@ export function initNations(){
     `).join("");
   }
 
+  function setStateField(name,value="NOT INDEXED"){
+    root.querySelectorAll(`[data-state-field="${name}"]`).forEach(el=>el.textContent=value);
+  }
+
+  function renderStateRecord(key){
+    const record=STATE_RECORDS[key];
+    dossier.dataset.stateReady=record?"true":"false";
+    root.querySelector("#naStateAvailability").textContent=record?"STATE SYSTEM // VERIFIED":"STATE SYSTEM // DETAIL INDEX PENDING";
+    if(!record){
+      ["gov-type","gov-ko","gov-note","gov-executive","gov-legislature","gov-judiciary","gov-balance",
+       "soc-civil","soc-military","soc-zone","soc-note","def-doctrine","def-command","def-status","def-note",
+       "inst-name","inst-eng","inst-class","inst-location","inst-role","inst-status","inst-note"].forEach(k=>setStateField(k));
+      return;
+    }
+    setStateField("gov-type",record.governance.type);setStateField("gov-ko",record.governance.ko);setStateField("gov-note",record.governance.note);
+    setStateField("gov-executive",record.governance.executive);setStateField("gov-legislature",record.governance.legislature);setStateField("gov-judiciary",record.governance.judiciary);setStateField("gov-balance",record.governance.balance);
+    setStateField("soc-civil",record.society.civil);setStateField("soc-military",record.society.military);setStateField("soc-zone",record.society.zone);setStateField("soc-note",record.society.note);
+    setStateField("def-doctrine",record.defense.doctrine);setStateField("def-command",record.defense.command);setStateField("def-status",record.defense.status);setStateField("def-note",record.defense.note);
+    setStateField("inst-name",record.institution.name);setStateField("inst-eng",record.institution.eng);setStateField("inst-class",record.institution.class);setStateField("inst-location",record.institution.location);setStateField("inst-role",record.institution.role);setStateField("inst-status",record.institution.status);setStateField("inst-note",record.institution.note);
+  }
+
   function updateButtons(){
     prev.disabled=currentIndex<=0;next.disabled=currentIndex>=N.length-1;
   }
@@ -193,7 +251,7 @@ export function initNations(){
     root.querySelector("#nb").textContent=n[8];
     root.querySelector("#naRailCode").textContent=n[1].split(" //")[0];
     setField("status",n[4]);setField("population",n[5]);setField("capital",n[6]);setField("strength",n[7]);setField("brief",n[8]);
-    renderHistory(n[0]);syncIndexSelection({center:centerPicker});updateButtons();
+    renderStateRecord(n[0]);renderHistory(n[0]);syncIndexSelection({center:centerPicker});updateButtons();
   }
 
   function show(n,{animate=true,centerPicker=false}={}){
@@ -259,6 +317,7 @@ export function initNations(){
   },{passive:true});
 
   tabButtons.forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.naTab)));
+  militaryLink?.addEventListener("click",()=>window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:"military"}})));
   prev.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
 
   window.addEventListener("archive:select-nation",e=>{
@@ -272,6 +331,6 @@ export function initNations(){
     pendingHandoff=false;setTimeout(playHandoff,110);
   });
 
-  renderIndex();switchTab("overview");show(N[0],{animate:false,centerPicker:true});
+  renderIndex();switchTab("governance");show(N[0],{animate:false,centerPicker:true});
   if(isRecordOpen())requestAnimationFrame(activateNationVisuals);
 }
