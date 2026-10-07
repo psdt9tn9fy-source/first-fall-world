@@ -1,5 +1,5 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-regional-cutout-1";
-import { THEATERS } from "./world-data.js?v=20261007-regional-cutout-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-displaced-markers-1";
+import { THEATERS } from "./world-data.js?v=20261007-displaced-markers-1";
 
 const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
@@ -55,10 +55,19 @@ export function initWorldMobile(){
     const card=document.createElement("article");
     card.className="ft-theater-card";card.dataset.theater=theater.id;card.dataset.index=index;
     const nodeById=new Map(theater.nodes.map(n=>[n.id,n])),art=THEATER_ART[theater.id];
-    const lines=theater.links.map(([a,b])=>{
+    const ax=n=>n.ax??n.x,ay=n=>n.ay??n.y;
+    const network=theater.links.map(([a,b])=>{
       const p=nodeById.get(a),q=nodeById.get(b);if(!p||!q)return"";
-      return `<line x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}"></line>`;
+      return `<line class="ft-network-line" x1="${ax(p)}" y1="${ay(p)}" x2="${ax(q)}" y2="${ay(q)}"></line>`;
     }).join("");
+    const leaders=theater.nodes.map(node=>{
+      const dx=Math.abs(node.x-ax(node)),dy=Math.abs(node.y-ay(node));
+      if(dx<.5&&dy<.5)return"";
+      return `<line class="ft-leader-line" data-node="${node.id}" x1="${ax(node)}" y1="${ay(node)}" x2="${node.x}" y2="${node.y}"></line>`;
+    }).join("");
+    const anchors=theater.nodes.map(node=>
+      `<circle class="ft-anchor-dot" data-node="${node.id}" cx="${ax(node)}" cy="${ay(node)}" r=".75"></circle>`
+    ).join("");
     const nodesHtml=theater.nodes.map(node=>{
       const meta=nodeMeta(node);
       return `<button class="ft-node" data-node="${node.id}" style="--x:${node.x}%;--y:${node.y}%" aria-label="${meta.title}">
@@ -77,7 +86,11 @@ export function initWorldMobile(){
         <svg class="ft-region-map" viewBox="${art.view}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <image href="${WORLD_SILHOUETTE}" x="0" y="0" width="1440" height="720"></image>
         </svg>
-        <svg class="ft-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g>${lines}</g></svg>
+        <svg class="ft-map-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <g class="ft-network">${network}</g>
+          <g class="ft-leaders">${leaders}</g>
+          <g class="ft-anchors">${anchors}</g>
+        </svg>
         <div class="ft-locator" aria-hidden="true">
           <img src="${WORLD_SILHOUETTE}" alt="" decoding="async">
           <i style="--lx:${lx}%;--ly:${ly}%;--lw:${lw}%;--lh:${lh}%"></i>
@@ -86,7 +99,7 @@ export function initWorldMobile(){
         ${nodesHtml}
         <div class="ft-target-lock" aria-hidden="true"><i></i><i></i><span>TARGET LOCK</span><b>---</b></div>
       </div>
-      <div class="ft-card-foot"><span>GEOGRAPHIC REFERENCE // GENERALIZED</span><b>${theater.nodes.length} NATIONS</b></div>`;
+      <div class="ft-card-foot"><span>ANCHOR = GEO POSITION // MARKER DISPLACED</span><b>${theater.nodes.length} NATIONS</b></div>`;
     card.querySelectorAll(".ft-node").forEach(button=>button.addEventListener("click",()=>selectNode(theater,button)));
     return card;
   }
@@ -187,7 +200,12 @@ export function initWorldMobile(){
     discoveryHint?.classList.remove("show");
     const node=theater.nodes.find(n=>n.id===button.dataset.node),meta=nodeMeta(node);
     deck.querySelectorAll(".ft-node.selected").forEach(n=>n.classList.remove("selected"));button.classList.add("selected");
-    showTarget(button.closest(".ft-theater-card"),button,meta.code);
+    deck.querySelectorAll(".ft-leader-line.selected,.ft-anchor-dot.selected").forEach(n=>n.classList.remove("selected"));
+    const card=button.closest(".ft-theater-card");
+    card.querySelectorAll(`[data-node="${node.id}"]`).forEach(el=>{
+      if(el.classList.contains("ft-leader-line")||el.classList.contains("ft-anchor-dot"))el.classList.add("selected");
+    });
+    showTarget(card,button,meta.code);
     fillDossier(meta);setSheetState("medium");
   }
 
