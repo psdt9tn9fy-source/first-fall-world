@@ -67,3 +67,9 @@
   .ei-behavior-warning{grid-template-columns:1fr;gap:5px;padding:10px}
 }
 @media(prefers-reduced-motion:reduce){.ei-trace-line i,.ei-adaptation-trace article{transition:none!important}}
+
+/* Trace CTA visibility */
+.ei-trace-footer button{min-width:150px;min-height:42px;padding:0 16px!important;border:1px solid #50656a!important;background:#101a1d!important;color:#d6e1e3!important;font-size:8px!important;letter-spacing:.12em!important}
+.ei-trace-footer button:before{content:"▶";margin-right:9px;font-size:7px}
+.ei-trace-footer button:active{transform:translateY(1px);background:#172326!important}
+@media(max-width:760px){.ei-trace-footer{display:grid;grid-template-columns:1fr}.ei-trace-footer>span{max-width:none!important}.ei-trace-footer button{width:100%;min-height:48px;font-size:8px!important;margin-top:3px}}
