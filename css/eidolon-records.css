@@ -91,3 +91,14 @@
   .ei-trace-footer button{min-width:0!important;max-width:100%}
   .ei-behavior-warning{grid-template-columns:minmax(0,1fr)!important}
 }
+
+
+/* Trace geometry alignment — center diamonds on the mobile rail */
+@media(max-width:820px){
+  .ei-adaptation-trace{--trace-rail-x:10px;padding-left:32px!important}
+  .ei-trace-line{left:var(--trace-rail-x)!important;top:0!important;bottom:0!important}
+  .ei-trace-line:before,.ei-trace-line:after{left:50%!important;right:auto!important;transform:translate(-50%,-50%) rotate(45deg)!important}
+  .ei-trace-line:before{top:0!important}
+  .ei-trace-line:after{top:100%!important;bottom:auto!important}
+  .ei-adaptation-trace article:before{left:calc(-32px + var(--trace-rail-x))!important;top:50%!important;transform:translate(-50%,-50%) rotate(45deg)!important}
+}
