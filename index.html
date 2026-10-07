@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./css/eidolon-mobile.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/military.css?v=20261007-refactor-3">
-  <link rel="stylesheet" href="./css/characters.css?v=20261007-character-v4">
+  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v5">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
 <body>
@@ -210,19 +210,19 @@
 </section>
 <!-- 02 / CHARACTERS -->
 <section class="view characters-view" data-view="characters">
-  <div class="char-experience" id="characterArchive">
+  <div class="char-experience" id="characterArchive" data-scene="0">
     <header class="char-experience-head">
-      <div>
+      <div class="char-head-id">
         <span>I.D.A. // PERSONNEL ARCHIVE</span>
         <b>인물 기록 001</b>
       </div>
-      <div class="char-progress" aria-label="기록 해제 진행도">
+      <div class="char-progress" aria-label="인물 기록 진행도">
         <i class="active" data-char-progress="0"></i>
         <i data-char-progress="1"></i>
         <i data-char-progress="2"></i>
         <i data-char-progress="3"></i>
       </div>
-      <em id="characterUnlockState">01 / 04 해제됨</em>
+      <em id="characterSceneState">01 / 식별</em>
     </header>
 
     <section class="char-opening" data-char-opening>
@@ -240,83 +240,80 @@
       </button>
     </section>
 
-    <div class="char-record-stack" id="characterRecordStack">
-      <article class="char-record unlocked active" data-char-record="0" data-record-key="identity">
-        <div class="char-record-index"><span>RECORD 01</span><b>IDENTIFICATION</b><em>식별 기록</em></div>
-        <div class="char-record-slices" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="char-record-content">
-          <div class="char-record-visual">
-            <div class="char-record-portrait" id="characterPortrait">
-              <span id="characterPortraitName">한서린</span>
-              <em>인물 이미지 // 미등록</em>
-            </div>
-            <div class="char-record-watermark">001</div>
-          </div>
-          <div class="char-record-copy">
-            <span class="char-record-kicker">IDENTIFIED // ACTIVE</span>
+    <section class="char-story" id="characterStory">
+      <div class="char-story-stage">
+        <div class="char-story-grid" aria-hidden="true"></div>
+        <div class="char-story-ghost" id="characterGhost">한서린</div>
+
+        <div class="char-story-portrait" id="characterPortrait">
+          <div class="char-scan-line" aria-hidden="true"></div>
+          <span id="characterPortraitName">한서린</span>
+          <em>PERSONNEL VISUAL // NO IMAGE</em>
+        </div>
+
+        <div class="char-scene active" data-char-scene="0">
+          <div class="char-scene-tag"><span>01</span><b>IDENTIFICATION</b><em>식별 기록</em></div>
+          <div class="char-id-name">
+            <span>PERSONNEL // ACTIVE</span>
             <h3 id="characterIdentityName">한서린</h3>
-            <div class="char-record-affiliation"><b id="characterAffiliation">중앙사관학교 제76기</b><span id="characterPosition">2학년 생도</span></div>
-            <div class="char-record-facts" id="characterFacts"></div>
-            <p class="char-record-note">공개 식별 기록. 세부 정보는 기록 해제 단계에 따라 순차적으로 복원된다.</p>
+            <p><b id="characterAffiliation">중앙사관학교 제76기</b><em id="characterPosition">2학년 생도</em></p>
           </div>
+          <div class="char-id-facts" id="characterFacts"></div>
+          <div class="char-scene-caption">등록된 신상정보와 현재 소속을 기준으로 식별한다.</div>
         </div>
-        <div class="char-record-status"><span>STATUS</span><b>복원 완료</b></div>
-      </article>
 
-      <article class="char-record locked" data-char-record="1" data-record-key="observation">
-        <div class="char-record-index"><span>RECORD 02</span><b>OBSERVATION</b><em>관찰 기록</em></div>
-        <div class="char-record-slices" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="char-record-content">
-          <div class="char-observation-mark"><span>02</span><b>행동 관찰</b><em>개인 성향 기록</em></div>
-          <div class="char-record-copy">
-            <span class="char-record-kicker">OBSERVATION // SEALED</span>
-            <h3>거리감 뒤의 변화.</h3>
-            <div class="char-observation-grid" id="characterObservation"></div>
+        <div class="char-scene" data-char-scene="1">
+          <div class="char-scene-tag"><span>02</span><b>OBSERVATION</b><em>성격 기록</em></div>
+          <div class="char-observation-title">
+            <span>OBSERVED BEHAVIOR</span>
+            <h3>거리감 뒤의<br>작은 변화.</h3>
           </div>
+          <div class="char-observation-orbit" id="characterObservation"></div>
+          <div class="char-scene-caption">공식 평가보다 반복적으로 관찰된 행동 변화에 초점을 둔다.</div>
         </div>
-        <button type="button" class="char-unlock" data-char-unlock="1"><span>기록 해제</span><b>02</b></button>
-        <div class="char-record-status"><span>STATUS</span><b>잠김</b></div>
-      </article>
 
-      <article class="char-record locked" data-char-record="2" data-record-key="career">
-        <div class="char-record-index"><span>RECORD 03</span><b>HISTORY</b><em>경력 기록</em></div>
-        <div class="char-record-slices" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="char-record-content">
-          <div class="char-career-axis" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="char-record-copy">
-            <span class="char-record-kicker">HISTORY // SEALED</span>
+        <div class="char-scene" data-char-scene="2">
+          <div class="char-scene-tag"><span>03</span><b>HISTORY</b><em>경력 기록</em></div>
+          <div class="char-career-title">
+            <span>CAREER TRACE</span>
             <h3>가문의 이름보다,<br>자신의 기록으로.</h3>
-            <div class="char-career-list" id="characterCareer"></div>
           </div>
+          <div class="char-career-track" id="characterCareer"></div>
+          <div class="char-scene-caption">2133년 입교 이후 현재까지 확인된 공식 경력.</div>
         </div>
-        <button type="button" class="char-unlock" data-char-unlock="2"><span>기록 해제</span><b>03</b></button>
-        <div class="char-record-status"><span>STATUS</span><b>잠김</b></div>
-      </article>
 
-      <article class="char-record locked" data-char-record="3" data-record-key="linked">
-        <div class="char-record-index"><span>RECORD 04</span><b>LINKED FILES</b><em>연결 기록</em></div>
-        <div class="char-record-slices" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="char-record-content">
-          <div class="char-link-emblem"><span>04</span><b>연결 기록</b><em>I.D.A. ARCHIVE</em></div>
-          <div class="char-record-copy">
-            <span class="char-record-kicker">LINKED FILES // SEALED</span>
-            <h3>한 사람의 기록에서<br>세계로 이어진다.</h3>
-            <p class="char-linked-copy">인물 기록과 직접 연결된 국가·기관·군사체계 자료를 열람한다.</p>
-            <div class="char-linked-files">
-              <button type="button" data-char-open="nations"><span>01</span><b>대한민국</b><em>WORLD ORDER ↗</em></button>
-              <button type="button" data-char-open="military"><span>02</span><b>중앙사관학교 / 군사 교육체계</b><em>MILITARY ↗</em></button>
-            </div>
+        <div class="char-scene" data-char-scene="3">
+          <div class="char-scene-tag"><span>04</span><b>CONNECTED WORLD</b><em>연결 기록</em></div>
+          <div class="char-link-title">
+            <span>LINKED RECORDS</span>
+            <h3>한 사람에서<br>세계로.</h3>
           </div>
+          <div class="char-world-lines" aria-hidden="true"><i></i><i></i><b></b></div>
+          <div class="char-world-links">
+            <button type="button" data-char-open="nations"><span>WORLD ORDER // 01</span><b>대한민국</b><em>국가 기록 열람 ↗</em></button>
+            <button type="button" data-char-open="military"><span>MILITARY // 02</span><b>중앙사관학교</b><em>군사 교육체계 열람 ↗</em></button>
+          </div>
+          <div class="char-scene-caption">인물의 소속과 경력은 세계관의 다른 기록으로 이어진다.</div>
         </div>
-        <button type="button" class="char-unlock" data-char-unlock="3"><span>기록 해제</span><b>04</b></button>
-        <div class="char-record-status"><span>STATUS</span><b>잠김</b></div>
-      </article>
-    </div>
+
+        <div class="char-story-chapter">
+          <span id="characterChapterNo">01</span>
+          <b id="characterChapterLabel">IDENTIFICATION</b>
+        </div>
+      </div>
+
+      <div class="char-story-steps" aria-hidden="true">
+        <div class="char-story-step" data-char-step="0"></div>
+        <div class="char-story-step" data-char-step="1"></div>
+        <div class="char-story-step" data-char-step="2"></div>
+        <div class="char-story-step" data-char-step="3"></div>
+      </div>
+    </section>
 
     <footer class="char-experience-foot">
-      <span>PERSONNEL RECORD COMPLETE</span>
+      <span>END OF PERSONNEL RECORD</span>
       <b>한서린 // 001</b>
-      <em>추가 인물 기록은 등록 시 자동 확장</em>
+      <em>추가 인물 등록 시 이 기록 체계가 확장된다.</em>
     </footer>
   </div>
 </section>
@@ -686,4 +683,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261007-character-v4"></script></body></html>
+<script type="module" src="./js/main.js?v=20261008-character-v5"></script></body></html>
