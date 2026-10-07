@@ -15,10 +15,6 @@
   .ei-risk-wrap{padding:11px 10px}.ei-focus-readout{padding:13px 10px}.ei-focus-readout p{font-size:9px}
   .ei-tabs{margin-top:10px;border:1px solid var(--ei-line)}.ei-tabs button{min-height:42px;font-size:5px;padding:0 2px}
   .ei-panels{min-height:0}.ei-panel{padding:18px 4px 24px}.ei-panel h3{font-size:21px}.ei-panel-copy{font-size:11px;line-height:1.72}
-  .ei-fact-grid{grid-template-columns:1fr 1fr;margin-top:16px}.ei-fact-grid article{min-height:66px;padding:11px}.ei-fact-grid b{font-size:9px}
-  .ei-behavior-grid{grid-template-columns:1fr}.ei-behavior-grid article{padding:13px}.ei-behavior-grid p{font-size:9px}
-  .ei-nest-layout{grid-template-columns:1fr;gap:10px}.ei-nest-rail{grid-template-columns:repeat(3,1fr);gap:4px}.ei-nest-rail button{padding:9px 6px}.ei-nest-rail button span{font-size:5px}.ei-nest-rail button b{font-size:6px}.ei-nest-visual{min-height:155px}.ei-nest-ring.r3{width:330px;height:185px}
-  .ei-engage{grid-template-columns:1fr;gap:14px}.ei-risk-buttons button{height:52px}.ei-risk-detail{border-left:0;border-top:1px solid #293438;padding:12px 0 0}.ei-risk-detail p{font-size:10px}
 }
 @media(max-width:380px){
   .ei-scanner{min-height:360px}.ei-orbit{width:225px}.ei-specimen{width:220px;height:260px}.ei-hotspot{min-width:61px}.ei-hotspot span{font-size:4px}.ei-hotspot b{font-size:5px}
