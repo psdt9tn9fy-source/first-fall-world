@@ -85,6 +85,7 @@
     stroke:#9ab0b6;stroke-width:.72;vector-effect:non-scaling-stroke;opacity:.62
   }
   .ft-leader-line.selected{stroke:#d9edf1;stroke-width:1;opacity:.95;filter:drop-shadow(0 0 2px #cce8ed88)}
+  .ft-leader-line[data-node="wur"]{stroke:#adbec3;stroke-width:.82;opacity:.78}
   .ft-anchor-dot{fill:#a9c0c6;stroke:#061012;stroke-width:.36;vector-effect:non-scaling-stroke;opacity:.86}
   .ft-anchor-dot.selected{fill:#e0f3f6;stroke:#a9d8e0;opacity:1}
   .ft-map-watermark{position:absolute;inset:0;pointer-events:none}
@@ -121,6 +122,9 @@
   .ft-flag-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .18s}
   .ft-node.flag-ready .ft-flag-img{opacity:1}
   .ft-node.selected .ft-flag-marker{border-color:#d5edf2;box-shadow:0 0 0 5px #bfe8ef12,0 0 22px #bfe8ef38}
+  .ft-node[data-node="wur"]{z-index:6}
+  .ft-node[data-node="wur"] .ft-flag-marker{border-color:#8da2a8;box-shadow:0 0 0 5px #0a141788,0 7px 18px #000a}
+  .ft-node[data-node="wur"]>b{background:#071012f2;box-shadow:0 0 0 1px #53686e55}
   .ft-node>b{
     position:absolute;top:52px;padding:2px 4px;background:#050809d9;
     font:800 8px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;color:#d0dde0;text-shadow:0 1px 3px #000
