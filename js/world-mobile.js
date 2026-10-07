@@ -104,7 +104,12 @@ export function initWorldMobile(){
     return card;
   }
 
+  function worldReady(){
+    return mobileQuery.matches&&terminal.closest(".view")?.classList.contains("active")&&(!intro||intro.classList.contains("hide"));
+  }
+
   function loadTheaterFlags(index){
+    if(!worldReady())return;
     const card=deck.children[index];if(!card)return;
     card.querySelectorAll(".ft-flag-img[data-src]").forEach(img=>{
       const src=img.dataset.src;if(!src)return;
@@ -153,7 +158,7 @@ export function initWorldMobile(){
     [...theaterDots.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     [...worldIndex.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     terminal.style.setProperty("--theater-index",activeTheater);
-    loadTheaterFlags(activeTheater);
+    if(worldReady())loadTheaterFlags(activeTheater);
     if(changed&&animate)animateTheaterSwitch();
   }
 
@@ -268,9 +273,8 @@ export function initWorldMobile(){
   }));
 
   function maybeShowDiscovery(){
-    if(!mobileQuery.matches)return;
-    if(intro&&!intro.classList.contains("hide"))return;
-    if(!terminal.closest(".view")?.classList.contains("active"))return;
+    if(!worldReady())return;
+    loadTheaterFlags(activeTheater);
     setTimeout(showDiscoveryHint,260);
   }
   if(intro)new MutationObserver(maybeShowDiscovery).observe(intro,{attributes:true,attributeFilter:["class"]});
