@@ -13,32 +13,44 @@ const NESTS={
   grand:{code:"N-03",name:"GRAND NEST",ko:"대형 네스트",sub:"REGIONAL FRONT HUB / STRATEGIC",body:"광역 전선을 지배하는 초대형 거점. 주변 네스트에 병력과 정보를 공급하며 국가급 또는 I.D.A. 연합작전이 요구될 수 있다."}
 };
 
-let threeDModulePromise=null;
-  let threeDController=null;
+export function initEidolon(){
+  const root=document.querySelector("#eidolonLab");
+  if(!root)return;
+
+  const classButtons=[...root.querySelectorAll("[data-ei-class-btn]")];
+  const tabButtons=[...root.querySelectorAll("[data-ei-tab-btn]")];
+  const panels=[...root.querySelectorAll("[data-ei-panel]")];
+  const focusButtons=[...root.querySelectorAll("[data-ei-focus]")];
+  const nestButtons=[...root.querySelectorAll("[data-ei-nest]")];
+  const riskButtons=[...root.querySelectorAll("[data-ei-risk]")];
+  const scanner=root.querySelector("#eiScanner");
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let classIndex=2,scanTimer=0,pointerX=null;
+  let threeDModulePromise=null,threeDController=null;
+
+  const q=id=>root.querySelector(id);
+  const field=(name,value)=>root.querySelectorAll('[data-ei-field="'+name+'"]').forEach(el=>el.textContent=value);
+  const current=()=>CLASSES[classIndex];
 
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
     if(threeDModulePromise)return threeDModulePromise;
-    threeDModulePromise=import("./eidolon-3d.js?v=20261007-3d-isolation-1")
-      .then(mod=>{
-        threeDController=mod.initEidolon3D(root,{reduced});
-        threeDController.setClass(current().key);
-        return threeDController;
-      })
-      .catch(error=>{
-        console.warn("EIDOLON 3D unavailable; continuing with 2D fallback.",error);
-        threeDModulePromise=null;
-        return null;
-      });
+    threeDModulePromise=import("./eidolon-3d.js?v=20261007-3d-isolation-1").then(mod=>{
+      threeDController=mod.initEidolon3D(root,{reduced});
+      threeDController.setClass(current().key);
+      return threeDController;
+    }).catch(error=>{
+      console.warn("EIDOLON 3D unavailable; continuing with 2D fallback.",error);
+      threeDModulePromise=null;
+      return null;
+    });
     return threeDModulePromise;
   }
 
   function sync3D(){
     threeDController?.setClass(current().key);
     const view=root.closest(".view");
-    if(current().key==="brute"&&view?.classList.contains("active")){
-      load3DController();
-    }
+    if(current().key==="brute"&&view?.classList.contains("active"))load3DController();
   }
 
   function setRiskScale(key=""){
