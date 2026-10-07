@@ -34,11 +34,30 @@ export function initEidolon(){
   const scanner=root.querySelector("#eiScanner");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   let classIndex=2,scanTimer=0,pointerX=null,textRun=0;
-  let threeDModulePromise=null,threeDController=null;
+  let threeDModulePromise=null,threeDController=null,dossierPromise=null,dossier=null;
 
   const q=id=>root.querySelector(id);
   const field=(name,value)=>root.querySelectorAll('[data-ei-field="'+name+'"]').forEach(el=>el.textContent=value);
   const current=()=>CLASSES[classIndex];
+
+  function loadDossier(){
+    if(dossier)return Promise.resolve(dossier);
+    if(dossierPromise)return dossierPromise;
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-live-dossier-1").then(mod=>{
+      dossier=mod.initEidolonDossier(root,{reduced});
+      return dossier;
+    }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
+    return dossierPromise;
+  }
+
+  function showLiveDossier(mode="morphology"){
+    const c=current();
+    let state="ENTITY IDENTIFIED",title=c.mark+" // "+c.name,body=c.brief;
+    if(mode==="core"){state="ANALYZING CORE";title="CORE ANALYSIS";body="코어는 동력원·연산장치·신경중추 역할을 겸한다. 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있다."}
+    else if(mode==="network"){state="INTERCEPTING SHARED DATA";title="ADAPTIVE NETWORK";body="에이돌론은 인간의 무기와 전술을 학습하고 전투정보를 공유한다. 반복되는 전술은 시간이 지날수록 효과가 떨어질 수 있다."}
+    else if(mode==="morphology")body=c.brief+" 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.";
+    loadDossier().then(ctrl=>ctrl?.show({state,code:"HOSTILE // "+c.mark+" // "+c.name,title,classification:c.ko+" / "+c.name,scale:c.scale,role:c.role,body}));
+  }
 
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
@@ -102,6 +121,7 @@ export function initEidolon(){
     focusButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiFocus===type));
     const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta");
     threeDController?.setFocus(type);
+    showLiveDossier(type);
     let copy="",status="MORPHOLOGY RECORD";
     if(type==="core"){
       title.textContent="CORE";
@@ -155,6 +175,7 @@ export function initEidolon(){
     setRiskScale(c.riskKey);
     focusAnalysis("morphology");
     sync3D();
+    showLiveDossier("morphology");
     if(animate)pulseScan();
   }
 
