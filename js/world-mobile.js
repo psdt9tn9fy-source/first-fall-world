@@ -198,7 +198,7 @@ export function initWorldMobile(){
     flag.src=meta.flag;flag.alt=meta.title+" flag";flagWrap.classList.add("visible");
     const open=document.querySelector("#ftDossierOpen");
     open.dataset.record=meta.record;open.dataset.nation=meta.nation||"";
-    open.textContent="OPEN 국가 기록 →";
+    open.textContent="국가 기록 열기 →";
   }
 
   function selectNode(theater,button){
