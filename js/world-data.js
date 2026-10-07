@@ -32,41 +32,41 @@ export const THEATERS=[
   {
     id:"east",code:"T-01",name:"EAST ASIA / PACIFIC",short:"EA / PAC",caption:"동아시아 · 태평양 전구",
     nodes:[
-      {id:"ncdr",type:"nation",x:34,y:31},
-      {id:"rok",type:"nation",x:49,y:48},
-      {id:"jpn",type:"nation",x:79,y:45},
-      {id:"crf",type:"nation",x:31,y:61},
-      {id:"wur",type:"nation",x:12,y:72},
-      {id:"sea",type:"nation",x:58,y:75},
-      {id:"aus",type:"nation",x:83,y:84}
+      {id:"ncdr",type:"nation",x:49,y:26},
+      {id:"rok",type:"nation",x:58,y:29},
+      {id:"jpn",type:"nation",x:70,y:32},
+      {id:"crf",type:"nation",x:48,y:40},
+      {id:"wur",type:"nation",x:34,y:45},
+      {id:"sea",type:"nation",x:50,y:61},
+      {id:"aus",type:"nation",x:67,y:79}
     ],
     links:[["ncdr","rok"],["ncdr","crf"],["crf","rok"],["rok","jpn"],["crf","sea"],["sea","aus"],["jpn","aus"]]
   },
   {
     id:"eurasia",code:"T-02",name:"EURASIA",short:"EURASIA",caption:"유라시아 내륙 전구",
     nodes:[
-      {id:"rus",type:"nation",x:31,y:25},
-      {id:"cadc",type:"nation",x:50,y:51},
-      {id:"ind",type:"nation",x:68,y:76}
+      {id:"rus",type:"nation",x:37,y:28},
+      {id:"cadc",type:"nation",x:59,y:48},
+      {id:"ind",type:"nation",x:66,y:72}
     ],
     links:[["rus","cadc"],["cadc","ind"]]
   },
   {
     id:"americas",code:"T-03",name:"ATLANTIC / AMERICAS",short:"AMERICAS",caption:"북미 · 남미 전구",
     nodes:[
-      {id:"can",type:"nation",x:34,y:18},
-      {id:"afu",type:"nation",x:43,y:40},
-      {id:"mex",type:"nation",x:38,y:65},
-      {id:"bra",type:"nation",x:67,y:79}
+      {id:"can",type:"nation",x:64,y:23},
+      {id:"afu",type:"nation",x:65,y:36},
+      {id:"mex",type:"nation",x:61,y:49},
+      {id:"bra",type:"nation",x:83,y:68}
     ],
     links:[["can","afu"],["afu","mex"],["mex","bra"]]
   },
   {
     id:"emea",code:"T-04",name:"EUROPE / MENA / AFRICA",short:"EU / MENA",caption:"유럽 · 중동 · 아프리카 전구",
     nodes:[
-      {id:"edc",type:"nation",x:33,y:23},
-      {id:"medc",type:"nation",x:66,y:49},
-      {id:"afr",type:"nation",x:43,y:78}
+      {id:"edc",type:"nation",x:34,y:23},
+      {id:"medc",type:"nation",x:65,y:43},
+      {id:"afr",type:"nation",x:47,y:67}
     ],
     links:[["edc","medc"],["edc","afr"],["medc","afr"]]
   }
