@@ -117,3 +117,15 @@
 @keyframes eiNestSweep{to{transform:translateY(110%)}}@keyframes eiNestData{to{stroke-dashoffset:-16}}
 @media(max-width:760px){.ei-nest-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}.ei-nest-selector button{text-align:center;padding:7px 3px}.ei-nest-topology{height:300px}.ei-nest-core{width:72px;height:72px}.ei-net-node.production{top:10%}.ei-net-node.repair{left:8%}.ei-net-node.supply{right:8%}.ei-net-node.data{bottom:8%}.ei-net-node span{font-size:5px}.ei-nest-readout{grid-template-columns:1fr;gap:9px;padding-top:12px}.ei-nest-foot{display:grid;grid-template-columns:1fr}.ei-nest-foot span{line-height:1.5}.ei-nest-foot button{width:100%;min-width:0;min-height:48px}.ei-satellite.m1{left:20%}.ei-satellite.m2{right:20%}.ei-satellite.g1{left:20%}.ei-satellite.g2{right:20%}}
 @media(prefers-reduced-motion:reduce){.ei-nest-topology.scanning:after,.ei-nest-topology.scanned .ei-nest-links path{animation:none!important}}
+
+
+/* NEST topology visibility + scale response */
+.ei-nest-topology{min-height:330px!important}
+.ei-nest-core{border-color:#8fa7ac!important;box-shadow:0 0 0 10px #71888d0b,0 0 28px #7f9ba122!important}
+.ei-nest-core:before,.ei-nest-core:after{content:"";position:absolute;inset:-18px;border:1px solid #31464b;transform:none}.ei-nest-core:after{inset:-34px;border-style:dashed;opacity:.55}
+.ei-nest-links path{stroke:#60787e!important;stroke-width:1!important;stroke-dasharray:3 3!important}
+.ei-nest-topology.scanned .ei-nest-links path{stroke:#b2c7cc!important;filter:drop-shadow(0 0 3px #9eb8be)}
+.ei-net-node i{width:16px!important;height:16px!important}.ei-net-node span{color:#9aadb1!important}
+.ei-nest-topology[data-level="medium"] .ei-nest-core{width:104px;height:104px}.ei-nest-topology[data-level="grand"] .ei-nest-core{width:120px;height:120px;box-shadow:0 0 0 15px #71888d0d,0 0 36px #8ca9af33!important}
+.ei-nest-topology[data-level="medium"] .ei-satellite,.ei-nest-topology[data-level="grand"] .ei-satellite{box-shadow:0 0 8px #9db6bb66}
+@media(max-width:760px){.ei-nest-topology{height:320px!important}.ei-nest-core{width:82px!important;height:82px!important}.ei-nest-topology[data-level="medium"] .ei-nest-core{width:94px!important;height:94px!important}.ei-nest-topology[data-level="grand"] .ei-nest-core{width:108px!important;height:108px!important}.ei-nest-links{inset:5%!important;width:90%!important;height:90%!important}}
