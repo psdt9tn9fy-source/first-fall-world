@@ -9,10 +9,10 @@ const ERA_WINDOWS={
 
 const WORLD_SILHOUETTE="./assets/globe/world-silhouette.svg";
 const THEATER_ART={
-  east:{label:"EAST ASIA / PACIFIC",sub:"REGIONAL CUTOUT // IFF OVERLAY",view:"940 70 500 500",loc:[65.3,9.7,34.7,69.4]},
-  eurasia:{label:"EURASIA",sub:"CONTINENTAL CORRIDOR",view:"720 20 460 460",loc:[50,2.8,31.9,63.9]},
-  americas:{label:"ATLANTIC / AMERICAS",sub:"WESTERN HEMISPHERE",view:"20 20 600 600",loc:[1.4,2.8,41.7,83.3]},
-  emea:{label:"EUROPE / MENA / AFRICA",sub:"JOINT DEFENSE THEATER",view:"560 40 520 520",loc:[38.9,5.6,36.1,72.2]}
+  east:{label:"동아시아 / 태평양",sub:"지역 보기 // 식별정보 표시",view:"940 70 500 500",loc:[65.3,9.7,34.7,69.4]},
+  eurasia:{label:"유라시아",sub:"대륙 회랑",view:"720 20 460 460",loc:[50,2.8,31.9,63.9]},
+  americas:{label:"대서양 / 아메리카",sub:"서반구",view:"20 20 600 600",loc:[1.4,2.8,41.7,83.3]},
+  emea:{label:"유럽 / 중동 / 아프리카",sub:"공동 방위 전구",view:"560 40 520 520",loc:[38.9,5.6,36.1,72.2]}
 };
 
 export function initWorldMobile(){
@@ -46,8 +46,8 @@ export function initWorldMobile(){
     const n=nations.get(node.id);
     return {
       code:n[1].split(" //")[0],title:n[2],eng:n[3],status:n[4],body:n[8],
-      record:"nations",nation:n[0],kind:"NATION RECORD",detail1:"CAPITAL",value1:n[6],
-      detail2:"STRENGTH",value2:n[7],flag:flagUrl(n[0])
+      record:"nations",nation:n[0],kind:"국가 기록",detail1:"수도",value1:n[6],
+      detail2:"주요 특징",value2:n[7],flag:flagUrl(n[0])
     };
   }
 
@@ -80,7 +80,7 @@ export function initWorldMobile(){
     }).join("");
     const [lx,ly,lw,lh]=art.loc;
     card.innerHTML=`
-      <div class="ft-card-code">${theater.code} // REGIONAL CUTOUT</div>
+      <div class="ft-card-code">${theater.code} // 지역 보기</div>
       <div class="ft-schematic" aria-label="${theater.caption}">
         <div class="ft-map-watermark"><b>${theater.code}</b><span>${art.label}</span><small>${art.sub}</small></div>
         <svg class="ft-region-map" viewBox="${art.view}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -94,12 +94,12 @@ export function initWorldMobile(){
         <div class="ft-locator" aria-hidden="true">
           <img src="${WORLD_SILHOUETTE}" alt="" decoding="async">
           <i style="--lx:${lx}%;--ly:${ly}%;--lw:${lw}%;--lh:${lh}%"></i>
-          <span>GLOBAL LOCATOR</span>
+          <span>세계 위치</span>
         </div>
         ${nodesHtml}
-        <div class="ft-target-lock" aria-hidden="true"><i></i><i></i><span>TARGET LOCK</span><b>---</b></div>
+        <div class="ft-target-lock" aria-hidden="true"><i></i><i></i><span>선택 대상</span><b>---</b></div>
       </div>
-      <div class="ft-card-foot"><span>ANCHOR = GEO POSITION // MARKER DISPLACED</span><b>${theater.nodes.length} NATIONS</b></div>`;
+      <div class="ft-card-foot"><span>기준 = 실제 위치 // 표식 보정</span><b>${theater.nodes.length}개 국가</b></div>`;
     card.querySelectorAll(".ft-node").forEach(button=>button.addEventListener("click",()=>selectNode(theater,button)));
     return card;
   }
@@ -198,7 +198,7 @@ export function initWorldMobile(){
     flag.src=meta.flag;flag.alt=meta.title+" flag";flagWrap.classList.add("visible");
     const open=document.querySelector("#ftDossierOpen");
     open.dataset.record=meta.record;open.dataset.nation=meta.nation||"";
-    open.textContent="OPEN NATION RECORD →";
+    open.textContent="OPEN 국가 기록 →";
   }
 
   function selectNode(theater,button){
