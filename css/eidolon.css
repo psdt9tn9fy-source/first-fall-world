@@ -72,7 +72,7 @@
 .ei-model-stage{position:absolute;z-index:4;inset:46px 10px 38px;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
 .ei-model-stage[hidden]{display:none}
 .ei-model-viewer{width:100%;height:100%;min-height:390px;background:transparent;--poster-color:transparent;touch-action:pan-y;outline:0}
-.ei-model-status{position:absolute;z-index:3;left:13px;bottom:12px;display:grid;gap:3px;pointer-events:none}
+.ei-model-status{position:absolute;z-index:9;left:13px;bottom:12px;display:grid;gap:3px;pointer-events:none}
 .ei-model-status span,.ei-model-status b,.ei-model-status em{font:650 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;font-style:normal;color:#607277}
 .ei-model-status b{color:#a9bec3}.ei-model-status em{color:#72868b}
 .ei-model-loading{position:absolute;z-index:5;inset:0;display:none;place-content:center;text-align:center;gap:6px;background:radial-gradient(circle,#0c1417cc 0,#050809d9 58%,#050809 100%);pointer-events:none}
@@ -143,7 +143,7 @@
 
 
 /* 3D acquisition / progressive analysis HUD */
-.ei-acquisition{position:absolute;z-index:4;inset:11% 10% 12%;pointer-events:none}
+.ei-acquisition{position:absolute;z-index:8;inset:11% 10% 12%;pointer-events:none}
 .ei-lock-frame{position:absolute;inset:15% 22%;transition:inset .36s cubic-bezier(.2,.75,.2,1),opacity .2s;opacity:.45}
 .ei-lock-frame>i{position:absolute;width:28px;height:28px;border-color:#a6bdc2;border-style:solid;opacity:.72}.ei-lock-frame>i:nth-child(1){left:0;top:0;border-width:1px 0 0 1px}.ei-lock-frame>i:nth-child(2){right:0;top:0;border-width:1px 1px 0 0}.ei-lock-frame>i:nth-child(3){right:0;bottom:0;border-width:0 1px 1px 0}.ei-lock-frame>i:nth-child(4){left:0;bottom:0;border-width:0 0 1px 1px}
 .ei-lock-frame>b{position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid #a9c0c5;border-radius:50%;transform:translate(-50%,-50%);opacity:.55}
