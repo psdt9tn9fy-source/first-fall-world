@@ -32,7 +32,6 @@ export const THEATERS=[
   {
     id:"east",code:"T-01",name:"EAST ASIA / PACIFIC",short:"EA / PAC",caption:"동아시아 · 태평양 전구",
     nodes:[
-      {id:"BAE",type:"sector",x:52,y:13},
       {id:"ncdr",type:"nation",x:34,y:31},
       {id:"rok",type:"nation",x:49,y:48},
       {id:"jpn",type:"nation",x:79,y:45},
@@ -41,7 +40,7 @@ export const THEATERS=[
       {id:"sea",type:"nation",x:58,y:75},
       {id:"aus",type:"nation",x:83,y:84}
     ],
-    links:[["BAE","rok"],["ncdr","rok"],["ncdr","crf"],["crf","rok"],["rok","jpn"],["crf","sea"],["sea","aus"],["jpn","aus"]]
+    links:[["ncdr","rok"],["ncdr","crf"],["crf","rok"],["rok","jpn"],["crf","sea"],["sea","aus"],["jpn","aus"]]
   },
   {
     id:"eurasia",code:"T-02",name:"EURASIA",short:"EURASIA",caption:"유라시아 내륙 전구",
@@ -58,10 +57,9 @@ export const THEATERS=[
       {id:"can",type:"nation",x:34,y:18},
       {id:"afu",type:"nation",x:43,y:40},
       {id:"mex",type:"nation",x:38,y:65},
-      {id:"bra",type:"nation",x:67,y:79},
-      {id:"AMZ",type:"sector",x:79,y:56}
+      {id:"bra",type:"nation",x:67,y:79}
     ],
-    links:[["can","afu"],["afu","mex"],["mex","bra"],["bra","AMZ"]]
+    links:[["can","afu"],["afu","mex"],["mex","bra"]]
   },
   {
     id:"emea",code:"T-04",name:"EUROPE / MENA / AFRICA",short:"EU / MENA",caption:"유럽 · 중동 · 아프리카 전구",
