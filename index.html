@@ -395,19 +395,31 @@
 
         <section class="ei-panel" data-ei-panel="nest">
           <div class="ei-panel-overline">NEST NETWORK // OCCUPIED TERRITORY</div>
-          <h3>생산·수리·보급·정보공유 거점.</h3>
-          <p class="ei-panel-copy">네스트는 에이돌론이 점령지역을 재구성해 만드는 거대 거점이다. 장기간 존재하면 주변 환경과 생태계까지 변질될 수 있다.</p>
-          <div class="ei-nest-layout">
-            <div class="ei-nest-rail">
-              <button class="active" type="button" data-ei-nest="small"><span>N-01</span><b>SMALL</b></button>
-              <button type="button" data-ei-nest="medium"><span>N-02</span><b>MEDIUM</b></button>
-              <button type="button" data-ei-nest="grand"><span>N-03</span><b>GRAND</b></button>
-            </div>
-            <div>
-              <div class="ei-nest-visual" aria-hidden="true"><i class="ei-nest-ring r1"></i><i class="ei-nest-ring r2"></i><i class="ei-nest-ring r3"></i><i class="ei-nest-node"></i></div>
-              <div class="ei-nest-detail"><span id="eiNestCode">N-01</span><h4 id="eiNestTitle">SMALL NEST</h4><em id="eiNestKo">소형 네스트</em><b id="eiNestSub">RECON / WATCH / SUPPLY OUTPOST</b><p id="eiNestBody">정찰·감시·보급을 위한 전초기지 성격의 네스트. 방치될 경우 중형 네스트로 성장할 수 있다.</p></div>
-            </div>
+          <div class="ei-nest-head"><div><h3>점령지를 하나의 시스템으로 바꾼다.</h3><p class="ei-panel-copy">네스트는 생산·수리·보급·정보공유 기능을 수행하는 에이돌론 거점이다. 규모를 선택하면 공개 기록상 네트워크 범위를 재구성한다.</p></div><div class="ei-nest-state"><span>TOPOLOGY</span><b data-ei-nest-status>STANDBY</b></div></div>
+          <div class="ei-nest-selector">
+            <button class="active" type="button" data-ei-nest="small"><span>N-01</span><b>SMALL</b></button>
+            <button type="button" data-ei-nest="medium"><span>N-02</span><b>MEDIUM</b></button>
+            <button type="button" data-ei-nest="grand"><span>N-03</span><b>GRAND</b></button>
           </div>
+          <div class="ei-nest-topology" data-ei-nest-topology data-level="small">
+            <div class="ei-nest-grid" aria-hidden="true"></div>
+            <svg class="ei-nest-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path data-link="production" d="M50 50 L50 16"/><path data-link="repair" d="M50 50 L18 50"/><path data-link="supply" d="M50 50 L82 50"/><path data-link="data" d="M50 50 L50 84"/>
+              <path class="ei-nest-branch medium" d="M18 50 L28 24"/><path class="ei-nest-branch medium" d="M82 50 L72 24"/>
+              <path class="ei-nest-branch grand" d="M18 50 L27 78"/><path class="ei-nest-branch grand" d="M82 50 L73 78"/>
+            </svg>
+            <div class="ei-nest-core"><i></i><span>NEST</span><b data-ei-nest-core>SMALL</b></div>
+            <div class="ei-net-node production"><i></i><span>PRODUCTION</span></div>
+            <div class="ei-net-node repair"><i></i><span>REPAIR</span></div>
+            <div class="ei-net-node supply"><i></i><span>SUPPLY</span></div>
+            <div class="ei-net-node data"><i></i><span>DATA</span></div>
+            <i class="ei-satellite m1"></i><i class="ei-satellite m2"></i><i class="ei-satellite g1"></i><i class="ei-satellite g2"></i>
+          </div>
+          <div class="ei-nest-readout">
+            <div><span id="eiNestCode">N-01</span><h4 id="eiNestTitle">SMALL NEST</h4><em id="eiNestKo">소형 네스트</em></div>
+            <div><b id="eiNestSub">RECON / WATCH / SUPPLY OUTPOST</b><p id="eiNestBody">정찰·감시·보급을 위한 전초기지 성격의 네스트. 방치될 경우 중형 네스트로 성장할 수 있다.</p></div>
+          </div>
+          <div class="ei-nest-foot"><span>KNOWN FUNCTIONS // PRODUCTION · REPAIR · SUPPLY · INFORMATION SHARING</span><button type="button" data-ei-scan-nest>SCAN NETWORK ↻</button></div>
         </section>
 
         <section class="ei-panel" data-ei-panel="engagement">
