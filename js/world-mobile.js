@@ -1,5 +1,5 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-field-terminal-3";
-import { THEATERS } from "./world-data.js?v=20261007-field-terminal-3";
+import { N, EVENTS, ext } from "./data.js?v=20261007-regional-cutout-1";
+import { THEATERS } from "./world-data.js?v=20261007-regional-cutout-1";
 
 const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
@@ -7,23 +7,12 @@ const ERA_WINDOWS={
   "2031":[2031,2040],"2041":[2041,2070],"2071":[2071,2100],"2101":[2101,2129],"2134":[2130,2134]
 };
 
+const WORLD_SILHOUETTE="./assets/globe/world-silhouette.svg";
 const THEATER_ART={
-  east:{
-    label:"PACIFIC DEFENSE GRID",sub:"EASTERN ARC // ACTIVE",
-    paths:["M2 17 C14 8 34 12 44 24 C47 33 42 40 36 47 C28 51 22 60 12 61 C6 54 4 43 2 17Z","M59 20 C64 17 68 24 67 35 C65 46 62 55 58 63","M76 72 C84 67 94 73 97 86 C90 94 78 94 72 84Z"]
-  },
-  eurasia:{
-    label:"CONTINENTAL CORRIDOR",sub:"LAND DEFENSE NETWORK",
-    paths:["M3 23 C16 8 47 9 69 17 C85 23 97 37 95 53 C82 57 69 53 58 60 C45 68 27 71 12 61 C5 49 2 37 3 23Z"]
-  },
-  americas:{
-    label:"ATLANTIC DEFENSE GRID",sub:"WESTERN HEMISPHERE",
-    paths:["M25 7 C39 9 48 19 43 31 C38 41 35 49 37 60 C31 66 25 57 23 48 C18 37 14 24 25 7Z","M48 55 C59 54 67 62 66 73 C63 86 56 96 48 94 C44 84 42 68 48 55Z"]
-  },
-  emea:{
-    label:"JOINT DEFENSE THEATER",sub:"EUROPE / MENA / AFRICA",
-    paths:["M7 22 C24 10 48 15 57 28 C52 39 39 41 30 38 C21 40 12 36 7 22Z","M36 41 C49 40 59 50 57 64 C54 81 45 94 35 90 C27 75 26 56 36 41Z","M60 35 C75 26 91 33 96 47 C88 58 77 60 65 54Z"]
-  }
+  east:{label:"EAST ASIA / PACIFIC",sub:"REGIONAL CUTOUT // IFF OVERLAY",view:"940 70 500 500",loc:[65.3,9.7,34.7,69.4]},
+  eurasia:{label:"EURASIA",sub:"CONTINENTAL CORRIDOR",view:"720 20 460 460",loc:[50,2.8,31.9,63.9]},
+  americas:{label:"ATLANTIC / AMERICAS",sub:"WESTERN HEMISPHERE",view:"20 20 600 600",loc:[1.4,2.8,41.7,83.3]},
+  emea:{label:"EUROPE / MENA / AFRICA",sub:"JOINT DEFENSE THEATER",view:"560 40 520 520",loc:[38.9,5.6,36.1,72.2]}
 };
 
 export function initWorldMobile(){
@@ -70,26 +59,46 @@ export function initWorldMobile(){
       const p=nodeById.get(a),q=nodeById.get(b);if(!p||!q)return"";
       return `<line x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}"></line>`;
     }).join("");
-    const land=art.paths.map(d=>`<path d="${d}"></path>`).join("");
     const nodesHtml=theater.nodes.map(node=>{
-      const m=nodeMeta(node);
-      return `<button class="ft-node" data-node="${node.id}" style="--x:${node.x}%;--y:${node.y}%" aria-label="${m.title}">
-        <i class="ft-iff"><span class="ft-iff-mark">${m.code}</span><span class="ft-iff-grid"></span></i>
-        <b>${m.code}</b><small>${m.title}</small>
+      const meta=nodeMeta(node);
+      return `<button class="ft-node" data-node="${node.id}" style="--x:${node.x}%;--y:${node.y}%" aria-label="${meta.title}">
+        <i class="ft-flag-marker">
+          <span class="ft-flag-fallback">${meta.code}</span>
+          <img class="ft-flag-img" data-src="${meta.flag}" alt="${meta.title} flag" loading="lazy" decoding="async" fetchpriority="low">
+        </i>
+        <b>${meta.code}</b><small>${meta.title}</small>
       </button>`;
     }).join("");
+    const [lx,ly,lw,lh]=art.loc;
     card.innerHTML=`
-      <div class="ft-card-code">${theater.code} // SCHEMATIC THEATER MAP</div>
+      <div class="ft-card-code">${theater.code} // REGIONAL CUTOUT</div>
       <div class="ft-schematic" aria-label="${theater.caption}">
         <div class="ft-map-watermark"><b>${theater.code}</b><span>${art.label}</span><small>${art.sub}</small></div>
-        <svg class="ft-terrain" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g>${land}</g></svg>
+        <svg class="ft-region-map" viewBox="${art.view}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <image href="${WORLD_SILHOUETTE}" x="0" y="0" width="1440" height="720"></image>
+        </svg>
         <svg class="ft-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g>${lines}</g></svg>
+        <div class="ft-locator" aria-hidden="true">
+          <img src="${WORLD_SILHOUETTE}" alt="" decoding="async">
+          <i style="--lx:${lx}%;--ly:${ly}%;--lw:${lw}%;--lh:${lh}%"></i>
+          <span>GLOBAL LOCATOR</span>
+        </div>
         ${nodesHtml}
         <div class="ft-target-lock" aria-hidden="true"><i></i><i></i><span>TARGET LOCK</span><b>---</b></div>
       </div>
-      <div class="ft-card-foot"><span>IFF NETWORK // NOT TO SCALE</span><b>${theater.nodes.length} NATIONS</b></div>`;
+      <div class="ft-card-foot"><span>GEOGRAPHIC REFERENCE // GENERALIZED</span><b>${theater.nodes.length} NATIONS</b></div>`;
     card.querySelectorAll(".ft-node").forEach(button=>button.addEventListener("click",()=>selectNode(theater,button)));
     return card;
+  }
+
+  function loadTheaterFlags(index){
+    const card=deck.children[index];if(!card)return;
+    card.querySelectorAll(".ft-flag-img[data-src]").forEach(img=>{
+      const src=img.dataset.src;if(!src)return;
+      const button=img.closest(".ft-node");
+      img.addEventListener("load",()=>button?.classList.add("flag-ready"),{once:true});
+      img.src=src;img.removeAttribute("data-src");
+    });
   }
 
   function animateTheaterSwitch(){
@@ -131,6 +140,7 @@ export function initWorldMobile(){
     [...theaterDots.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     [...worldIndex.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     terminal.style.setProperty("--theater-index",activeTheater);
+    loadTheaterFlags(activeTheater);
     if(changed&&animate)animateTheaterSwitch();
   }
 
@@ -177,7 +187,6 @@ export function initWorldMobile(){
     discoveryHint?.classList.remove("show");
     const node=theater.nodes.find(n=>n.id===button.dataset.node),meta=nodeMeta(node);
     deck.querySelectorAll(".ft-node.selected").forEach(n=>n.classList.remove("selected"));button.classList.add("selected");
-    button.style.setProperty("--flag-image",`url("${meta.flag}")`);button.classList.add("flag-loaded");
     showTarget(button.closest(".ft-theater-card"),button,meta.code);
     fillDossier(meta);setSheetState("medium");
   }
