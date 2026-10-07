@@ -68,14 +68,14 @@
 }
 @media(prefers-reduced-motion:reduce){.ei-trace-line i,.ei-adaptation-trace article{transition:none!important}}
 
-/* Trace CTA visibility */
+/* BEHAVIOR // CTA */
 .ei-trace-footer button{min-width:150px;min-height:42px;padding:0 16px!important;border:1px solid #50656a!important;background:#101a1d!important;color:#d6e1e3!important;font-size:8px!important;letter-spacing:.12em!important}
 .ei-trace-footer button:before{content:"▶";margin-right:9px;font-size:7px}
 .ei-trace-footer button:active{transform:translateY(1px);background:#172326!important}
 @media(max-width:760px){.ei-trace-footer{display:grid;grid-template-columns:1fr}.ei-trace-footer>span{max-width:none!important}.ei-trace-footer button{width:100%;min-height:48px;font-size:8px!important;margin-top:3px}}
 
 
-/* Mobile viewport containment hotfix */
+/* BEHAVIOR // MOBILE CONTAINMENT */
 @media(max-width:820px){
   .ei-record-console,.ei-record-console *{box-sizing:border-box}
   .ei-record-console{width:100%;max-width:100%;min-width:0;overflow:hidden}
@@ -93,7 +93,7 @@
 }
 
 
-/* Trace geometry alignment — center diamonds on the mobile rail */
+/* BEHAVIOR // MOBILE TRACE GEOMETRY */
 @media(max-width:820px){
   .ei-adaptation-trace{--trace-rail-x:10px;padding-left:32px!important}
   .ei-trace-line{left:var(--trace-rail-x)!important;top:0!important;bottom:0!important}
@@ -118,7 +118,7 @@
 @media(prefers-reduced-motion:reduce){.ei-nest-topology.scanning:after, .ei-nest-topology.scanned .ei-nest-links .link{animation:none!important}}
 
 
-/* NEST // SCALE + VISIBILITY */
+/* NEST // SCALE */
 .ei-nest-core{border-color:#8fa7ac!important;box-shadow:0 0 0 10px #71888d0b,0 0 28px #7f9ba122!important}
 .ei-nest-core:before,.ei-nest-core:after{content:"";position:absolute;inset:-18px;border:1px solid #31464b;transform:none}.ei-nest-core:after{inset:-34px;border-style:dashed;opacity:.55}
 .ei-net-node i{width:16px!important;height:16px!important}.ei-net-node span{color:#9aadb1!important}
@@ -127,7 +127,7 @@
 @media(max-width:760px){.ei-nest-topology{height:320px!important}.ei-nest-core{width:82px!important;height:82px!important}.ei-nest-topology[data-level="medium"] .ei-nest-core{width:94px!important;height:94px!important}.ei-nest-topology[data-level="grand"] .ei-nest-core{width:108px!important;height:108px!important}.ei-nest-links{inset:5%!important;width:90%!important;height:90%!important}}
 
 
-/* NEST // CSS TOPOLOGY GEOMETRY */
+/* NEST // TOPOLOGY LINKS */
 .ei-nest-links{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;pointer-events:none}
 .ei-nest-links .link,.ei-nest-links .branch{position:absolute;display:block;background:#6f888e;opacity:.7;transform-origin:0 50%;height:1px}
 .ei-nest-links .production{left:50%;top:50%;width:34%;transform:rotate(-90deg)}
@@ -149,13 +149,13 @@
 .ei-nest-topology[data-level="grand"] .ei-satellite{display:block!important}
 
 
-/* NEST // STATUS LOCK */
+/* NEST // STATUS */
 .ei-nest-state{min-width:82px}
 .ei-nest-state b{display:block;width:82px;white-space:nowrap;text-align:right}
 @media(max-width:760px){.ei-nest-state{min-width:76px}.ei-nest-state b{width:76px}}
 
 
-/* NEST // LINK GEOMETRY */
+/* NEST // FINAL LINK GEOMETRY */
 .ei-nest-links .production{left:50%;top:calc(50% - 58px);width:calc(34% - 58px);transform:rotate(-90deg)}
 .ei-nest-links .repair{left:calc(50% - 58px);top:50%;width:calc(32% - 58px);transform:rotate(180deg)}
 .ei-nest-links .supply{left:calc(50% + 58px);top:50%;width:calc(32% - 58px);transform:rotate(0)}
