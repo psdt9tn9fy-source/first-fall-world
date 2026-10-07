@@ -183,3 +183,19 @@
 .ei-tabs{gap:0!important;border-top:1px solid #26363a!important;border-bottom:1px solid #26363a!important}.ei-tabs button{position:relative;border:0!important;border-right:1px solid #26363a!important;background:transparent!important;min-height:46px!important;color:#607278!important}.ei-tabs button:last-child{border-right:0!important}.ei-tabs button.active{color:#d0dcde!important;background:#0d1518!important;box-shadow:inset 0 -2px #91a8ad}.ei-tabs button.active:before{content:"";position:absolute;left:50%;top:-3px;width:5px;height:5px;border:1px solid #8da3a8;background:#071012;transform:translateX(-50%) rotate(45deg)}
 .ei-panels{border-top:0!important}.ei-panel{padding-top:20px!important}
 @media(max-width:760px){.ei-record-deck-head{padding:11px 12px 8px}.ei-record-deck-head b{display:none}.ei-tabs{display:grid!important;grid-template-columns:repeat(4,1fr)!important;overflow:visible!important}.ei-tabs button{min-width:0!important;padding:10px 2px!important;font-size:5px!important;letter-spacing:.05em!important;white-space:nowrap}.ei-panel{padding-top:16px!important}}
+
+
+/* Record console v2 — structural rebuild */
+.ei-record-console{grid-column:1/-1;margin-top:10px;border:1px solid #2d3d41;background:#070b0d;overflow:hidden}
+.ei-record-console>header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:14px 17px 12px;border-bottom:1px solid #2b3a3e;background:linear-gradient(90deg,#0c1417,#080d0f 55%,#070b0d)}
+.ei-record-console>header div{display:grid;gap:5px}.ei-record-console>header span,.ei-record-console>header em{font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#61757a;font-style:normal}.ei-record-console>header b{font:850 12px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;color:#c4d0d2}.ei-record-console>header em{color:#4f6267}
+.ei-record-console .ei-tabs{display:grid!important;grid-template-columns:repeat(4,1fr)!important;margin:0!important;border:0!important;border-bottom:1px solid #2b3a3e!important}
+.ei-record-console .ei-tabs button{min-height:52px!important;padding:0 12px!important;text-align:left!important;font-size:6px!important;letter-spacing:.1em!important}
+.ei-record-console .ei-tabs button.active{background:#111b1e!important}
+.ei-record-console .ei-panels{margin:0!important;border:0!important;background:linear-gradient(180deg,#091012,#070b0d)!important}
+.ei-record-console .ei-panel{padding:22px 20px 24px!important;min-height:0!important}
+.ei-record-console .ei-panel-overline{margin-bottom:12px!important}
+.ei-record-console .ei-panel h3{margin-top:0!important}
+.ei-risk-head>b em{font-style:normal;color:#a0b1b5}
+.ei-risk-scale span.active{color:#596a6f!important;text-shadow:none!important}.ei-risk-scale span.active:before{width:5px!important;height:5px!important;border-color:#53676c!important;box-shadow:none!important}
+@media(max-width:760px){.ei-record-console{margin:8px 0 0}.ei-record-console>header{padding:12px 13px 10px}.ei-record-console>header b{font-size:10px}.ei-record-console>header em{display:none}.ei-record-console .ei-tabs button{min-height:44px!important;padding:0 5px!important;text-align:center!important;font-size:5px!important;letter-spacing:.045em!important}.ei-record-console .ei-panel{padding:17px 13px 20px!important}}
