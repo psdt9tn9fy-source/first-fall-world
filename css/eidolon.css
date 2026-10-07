@@ -125,3 +125,11 @@
 @keyframes eiDataLine{0%{transform:scaleX(.08);opacity:.3}65%{transform:scaleX(1);opacity:.8}100%{opacity:.15}}
 @media(max-width:760px){.ei-live-dossier{position:absolute;left:8px;right:8px;bottom:40px;width:auto;max-height:43%;padding:11px 12px;transform:translateY(18px);transform-origin:center bottom}.ei-live-dossier.open{transform:none}.ei-live-dossier:before{display:none}.ei-live-dossier h3{font-size:17px}.ei-live-dossier p{font-size:9px;line-height:1.55}}
 @media(prefers-reduced-motion:reduce){.ei-live-dossier{transition:none}.ei-live-dossier.streaming p:after,.ei-live-dossier footer i{animation:none}}
+
+
+/* Dedicated entity information tab */
+.ei-info-tab{position:absolute;z-index:9;right:18px;top:54px;display:grid;grid-template-columns:auto auto 18px;align-items:center;gap:7px;min-height:31px;padding:0 8px;border:1px solid #3b4a4f;background:#081012e8;color:#87999e;cursor:pointer}
+.ei-info-tab span,.ei-info-tab b{font:700 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em}.ei-info-tab b{color:#c0d0d3}.ei-info-tab i{font:400 15px/1 ui-monospace,SFMono-Regular,monospace;font-style:normal;color:#9eb8bd;border-left:1px solid #354449;padding-left:7px}
+.ei-info-tab:hover{border-color:#718990;background:#0d1719}
+.ei-live-head>div{display:flex;align-items:center;gap:8px}.ei-live-close{width:22px;height:22px;padding:0;border:1px solid #39494e;background:transparent;color:#91a5aa;font:400 15px/1 ui-monospace,SFMono-Regular,monospace;cursor:pointer}.ei-live-close:hover{border-color:#819ba1;color:#e0eaec;background:#10191b}
+@media(max-width:760px){.ei-info-tab{right:10px;top:48px}.ei-info-tab span{display:none}.ei-live-close{width:26px;height:26px}}
