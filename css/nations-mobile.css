@@ -36,7 +36,7 @@
 
   .na-index-list{
     position:relative;display:block;overflow-y:auto;overflow-x:hidden;height:calc(100% - 42px);max-height:none;
-    padding:calc(50% - 54px) 0;scrollbar-width:none;overscroll-behavior:contain;
+    padding:calc((100dvh - 154px)/2 - 38px) 0;scrollbar-width:none;overscroll-behavior:contain;
     scroll-snap-type:y mandatory;scroll-padding-block:calc(50% - 38px);
     -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 87%,transparent 100%);
     mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 87%,transparent 100%)
