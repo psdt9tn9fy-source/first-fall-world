@@ -128,7 +128,15 @@
 
 
 
-/* Shared EIDOLON classification-mark geometry */
-.eidolon-view{--ei-mark-font:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--ei-mark-weight:900}
-.ei-class-btn>span,[data-ei-field="mark"],.ei-fui-title-mark{font-family:var(--ei-mark-font);font-weight:var(--ei-mark-weight);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:-.08em;text-align:center}
-.ei-class-btn>span{display:block;width:34px;font-size:16px;line-height:1}
+/* Shared EIDOLON classification system */
+.eidolon-view{--ei-mark-font:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--ei-mark-weight:900;--ei-mark-track:-.08em}
+.ei-class-mark{display:inline-block;font-family:var(--ei-mark-font);font-weight:var(--ei-mark-weight);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:var(--ei-mark-track);line-height:1;text-align:center;font-style:normal}
+.ei-class-btn>.ei-class-mark{width:34px;font-size:16px}
+.ei-class-lockup{display:flex!important;align-items:baseline;gap:.34em;font-family:var(--ei-mark-font);font-style:normal}
+.ei-class-lockup .ei-class-mark{min-width:2.35em;text-align:left}
+.ei-class-lockup u,.ei-class-lockup>i{font-style:normal;text-decoration:none;color:#71858a;font-weight:700}
+.ei-class-lockup .ei-class-name,.ei-class-lockup>b{font-style:normal;font-weight:inherit;letter-spacing:inherit}
+.ei-assess-primary .ei-class-lockup .ei-class-mark{min-width:2.25em}
+#eiProfileTitle.ei-class-lockup{margin:0;gap:.32em}
+#eiProfileTitle.ei-class-lockup .ei-class-mark{min-width:2.35em}
+.ei-fui-title-mark{display:inline-block;min-width:2.35em;font-family:var(--ei-mark-font);font-weight:var(--ei-mark-weight);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:var(--ei-mark-track);line-height:1;text-align:left}
