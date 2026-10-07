@@ -13,8 +13,6 @@
   .ei-assessment{padding:0;border:1px solid var(--ei-line);border-top:0}.ei-assessment>header{padding:10px}.ei-assessment>header span,.ei-assessment>header b{font-size:5px}.ei-assess-primary{padding:13px 10px}.ei-assess-primary b{font-size:30px}.ei-assess-primary em{font-size:6px}
   .ei-assess-list{display:grid;grid-template-columns:1fr 1fr}.ei-assess-list div{padding:10px;border-right:1px solid var(--ei-line2)}.ei-assess-list div:nth-child(even){border-right:0}.ei-assess-list dd{font-size:8px}
   .ei-risk-wrap{padding:11px 10px}.ei-focus-readout{padding:13px 10px}.ei-focus-readout p{font-size:9px}
-  .ei-tabs{margin-top:10px;border:1px solid var(--ei-line)}.ei-tabs button{min-height:42px;font-size:5px;padding:0 2px}
-  .ei-panels{min-height:0}.ei-panel{padding:18px 4px 24px}.ei-panel h3{font-size:21px}.ei-panel-copy{font-size:11px;line-height:1.72}
 }
 @media(max-width:380px){
   .ei-scanner{min-height:360px}.ei-orbit{width:225px}.ei-specimen{width:220px;height:260px}.ei-hotspot{min-width:61px}.ei-hotspot span{font-size:4px}.ei-hotspot b{font-size:5px}
