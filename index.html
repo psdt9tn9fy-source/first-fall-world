@@ -194,6 +194,53 @@
     </div>
   </div>
 </section>
+<section class="view characters-view" data-view="characters">
+  <div class="char-archive" id="characterArchive">
+    <header class="char-head">
+      <div><span>인물 기록 // CHARACTER ARCHIVE</span><h2>이 시대를 살아가는 사람들.</h2></div>
+      <p>2134년의 세계를 인물의 시선으로 연결한다. 국가·기관·군사체계의 설정은 각 인물 기록에서 관련 자료로 이어진다.</p>
+    </header>
+
+    <nav class="char-roster" id="characterRoster" aria-label="등록 인물"></nav>
+
+    <section class="char-hero">
+      <div class="char-visual">
+        <div class="char-watermark" id="characterWatermark">한서린</div>
+        <div class="char-image-label">인물 식별 기록 // 001</div>
+        <div class="char-portrait" id="characterPortrait"><span class="char-portrait-name" id="characterPortraitName">韓瑞麟</span></div>
+        <div class="char-visual-index"><span>현재 등록 인물</span><b>01 / 확장형 기록</b></div>
+      </div>
+
+      <article class="char-summary">
+        <div class="char-record-no" id="characterRecordNo">인물 기록 001</div>
+        <h3 id="characterName">한서린</h3>
+        <div class="char-name-meta"><span id="characterHanja">韓瑞麟</span><i></i><b id="characterRoman">HAN SEO-RIN</b></div>
+        <div class="char-affiliation"><b id="characterAffiliation">중앙사관학교 제76기</b><span id="characterPosition">2학년 생도</span></div>
+        <p class="char-summary-copy" id="characterSummary"></p>
+        <div class="char-facts" id="characterFacts"></div>
+        <div class="char-links">
+          <button type="button" data-char-open="nations">대한민국 국가 기록 →</button>
+          <button type="button" data-char-open="military">군사·교육체계 기록 →</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="char-details">
+      <nav class="char-detail-tabs" aria-label="인물 상세정보">
+        <button class="active" type="button" data-char-panel="basic">기본정보</button>
+        <button type="button" data-char-panel="personality">성격</button>
+        <button type="button" data-char-panel="career">경력</button>
+        <button type="button" data-char-panel="relations">관계</button>
+        <button type="button" data-char-panel="records">연결 기록</button>
+      </nav>
+      <div class="char-detail-panel">
+        <div class="char-detail-intro"><span>인물 상세기록</span><h4 id="characterPanelTitle">기본정보</h4><p id="characterPanelLead"></p></div>
+        <div class="char-detail-blocks" id="characterPanelBlocks"></div>
+      </div>
+    </section>
+  </div>
+</section>
+
 <section class="view nations-view" data-view="nations">
   <div class="nation-archive world-order" id="nationsArchive">
     <header class="na-head wo-head">
@@ -272,7 +319,7 @@
           </section>
 
           <section class="na-panel" data-na-panel="defense">
-            <div class="wo-section-head"><span>03 / 국방</span><b>국가 방위 체계</b><em>04 군사 기록과 연결</em></div>
+            <div class="wo-section-head"><span>03 / 국방</span><b>국가 방위 체계</b><em>05 군사 기록과 연결</em></div>
             <div class="wo-pending"><span>상세 국가 체계</span><b>기록 준비 중 // 대한민국 상세자료 제공</b></div>
             <div class="wo-state-content">
               <div class="wo-defense-route">
@@ -286,7 +333,7 @@
                 <article><span>지휘 연결</span><b data-nation-field="capital">---</b></article>
               </div>
               <p class="wo-copy" data-state-field="def-note"></p>
-              <button class="wo-record-link" type="button" data-na-open-military><span>연결 기록 04</span><b>군사 체계 보기 →</b></button>
+              <button class="wo-record-link" type="button" data-na-open-military><span>연결 기록 05</span><b>군사 체계 보기 →</b></button>
             </div>
           </section>
 
@@ -529,53 +576,6 @@
     <footer class="mil-social"><span>군사사회 // 공개 기록</span><p>안전권에서는 민간의 일상이 계속된다. 동시에 군 경력과 출신 교육기관은 장기전 사회에서 중요한 경력 자산으로 기능한다.</p></footer>
   </div>
 </section>
-<section class="view characters-view" data-view="characters">
-  <div class="char-archive" id="characterArchive">
-    <header class="char-head">
-      <div><span>인물 기록 // CHARACTER ARCHIVE</span><h2>이 시대를 살아가는 사람들.</h2></div>
-      <p>2134년의 세계를 인물의 시선으로 연결한다. 국가·기관·군사체계의 설정은 각 인물 기록에서 관련 자료로 이어진다.</p>
-    </header>
-
-    <nav class="char-roster" id="characterRoster" aria-label="등록 인물"></nav>
-
-    <section class="char-hero">
-      <div class="char-visual">
-        <div class="char-watermark" id="characterWatermark">한서린</div>
-        <div class="char-image-label">인물 식별 기록 // 001</div>
-        <div class="char-portrait" id="characterPortrait"><span class="char-portrait-name" id="characterPortraitName">韓瑞麟</span></div>
-        <div class="char-visual-index"><span>현재 등록 인물</span><b>01 / 확장형 기록</b></div>
-      </div>
-
-      <article class="char-summary">
-        <div class="char-record-no" id="characterRecordNo">인물 기록 001</div>
-        <h3 id="characterName">한서린</h3>
-        <div class="char-name-meta"><span id="characterHanja">韓瑞麟</span><i></i><b id="characterRoman">HAN SEO-RIN</b></div>
-        <div class="char-affiliation"><b id="characterAffiliation">중앙사관학교 제76기</b><span id="characterPosition">2학년 생도</span></div>
-        <p class="char-summary-copy" id="characterSummary"></p>
-        <div class="char-facts" id="characterFacts"></div>
-        <div class="char-links">
-          <button type="button" data-char-open="nations">대한민국 국가 기록 →</button>
-          <button type="button" data-char-open="military">군사·교육체계 기록 →</button>
-        </div>
-      </article>
-    </section>
-
-    <section class="char-details">
-      <nav class="char-detail-tabs" aria-label="인물 상세정보">
-        <button class="active" type="button" data-char-panel="basic">기본정보</button>
-        <button type="button" data-char-panel="personality">성격</button>
-        <button type="button" data-char-panel="career">경력</button>
-        <button type="button" data-char-panel="relations">관계</button>
-        <button type="button" data-char-panel="records">연결 기록</button>
-      </nav>
-      <div class="char-detail-panel">
-        <div class="char-detail-intro"><span>인물 상세기록</span><h4 id="characterPanelTitle">기본정보</h4><p id="characterPanelLead"></p></div>
-        <div class="char-detail-blocks" id="characterPanelBlocks"></div>
-      </div>
-    </section>
-  </div>
-</section>
-
 <section class="view" data-view="archive"><div class="pagehead"><div><div class="kicker">역사 기록</div><h2>역사 기록</h2></div><p>현재 세계를 만든 핵심 사건. 세부 연표는 설정 확장에 맞춰 추가한다.</p></div><div class="record"><time>2031</time><div><h3>제1강하</h3><p>에이돌론의 출현과 전 지구적 전쟁의 시작.</p></div></div><div class="record"><time>2040s</time><div><h3>방위권 재편</h3><p>도시 요새화, 대규모 피난, 국가별 장기 방위체계가 형성된다.</p></div></div><div class="record"><time>21C</time><div><h3>I.D.A. 방위망 정착</h3><p>국가 간 전략정보와 공동작전을 연결하는 국제 방위망이 자리잡는다.</p></div></div><div class="record"><time>2134</time><div><h3>전쟁 103년째</h3><p>인류는 멸망하지 않았다. 대신 전쟁에 적응한 새로운 문명을 만들었다.</p></div></div></section>
 </main>
 <nav class="mobile-record-shell" id="mobileRecordShell" aria-label="모바일 기록 메뉴">
