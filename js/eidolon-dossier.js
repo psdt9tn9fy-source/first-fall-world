@@ -6,8 +6,9 @@ export function initEidolonDossier(root,{reduced=false}={}){
     panel=document.createElement("aside");
     panel.className="ei-live-dossier";
     panel.setAttribute("aria-live","polite");
-    panel.innerHTML='<div class="ei-live-head"><span>I.D.A. // LIVE ENTITY RECORD</span><b data-live-state>STANDBY</b></div><div class="ei-live-code" data-live-code></div><h3 data-live-title></h3><div class="ei-live-lines"><div><span>CLASS</span><b data-live-class></b></div><div><span>SCALE</span><b data-live-scale></b></div><div><span>ROLE</span><b data-live-role></b></div></div><p data-live-body></p><footer><span data-live-foot>STREAM // ACTIVE</span><i></i></footer>';
+    panel.innerHTML='<div class="ei-live-head"><span>I.D.A. // ENTITY INFORMATION</span><div><b data-live-state>STANDBY</b><button class="ei-live-close" type="button" aria-label="Close entity information">×</button></div></div><div class="ei-live-code" data-live-code></div><h3 data-live-title></h3><div class="ei-live-lines"><div><span>CLASS</span><b data-live-class></b></div><div><span>SCALE</span><b data-live-scale></b></div><div><span>ROLE</span><b data-live-role></b></div></div><p data-live-body></p><footer><span data-live-foot>STREAM // ACTIVE</span><i></i></footer>';
     scanner.appendChild(panel);
+    panel.querySelector(".ei-live-close")?.addEventListener("click",close);
   }
   const get=s=>panel.querySelector(s);
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
