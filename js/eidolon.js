@@ -44,7 +44,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-headingfix-1").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-class-system-1").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
@@ -168,7 +168,9 @@ export function initEidolon(){
     field("scale",c.scale);
     field("role",c.role);
     field("risk",c.risk);
-    q("#eiProfileTitle").textContent=c.mark+" // "+c.name;
+    const profileMark=root.querySelector("[data-ei-profile-mark]"),profileName=root.querySelector("[data-ei-profile-name]");
+    if(profileMark)profileMark.textContent=c.mark;
+    if(profileName)profileName.textContent=c.name;
     typeRecord(q("#eiProfileBody"),c.brief,"SPECIMEN IDENTIFIED");
     q("#eiBehaviorClass").textContent=c.name+" // "+c.role;
     q("#eiSeraphNotice").hidden=c.key!=="seraph";
