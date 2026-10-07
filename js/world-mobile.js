@@ -1,5 +1,5 @@
-import { N, EVENTS, ext } from "./data.js";
-import { THEATERS } from "./world-data.js";
+import { N, EVENTS, ext } from "./data.js?v=20261007-field-terminal-3";
+import { THEATERS } from "./world-data.js?v=20261007-field-terminal-3";
 
 const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
