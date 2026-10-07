@@ -15,7 +15,7 @@
     transition:height .2s cubic-bezier(.2,.76,.2,1)
   }
   .na-index:before{
-    content:"SELECTED NATION";position:absolute;z-index:7;left:10px;top:50%;
+    content:"선택한 국가";position:absolute;z-index:7;left:10px;top:50%;
     transform:translateY(calc(-50% - 8px));font:700 5px ui-monospace,SFMono-Regular,monospace;
     letter-spacing:.18em;color:#7e9298;pointer-events:none
   }
@@ -202,7 +202,7 @@
   .world-order .na-head p{font-size:7px;line-height:1.55;max-width:145px}
 
   .world-order .na-index:before{
-    content:"SELECTED STATE";left:12px;font-size:7px;letter-spacing:.14em;
+    content:"선택한 국가";left:12px;font-size:7px;letter-spacing:.14em;
     transform:translateY(calc(-50% - 10px))
   }
   .world-order .na-index-mobile-bar{height:48px}
