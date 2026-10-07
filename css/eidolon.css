@@ -107,3 +107,21 @@
 .eidolon-lab.ei-focus-pulse .ei-scanline{animation:eiFocusSweep .62s cubic-bezier(.2,.7,.2,1) 1}
 @keyframes eiFocusSweep{0%{opacity:0;transform:translateY(-145px)}22%{opacity:.75}100%{opacity:0;transform:translateY(145px)}}
 @media(prefers-reduced-motion:reduce){#eiProfileBody.ei-type-active:after,#eiFocusBody.ei-type-active:after{animation:none}.eidolon-lab.ei-focus-pulse .ei-scanline{animation:none}}
+
+
+/* Live contextual entity dossier — single reusable surface */
+.ei-live-dossier{position:absolute;z-index:10;right:18px;bottom:48px;width:min(48%,360px);max-height:74%;overflow:auto;padding:13px 14px 12px;border:1px solid #52676d;background:linear-gradient(135deg,#0a1113f2,#06090af7 68%);box-shadow:0 18px 48px #000a,inset 2px 0 #9ab8be38;backdrop-filter:blur(8px);opacity:0;visibility:hidden;transform:translateX(18px) scaleX(.94);transform-origin:right center;transition:opacity .16s,transform .2s,visibility .2s;pointer-events:none}
+.ei-live-dossier.open{opacity:1;visibility:visible;transform:none}
+.ei-live-dossier:before{content:"";position:absolute;left:-72px;top:44%;width:72px;height:1px;background:linear-gradient(90deg,transparent,#78949a)}
+.ei-live-head{display:flex;justify-content:space-between;gap:10px;padding-bottom:8px;border-bottom:1px solid #314045}
+.ei-live-head span,.ei-live-head b,.ei-live-lines span,.ei-live-dossier footer{font:700 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em;color:#71858a}.ei-live-head b{color:#aec4c9}
+.ei-live-code{min-height:12px;margin-top:11px;font:750 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em;color:#789096}
+.ei-live-dossier h3{min-height:24px;margin:4px 0 10px;font:900 20px/1 ui-monospace,SFMono-Regular,monospace;letter-spacing:-.03em;color:#e0eaec}
+.ei-live-lines{display:grid;border-top:1px solid #202b2e}.ei-live-lines>div{display:grid;grid-template-columns:58px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #202b2e}.ei-live-lines b{min-height:9px;font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;color:#a5b6ba}
+.ei-live-dossier p{min-height:46px;margin:11px 0 9px;font-size:10px;line-height:1.7;color:#9ba9ad}
+.ei-live-dossier.streaming p:after{content:"▌";margin-left:2px;color:#c1d7dc;animation:eiCursorBlink .48s steps(1) infinite}
+.ei-live-dossier footer{display:flex;align-items:center;gap:7px;padding-top:8px;border-top:1px solid #263236}.ei-live-dossier footer i{height:1px;flex:1;background:linear-gradient(90deg,#91aeb5,transparent);transform-origin:left;animation:eiDataLine .8s ease-out infinite}
+.ei-live-dossier.ready footer i{animation:none;transform:scaleX(.35);opacity:.45}
+@keyframes eiDataLine{0%{transform:scaleX(.08);opacity:.3}65%{transform:scaleX(1);opacity:.8}100%{opacity:.15}}
+@media(max-width:760px){.ei-live-dossier{position:absolute;left:8px;right:8px;bottom:40px;width:auto;max-height:43%;padding:11px 12px;transform:translateY(18px);transform-origin:center bottom}.ei-live-dossier.open{transform:none}.ei-live-dossier:before{display:none}.ei-live-dossier h3{font-size:17px}.ei-live-dossier p{font-size:9px;line-height:1.55}}
+@media(prefers-reduced-motion:reduce){.ei-live-dossier{transition:none}.ei-live-dossier.streaming p:after,.ei-live-dossier footer i{animation:none}}
