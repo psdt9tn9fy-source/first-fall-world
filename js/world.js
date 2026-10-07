@@ -42,11 +42,11 @@ export function initWorld(){
   const nationsByKey=new Map(N.map(n=>[n[0],n])),countryByName=new Map(),pathByIso=new Map(),sectorNode=new Map();
   let loaded=false,loadingNow=false,selected=null,zone="all",era="2134",zoom=1,focus=[W/2,H/2],tx=0,ty=0,drawTx=0,drawTy=0,drawZoom=1,mapAnim=0;
 
-  function setPanel({overline="GLOBAL THEATER // 2134",index="00",title="WORLD OVERVIEW",className="I.D.A. PUBLIC ARCHIVE",body="지도의 국가 또는 전략 노드를 선택하면 현재 기록과 연결된 아카이브를 열람할 수 있다.",status="ONGOING WAR",access="PUBLIC",record=null,nation=null,feed="NODE 07 // WORLD DATA SYNCHRONIZED"}={}){
+  function setPanel({overline="세계 전구 // 2134",index="00",title="세계 현황",className="I.D.A. 공개 기록",body="지도의 국가 또는 전략 노드를 선택하면 현재 기록과 연결된 아카이브를 열람할 수 있다.",status="전쟁 계속 중",access="공개",record=null,nation=null,feed="NODE 07 // 세계 데이터 동기화"}={}){
     panel.overline.textContent=overline;panel.index.textContent=index;panel.title.textContent=title;panel.class.textContent=className;panel.body.textContent=body;
     panel.era.textContent=era;panel.status.textContent=status;panel.access.textContent=access;panel.feed.textContent=feed;
     panel.open.disabled=!record;panel.open.dataset.record=record||"";panel.open.dataset.nation=nation||"";
-    panel.open.firstChild.nodeValue=record?"OPEN RELATED RECORD ":"NO LINKED RECORD ";
+    panel.open.firstChild.nodeValue=record?"관련 기록 열기 ":"연결된 기록 없음 ";
   }
   function clearSelected(){
     land.querySelectorAll(".selected").forEach(n=>n.classList.remove("selected"));
@@ -65,23 +65,23 @@ export function initWorld(){
     };
     mapAnim=requestAnimationFrame(tick);
   }
-  function resetFocus(){clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();setPanel({overline:`GLOBAL THEATER // ${era}`})}
+  function resetFocus(){clearSelected();selected=null;zoom=1;focus=[W/2,H/2];applyTransform();setPanel({overline:`세계 전구 // ${era}`})}
   function focusAt(x,y,z=1.55){focus=[x,y];zoom=Math.max(1,Math.min(2.35,z));applyTransform()}
   function nationPanel(key,name,iso,feature){
     const n=nationsByKey.get(key);clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"nation",key,iso};
     const [x,y]=centroid(feature);focusAt(x,y,1.55);
-    if(n)setPanel({overline:`NATION LINK // ${iso}`,index:"N",title:n[2],className:n[3],body:n[8],status:n[4],access:"PUBLIC",record:"nations",nation:key,feed:`${n[1]} // ARCHIVE LINK READY`});
-    else setPanel({overline:`GEOGRAPHIC RECORD // ${iso}`,index:"N",title:name,className:"NO DEDICATED PUBLIC RECORD",body:"현재 공개 아카이브에 독립 국가 기록이 연결되어 있지 않다.",status:"REFERENCE ONLY",feed:"GEOGRAPHIC REFERENCE // NO RECORD LINK"});
+    if(n)setPanel({overline:`국가 연결 // ${iso}`,index:"N",title:n[2],className:n[3],body:n[8],status:n[4],access:"공개",record:"nations",nation:key,feed:`${n[1]} // 기록 연결 준비`});
+    else setPanel({overline:`지리 기록 // ${iso}`,index:"N",title:name,className:"NO DEDICATED 공개 RECORD",body:"현재 공개 아카이브에 독립 국가 기록이 연결되어 있지 않다.",status:"참고 정보",feed:"지리 참고 // 연결 기록 없음"});
   }
   function genericCountryPanel(feature){
-    const iso=feature.id||"---",name=feature.properties?.name||"UNKNOWN";clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"country",iso};
+    const iso=feature.id||"---",name=feature.properties?.name||"미상";clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"country",iso};
     const [x,y]=centroid(feature);focusAt(x,y,1.42);
-    setPanel({overline:`GEOGRAPHIC REFERENCE // ${iso}`,index:"G",title:name,className:"WORLD MAP REFERENCE",body:"지리 정보는 확인되지만 현재 공개 아카이브에 별도 국가 기록이 연결되어 있지 않다.",status:"REFERENCE ONLY",feed:"MAP NODE // NO DEDICATED RECORD"});
+    setPanel({overline:`지리 참고 // ${iso}`,index:"G",title:name,className:"세계지도 참고",body:"지리 정보는 확인되지만 현재 공개 아카이브에 별도 국가 기록이 연결되어 있지 않다.",status:"참고 정보",feed:"지도 노드 // 전용 기록 없음"});
   }
   function sectorPanelData(s,node){
     clearSelected();node.classList.add("selected");selected={type:"sector",id:s.id};
     const [x,y]=project(s.lon,s.lat);focusAt(x,y,1.72);
-    setPanel({overline:`STRATEGIC NODE // ${s.id}`,index:s.id,title:s.ko,className:`${ZONE_LABEL[s.zone]} // ${s.name}`,body:s.body,status:ZONE_LABEL[s.zone],access:s.zone==="black"?"RESTRICTED":"PUBLIC",record:s.record,nation:s.nation||null,feed:`${s.name} // RECORD LINK READY`});
+    setPanel({overline:`전략 노드 // ${s.id}`,index:s.id,title:s.ko,className:`${ZONE_LABEL[s.zone]} // ${s.name}`,body:s.body,status:ZONE_LABEL[s.zone],access:s.zone==="black"?"제한":"공개",record:s.record,nation:s.nation||null,feed:`${s.name} // 기록 연결 준비`});
   }
   function renderSectors(){
     sectorLayer.innerHTML="";const counts={all:SECTORS.length,safe:0,contested:0,lost:0,black:0};
@@ -90,13 +90,13 @@ export function initWorld(){
       g.setAttribute("class","sector-marker");g.dataset.zone=s.zone;g.dataset.id=s.id;g.setAttribute("transform",`translate(${x} ${y})`);
       g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",`${s.ko}, ${ZONE_LABEL[s.zone]}`);
       g.innerHTML='<circle class="sector-hit" r="20"></circle><circle class="sector-pulse" r="8"></circle><circle class="sector-ring" r="8"></circle><circle class="sector-core" r="2.6"></circle><text x="12" y="-8">'+s.id+'</text>';
-      g.addEventListener("mouseenter",()=>hover.textContent=`${s.id} // ${s.name}`);g.addEventListener("mouseleave",()=>hover.textContent="SELECT A SECTOR OR NATION");
+      g.addEventListener("mouseenter",()=>hover.textContent=`${s.id} // ${s.name}`);g.addEventListener("mouseleave",()=>hover.textContent="권역 또는 국가를 선택하세요");
       g.addEventListener("click",e=>{e.stopPropagation();sectorPanelData(s,g)});
       g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();sectorPanelData(s,g)}});
       sectorLayer.appendChild(g);sectorNode.set(s.id,g);
     }
     Object.entries(counts).forEach(([k,v])=>{const el=document.querySelector("#count"+k[0].toUpperCase()+k.slice(1));if(el)el.textContent=String(v).padStart(2,"0")});
-    document.querySelector("#worldNodeCount").textContent=String(SECTORS.length).padStart(2,"0")+" TRACKED";
+    document.querySelector("#worldNodeCount").textContent=String(SECTORS.length).padStart(2,"0")+"개 추적";
   }
   function addSearchOptions(features){
     searchList.innerHTML="";const frag=document.createDocumentFragment();
@@ -119,19 +119,19 @@ export function initWorld(){
         const path=document.createElementNS("http://www.w3.org/2000/svg","path"),iso=feature.id||"---",name=feature.properties?.name||iso,route=ROUTES[iso];
         path.setAttribute("d",d);path.setAttribute("fill-rule","evenodd");path.dataset.iso=iso;path.dataset.name=name;if(route)path.classList.add("linked");
         path.addEventListener("mouseenter",()=>hover.textContent=`${iso} // ${name.toUpperCase()}${route?" // RECORD LINK":""}`);
-        path.addEventListener("mouseleave",()=>hover.textContent="SELECT A SECTOR OR NATION");
+        path.addEventListener("mouseleave",()=>hover.textContent="권역 또는 국가를 선택하세요");
         path.addEventListener("click",e=>{e.stopPropagation();route?nationPanel(route,name,iso,feature):genericCountryPanel(feature)});
         frag.appendChild(path);pathByIso.set(iso,path);countryByName.set(name.toLowerCase(),feature);
       }
       land.appendChild(frag);renderSectors();addSearchOptions(geo.features);loaded=true;loading.classList.add("done");viewport.classList.add("ready");
-    }catch(e){loading.innerHTML="<span>WORLD DATA // UNAVAILABLE</span>";setPanel({status:"MAP OFFLINE",feed:"NODE 07 // GEOGRAPHIC DATA FAILED"})}
+    }catch(e){loading.innerHTML="<span>세계 데이터 // 사용 불가</span>";setPanel({status:"지도 연결 안 됨",feed:"NODE 07 // 지리 데이터 불러오기 실패"})}
     finally{loadingNow=false}
   }
 
   document.querySelectorAll("[data-zone-filter]").forEach(btn=>btn.addEventListener("click",()=>{
     zone=btn.dataset.zoneFilter;room.dataset.zone=zone;document.querySelectorAll("[data-zone-filter]").forEach(x=>x.classList.toggle("active",x===btn));
     sectorNode.forEach((node,id)=>{const s=SECTORS.find(v=>v.id===id);node.classList.toggle("filtered",zone!=="all"&&s.zone!==zone)});
-    if(zone!=="all"&&!SECTORS.some(s=>s.zone===zone)){clearSelected();selected=null;setPanel({overline:`ZONE CLASSIFICATION // ${ZONE_LABEL[zone]}`,index:zone==="contested"?"02":"03",title:ZONE_LABEL[zone],className:"CLASSIFICATION RECORD",body:zone==="contested"?"교전 및 회복작전이 진행 중인 유동 통제권. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.":"지속적인 인류 통제가 상실된 지역. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.",status:"NO PUBLIC NODES",feed:"ZONE FILTER // ACTIVE"})}
+    if(zone!=="all"&&!SECTORS.some(s=>s.zone===zone)){clearSelected();selected=null;setPanel({overline:`권역 분류 // ${ZONE_LABEL[zone]}`,index:zone==="contested"?"02":"03",title:ZONE_LABEL[zone],className:"분류 기록",body:zone==="contested"?"교전 및 회복작전이 진행 중인 유동 통제권. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.":"지속적인 인류 통제가 상실된 지역. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.",status:"NO 공개 NODES",feed:"권역 필터 // 적용 중"})}
     else if(zone==="all"&&!selected)resetFocus();
   }));
   document.querySelectorAll(".era-track [data-era]").forEach(btn=>btn.addEventListener("click",()=>{
