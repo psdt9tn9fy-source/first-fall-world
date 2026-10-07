@@ -15,7 +15,7 @@ export function initEidolonDossier(root,{reduced=false}={}){
       </header>
       <main class="ei-fui-document">
         <div class="ei-fui-index"><span data-live-code></span><i>RECORD // 03</i></div>
-        <section class="ei-fui-hero" data-stage="hero"><strong data-live-mark></strong><div><span>CLASSIFICATION RECORD</span><h3 data-live-title></h3><em data-live-role></em></div></section>
+        <section class="ei-fui-hero" data-stage="hero"><div class="ei-fui-heading"><span>CLASSIFICATION RECORD</span><h3><b class="ei-fui-title-mark" data-live-mark></b><i>//</i><strong data-live-title></strong></h3><em data-live-role></em></div></section>
         <section class="ei-fui-meta" data-stage="meta">
           <div><span>CLASS</span><b data-live-class></b></div><div><span>SCALE</span><b data-live-scale></b></div>
           <div><span>ROLE</span><b data-live-role2></b></div><div><span>RISK</span><b data-live-risk></b></div>
@@ -68,7 +68,9 @@ export function initEidolonDossier(root,{reduced=false}={}){
     await stream(get("[data-live-code]"),record.code||"",token,5);
     if(token!==run)return;
     const hero=get('[data-stage="hero"]');hero.classList.add("arrived","writing");
-    await Promise.all([stream(get("[data-live-mark]"),record.mark||"",token,5),stream(get("[data-live-title]"),record.title||"",token,6),stream(get("[data-live-role]"),record.role||"",token,5)]);
+    get("[data-live-mark]").textContent=record.mark||"";
+    const displayTitle=(record.title||"").replace(/^.*?\/\/\s*/, "");
+    await Promise.all([stream(get("[data-live-title]"),displayTitle,token,6),stream(get("[data-live-role]"),record.role||"",token,5)]);
     hero.classList.remove("writing");if(token!==run)return;
     const meta=get('[data-stage="meta"]');meta.classList.add("arrived","writing");
     await Promise.all([stream(get("[data-live-class]"),record.classification||"",token,4),stream(get("[data-live-scale]"),record.scale||"",token,4),stream(get("[data-live-role2]"),record.role||"",token,4),stream(get("[data-live-risk]"),record.risk||"",token,4)]);
