@@ -40,7 +40,7 @@ export function initEidolon(){
 
   function loadRecords(){
     if(recordsPromise)return recordsPromise;
-    recordsPromise=import("./eidolon-records.js?v=20261007-risk-sync-1").then(mod=>{
+    recordsPromise=import("./eidolon-records.js?v=20261007-seraph-breach-1").then(mod=>{
       records=mod.initEidolonRecords(root);
       return records;
     }).catch(err=>{console.warn("EIDOLON records unavailable",err);return null});
