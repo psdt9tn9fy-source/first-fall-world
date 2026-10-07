@@ -209,6 +209,7 @@
 /* binder shell */
 .char-binder{
   position:relative;
+  scroll-margin-top:150px;
   display:grid;
   grid-template-columns:minmax(0,1fr) 112px;
   grid-template-rows:auto minmax(610px,70vh) auto;
