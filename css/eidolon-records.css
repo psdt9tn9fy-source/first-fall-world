@@ -177,3 +177,10 @@
  .ei-nest-topology[data-level="medium"] .ei-nest-links .production{top:calc(50% - 56px);width:calc(34% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .repair{left:calc(50% - 56px);width:calc(32% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .supply{left:calc(50% + 56px);width:calc(32% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .data{top:calc(50% + 56px);width:calc(34% - 56px)}
  .ei-nest-topology[data-level="grand"] .ei-nest-links .production{top:calc(50% - 63px);width:calc(34% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .repair{left:calc(50% - 63px);width:calc(32% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .supply{left:calc(50% + 63px);width:calc(32% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .data{top:calc(50% + 63px);width:calc(34% - 63px)}
 }
+
+
+/* NEST core label optical centering */
+.ei-nest-core{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:7px!important;padding:0!important;line-height:1!important}
+.ei-nest-core span,.ei-nest-core b{display:block!important;width:100%;margin:0!important;padding:0!important;text-align:center!important;transform:rotate(-45deg) translateZ(0)!important;transform-origin:center!important;line-height:1!important}
+.ei-nest-core span{font-size:5px!important;letter-spacing:.18em!important}
+.ei-nest-core b{font-size:8px!important;letter-spacing:.08em!important}
