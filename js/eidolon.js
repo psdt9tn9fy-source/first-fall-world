@@ -33,7 +33,8 @@ export function initEidolon(){
   const riskButtons=[...root.querySelectorAll("[data-ei-risk]")];
   const scanner=root.querySelector("#eiScanner");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let classIndex=2,scanTimer=0,pointerX=null,textRun=0;
+  let classIndex=2,scanTimer=0,pointerX=null;
+  const textRuns=new WeakMap();
   let threeDModulePromise=null,threeDController=null,dossierPromise=null,dossier=null;
 
   const q=id=>root.querySelector(id);
@@ -43,7 +44,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-fui-clean").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-cleanup-1").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
@@ -88,7 +89,8 @@ export function initEidolon(){
 
   function typeRecord(el,text,status="DATA DECODE"){
     if(!el)return;
-    const run=++textRun;
+    const run=(textRuns.get(el)||0)+1;
+    textRuns.set(el,run);
     el.classList.remove("ei-type-done");
     el.classList.add("ei-type-active");
     el.dataset.decode=status;
@@ -96,14 +98,14 @@ export function initEidolon(){
     const glyphs="01/\\[]<>#_";
     let scramble=0;
     const scrambleTimer=setInterval(()=>{
-      if(run!==textRun){clearInterval(scrambleTimer);return}
+      if(run!==textRuns.get(el)){clearInterval(scrambleTimer);return}
       const reveal=Math.min(10,Math.max(4,Math.floor(text.length*.12)));
       el.textContent=Array.from({length:reveal},()=>glyphs[Math.floor(Math.random()*glyphs.length)]).join("");
       if(++scramble>=3){
         clearInterval(scrambleTimer);
         let i=0;el.textContent="";
         const tick=()=>{
-          if(run!==textRun)return;
+          if(run!==textRuns.get(el))return;
           const step=text[i]?.match(/[\s.,·]/)?2:1;
           i=Math.min(text.length,i+step);
           el.textContent=text.slice(0,i);
@@ -237,8 +239,9 @@ export function initEidolon(){
     if(e.key==="ArrowLeft"||e.key==="ArrowUp"){e.preventDefault();stepClass(-1)}
     if(e.key==="ArrowRight"||e.key==="ArrowDown"){e.preventDefault();stepClass(1)}
   });
-  scanner.addEventListener("pointerdown",e=>{if(e.target.closest?.(".ei-model-stage"))return;pointerX=e.clientX;scanner.setPointerCapture?.(e.pointerId)});
+  scanner.addEventListener("pointerdown",e=>{if(e.target.closest?.(".ei-model-stage,.ei-live-dossier,.ei-info-tab"))return;pointerX=e.clientX;scanner.setPointerCapture?.(e.pointerId)});
   scanner.addEventListener("pointerup",e=>{
+    if(e.target.closest?.(".ei-live-dossier,.ei-info-tab")){pointerX=null;return}
     if(pointerX===null)return;
     const dx=e.clientX-pointerX;pointerX=null;
     if(Math.abs(dx)>52)stepClass(dx<0?1:-1);
