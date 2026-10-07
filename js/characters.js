@@ -1,22 +1,26 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261008-character-v5";
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261008-character-v6";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
   if(!root)return;
 
   const character=CHARACTERS[CHARACTER_ORDER[0]];
-  const story=root.querySelector("#characterStory");
-  const steps=[...root.querySelectorAll("[data-char-step]")];
-  const scenes=[...root.querySelectorAll("[data-char-scene]")];
+  const binder=root.querySelector("#characterBinder");
+  const stage=binder?.querySelector("[data-char-swipe]");
+  const tabs=[...root.querySelectorAll("[data-char-tab]")];
+  const pages=[...root.querySelectorAll("[data-char-page]")];
   const progress=[...root.querySelectorAll("[data-char-progress]")];
-  const state=root.querySelector("#characterSceneState");
-  const chapterNo=root.querySelector("#characterChapterNo");
-  const chapterLabel=root.querySelector("#characterChapterLabel");
+  const state=root.querySelector("#characterSectionState");
+  const pageNo=root.querySelector("#characterPageNo");
+  const pageLabel=root.querySelector("#characterPageLabel");
+  const prev=root.querySelector("[data-char-prev]");
+  const next=root.querySelector("[data-char-next]");
   const start=root.querySelector("[data-char-start]");
   const portrait=root.querySelector("#characterPortrait");
   const name=root.querySelector("#characterName");
   const roman=root.querySelector("#characterRoman");
   const summary=root.querySelector("#characterSummary");
+  const binderName=root.querySelector("#characterBinderName");
   const ghost=root.querySelector("#characterGhost");
   const portraitName=root.querySelector("#characterPortraitName");
   const identityName=root.querySelector("#characterIdentityName");
@@ -27,15 +31,17 @@ export function initCharacters(){
   const career=root.querySelector("#characterCareer");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const sceneMeta=[
-    ["01","식별","IDENTIFICATION"],
+  const sections=[
+    ["01","신상","IDENTIFICATION"],
     ["02","성격","OBSERVATION"],
     ["03","경력","HISTORY"],
-    ["04","연결","CONNECTED WORLD"]
+    ["04","연결","LINKED RECORDS"]
   ];
 
-  let activeScene=-1;
-  let ticking=false;
+  let activeSection=0;
+  let touchStartX=0;
+  let touchStartY=0;
+  let switchTimer=0;
 
   root.style.setProperty("--char-accent",character.accent);
 
@@ -43,6 +49,7 @@ export function initCharacters(){
     name.textContent=character.name;
     roman.textContent=character.roman;
     summary.textContent=character.summary;
+    binderName.textContent=character.name;
     ghost.textContent=character.name;
     portraitName.textContent=character.name;
     identityName.textContent=character.name;
@@ -67,63 +74,107 @@ export function initCharacters(){
     }).join("");
   }
 
-  function setScene(index){
-    const next=Math.max(0,Math.min(index,scenes.length-1));
-    if(next===activeScene)return;
-    activeScene=next;
-    root.dataset.scene=String(next);
-
-    scenes.forEach(function(scene,i){
-      scene.classList.toggle("active",i===next);
-      scene.setAttribute("aria-hidden",i===next?"false":"true");
+  function updateControls(){
+    tabs.forEach(function(tab,index){
+      const active=index===activeSection;
+      tab.classList.toggle("active",active);
+      tab.setAttribute("aria-selected",active?"true":"false");
+      tab.tabIndex=active?0:-1;
     });
 
-    progress.forEach(function(item,i){
-      item.classList.toggle("active",i===next);
-      item.classList.toggle("done",i<next);
+    progress.forEach(function(item,index){
+      item.classList.toggle("active",index===activeSection);
+      item.classList.toggle("done",index<activeSection);
     });
 
-    const meta=sceneMeta[next];
+    const meta=sections[activeSection];
     state.textContent=meta[0]+" / "+meta[1];
-    chapterNo.textContent=meta[0];
-    chapterLabel.textContent=meta[2];
+    pageNo.textContent=meta[0];
+    pageLabel.textContent=meta[2];
+
+    if(prev)prev.disabled=activeSection===0;
+    if(next)next.disabled=activeSection===pages.length-1;
   }
 
-  function updateSceneFromScroll(){
-    ticking=false;
-    if(!story||!steps.length)return;
+  function setSection(index,animate=true){
+    const target=Math.max(0,Math.min(index,pages.length-1));
+    if(target===activeSection){
+      updateControls();
+      return;
+    }
 
-    const storyRect=story.getBoundingClientRect();
-    if(storyRect.bottom<=0||storyRect.top>=innerHeight)return;
+    const direction=target>activeSection?"forward":"back";
+    activeSection=target;
+    root.dataset.section=String(target);
 
-    const targetY=innerHeight*.54;
-    let bestIndex=0;
-    let bestDistance=Infinity;
-
-    steps.forEach(function(step,index){
-      const rect=step.getBoundingClientRect();
-      const center=rect.top+rect.height*.5;
-      const distance=Math.abs(center-targetY);
-      if(distance<bestDistance){
-        bestDistance=distance;
-        bestIndex=index;
-      }
+    pages.forEach(function(page,i){
+      const active=i===target;
+      page.hidden=!active;
+      page.classList.toggle("active",active);
+      page.setAttribute("aria-hidden",active?"false":"true");
     });
 
-    setScene(bestIndex);
+    updateControls();
+
+    if(binder&&animate&&!reduced){
+      clearTimeout(switchTimer);
+      binder.classList.remove("switch-forward","switch-back");
+      void binder.offsetWidth;
+      binder.classList.add(direction==="forward"?"switch-forward":"switch-back");
+      switchTimer=setTimeout(function(){
+        binder.classList.remove("switch-forward","switch-back");
+      },420);
+    }
   }
 
-  function onScroll(){
-    if(ticking)return;
-    ticking=true;
-    requestAnimationFrame(updateSceneFromScroll);
-  }
-
-  if(start){
-    start.addEventListener("click",function(){
-      if(!story)return;
-      story.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+  tabs.forEach(function(tab,index){
+    tab.addEventListener("click",function(){
+      setSection(index,true);
     });
+
+    tab.addEventListener("keydown",function(event){
+      if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+      event.preventDefault();
+
+      let target=activeSection;
+      if(event.key==="ArrowLeft")target=activeSection-1;
+      if(event.key==="ArrowRight")target=activeSection+1;
+      if(event.key==="Home")target=0;
+      if(event.key==="End")target=tabs.length-1;
+
+      target=Math.max(0,Math.min(target,tabs.length-1));
+      setSection(target,true);
+      tabs[target]?.focus();
+    });
+  });
+
+  prev?.addEventListener("click",function(){
+    setSection(activeSection-1,true);
+  });
+
+  next?.addEventListener("click",function(){
+    setSection(activeSection+1,true);
+  });
+
+  start?.addEventListener("click",function(){
+    binder?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+  });
+
+  if(stage){
+    stage.addEventListener("touchstart",function(event){
+      const touch=event.changedTouches[0];
+      touchStartX=touch.clientX;
+      touchStartY=touch.clientY;
+    },{passive:true});
+
+    stage.addEventListener("touchend",function(event){
+      const touch=event.changedTouches[0];
+      const dx=touch.clientX-touchStartX;
+      const dy=touch.clientY-touchStartY;
+
+      if(Math.abs(dx)<46||Math.abs(dx)<=Math.abs(dy)*1.15)return;
+      setSection(activeSection+(dx<0?1:-1),true);
+    },{passive:true});
   }
 
   root.querySelectorAll("[data-char-open]").forEach(function(button){
@@ -136,15 +187,21 @@ export function initCharacters(){
     });
   });
 
-  window.addEventListener("scroll",onScroll,{passive:true});
-  window.addEventListener("resize",onScroll);
   window.addEventListener("archive:record-opened",function(event){
     if(event.detail&&event.detail.key==="characters"){
-      requestAnimationFrame(updateSceneFromScroll);
+      updateControls();
     }
   });
 
   renderCharacter();
-  setScene(0);
-  updateSceneFromScroll();
+
+  pages.forEach(function(page,index){
+    const active=index===0;
+    page.hidden=!active;
+    page.classList.toggle("active",active);
+    page.setAttribute("aria-hidden",active?"false":"true");
+  });
+
+  root.dataset.section="0";
+  updateControls();
 }
