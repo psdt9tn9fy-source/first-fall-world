@@ -199,3 +199,21 @@
 .ei-threat-matrix[data-view-risk="S"]{border-color:#654044}.ei-threat-matrix[data-view-risk="S"] .ei-risk-progress,.ei-threat-matrix[data-view-risk="S"] .ei-threat-bars i b{background:#a86a70;box-shadow:0 0 8px #a86a7055}.ei-threat-matrix[data-view-risk="S"] .ei-risk-track button.active span{border-color:#a86a70;color:#e2c6c9;background:#1c1113}
 @media(max-width:760px){.ei-engage-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}.ei-engage-state{min-width:82px}.ei-threat-matrix{margin-top:16px;padding:17px 10px 13px}.ei-risk-track button span{width:31px;height:31px;line-height:31px;font-size:9px}.ei-risk-track:before,.ei-risk-progress{top:19px}.ei-risk-track button strong{top:50px;font-size:4px}.ei-threat-readout{grid-template-columns:1fr;gap:14px;margin-top:30px}.ei-threat-code{grid-template-columns:auto 1fr;align-items:baseline;column-gap:10px}.ei-threat-code span{grid-column:1/-1}.ei-threat-code b{font-size:21px}.ei-threat-bars>div{grid-template-columns:52px 1fr}.ei-threat-directive{grid-template-columns:1fr;gap:7px}.ei-threat-directive>b{text-align:left}.ei-engage-note{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.ei-risk-progress,.ei-threat-bars i b{transition:none!important}}
+
+
+/* SERAPH // OPERATIONAL SCALE BREACH */
+.ei-risk-breach,.ei-risk-unbounded{display:none}
+.eidolon-view .risk-unbounded .ei-risk-wrap{border-color:#5b3438;box-shadow:inset 0 0 24px #6b303516}
+.eidolon-view .risk-unbounded .ei-risk-scale{padding-right:72px;position:relative}
+.eidolon-view .risk-unbounded .ei-risk-scale span{opacity:.28!important;color:#68777a!important;text-shadow:none!important}
+.eidolon-view .risk-unbounded .ei-risk-breach{display:block;position:absolute;left:calc(100% - 70px);right:20px;top:50%;height:1px;background:#9d555c;box-shadow:0 0 8px #9d555c;animation:eiRiskBreach .72s ease-out both}
+.eidolon-view .risk-unbounded .ei-risk-breach:after{content:"×";position:absolute;right:-7px;top:-10px;color:#d18a91;font:900 17px ui-monospace,SFMono-Regular,monospace}
+.eidolon-view .risk-unbounded .ei-risk-unbounded{display:block;position:absolute;right:0;bottom:-16px;color:#b86c73;font:900 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em}
+.ei-seraph-breach{display:none;position:relative;margin-top:12px;min-height:56px;border:1px solid #58353a;background:#120b0d;overflow:hidden;padding:10px 12px}
+.ei-seraph-risk .ei-seraph-breach{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+.ei-seraph-breach span,.ei-seraph-breach strong{font:800 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em;color:#82575b}.ei-seraph-breach i{height:1px;background:#78464b;transform-origin:left}.ei-seraph-breach b{color:#d28a91;font:900 20px ui-monospace,SFMono-Regular,monospace}.ei-seraph-breach strong{grid-column:1/3;color:#b96e75}.ei-seraph-breach em{justify-self:end;color:#e0a0a6;font:900 9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em;font-style:normal}
+.ei-seraph-risk .ei-threat-matrix{border-color:#56353a}.ei-seraph-risk .ei-threat-matrix.breaching{animation:eiSeraphTear .12s steps(2) 5}.ei-seraph-risk .ei-threat-matrix.breaching .ei-risk-progress{width:92%!important;background:#a45c63;box-shadow:0 0 10px #a45c63}.ei-seraph-risk .ei-threat-matrix.breached .ei-risk-progress{width:80%!important;background:#75464b}.ei-seraph-risk .ei-threat-matrix.breached .ei-threat-code b{color:#dfa0a6}
+@keyframes eiRiskBreach{from{transform:scaleX(0);transform-origin:left;opacity:.2}to{transform:scaleX(1);opacity:1}}
+@keyframes eiSeraphTear{0%{transform:translateX(0)}25%{transform:translateX(2px)}50%{transform:translateX(-3px)}75%{transform:translateX(1px)}100%{transform:translateX(0)}}
+@media(max-width:760px){.eidolon-view .risk-unbounded .ei-risk-scale{padding-right:55px}.eidolon-view .risk-unbounded .ei-risk-breach{left:calc(100% - 53px);right:14px}.ei-seraph-risk .ei-seraph-breach{min-height:62px}}
+@media(prefers-reduced-motion:reduce){.eidolon-view .risk-unbounded .ei-risk-breach,.ei-seraph-risk .ei-threat-matrix.breaching{animation:none!important}}
