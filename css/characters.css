@@ -741,6 +741,22 @@
   color:var(--char-accent);
 }
 
+.char-unlock.waiting,
+.char-unlock:disabled{
+  cursor:default;
+}
+
+.char-unlock.waiting{
+  border-color:#293740;
+  color:#667780;
+  background:#071017e8;
+  box-shadow:0 10px 24px #0008;
+}
+
+.char-unlock.waiting b{
+  color:#50616b;
+}
+
 .char-record.unlocking .char-unlock{
   animation:charUnlockButton .28s ease forwards;
   pointer-events:none;
