@@ -157,3 +157,23 @@
 .ei-nest-state{min-width:82px}
 .ei-nest-state b{display:block;width:82px;white-space:nowrap;text-align:right}
 @media(max-width:760px){.ei-nest-state{min-width:76px}.ei-nest-state b{width:76px}}
+
+
+/* NEST geometry precision — terminate links at node/core edges */
+.ei-nest-links .production{left:50%;top:calc(50% - 58px);width:calc(34% - 58px);transform:rotate(-90deg)}
+.ei-nest-links .repair{left:calc(50% - 58px);top:50%;width:calc(32% - 58px);transform:rotate(180deg)}
+.ei-nest-links .supply{left:calc(50% + 58px);top:50%;width:calc(32% - 58px);transform:rotate(0)}
+.ei-nest-links .data{left:50%;top:calc(50% + 58px);width:calc(34% - 58px);transform:rotate(90deg)}
+.ei-nest-topology[data-level="medium"] .ei-nest-links .production{top:calc(50% - 65px);width:calc(34% - 65px)}
+.ei-nest-topology[data-level="medium"] .ei-nest-links .repair{left:calc(50% - 65px);width:calc(32% - 65px)}
+.ei-nest-topology[data-level="medium"] .ei-nest-links .supply{left:calc(50% + 65px);width:calc(32% - 65px)}
+.ei-nest-topology[data-level="medium"] .ei-nest-links .data{top:calc(50% + 65px);width:calc(34% - 65px)}
+.ei-nest-topology[data-level="grand"] .ei-nest-links .production{top:calc(50% - 73px);width:calc(34% - 73px)}
+.ei-nest-topology[data-level="grand"] .ei-nest-links .repair{left:calc(50% - 73px);width:calc(32% - 73px)}
+.ei-nest-topology[data-level="grand"] .ei-nest-links .supply{left:calc(50% + 73px);width:calc(32% - 73px)}
+.ei-nest-topology[data-level="grand"] .ei-nest-links .data{top:calc(50% + 73px);width:calc(34% - 73px)}
+@media(max-width:760px){
+ .ei-nest-links .production{top:calc(50% - 49px);width:calc(34% - 49px)}.ei-nest-links .repair{left:calc(50% - 49px);width:calc(32% - 49px)}.ei-nest-links .supply{left:calc(50% + 49px);width:calc(32% - 49px)}.ei-nest-links .data{top:calc(50% + 49px);width:calc(34% - 49px)}
+ .ei-nest-topology[data-level="medium"] .ei-nest-links .production{top:calc(50% - 56px);width:calc(34% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .repair{left:calc(50% - 56px);width:calc(32% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .supply{left:calc(50% + 56px);width:calc(32% - 56px)}.ei-nest-topology[data-level="medium"] .ei-nest-links .data{top:calc(50% + 56px);width:calc(34% - 56px)}
+ .ei-nest-topology[data-level="grand"] .ei-nest-links .production{top:calc(50% - 63px);width:calc(34% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .repair{left:calc(50% - 63px);width:calc(32% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .supply{left:calc(50% + 63px);width:calc(32% - 63px)}.ei-nest-topology[data-level="grand"] .ei-nest-links .data{top:calc(50% + 63px);width:calc(34% - 63px)}
+}
