@@ -29,6 +29,7 @@ const THEATER_ART={
 export function initWorldMobile(){
   const terminal=document.querySelector("#fieldTerminal");
   if(!terminal)return;
+  const intro=document.querySelector("#intro");
 
   const deck=document.querySelector("#ftTheaterDeck");
   const theaterName=document.querySelector("#ftTheaterName");
@@ -36,6 +37,7 @@ export function initWorldMobile(){
   const theaterIndex=document.querySelector("#ftTheaterIndex");
   const theaterDots=document.querySelector("#ftTheaterDots");
   const worldIndex=document.querySelector("#ftWorldIndex");
+  const discoveryHint=document.querySelector("#ftDiscoveryHint");
   const dossier=document.querySelector("#ftDossier");
   const grabber=document.querySelector("#ftDossierGrabber");
   const close=document.querySelector("#ftDossierClose");
@@ -44,7 +46,7 @@ export function initWorldMobile(){
   const timelineButtons=[...terminal.querySelectorAll("[data-ft-era]")];
   const timelineList=document.querySelector("#ftTimelineList");
   const more=document.querySelector("#ftMoreMenu");
-  let activeTheater=0,sheetState="closed",dragY=null,dragged=false,scrollRaf=0;
+  let activeTheater=0,sheetState="closed",dragY=null,dragged=false,scrollRaf=0,switchTimer=0,hintTimer=0;
 
   function flagUrl(key){
     const suffix=ext[key]||"jpg";
@@ -90,6 +92,24 @@ export function initWorldMobile(){
     return card;
   }
 
+  function animateTheaterSwitch(){
+    if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    clearTimeout(switchTimer);terminal.classList.remove("theater-switch");void terminal.offsetWidth;terminal.classList.add("theater-switch");
+    switchTimer=setTimeout(()=>terminal.classList.remove("theater-switch"),430);
+  }
+
+  function showDiscoveryHint(){
+    if(!mobileQuery.matches||!discoveryHint)return;
+    let seen=false;
+    try{seen=localStorage.getItem("ida-field-terminal-hint-v1")==="1"}catch(e){}
+    if(seen)return;
+    discoveryHint.classList.add("show");
+    clearTimeout(hintTimer);hintTimer=setTimeout(()=>{
+      discoveryHint.classList.remove("show");
+      try{localStorage.setItem("ida-field-terminal-hint-v1","1")}catch(e){}
+    },2600);
+  }
+
   function renderDeck(){
     deck.innerHTML="";theaterDots.innerHTML="";worldIndex.innerHTML="";
     THEATERS.forEach((theater,index)=>{
@@ -99,22 +119,25 @@ export function initWorldMobile(){
       const tab=document.createElement("button");tab.type="button";tab.dataset.index=index;tab.textContent=theater.short;
       tab.addEventListener("click",()=>goTheater(index));worldIndex.appendChild(tab);
     });
-    updateTheater(0);
+    updateTheater(0,false);
   }
 
-  function updateTheater(index){
-    activeTheater=Math.max(0,Math.min(THEATERS.length-1,index));
+  function updateTheater(index,animate=true){
+    const next=Math.max(0,Math.min(THEATERS.length-1,index)),changed=next!==activeTheater;
+    activeTheater=next;
     const t=THEATERS[activeTheater];
     theaterName.textContent=t.name;theaterCaption.textContent=t.caption;
     theaterIndex.textContent=String(activeTheater+1).padStart(2,"0")+" / "+String(THEATERS.length).padStart(2,"0");
     [...theaterDots.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     [...worldIndex.children].forEach((d,i)=>d.classList.toggle("active",i===activeTheater));
     terminal.style.setProperty("--theater-index",activeTheater);
+    if(changed&&animate)animateTheaterSwitch();
   }
 
   function goTheater(index){
     const card=deck.children[index];if(!card)return;
-    deck.scrollTo({left:index*deck.clientWidth,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    const left=card.offsetLeft-deck.offsetLeft;
+    deck.scrollTo({left,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
     updateTheater(index);
   }
 
@@ -151,6 +174,7 @@ export function initWorldMobile(){
   }
 
   function selectNode(theater,button){
+    discoveryHint?.classList.remove("show");
     const node=theater.nodes.find(n=>n.id===button.dataset.node),meta=nodeMeta(node);
     deck.querySelectorAll(".ft-node.selected").forEach(n=>n.classList.remove("selected"));button.classList.add("selected");
     button.style.setProperty("--flag-image",`url("${meta.flag}")`);button.classList.add("flag-loaded");
@@ -176,7 +200,12 @@ export function initWorldMobile(){
 
   deck.addEventListener("scroll",()=>{
     cancelAnimationFrame(scrollRaf);scrollRaf=requestAnimationFrame(()=>{
-      const index=Math.round(deck.scrollLeft/Math.max(1,deck.clientWidth));if(index!==activeTheater)updateTheater(index);
+      let index=0,best=Infinity;
+      [...deck.children].forEach((card,i)=>{
+        const d=Math.abs((card.offsetLeft-deck.offsetLeft)-deck.scrollLeft);
+        if(d<best){best=d;index=i}
+      });
+      if(index!==activeTheater)updateTheater(index);
     });
   },{passive:true});
 
@@ -211,6 +240,14 @@ export function initWorldMobile(){
     more.classList.remove("open");window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:button.dataset.ftMore}}));
   }));
 
-  mobileQuery.addEventListener?.("change",e=>{if(!e.matches)setSheetState("closed")});
-  renderDeck();renderTimeline("2134");
+  function maybeShowDiscovery(){
+    if(!mobileQuery.matches)return;
+    if(intro&&!intro.classList.contains("hide"))return;
+    if(!terminal.closest(".view")?.classList.contains("active"))return;
+    setTimeout(showDiscoveryHint,260);
+  }
+  if(intro)new MutationObserver(maybeShowDiscovery).observe(intro,{attributes:true,attributeFilter:["class"]});
+  window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="world")maybeShowDiscovery()});
+  mobileQuery.addEventListener?.("change",e=>{if(!e.matches)setSheetState("closed");else maybeShowDiscovery()});
+  renderDeck();renderTimeline("2134");maybeShowDiscovery();
 }
