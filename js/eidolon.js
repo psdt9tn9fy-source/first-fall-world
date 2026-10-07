@@ -33,7 +33,7 @@ export function initEidolon(){
   const riskButtons=[...root.querySelectorAll("[data-ei-risk]")];
   const scanner=root.querySelector("#eiScanner");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let classIndex=2,scanTimer=0,pointerX=null;
+  let classIndex=2,scanTimer=0,pointerX=null,textRun=0;
   let threeDModulePromise=null,threeDController=null;
 
   const q=id=>root.querySelector(id);
@@ -46,6 +46,7 @@ export function initEidolon(){
     threeDModulePromise=import("./eidolon-3d.js?v=20261007-focus-camera-1").then(mod=>{
       threeDController=mod.initEidolon3D(root,{reduced});
       threeDController.setClass(current().key);
+      threeDController.setFocus(root.dataset.eiFocus||"morphology");
       return threeDController;
     }).catch(error=>{
       console.warn("EIDOLON 3D unavailable; continuing with 2D fallback.",error);
@@ -66,24 +67,59 @@ export function initEidolon(){
     root.classList.toggle("risk-s",key==="S");
   }
 
+  function typeRecord(el,text,status="DATA DECODE"){
+    if(!el)return;
+    const run=++textRun;
+    el.classList.remove("ei-type-done");
+    el.classList.add("ei-type-active");
+    el.dataset.decode=status;
+    if(reduced){el.textContent=text;el.classList.remove("ei-type-active");el.classList.add("ei-type-done");return}
+    const glyphs="01/\\[]<>#_";
+    let scramble=0;
+    const scrambleTimer=setInterval(()=>{
+      if(run!==textRun){clearInterval(scrambleTimer);return}
+      const reveal=Math.min(10,Math.max(4,Math.floor(text.length*.12)));
+      el.textContent=Array.from({length:reveal},()=>glyphs[Math.floor(Math.random()*glyphs.length)]).join("");
+      if(++scramble>=3){
+        clearInterval(scrambleTimer);
+        let i=0;el.textContent="";
+        const tick=()=>{
+          if(run!==textRun)return;
+          const step=text[i]?.match(/[\s.,·]/)?2:1;
+          i=Math.min(text.length,i+step);
+          el.textContent=text.slice(0,i);
+          if(i<text.length)setTimeout(tick,14+Math.random()*18);
+          else{el.classList.remove("ei-type-active");el.classList.add("ei-type-done")}
+        };
+        setTimeout(tick,55);
+      }
+    },45);
+  }
+
   function focusAnalysis(type){
     const c=current();
+    root.dataset.eiFocus=type;
     focusButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiFocus===type));
     const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta");
     threeDController?.setFocus(type);
+    let copy="",status="MORPHOLOGY RECORD";
     if(type==="core"){
       title.textContent="CORE";
       meta.textContent="POWER / COMPUTE / NEURAL";
-      body.textContent="코어는 동력원·연산장치·신경중추 역할을 겸한다. 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있다.";
+      copy="코어는 동력원·연산장치·신경중추 역할을 겸한다. 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있다.";
+      status="ANALYZING CORE";
     }else if(type==="network"){
       title.textContent="ADAPTIVE NETWORK";
       meta.textContent="COMBAT DATA / SHARED LEARNING";
-      body.textContent="에이돌론은 인간의 무기와 전술을 학습하고 전투정보를 공유한다. 반복되는 전술은 시간이 지날수록 효과가 떨어질 수 있다.";
+      copy="에이돌론은 인간의 무기와 전술을 학습하고 전투정보를 공유한다. 반복되는 전술은 시간이 지날수록 효과가 떨어질 수 있다.";
+      status="INTERCEPTING SHARED DATA";
     }else{
       title.textContent="MORPHOLOGY";
       meta.textContent=c.scale+" // "+c.role;
-      body.textContent=c.brief+" 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.";
+      copy=c.brief+" 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.";
+      status="MORPHOLOGY RECORD";
     }
+    typeRecord(body,copy,status);
   }
 
   function pulseScan(){
@@ -112,7 +148,7 @@ export function initEidolon(){
     field("role",c.role);
     field("risk",c.risk);
     q("#eiProfileTitle").textContent=c.mark+" // "+c.name;
-    q("#eiProfileBody").textContent=c.brief;
+    typeRecord(q("#eiProfileBody"),c.brief,"SPECIMEN IDENTIFIED");
     q("#eiBehaviorClass").textContent=c.name+" // "+c.role;
     q("#eiSeraphNotice").hidden=c.key!=="seraph";
     q("#eiTaxonomyState").textContent=c.key==="seraph"?"STANDARD TAXONOMY // NOT APPLICABLE":"PUBLIC TAXONOMY // CLASS VERIFIED";
