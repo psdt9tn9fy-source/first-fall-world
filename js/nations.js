@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-nations-final-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-nations-final-2";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
@@ -47,11 +47,16 @@ export function initNations(){
     return `./assets/flags-hq/${key}-2134.${ext[key]||"jpg"}`;
   }
 
+  function isRecordOpen(){
+    return root.closest(".view")?.classList.contains("active")===true;
+  }
+
   function setField(name,value){
     root.querySelectorAll(`[data-nation-field="${name}"]`).forEach(el=>el.textContent=value);
   }
 
   function hydrateFlag(button){
+    if(!isRecordOpen())return;
     const img=button?.querySelector(".na-flag-card img[data-src]");
     if(!img)return;
     img.src=img.dataset.src;img.removeAttribute("data-src");
@@ -102,7 +107,7 @@ export function initNations(){
   }
 
   function centerButton(button,behavior=reduced?"auto":"smooth"){
-    if(!button||!mobileQuery.matches||root.classList.contains("index-open"))return;
+    if(!button||!isRecordOpen()||!mobileQuery.matches||root.classList.contains("index-open"))return;
     const top=button.offsetTop-(list.clientHeight-button.offsetHeight)/2;
     list.scrollTo({top:Math.max(0,top),behavior});
   }
@@ -177,7 +182,7 @@ export function initNations(){
   function updateContent(n,{centerPicker=false}={}){
     currentKey=n[0];currentIndex=N.findIndex(x=>x[0]===n[0]);
     const src=flagUrl(n[0]);
-    if(!mobileQuery.matches){
+    if(isRecordOpen()&&!mobileQuery.matches){
       flag.src=src;flag.alt=n[2]+" flag";
       railFlag.src=src;railFlag.alt="";
     }
@@ -218,6 +223,19 @@ export function initNations(){
     if(index!==currentIndex)show(N[index],{animate:true,centerPicker:true});
   }
 
+  function activateNationVisuals(){
+    const n=byKey.get(currentKey);if(!n||!isRecordOpen())return;
+    if(mobileQuery.matches){
+      const active=list.querySelector(".na-index-btn.active");
+      hydrateAround(active,1);
+      requestAnimationFrame(()=>centerButton(active,"auto"));
+    }else{
+      const src=flagUrl(n[0]);
+      flag.src=src;flag.alt=n[2]+" flag";
+      railFlag.src=src;railFlag.alt="";
+    }
+  }
+
   function playHandoff(){
     const n=byKey.get(currentKey);if(!n||reduced)return;
     clearTimeout(handoffTimer);
@@ -248,9 +266,12 @@ export function initNations(){
     pendingHandoff=true;setIndexOpen(false);show(n,{animate:false,centerPicker:true});
   });
   window.addEventListener("archive:record-opened",e=>{
-    if(e.detail?.key!=="nations"||!pendingHandoff)return;
+    if(e.detail?.key!=="nations")return;
+    requestAnimationFrame(activateNationVisuals);
+    if(!pendingHandoff)return;
     pendingHandoff=false;setTimeout(playHandoff,110);
   });
 
   renderIndex();switchTab("overview");show(N[0],{animate:false,centerPicker:true});
+  if(isRecordOpen())requestAnimationFrame(activateNationVisuals);
 }
