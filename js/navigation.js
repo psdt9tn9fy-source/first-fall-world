@@ -8,69 +8,75 @@ const RECORDS={
 };
 
 export function initNavigation(){
-  const tabs=[...document.querySelectorAll(".tab")];
   const views=[...document.querySelectorAll(".view")];
+  const dock=document.querySelector("#recordDock");
+  const dockButtons=[...document.querySelectorAll("[data-record-nav]")];
+  const moreButton=document.querySelector("[data-record-more]");
   const transition=document.querySelector("#recordTransition");
   const target=document.querySelector("#transitionTarget");
   const transitionState=document.querySelector("#transitionState");
   const recordCode=document.querySelector("#recordCode");
   const recordTitle=document.querySelector("#recordTitle");
   const frameRecord=document.querySelector("#frameRecord");
-  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const shell=document.querySelector("#archiveShell");
-  const mobileShell=document.querySelector("#mobileRecordShell");
-  const mobileButtons=[...document.querySelectorAll("[data-mobile-record]")];
-  const mobileMore=document.querySelector("[data-mobile-more]");
-  if(shell)shell.dataset.activeRecord=tabs.find(tab=>tab.classList.contains("active"))?.dataset.tab||"world";
-  let busy=false;
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!shell)return;
 
-  function activate(key,button){
-    const meta=RECORDS[key];if(!meta||!button)return;
-    tabs.forEach(tab=>{
-      const active=tab===button;tab.classList.toggle("active",active);
-      active?tab.setAttribute("aria-current","page"):tab.removeAttribute("aria-current");
-    });
+  let busy=false;
+  shell.dataset.activeRecord=shell.dataset.activeRecord||"world";
+
+  function closeMore(){
+    dock?.classList.remove("more-open");
+    moreButton?.setAttribute("aria-expanded","false");
+  }
+
+  function activate(key){
+    const meta=RECORDS[key];if(!meta)return;
     views.forEach(view=>view.classList.toggle("active",view.dataset.view===key));
-    mobileButtons.forEach(btn=>btn.classList.toggle("active",btn.dataset.mobileRecord===key));
-    mobileMore?.classList.toggle("active",key==="military"||key==="archive");
-    mobileShell?.classList.remove("more-open");
-    mobileMore?.setAttribute("aria-expanded","false");
-    if(shell)shell.dataset.activeRecord=key;
-    recordCode.textContent=`기록 ${meta.no} // ${meta.code}`;recordTitle.textContent=meta.title;
-    frameRecord.textContent=`기록 ${meta.no} / 06`;document.title=`# 2134 // ${meta.title}`;
+    dockButtons.forEach(button=>{
+      const active=button.dataset.recordNav===key;
+      button.classList.toggle("active",active);
+      active?button.setAttribute("aria-current","page"):button.removeAttribute("aria-current");
+    });
+    moreButton?.classList.toggle("active",key==="military"||key==="archive");
+    shell.dataset.activeRecord=key;
+    closeMore();
+    if(recordCode)recordCode.textContent=`기록 ${meta.no} // ${meta.code}`;
+    if(recordTitle)recordTitle.textContent=meta.title;
+    if(frameRecord)frameRecord.textContent=`기록 ${meta.no} / 06`;
+    document.title=`# 2134 // ${meta.title}`;
     window.dispatchEvent(new CustomEvent("archive:record-opened",{detail:{key}}));
   }
 
   function openRecord(key){
-    const button=tabs.find(tab=>tab.dataset.tab===key),meta=RECORDS[key];
-    if(!button||!meta||busy)return;
-    if(button.classList.contains("active")){
-      mobileShell?.classList.remove("more-open");
-      mobileMore?.setAttribute("aria-expanded","false");
-      return;
-    }
-    if(reduced){activate(key,button);window.scrollTo(0,0);return}
-    busy=true;target.textContent=`${meta.no} // ${meta.title}`;transitionState.textContent=`${meta.code} // 기록 불러오는 중`;
-    transition.classList.add("engaged");
-    requestAnimationFrame(()=>requestAnimationFrame(()=>transition.classList.add("cover")));
+    const meta=RECORDS[key];if(!meta||busy)return;
+    if(shell.dataset.activeRecord===key){closeMore();return}
+    if(reduced){activate(key);window.scrollTo(0,0);return}
+
+    busy=true;
+    if(target)target.textContent=`${meta.no} // ${meta.title}`;
+    if(transitionState)transitionState.textContent=`${meta.code} // 기록 불러오는 중`;
+    transition?.classList.add("engaged");
+    requestAnimationFrame(()=>requestAnimationFrame(()=>transition?.classList.add("cover")));
+
     setTimeout(()=>{
-      activate(key,button);window.scrollTo(0,0);transitionState.textContent="기록 확인 완료 // 열림";transition.classList.remove("cover");
-      setTimeout(()=>{transition.classList.remove("engaged");busy=false},360);
+      activate(key);window.scrollTo(0,0);
+      if(transitionState)transitionState.textContent="기록 확인 완료 // 열림";
+      transition?.classList.remove("cover");
+      setTimeout(()=>{transition?.classList.remove("engaged");busy=false},360);
     },320);
   }
 
-  tabs.forEach(button=>button.addEventListener("click",()=>openRecord(button.dataset.tab)));
-  mobileButtons.forEach(button=>button.addEventListener("click",()=>openRecord(button.dataset.mobileRecord)));
-  mobileMore?.setAttribute("aria-expanded","false");
-  mobileMore?.addEventListener("click",()=>{
-    const open=!mobileShell?.classList.contains("more-open");
-    mobileShell?.classList.toggle("more-open",open);
-    mobileMore.setAttribute("aria-expanded",String(open));
+  dockButtons.forEach(button=>button.addEventListener("click",()=>openRecord(button.dataset.recordNav)));
+  moreButton?.addEventListener("click",()=>{
+    const open=!dock?.classList.contains("more-open");
+    dock?.classList.toggle("more-open",open);
+    moreButton.setAttribute("aria-expanded",String(open));
   });
-  document.addEventListener("pointerdown",e=>{
-    if(mobileShell?.classList.contains("more-open")&&!mobileShell.contains(e.target)){
-      mobileShell.classList.remove("more-open");mobileMore?.setAttribute("aria-expanded","false");
-    }
+  document.addEventListener("pointerdown",event=>{
+    if(dock?.classList.contains("more-open")&&!dock.contains(event.target))closeMore();
   });
-  window.addEventListener("archive:open-record",e=>openRecord(e.detail?.key));
+  window.addEventListener("archive:open-record",event=>openRecord(event.detail?.key));
+
+  activate(shell.dataset.activeRecord);
 }
