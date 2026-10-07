@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-nations-mainpicker-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-nations-final-1";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
@@ -28,10 +28,8 @@ export function initNations(){
   const search=root.querySelector("#nationSearch");
   const indexToggle=root.querySelector("#nationIndexToggle");
   const indexClose=root.querySelector("#nationIndexClose");
-  const indexScrim=root.querySelector("#nationIndexScrim");
   const mobileQuery=matchMedia("(max-width:820px)");
   const dossier=root.querySelector("#nationDossier");
-  const identity=root.querySelector("#nationIdentity");
   const flag=root.querySelector("#nf");
   const railFlag=root.querySelector("#naRailFlag");
   const handoff=root.querySelector("#nationHandoff");
@@ -60,7 +58,7 @@ export function initNations(){
     img.addEventListener("load",()=>button.classList.add("flag-ready"),{once:true});
   }
 
-  function hydrateAround(button,radius=2){
+  function hydrateAround(button,radius=1){
     if(!button)return;
     const buttons=[...list.querySelectorAll(".na-index-btn")];
     const i=buttons.indexOf(button);
@@ -80,9 +78,10 @@ export function initNations(){
       const b=document.createElement("button");
       b.type="button";b.className="na-index-btn";b.dataset.k=n[0];b.dataset.index=index;
       b.setAttribute("role","option");b.setAttribute("aria-selected",String(n[0]===currentKey));
+      const flagCard=mobileQuery.matches?`<i class="na-flag-card" aria-hidden="true"><img data-src="${flagUrl(n[0])}" alt="" decoding="async"><u></u></i>`:"";
       b.innerHTML=`
         <span>${String(index+1).padStart(2,"0")}</span>
-        <i class="na-flag-card" aria-hidden="true"><img data-src="${flagUrl(n[0])}" alt="" decoding="async"><u></u></i>
+        ${flagCard}
         <div><b>${n[2]}</b><small>${n[3]}</small></div>
         <em>${code}</em>`;
       b.classList.toggle("active",n[0]===currentKey);
@@ -97,7 +96,7 @@ export function initNations(){
     root.querySelector("#nationCount").textContent=`${shown} / ${N.length} RECORDS`;
     requestAnimationFrame(()=>{
       const active=list.querySelector(".na-index-btn.active");
-      hydrateAround(active,2);
+      hydrateAround(active,1);
       if(mobileQuery.matches&&!root.classList.contains("index-open"))centerButton(active,"auto");
     });
   }
@@ -115,7 +114,7 @@ export function initNations(){
       b.setAttribute("aria-selected",String(active));
     });
     const active=list.querySelector(".na-index-btn.active");
-    hydrateAround(active,2);
+    hydrateAround(active,1);
     if(center)requestAnimationFrame(()=>centerButton(active,behavior));
   }
 
@@ -135,7 +134,7 @@ export function initNations(){
     if(!mobileQuery.matches||root.classList.contains("index-open")||pickerLock)return;
     const button=nearestPickerButton();
     if(!button)return;
-    hydrateAround(button,2);
+    hydrateAround(button,1);
     const n=byKey.get(button.dataset.k);
     if(n&&n[0]!==currentKey)show(n,{animate:true,centerPicker:false});
   }
@@ -146,7 +145,7 @@ export function initNations(){
     root.classList.toggle("index-open",open);
     indexToggle?.setAttribute("aria-expanded",String(open));
     if(open){
-      hydrateAround(list.querySelector(".na-index-btn.active"),3);
+      hydrateAround(list.querySelector(".na-index-btn.active"),2);
       requestAnimationFrame(()=>list.querySelector(".na-index-btn.active")?.scrollIntoView({block:"nearest"}));
     }else{
       if(wasOpen&&search.value){
@@ -178,16 +177,15 @@ export function initNations(){
   function updateContent(n,{centerPicker=false}={}){
     currentKey=n[0];currentIndex=N.findIndex(x=>x[0]===n[0]);
     const src=flagUrl(n[0]);
-    flag.src=src;flag.alt=n[2]+" flag";
-    railFlag.src=src;railFlag.alt="";
+    if(!mobileQuery.matches){
+      flag.src=src;flag.alt=n[2]+" flag";
+      railFlag.src=src;railFlag.alt="";
+    }
     dossier.dataset.code=n[1].split(" //")[0];
     root.querySelector("#nc").textContent=n[1];
     root.querySelector("#nn").textContent=n[2];
     root.querySelector("#ne").textContent=n[3];
     root.querySelector("#nb").textContent=n[8];
-    root.querySelector("#naStickyCode").textContent=n[1].split(" //")[0];
-    root.querySelector("#naStickyName").textContent=n[2];
-    root.querySelector("#naPosition").textContent=`${String(currentIndex+1).padStart(2,"0")} / ${String(N.length).padStart(2,"0")}`;
     root.querySelector("#naRailCode").textContent=n[1].split(" //")[0];
     setField("status",n[4]);setField("population",n[5]);setField("capital",n[6]);setField("strength",n[7]);setField("brief",n[8]);
     renderHistory(n[0]);syncIndexSelection({center:centerPicker});updateButtons();
@@ -195,11 +193,13 @@ export function initNations(){
 
   function show(n,{animate=true,centerPicker=false}={}){
     if(!n)return;
+    const nextIndex=N.findIndex(x=>x[0]===n[0]);
+    const direction=nextIndex<currentIndex?"prev":"next";
     clearTimeout(swapTimer);
     dossier.classList.remove("swap-next","swap-prev");
     updateContent(n,{centerPicker});
     if(animate&&!reduced){
-      dossier.classList.add("swap-next");
+      dossier.classList.add(direction==="prev"?"swap-prev":"swap-next");
       swapTimer=setTimeout(()=>dossier.classList.remove("swap-next","swap-prev"),210);
     }
   }
@@ -229,28 +229,19 @@ export function initNations(){
   search.addEventListener("input",()=>renderIndex(search.value));
   indexToggle?.addEventListener("click",()=>setIndexOpen(!root.classList.contains("index-open")));
   indexClose?.addEventListener("click",()=>setIndexOpen(false));
-  indexScrim?.addEventListener("click",()=>setIndexOpen(false));
   window.addEventListener("keydown",e=>{if(e.key==="Escape")setIndexOpen(false)});
   mobileQuery.addEventListener?.("change",()=>{setIndexOpen(false);renderIndex(search.value)});
   list.addEventListener("scroll",()=>{
     if(!mobileQuery.matches)return;
     const near=nearestPickerButton();
-    if(root.classList.contains("index-open")){hydrateAround(near,3);return}
+    if(root.classList.contains("index-open")){hydrateAround(near,2);return}
     clearTimeout(pickerTimer);
-    hydrateAround(near,2);
+    hydrateAround(near,1);
     pickerTimer=setTimeout(settlePicker,105);
   },{passive:true});
 
   tabButtons.forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.naTab)));
   prev.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
-
-  let startX=null,startY=null;
-  identity.addEventListener("pointerdown",e=>{startX=e.clientX;startY=e.clientY});
-  identity.addEventListener("pointerup",e=>{
-    if(startX===null||startY===null)return;
-    const dx=e.clientX-startX,dy=e.clientY-startY;startX=startY=null;
-    if(Math.abs(dx)>54&&Math.abs(dx)>Math.abs(dy)*1.35)step(dx<0?1:-1);
-  });
 
   window.addEventListener("archive:select-nation",e=>{
     const n=byKey.get(e.detail?.key);if(!n)return;
