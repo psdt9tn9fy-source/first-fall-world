@@ -207,6 +207,7 @@ export function initEidolon(){
     q("#eiNestSub").textContent=n.sub;
     q("#eiNestBody").textContent=n.body;
     root.dataset.eiNest=key;
+    root.dispatchEvent(new CustomEvent("eidolon:nest-change",{detail:{key}}));
   }
 
   function setRisk(key){
