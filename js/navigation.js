@@ -1,6 +1,6 @@
 const RECORDS={
   world:{no:"01",title:"WORLD",code:"CURRENT ERA"},
-  nations:{no:"02",title:"NATIONS",code:"NATION ARCHIVE"},
+  nations:{no:"02",title:"WORLD ORDER",code:"STATE SYSTEM"},
   eidolon:{no:"03",title:"EIDOLON",code:"HOSTILE ENTITY"},
   military:{no:"04",title:"MILITARY",code:"MILITARY SOCIETY"},
   academy:{no:"05",title:"ACADEMY",code:"OFFICER EDUCATION"},
