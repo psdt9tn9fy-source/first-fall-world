@@ -84,7 +84,7 @@ export function initEidolon(){
 
   function setRiskScale(key=""){
     root.querySelectorAll(".ei-risk-scale span").forEach(el=>el.classList.toggle("active",el.dataset.risk===key));
-    const currentRisk=q("#eiRiskCurrent");if(currentRisk)currentRisk.textContent=key||"—";
+
     root.classList.toggle("risk-s",key==="S");
   }
 
@@ -213,8 +213,7 @@ export function initEidolon(){
     riskButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiRisk===key));
     q("#eiRiskDetailCode").textContent="RISK "+key;
     q("#eiRiskDetailBody").textContent=RISKS[key];
-    const currentRisk=q("#eiRiskCurrent");if(currentRisk)currentRisk.textContent=key;
-    root.querySelectorAll(".ei-risk-scale span").forEach(el=>el.classList.toggle("active",el.dataset.risk===key));
+
   }
 
   function setSource(detail){
@@ -262,5 +261,5 @@ export function initEidolon(){
   selectClass("brute",{animate:false});
   setTab("profile");
   setNest("small");
-  setRisk("D");
+  riskButtons.forEach(b=>b.classList.remove("active"));
 }
