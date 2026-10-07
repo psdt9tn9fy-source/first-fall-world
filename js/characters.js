@@ -1,18 +1,23 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-character-v4";
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261008-character-v5";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
   if(!root)return;
 
   const character=CHARACTERS[CHARACTER_ORDER[0]];
-  const records=[...root.querySelectorAll("[data-char-record]")];
+  const story=root.querySelector("#characterStory");
+  const steps=[...root.querySelectorAll("[data-char-step]")];
+  const scenes=[...root.querySelectorAll("[data-char-scene]")];
   const progress=[...root.querySelectorAll("[data-char-progress]")];
-  const state=root.querySelector("#characterUnlockState");
+  const state=root.querySelector("#characterSceneState");
+  const chapterNo=root.querySelector("#characterChapterNo");
+  const chapterLabel=root.querySelector("#characterChapterLabel");
   const start=root.querySelector("[data-char-start]");
   const portrait=root.querySelector("#characterPortrait");
   const name=root.querySelector("#characterName");
   const roman=root.querySelector("#characterRoman");
   const summary=root.querySelector("#characterSummary");
+  const ghost=root.querySelector("#characterGhost");
   const portraitName=root.querySelector("#characterPortraitName");
   const identityName=root.querySelector("#characterIdentityName");
   const affiliation=root.querySelector("#characterAffiliation");
@@ -22,9 +27,15 @@ export function initCharacters(){
   const career=root.querySelector("#characterCareer");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let unlockedCount=1;
-  let activeRecord=0;
-  let scrollTick=false;
+  const sceneMeta=[
+    ["01","식별","IDENTIFICATION"],
+    ["02","성격","OBSERVATION"],
+    ["03","경력","HISTORY"],
+    ["04","연결","CONNECTED WORLD"]
+  ];
+
+  let activeScene=-1;
+  let ticking=false;
 
   root.style.setProperty("--char-accent",character.accent);
 
@@ -32,6 +43,7 @@ export function initCharacters(){
     name.textContent=character.name;
     roman.textContent=character.roman;
     summary.textContent=character.summary;
+    ghost.textContent=character.name;
     portraitName.textContent=character.name;
     identityName.textContent=character.name;
     affiliation.textContent=character.affiliation;
@@ -55,111 +67,67 @@ export function initCharacters(){
     }).join("");
   }
 
-  function updateUnlockUI(){
-    state.textContent=String(unlockedCount).padStart(2,"0")+" / 04 해제됨";
+  function setScene(index){
+    const next=Math.max(0,Math.min(index,scenes.length-1));
+    if(next===activeScene)return;
+    activeScene=next;
+    root.dataset.scene=String(next);
 
-    records.forEach(function(record,index){
-      const button=record.querySelector("[data-char-unlock]");
-      const status=record.querySelector(".char-record-status b");
-      const kicker=record.querySelector(".char-record-kicker");
+    scenes.forEach(function(scene,i){
+      scene.classList.toggle("active",i===next);
+      scene.setAttribute("aria-hidden",i===next?"false":"true");
+    });
 
-      if(index<unlockedCount){
-        record.classList.add("unlocked");
-        record.classList.remove("locked","waiting");
-        if(status)status.textContent="복원 완료";
-        if(kicker)kicker.textContent=kicker.textContent.replace("SEALED","RECOVERED");
-        if(button)button.disabled=true;
-      }else{
-        record.classList.add("locked");
-        record.classList.remove("unlocked");
-        if(status)status.textContent=index===unlockedCount?"해제 가능":"순차 잠금";
-        if(button){
-          const ready=index===unlockedCount;
-          button.disabled=!ready;
-          button.classList.toggle("waiting",!ready);
-          const label=button.querySelector("span");
-          if(label)label.textContent=ready?"기록 해제":"이전 기록 필요";
-        }
+    progress.forEach(function(item,i){
+      item.classList.toggle("active",i===next);
+      item.classList.toggle("done",i<next);
+    });
+
+    const meta=sceneMeta[next];
+    state.textContent=meta[0]+" / "+meta[1];
+    chapterNo.textContent=meta[0];
+    chapterLabel.textContent=meta[2];
+  }
+
+  function updateSceneFromScroll(){
+    ticking=false;
+    if(!story||!steps.length)return;
+
+    const storyRect=story.getBoundingClientRect();
+    if(storyRect.bottom<=0||storyRect.top>=innerHeight)return;
+
+    const targetY=innerHeight*.54;
+    let bestIndex=0;
+    let bestDistance=Infinity;
+
+    steps.forEach(function(step,index){
+      const rect=step.getBoundingClientRect();
+      const center=rect.top+rect.height*.5;
+      const distance=Math.abs(center-targetY);
+      if(distance<bestDistance){
+        bestDistance=distance;
+        bestIndex=index;
       }
     });
 
-    progress.forEach(function(item,index){
-      item.classList.toggle("done",index<unlockedCount&&index!==activeRecord);
-      item.classList.toggle("active",index===activeRecord);
-    });
-
-    root.classList.toggle("complete",unlockedCount===records.length);
-  }
-
-  function setActiveRecord(index){
-    activeRecord=Math.max(0,Math.min(index,records.length-1));
-    records.forEach(function(record,i){
-      record.classList.toggle("active",i===activeRecord);
-    });
-    progress.forEach(function(item,i){
-      item.classList.toggle("active",i===activeRecord);
-      item.classList.toggle("done",i<unlockedCount&&i!==activeRecord);
-    });
-  }
-
-  function unlockRecord(index){
-    if(index!==unlockedCount||index>=records.length)return;
-
-    const record=records[index];
-    const button=record.querySelector("[data-char-unlock]");
-    const status=record.querySelector(".char-record-status b");
-
-    if(button)button.disabled=true;
-    if(status)status.textContent="복원 중";
-    record.classList.add("unlocking");
-    record.classList.remove("waiting");
-    setActiveRecord(index);
-
-    const finish=function(){
-      record.classList.remove("unlocking","locked");
-      record.classList.add("unlocked");
-      unlockedCount=index+1;
-      updateUnlockUI();
-    };
-
-    if(reduced)finish();
-    else setTimeout(finish,760);
-  }
-
-  function updateScrollState(){
-    scrollTick=false;
-    const threshold=innerWidth<=820?165:172;
-    let current=0;
-
-    records.forEach(function(record,index){
-      const rect=record.getBoundingClientRect();
-      if(rect.top<=threshold+18)current=index;
-    });
-
-    setActiveRecord(current);
+    setScene(bestIndex);
   }
 
   function onScroll(){
-    if(scrollTick)return;
-    scrollTick=true;
-    requestAnimationFrame(updateScrollState);
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(updateSceneFromScroll);
   }
 
   if(start){
     start.addEventListener("click",function(){
-      if(records[0])records[0].scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+      if(!story)return;
+      story.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
     });
   }
 
-  root.querySelectorAll("[data-char-unlock]").forEach(function(button){
-    button.addEventListener("click",function(){
-      unlockRecord(Number(button.dataset.charUnlock));
-    });
-  });
-
   root.querySelectorAll("[data-char-open]").forEach(function(button){
     button.addEventListener("click",function(){
-      if(unlockedCount<records.length)return;
       const key=button.dataset.charOpen;
       if(key==="nations"){
         window.dispatchEvent(new CustomEvent("archive:select-nation",{detail:{key:character.nationKey}}));
@@ -170,14 +138,13 @@ export function initCharacters(){
 
   window.addEventListener("scroll",onScroll,{passive:true});
   window.addEventListener("resize",onScroll);
-
   window.addEventListener("archive:record-opened",function(event){
     if(event.detail&&event.detail.key==="characters"){
-      requestAnimationFrame(updateScrollState);
+      requestAnimationFrame(updateSceneFromScroll);
     }
   });
 
   renderCharacter();
-  updateUnlockUI();
-  updateScrollState();
+  setScene(0);
+  updateSceneFromScroll();
 }
