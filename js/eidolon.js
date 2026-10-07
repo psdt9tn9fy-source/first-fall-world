@@ -13,13 +13,6 @@ const NESTS={
   grand:{code:"N-03",name:"GRAND NEST",ko:"대형 네스트",sub:"REGIONAL FRONT HUB / STRATEGIC",body:"광역 전선을 지배하는 초대형 거점. 주변 네스트에 병력과 정보를 공급하며 국가급 또는 I.D.A. 연합작전이 요구될 수 있다."}
 };
 
-const RISKS={
-  D:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
-  C:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
-  B:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",
-  A:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",
-  S:"ARK·SERAPH 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다."
-};
 
 export function initEidolon(){
   const root=document.querySelector("#eidolonLab");
