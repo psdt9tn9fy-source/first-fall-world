@@ -13,7 +13,10 @@ const NESTS={
   grand:{code:"N-03",name:"GRAND NEST",ko:"대형 네스트",sub:"REGIONAL FRONT HUB / STRATEGIC",body:"광역 전선을 지배하는 초대형 거점. 주변 네스트에 병력과 정보를 공급하며 국가급 또는 I.D.A. 연합작전이 요구될 수 있다."}
 };
 
-const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";\nconst MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";\n\nconst RISKS={
+const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";
+const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
+
+const RISKS={
   D:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
   C:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",
   B:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",
