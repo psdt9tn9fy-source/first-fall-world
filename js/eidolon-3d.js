@@ -6,6 +6,7 @@ export function initEidolon3D(root,{reduced=false}={}){
   let modelStage=null;
   let modelViewer=null;
   let classKey=root.dataset.eiClass||"brute";
+  let focusKey="morphology";
 
   function buildModelStage(){
     if(modelStage)return modelStage;
@@ -91,6 +92,7 @@ export function initEidolon3D(root,{reduced=false}={}){
       });
       stage.prepend(modelViewer);
       syncVisibility();
+      applyFocus();
     }catch(error){
       console.warn("BRUTE 3D model failed to initialize.",error);
       root.classList.remove("ei-model-pending","ei-model-ready");
@@ -98,11 +100,33 @@ export function initEidolon3D(root,{reduced=false}={}){
     }
   }
 
+  function applyFocus(){
+    if(!modelViewer||classKey!=="brute")return;
+    const views={
+      morphology:{orbit:"35deg 72deg 115%",target:"auto auto auto"},
+      core:{orbit:"8deg 78deg 72%",target:"auto 52% auto"},
+      network:{orbit:"-18deg 66deg 82%",target:"auto 68% auto"}
+    };
+    const view=views[focusKey]||views.morphology;
+    if(!reduced&&typeof modelViewer.setAttribute==="function"){
+      modelViewer.setAttribute("interpolation-decay","120");
+    }
+    modelViewer.setAttribute("camera-orbit",view.orbit);
+    modelViewer.setAttribute("camera-target",view.target);
+    if(focusKey==="morphology"&&!reduced)modelViewer.setAttribute("auto-rotate","");
+    else modelViewer.removeAttribute("auto-rotate");
+  }
+
   function setClass(key){
     classKey=key;
     syncVisibility();
-    if(classKey==="brute")ensureBruteModel();
+    if(classKey==="brute")ensureBruteModel().then?.(()=>applyFocus());
   }
 
-  return {setClass};
+  function setFocus(key){
+    focusKey=key||"morphology";
+    applyFocus();
+  }
+
+  return {setClass,setFocus};
 }
