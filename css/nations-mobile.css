@@ -104,18 +104,16 @@
   .nation-archive.index-open .na-index-btn.active{background:#101719;box-shadow:inset 2px 0 #bddce3}
   .nation-archive.index-open .na-index-btn.active .na-flag-card{opacity:1;filter:saturate(.9) brightness(.92);box-shadow:0 5px 12px #0008}
 
-  .na-index-scrim{display:none}
-
   .na-dossier{padding:0 0 28px;min-width:0;overflow:visible}
   .na-dossier:before{right:0;top:18px;font-size:78px}
-  .na-sticky-id{display:none}
 
   .na-identity{
-    display:block;min-height:0;padding:18px 4px 14px;border-bottom:1px solid #263034;touch-action:pan-y
+    display:block;min-height:0;padding:16px 11px 14px;border:1px solid #2b363a;border-top:0;
+    background:linear-gradient(180deg,#0c1113 0,#080b0c 100%)
   }
   .na-flag-frame{display:none}
   .na-identity-copy{padding:0}
-  .na-code{font-size:6px;letter-spacing:.16em}.na-identity h2{font-size:clamp(30px,10vw,46px);margin:8px 0 7px;line-height:.9}.na-eng{font-size:7px;line-height:1.5}
+  .na-code{font-size:6px;letter-spacing:.16em;color:#8ea0a5}.na-identity h2{font-size:clamp(30px,10vw,46px);margin:8px 0 7px;line-height:.9}.na-eng{font-size:7px;line-height:1.5}
   .na-state-line{display:grid;grid-template-columns:auto 1fr auto;margin-top:13px;padding-top:10px;gap:7px;align-items:center}
   .na-state-line span{font-size:5px}.na-state-line b{font-size:9px;text-align:left}.na-state-line i{display:block;font-size:5px;text-align:right}
 
