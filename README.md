@@ -1,30 +1,48 @@
-# FIRST FALL WORLD DATABASE
+# #2134 : 군사시대
 
-2080년대 군사·재난 세계관용 인터랙티브 웹사이트 프로토타입입니다.
+2031년 **제1강하(First Descent)** 이후 103년이 지난 2134년의 세계를 다루는 인터랙티브 세계관 아카이브입니다.
 
-## 현재 구현
-- 보안 인증 / 부팅 연출
-- 인터랙티브 세계지도
-- 국가별 현황
-- 군사조직 데이터
-- 대한민국 중앙사관학교 섹션
-- ENEMY 데이터베이스
-- 제1강하 연표
-- 기밀문서 열람
-- 모바일 반응형 UI
+## 기록 구조
 
-현재 국가·연표·에네미 데이터는 프로토타입 임시값입니다.
+1. **세계** — 현재 전구, 세계지도, 연표, 전황
+2. **인물** — 캐릭터 기록과 세계관 연결
+3. **세계 질서** — 국가·정부·사회·국방·기관
+4. **에이돌론** — 적성 개체 분류와 분석 기록
+5. **군사** — 지휘·편제·전력·계급·배치
+6. **기록** — 주요 역사 연표
 
-## GitHub Pages 켜기
-1. 저장소에서 **Settings**
-2. 왼쪽 메뉴 **Pages**
-3. **Build and deployment**
-4. Source → **Deploy from a branch**
-5. Branch → **main**
-6. Folder → **/(root)**
-7. **Save**
+PC와 모바일은 동일한 전역 하단 기록 네비게이션을 사용합니다.
+
+## 코드 소유권
+
+화면 수정 시 아래 역할을 지켜 중복 패치를 만들지 않습니다.
+
+- `css/site.css` — 전역 프레임, 상단 헤더, 공통 기록 UI
+- `css/record-nav.css` — PC/모바일 공용 하단 기록 네비게이션
+- `css/world.css` — WORLD 데스크톱
+- `css/world-mobile.css` — WORLD 모바일 전용
+- `css/characters.css` — 인물 기록
+- `css/nations.css` — WORLD ORDER 기본/데스크톱
+- `css/nations-mobile.css` — WORLD ORDER 모바일 전용
+- `css/eidolon.css` — EIDOLON 분류·스캐너·위험도
+- `css/eidolon-mobile.css` — EIDOLON 모바일 코어
+- `css/eidolon-records.css` — EIDOLON 개체정보·행동·네스트·교전
+- `css/military.css` — MILITARY
+- `js/navigation.js` — 전역 기록 이동
+- `js/characters-data.js` — 캐릭터 데이터
+- `js/characters.js` — 캐릭터 화면 렌더링/동작
+
+## 유지보수 원칙
+
+- 가독성 수정은 별도 override 파일을 만들지 않고 **해당 섹션 CSS에서 처리**합니다.
+- PC/모바일 공통 기능은 중복 구현하지 않습니다.
+- 캐릭터 추가는 `characters-data.js`를 우선 수정합니다.
+- EIDOLON 상세 기록 스타일은 `eidolon-records.css`가 소유합니다.
+- 사용하지 않는 임시 UI와 파일은 기능 교체 시 함께 삭제합니다.
+- 배포 캐시 버전은 한 번의 작업 단위에서 동일한 값으로 맞춥니다.
+
+## GitHub Pages
 
 배포 주소:
-https://psdt9tn9fy-source.github.io/first-fall-world/
 
-Pages가 켜진 뒤 실제 반영까지 잠시 걸릴 수 있습니다.
+https://psdt9tn9fy-source.github.io/first-fall-world/
