@@ -43,7 +43,12 @@ export function initNavigation(){
 
   function openRecord(key){
     const button=tabs.find(tab=>tab.dataset.tab===key),meta=RECORDS[key];
-    if(!button||!meta||busy||button.classList.contains("active"))return;
+    if(!button||!meta||busy)return;
+    if(button.classList.contains("active")){
+      mobileShell?.classList.remove("more-open");
+      mobileMore?.setAttribute("aria-expanded","false");
+      return;
+    }
     if(reduced){activate(key,button);window.scrollTo(0,0);return}
     busy=true;target.textContent=`${meta.no} // ${meta.title}`;transitionState.textContent=`${meta.code} // 기록 불러오는 중`;
     transition.classList.add("engaged");
