@@ -271,3 +271,13 @@
   .world-order .na-history div span,.world-order .na-history em{font-size:8px}
   .world-order .wo-pending span,.world-order .wo-pending b{font-size:8px}
 }
+
+
+/* READABILITY MERGED / WORLD ORDER */
+.world-order .na-index-head span,.world-order .na-index-head b,.world-order .na-search span,
+.world-order .na-state-line span,.world-order .na-state-line i{font-size:9px}
+.world-order .wo-power-core span,.world-order .wo-power-core em,
+.world-order .wo-inst-no b,.world-order .wo-inst-title>span,.world-order .wo-institution-card dt{font-size:9px}
+.world-order .wo-tabs button b{font-size:11px!important;letter-spacing:.03em!important}
+.world-order .wo-section-head b{font-size:15px!important}
+.world-order .wo-brief{font-size:15px!important}
