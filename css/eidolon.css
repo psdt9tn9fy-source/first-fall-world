@@ -199,3 +199,24 @@
 /* Operational risk — entity baseline */
 .ei-risk-scale span.active{color:#d6e1e3!important;text-shadow:0 0 9px #a9c1c766!important}
 .ei-risk-scale span.active:before{width:10px!important;height:10px!important;border-color:#b3c8cd!important;background:#172327!important;box-shadow:0 0 0 3px #82999f18,0 0 13px #a9c1c74d!important}
+
+
+/* READABILITY MERGED / EIDOLON CORE */
+.ei-head .kicker,.ei-head-meta span,.ei-source span,.ei-source b,
+.ei-class-head span,.ei-class-head b,.ei-scan-top span,.ei-scan-top b,.ei-scan-foot span,.ei-scan-foot b,
+.ei-assessment>header span,.ei-assessment>header b,.ei-assess-primary span,
+.ei-assess-role span,.ei-risk-head span,.ei-focus-head span{font-size:9px}
+.ei-head-meta b{font-size:12px}
+.ei-class-btn{min-height:76px;grid-template-columns:40px 1fr;gap:10px;padding:10px 9px}
+.ei-class-btn>.ei-class-mark{width:40px;font-size:18px}
+.ei-class-btn b{font-size:12px}.ei-class-btn small{font-size:9px;line-height:1.35}
+.ei-hotspot span{font-size:7px}.ei-hotspot b{font-size:9px}
+.ei-assess-primary em{font-size:10px}
+.ei-assess-list dt,.ei-risk-wrap>span,.ei-focus-readout>span,.ei-focus-readout>em,
+.ei-model-status span,.ei-model-status b,.ei-model-status em{font-size:8px}
+.ei-assess-list dd{font-size:11px}
+.ei-risk-scale span{font-size:10px!important}
+.ei-focus-head>b{font-size:9px!important}
+.ei-focus-switch button{font-size:9px}
+.ei-focus-status span,.ei-focus-status button{font-size:8px}
+.ei-focus-readout p{font-size:14px;line-height:1.75}
