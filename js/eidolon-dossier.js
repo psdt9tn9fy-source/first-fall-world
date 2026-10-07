@@ -34,9 +34,11 @@ export function initEidolonDossier(root,{reduced=false}={}){
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   async function stream(el,text,token,speed=8){
     if(!el)return false;
-    el.textContent="";
+    text=String(text??"");
     if(reduced){el.textContent=text;return true}
-    for(let i=0;i<text.length;){
+    let i=Math.min(1,text.length);
+    el.textContent=text.slice(0,i);
+    for(;i<text.length;){
       if(token!==run)return false;
       const r=Math.random(),burst=r<.16?4:r<.38?3:r<.68?2:1;
       i=Math.min(text.length,i+burst);
@@ -54,7 +56,16 @@ export function initEidolonDossier(root,{reduced=false}={}){
     get("[data-live-foot]").textContent="DATA STREAM // ACTIVE";
     const fields=["code","title","mark","class","scale","role","risk","body","core","network","note"];
     fields.forEach(k=>{const el=get("[data-live-"+k+"]");if(el)el.textContent=""});
-    if(!reduced)await sleep(70);
+    /* Seed visible content synchronously so mobile Safari never presents an empty document. */
+    get("[data-live-code]").textContent=(record.code||"").slice(0,1);
+    get("[data-live-mark]").textContent=(record.mark||"").slice(0,1);
+    get("[data-live-title]").textContent=(record.title||"").slice(0,1);
+    get("[data-live-class]").textContent=(record.classification||"").slice(0,1);
+    get("[data-live-scale]").textContent=(record.scale||"").slice(0,1);
+    get("[data-live-role]").textContent=(record.role||"").slice(0,1);
+    get("[data-live-risk]").textContent=(record.risk||"").slice(0,1);
+    get("[data-live-body]").textContent=(record.body||"").slice(0,1);
+    if(!reduced)await sleep(45);
     if(token!==run)return;
     get("[data-live-state]").textContent=record.state||"ENTITY IDENTIFIED";
     await Promise.all([
