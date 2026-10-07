@@ -422,13 +422,28 @@
         </section>
 
         <section class="ei-panel" data-ei-panel="engagement">
-          <div class="ei-panel-overline">OPERATIONAL RISK // D–S</div>
-          <h3>분류등급과 작전위험도는 다르다.</h3>
-          <p class="ei-panel-copy">I~V와 SERAPH는 에이돌론 분류체계이며 D~S는 작전 환경·네스트·개체 위협을 종합해 산정하는 작전 위험도다.</p>
-          <div class="ei-engage">
-            <div class="ei-risk-buttons"><button class="active" type="button" data-ei-risk="D">D</button><button type="button" data-ei-risk="C">C</button><button type="button" data-ei-risk="B">B</button><button type="button" data-ei-risk="A">A</button><button type="button" data-ei-risk="S">S</button></div>
-            <div class="ei-risk-detail"><span>SELECTED PROTOCOL</span><h4 id="eiRiskDetailCode">RISK D</h4><p id="eiRiskDetailBody">일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.</p></div>
+          <div class="ei-panel-overline">ENGAGEMENT // THREAT RESPONSE MATRIX</div>
+          <div class="ei-engage-head"><div><h3>작전위험도를 대응 단계로 변환한다.</h3><p class="ei-panel-copy">I~V와 SERAPH는 개체 분류체계, D~S는 작전 환경·네스트·개체 위협을 종합한 작전 위험도다.</p></div><div class="ei-engage-state"><span>ENTITY BASELINE</span><b data-ei-baseline-risk>B // BRUTE</b></div></div>
+          <div class="ei-threat-matrix" data-ei-threat-matrix data-view-risk="B">
+            <div class="ei-risk-track" aria-label="Operational risk levels">
+              <i class="ei-risk-progress"></i>
+              <button type="button" data-ei-risk="D"><span>D</span><em>01</em></button>
+              <button type="button" data-ei-risk="C"><span>C</span><em>02</em></button>
+              <button class="baseline active" type="button" data-ei-risk="B"><span>B</span><em>03</em><strong>CURRENT</strong></button>
+              <button type="button" data-ei-risk="A"><span>A</span><em>04</em></button>
+              <button type="button" data-ei-risk="S"><span>S</span><em>05</em></button>
+            </div>
+            <div class="ei-threat-readout">
+              <div class="ei-threat-code"><span>VIEWING PROTOCOL</span><b id="eiRiskDetailCode">RISK B</b><em id="eiRiskTier">TACTICAL RESPONSE</em></div>
+              <div class="ei-threat-bars">
+                <div><span>THREAT</span><i><b data-meter="threat"></b></i></div>
+                <div><span>FORCE</span><i><b data-meter="force"></b></i></div>
+                <div><span>COORD.</span><i><b data-meter="coord"></b></i></div>
+              </div>
+            </div>
+            <div class="ei-threat-directive"><span>OPERATIONAL DEFINITION</span><p id="eiRiskDetailBody">중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.</p><b id="eiRiskDirective">TACTICAL FORCE DEPLOYMENT</b></div>
           </div>
+          <div class="ei-engage-note"><span>BASELINE</span><p><b data-ei-baseline-label>III // BRUTE = B</b> · 현재 개체의 기준 표시와 열람 중인 위험 프로토콜은 별개다.</p></div>
         </section>
       </div>
       </section>
