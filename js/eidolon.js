@@ -1,7 +1,7 @@
 const CLASSES=[
   {key:"swarm",mark:"I",name:"SWARM",ko:"스웜",scale:"SMALL / MASS-PRODUCED",role:"RECON / INFILTRATION / GROUP COMBAT",brief:"소형 양산형. 정찰·침투·집단전에 특화된 기본 분류.",risk:"CONTEXTUAL",riskKey:""},
   {key:"hunter",mark:"II",name:"HUNTER",ko:"헌터",scale:"MEDIUM",role:"TRACKING / CLOSE QUARTERS / URBAN",brief:"중형 추적개체. 근접전과 도심전에서 높은 위협을 보이는 분류.",risk:"CONTEXTUAL",riskKey:""},
-  {key:"brute",mark:"III",name:"BRUTE",ko:"브루트",scale:"TANK-CLASS",role:"HEAVY ARMOR / DIRECT ASSAULT",brief:"전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.",risk:"CONTEXTUAL",riskKey:""},
+  {key:"brute",mark:"III",name:"BRUTE",ko:"브루트",scale:"TANK-CLASS",role:"HEAVY ARMOR / DIRECT ASSAULT",brief:"전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.",risk:"B-CLASS // STANDARD",riskKey:"B"},
   {key:"dominion",mark:"IV",name:"DOMINION",ko:"도미니언",scale:"COMMAND TYPE",role:"COMMAND / TACTICAL CONTROL",brief:"주변 개체와 전술을 통제하는 지휘형. 단독 전투력뿐 아니라 전장 전체에 영향을 준다.",risk:"CONTEXTUAL",riskKey:""},
   {key:"ark",mark:"V",name:"ARK",ko:"아크",scale:"TENS–HUNDREDS M",role:"STRATEGIC ENTITY / CITY-LEVEL THREAT",brief:"수십~수백 m급 전략개체. 도시급 위협으로 분류되며 S급 작전위험 대응 대상이 될 수 있다.",risk:"S PROTOCOL",riskKey:"S"},
   {key:"seraph",mark:"?",name:"SERAPH",ko:"세라프",scale:"VARIABLE / UNKNOWN",role:"OUTLIER / UNIQUE CAPABILITY",brief:"기존 I~V 등급 밖의 희귀 특이개체. 고유 능력과 압도적 전투력을 가지며 일부는 인간의 언어·사고를 이해하는 정황이 있다.",risk:"S PROTOCOL",riskKey:"S"}
