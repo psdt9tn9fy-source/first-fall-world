@@ -1,6 +1,6 @@
 import { initIntro } from "./intro.js?v=20261007-refactor-3";
 import {initMilitary} from "./military.js?v=20261007-refactor-3";
-import { initCharacters } from "./characters.js?v=20261008-character-v5";
+import { initCharacters } from "./characters.js?v=20261008-character-v6";
 import { initAccess } from "./access.js?v=20261007-refactor-3";
 import { initNavigation } from "./navigation.js?v=20261007-refactor-3";
 import { initNations } from "./nations.js?v=20261007-refactor-3";
