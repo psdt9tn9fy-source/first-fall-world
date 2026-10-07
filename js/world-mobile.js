@@ -1,5 +1,5 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-refactor-2";
-import { THEATERS } from "./world-data.js?v=20261007-refactor-2";
+import { N, EVENTS, ext } from "./data.js?v=20261007-refactor-3";
+import { THEATERS } from "./world-data.js?v=20261007-refactor-3";
 
 const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
