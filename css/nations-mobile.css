@@ -293,3 +293,10 @@
   .world-order .na-mobile-pager span{font-size:7px}
   .world-order .na-mobile-pager b{font-size:9px;line-height:1.35}
 }
+
+
+/* READABILITY MERGED / WORLD ORDER MOBILE */
+@media(max-width:820px){
+  .world-order .wo-tabs button b{font-size:10px!important}
+  .world-order .wo-brief{font-size:14px!important}
+}
