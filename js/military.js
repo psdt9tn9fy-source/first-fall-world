@@ -1,0 +1,15 @@
+const MODES={
+command:{kick:"COMMAND AUTHORITY ROUTING",title:"STRATEGIC NETWORK",read:"지휘체계",body:"장기전의 군사체계는 국가 지휘부에서 합동·전구·현장 지휘로 이어지는 다층 구조를 가진다. 세부 편제와 명칭은 국가마다 다르다.",facts:["STRATEGIC → TACTICAL","NETWORK ACTIVE","2134"]},
+structure:{kick:"ORGANIZATIONAL LAYER",title:"FORCE STRUCTURE",read:"군 조직",body:"각국은 독립된 군사제도와 편제를 유지한다. 장교·부사관·병의 역할과 지휘권은 계층적으로 구분되며 전시 편제는 국가와 전선에 따라 달라진다.",facts:["OFFICER / NCO / ENLISTED","NATIONAL SYSTEM","VARIABLE"]},
+force:{kick:"COMBAT FORCE INDEX",title:"SERVICE NETWORK",read:"전력 구조",body:"100년이 넘는 전쟁 동안 각국은 환경과 산업기반에 맞는 전투교리를 발전시켰다. 전력 구성과 주력 병과는 국가별로 서로 다르다.",facts:["MULTI-SERVICE","NATIONAL DOCTRINE","ADAPTIVE"]},
+rank:{kick:"COMMAND AUTHORITY",title:"RANK LADDER",read:"계급과 경력",body:"군 경력과 계급은 장기전 사회에서 강한 경력 자산이다. 병에서 부사관으로 이어지는 진급 경로가 존재하며 장교 교육기관의 위상도 높다.",facts:["OFFICER / NCO / ENLISTED","CAREER PATH","SOCIAL CAPITAL"]},
+deployment:{kick:"OPERATIONAL SEQUENCE",title:"DEPLOYMENT ROUTE",read:"전개 절차",body:"작전은 지휘·정보·전력의 연결을 통해 수행된다. 실제 대응 규모와 절차는 전선, 적 개체, 네스트 규모와 작전 위험도에 따라 달라진다.",facts:["COMMAND → FIELD","CONTEXT DEPENDENT","ACTIVE WAR"]}
+};
+export function initMilitary(){
+ const root=document.querySelector("#milCommand");if(!root)return;
+ const stage=root.querySelector(".mil-stage"),net=root.querySelector("[data-mil-network]"),route=root.querySelector("[data-mil-route]");
+ const buttons=[...root.querySelectorAll("[data-mil-mode]")],nodes=[...root.querySelectorAll("[data-mil-node]")];let token=0;
+ const setMode=key=>{const d=MODES[key];if(!d)return;root.dataset.mode=key;buttons.forEach(b=>b.classList.toggle("active",b.dataset.milMode===key));root.querySelector("[data-mil-kicker]").textContent=d.kick;root.querySelector("[data-mil-title]").textContent=d.title;root.querySelector("[data-mil-readout-code]").textContent=key.toUpperCase()+" // "+String(buttons.findIndex(b=>b.dataset.milMode===key)+1).padStart(2,"0");root.querySelector("[data-mil-readout-title]").textContent=d.read;root.querySelector("[data-mil-readout-body]").textContent=d.body;root.querySelectorAll("[data-mil-facts] b").forEach((b,i)=>b.textContent=d.facts[i]);nodes.forEach((n,i)=>n.classList.toggle("active",i===0));route.textContent="STANDBY"};
+ const run=()=>{const t=++token;stage.classList.remove("routing");net.classList.remove("signal");void stage.offsetWidth;stage.classList.add("routing");net.classList.add("signal");route.textContent="ROUTING";nodes.forEach(n=>n.classList.remove("active"));nodes.forEach((n,i)=>setTimeout(()=>{if(t!==token)return;n.classList.add("active");if(i===nodes.length-1)route.textContent="LINKED"},160+i*190));setTimeout(()=>{if(t===token)stage.classList.remove("routing")},1500)};
+ buttons.forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.milMode)));nodes.forEach(n=>n.addEventListener("click",()=>{nodes.forEach(x=>x.classList.toggle("active",x===n));route.textContent=n.dataset.milNode.toUpperCase()+" // SELECTED"}));root.querySelector("[data-mil-route-btn]")?.addEventListener("click",run);window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="military")setTimeout(run,120)});setMode("command");
+}
