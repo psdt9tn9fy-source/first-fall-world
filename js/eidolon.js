@@ -4,7 +4,7 @@ const CLASSES=[
   {key:"brute",mark:"III",name:"BRUTE",ko:"브루트",scale:"TANK-CLASS",role:"HEAVY ARMOR / DIRECT ASSAULT",brief:"전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.",risk:"B-CLASS // STANDARD",riskKey:"B"},
   {key:"dominion",mark:"IV",name:"DOMINION",ko:"도미니언",scale:"COMMAND TYPE",role:"COMMAND / TACTICAL CONTROL",brief:"주변 개체와 전술을 통제하는 지휘형. 단독 전투력뿐 아니라 전장 전체에 영향을 준다.",risk:"A-CLASS // STANDARD",riskKey:"A"},
   {key:"ark",mark:"V",name:"ARK",ko:"아크",scale:"TENS–HUNDREDS M",role:"STRATEGIC ENTITY / CITY-LEVEL THREAT",brief:"수십~수백 m급 전략개체. 도시급 위협으로 분류되며 S급 작전위험 대응 대상이 될 수 있다.",risk:"S PROTOCOL",riskKey:"S"},
-  {key:"seraph",mark:"?",name:"SERAPH",ko:"세라프",scale:"VARIABLE / UNKNOWN",role:"OUTLIER / UNIQUE CAPABILITY",brief:"기존 I~V 등급 밖의 희귀 특이개체. 고유 능력과 압도적 전투력을 가지며 일부는 인간의 언어·사고를 이해하는 정황이 있다.",risk:"S PROTOCOL",riskKey:"S"}
+  {key:"seraph",mark:"?",name:"SERAPH",ko:"세라프",scale:"VARIABLE / UNKNOWN",role:"OUTLIER / UNIQUE CAPABILITY",brief:"기존 I~V 등급 밖의 희귀 특이개체. 고유 능력과 압도적 전투력을 가지며 일부는 인간의 언어·사고를 이해하는 정황이 있다.",risk:"UNBOUNDED // SCALE EXCEEDED",riskKey:""}
 ];
 
 const NESTS={
@@ -89,9 +89,10 @@ export function initEidolon(){
   }
 
   function setRiskScale(key=""){
-    root.querySelectorAll(".ei-risk-scale span").forEach(el=>el.classList.toggle("active",el.dataset.risk===key));
-
+    const unbounded=key==="UNBOUNDED";
+    root.querySelectorAll(".ei-risk-scale span").forEach(el=>el.classList.toggle("active",!unbounded&&el.dataset.risk===key));
     root.classList.toggle("risk-s",key==="S");
+    root.classList.toggle("risk-unbounded",unbounded);
   }
 
   function typeRecord(el,text,status="DATA DECODE"){
@@ -185,8 +186,8 @@ export function initEidolon(){
     q("#eiBehaviorClass").textContent=c.name+" // "+c.role;
     q("#eiSeraphNotice").hidden=c.key!=="seraph";
     q("#eiTaxonomyState").textContent=c.key==="seraph"?"STANDARD TAXONOMY // NOT APPLICABLE":"PUBLIC TAXONOMY // CLASS VERIFIED";
-    setRiskScale(c.riskKey);
-    root.dispatchEvent(new CustomEvent("eidolon:class-risk",{detail:{key:c.riskKey,classKey:c.key,mark:c.mark,name:c.name,risk:c.risk}}));
+    setRiskScale(c.key==="seraph"?"UNBOUNDED":c.riskKey);
+    root.dispatchEvent(new CustomEvent("eidolon:class-risk",{detail:{key:c.key==="seraph"?"UNBOUNDED":c.riskKey,classKey:c.key,mark:c.mark,name:c.name,risk:c.risk}}));
     focusAnalysis("morphology");
     sync3D();
     dossier?.close();
