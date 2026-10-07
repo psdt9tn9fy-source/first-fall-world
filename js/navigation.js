@@ -3,7 +3,7 @@ const RECORDS={
   nations:{no:"02",title:"WORLD ORDER",code:"STATE SYSTEM"},
   eidolon:{no:"03",title:"EIDOLON",code:"HOSTILE ENTITY"},
   military:{no:"04",title:"MILITARY",code:"MILITARY SOCIETY"},
-  academy:{no:"05",title:"ACADEMY",code:"OFFICER EDUCATION"},
+  life:{no:"05",title:"LIFE",code:"CIVIL LIFE"},
   archive:{no:"06",title:"ARCHIVE",code:"HISTORICAL RECORD"}
 };
 
