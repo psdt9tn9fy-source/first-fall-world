@@ -129,3 +129,25 @@
 .ei-nest-topology[data-level="medium"] .ei-nest-core{width:104px;height:104px}.ei-nest-topology[data-level="grand"] .ei-nest-core{width:120px;height:120px;box-shadow:0 0 0 15px #71888d0d,0 0 36px #8ca9af33!important}
 .ei-nest-topology[data-level="medium"] .ei-satellite,.ei-nest-topology[data-level="grand"] .ei-satellite{box-shadow:0 0 8px #9db6bb66}
 @media(max-width:760px){.ei-nest-topology{height:320px!important}.ei-nest-core{width:82px!important;height:82px!important}.ei-nest-topology[data-level="medium"] .ei-nest-core{width:94px!important;height:94px!important}.ei-nest-topology[data-level="grand"] .ei-nest-core{width:108px!important;height:108px!important}.ei-nest-links{inset:5%!important;width:90%!important;height:90%!important}}
+
+
+/* NEST v3 — CSS topology geometry (mobile-safe) */
+.ei-nest-links{position:absolute!important;inset:0!important;width:auto!important;height:auto!important;pointer-events:none}
+.ei-nest-links .link,.ei-nest-links .branch{position:absolute;display:block;background:#6f888e;opacity:.7;transform-origin:0 50%;height:1px}
+.ei-nest-links .production{left:50%;top:50%;width:34%;transform:rotate(-90deg)}
+.ei-nest-links .repair{left:50%;top:50%;width:32%;transform:rotate(180deg)}
+.ei-nest-links .supply{left:50%;top:50%;width:32%;transform:rotate(0)}
+.ei-nest-links .data{left:50%;top:50%;width:34%;transform:rotate(90deg)}
+.ei-nest-links .branch{display:none;width:27%;opacity:.55}
+.ei-nest-links .bm1{left:18%;top:50%;transform:rotate(-58deg)}.ei-nest-links .bm2{left:82%;top:50%;transform:rotate(-122deg)}
+.ei-nest-links .bg1{left:18%;top:50%;transform:rotate(58deg)}.ei-nest-links .bg2{left:82%;top:50%;transform:rotate(122deg)}
+.ei-nest-topology[data-level="medium"] .bm1,.ei-nest-topology[data-level="medium"] .bm2,.ei-nest-topology[data-level="grand"] .branch{display:block}
+.ei-nest-topology.scanning .ei-nest-links .link,.ei-nest-topology.scanning .ei-nest-links .branch{animation:eiLinkPulse .8s ease-in-out infinite alternate}
+.ei-nest-topology.scanned .ei-nest-links .link,.ei-nest-topology.scanned .ei-nest-links .branch{background:#c0d3d7;box-shadow:0 0 7px #a8c0c5}
+@keyframes eiLinkPulse{from{opacity:.25}to{opacity:1}}
+.ei-nest-core{border-radius:0!important}
+.ei-nest-core i{display:none!important}
+.ei-nest-topology[data-level="small"] .ei-satellite{display:none!important}
+.ei-nest-topology[data-level="medium"] .m1,.ei-nest-topology[data-level="medium"] .m2{display:block!important}
+.ei-nest-topology[data-level="medium"] .g1,.ei-nest-topology[data-level="medium"] .g2{display:none!important}
+.ei-nest-topology[data-level="grand"] .ei-satellite{display:block!important}
