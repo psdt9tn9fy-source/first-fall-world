@@ -43,7 +43,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-live-dossier-1").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-info-tab-1").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
@@ -121,7 +121,6 @@ export function initEidolon(){
     focusButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiFocus===type));
     const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta");
     threeDController?.setFocus(type);
-    showLiveDossier(type);
     let copy="",status="MORPHOLOGY RECORD";
     if(type==="core"){
       title.textContent="CORE";
@@ -175,7 +174,7 @@ export function initEidolon(){
     setRiskScale(c.riskKey);
     focusAnalysis("morphology");
     sync3D();
-    showLiveDossier("morphology");
+    dossier?.close();
     if(animate)pulseScan();
   }
 
@@ -219,6 +218,14 @@ export function initEidolon(){
     body.textContent=(detail.name||detail.ko||"BLACK ZONE")+" // LOCAL COMPOSITION NOT PUBLICLY INDEXED";
     root.classList.add("source-linked");
   }
+
+  const infoButton=document.createElement("button");
+  infoButton.className="ei-info-tab";
+  infoButton.type="button";
+  infoButton.innerHTML="<span>ENTITY</span><b>INFORMATION</b><i>+</i>";
+  infoButton.setAttribute("aria-label","Open detailed entity information");
+  scanner.appendChild(infoButton);
+  infoButton.addEventListener("click",()=>showLiveDossier(root.dataset.eiFocus||"morphology"));
 
   classButtons.forEach(b=>b.addEventListener("click",()=>selectClass(b.dataset.eiClassBtn)));
   tabButtons.forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.eiTabBtn)));
