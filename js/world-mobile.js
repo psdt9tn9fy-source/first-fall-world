@@ -34,7 +34,6 @@ export function initWorldMobile(){
   const modulePanels=[...terminal.querySelectorAll("[data-ft-panel]")];
   const timelineButtons=[...terminal.querySelectorAll("[data-ft-era]")];
   const timelineList=document.querySelector("#ftTimelineList");
-  const more=document.querySelector("#ftMoreMenu");
   let activeTheater=0,sheetState="closed",dragY=null,dragged=false,scrollRaf=0,switchTimer=0,hintTimer=0;
 
   function flagUrl(key){
@@ -263,13 +262,7 @@ export function initWorldMobile(){
   });
 
   terminal.querySelectorAll("[data-ft-open]").forEach(button=>button.addEventListener("click",()=>{
-    const key=button.dataset.ftOpen;
-    if(key==="more"){more.classList.toggle("open");return}
-    more.classList.remove("open");window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key}}));
-  }));
-
-  terminal.querySelectorAll("[data-ft-more]").forEach(button=>button.addEventListener("click",()=>{
-    more.classList.remove("open");window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:button.dataset.ftMore}}));
+    window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:button.dataset.ftOpen}}));
   }));
 
   function maybeShowDiscovery(){
