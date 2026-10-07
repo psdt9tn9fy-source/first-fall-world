@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-nations-rail-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-nations-picker-1";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
@@ -43,7 +43,7 @@ export function initNations(){
   const panels=[...root.querySelectorAll("[data-na-panel]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const byKey=new Map(N.map(n=>[n[0],n]));
-  let currentIndex=0,currentKey=N[0][0],pendingHandoff=false,swapTimer=0,handoffTimer=0;
+  let currentIndex=0,currentKey=N[0][0],pendingHandoff=false,swapTimer=0,handoffTimer=0,pickerTimer=0,pickerLock=false;
 
   function flagUrl(key){
     return `./assets/flags-hq/${key}-2134.${ext[key]||"jpg"}`;
@@ -51,6 +51,21 @@ export function initNations(){
 
   function setField(name,value){
     root.querySelectorAll(`[data-nation-field="${name}"]`).forEach(el=>el.textContent=value);
+  }
+
+  function hydrateFlag(button){
+    const img=button?.querySelector(".na-flag-card img[data-src]");
+    if(!img)return;
+    img.src=img.dataset.src;img.removeAttribute("data-src");
+    img.addEventListener("load",()=>button.classList.add("flag-ready"),{once:true});
+  }
+
+  function hydrateAround(button,radius=2){
+    if(!button)return;
+    const buttons=[...list.querySelectorAll(".na-index-btn")];
+    const i=buttons.indexOf(button);
+    if(i<0)return;
+    for(let n=Math.max(0,i-radius);n<=Math.min(buttons.length-1,i+radius);n++)hydrateFlag(buttons[n]);
   }
 
   function renderIndex(filter=""){
@@ -61,36 +76,83 @@ export function initNations(){
       const hay=[n[0],n[1],n[2],n[3],n[4]].join(" ").toLowerCase();
       if(q&&!hay.includes(q))return;
       shown++;
+      const code=n[1].split(" //")[0];
       const b=document.createElement("button");
       b.type="button";b.className="na-index-btn";b.dataset.k=n[0];b.dataset.index=index;
       b.setAttribute("role","option");b.setAttribute("aria-selected",String(n[0]===currentKey));
-      b.innerHTML=`<span>${String(index+1).padStart(2,"0")}</span><div><b>${n[2]}</b><small>${n[3]}</small></div><em>${n[1].split(" //")[0]}</em>`;
+      b.innerHTML=`
+        <span>${String(index+1).padStart(2,"0")}</span>
+        <i class="na-flag-card" aria-hidden="true"><img data-src="${flagUrl(n[0])}" alt="" decoding="async"><u></u></i>
+        <div><b>${n[2]}</b><small>${n[3]}</small></div>
+        <em>${code}</em>`;
       b.classList.toggle("active",n[0]===currentKey);
       b.addEventListener("click",()=>{
-        show(n,{animate:true});
-        if(mobileQuery.matches)setIndexOpen(false);
+        pickerLock=true;
+        show(n,{animate:true,centerPicker:true});
+        if(root.classList.contains("index-open"))setIndexOpen(false);
+        setTimeout(()=>pickerLock=false,240);
       });
       list.appendChild(b);
     });
-    const indicator=document.createElement("i");
-    indicator.className="na-rail-indicator";indicator.setAttribute("aria-hidden","true");list.appendChild(indicator);
     root.querySelector("#nationCount").textContent=`${shown} / ${N.length} RECORDS`;
-    requestAnimationFrame(updateRailIndicator);
+    requestAnimationFrame(()=>{
+      const active=list.querySelector(".na-index-btn.active");
+      hydrateAround(active,2);
+      if(mobileQuery.matches&&!root.classList.contains("index-open"))centerButton(active,"auto");
+    });
   }
 
-  function updateRailIndicator(){
-    const active=list.querySelector(".na-index-btn.active"),indicator=list.querySelector(".na-rail-indicator");
-    if(!active||!indicator){if(indicator)indicator.style.opacity="0";return}
-    indicator.style.opacity="1";
-    indicator.style.setProperty("--rail-y",active.offsetTop+"px");
-    indicator.style.setProperty("--rail-h",active.offsetHeight+"px");
+  function centerButton(button,behavior=reduced?"auto":"smooth"){
+    if(!button||!mobileQuery.matches||root.classList.contains("index-open"))return;
+    const top=button.offsetTop-(list.clientHeight-button.offsetHeight)/2;
+    list.scrollTo({top:Math.max(0,top),behavior});
+  }
+
+  function syncIndexSelection({center=false,behavior}={}){
+    list.querySelectorAll(".na-index-btn").forEach(b=>{
+      const active=b.dataset.k===currentKey;
+      b.classList.toggle("active",active);
+      b.setAttribute("aria-selected",String(active));
+    });
+    const active=list.querySelector(".na-index-btn.active");
+    hydrateAround(active,2);
+    if(center)requestAnimationFrame(()=>centerButton(active,behavior));
+  }
+
+  function nearestPickerButton(){
+    const buttons=[...list.querySelectorAll(".na-index-btn")];
+    if(!buttons.length)return null;
+    const box=list.getBoundingClientRect(),center=box.top+box.height/2;
+    let best=null,distance=Infinity;
+    buttons.forEach(b=>{
+      const r=b.getBoundingClientRect(),d=Math.abs((r.top+r.height/2)-center);
+      if(d<distance){distance=d;best=b}
+    });
+    return best;
+  }
+
+  function settlePicker(){
+    if(!mobileQuery.matches||root.classList.contains("index-open")||pickerLock)return;
+    const button=nearestPickerButton();
+    if(!button)return;
+    hydrateAround(button,2);
+    const n=byKey.get(button.dataset.k);
+    if(n&&n[0]!==currentKey)show(n,{animate:true,centerPicker:false});
   }
 
   function setIndexOpen(open){
     if(!mobileQuery.matches)open=false;
+    const wasOpen=root.classList.contains("index-open");
     root.classList.toggle("index-open",open);
     indexToggle?.setAttribute("aria-expanded",String(open));
-    if(open)requestAnimationFrame(updateRailIndicator);
+    if(open){
+      hydrateAround(list.querySelector(".na-index-btn.active"),3);
+      requestAnimationFrame(()=>list.querySelector(".na-index-btn.active")?.scrollIntoView({block:"nearest"}));
+    }else{
+      if(wasOpen&&search.value){
+        search.value="";renderIndex("");
+      }else requestAnimationFrame(()=>centerButton(list.querySelector(".na-index-btn.active"),"auto"));
+    }
   }
 
   function linkedEvents(key){
@@ -113,7 +175,7 @@ export function initNations(){
     prev.disabled=currentIndex<=0;next.disabled=currentIndex>=N.length-1;
   }
 
-  function updateContent(n){
+  function updateContent(n,{centerPicker=false}={}){
     currentKey=n[0];currentIndex=N.findIndex(x=>x[0]===n[0]);
     const src=flagUrl(n[0]);
     flag.src=src;flag.alt=n[2]+" flag";
@@ -128,22 +190,17 @@ export function initNations(){
     root.querySelector("#naPosition").textContent=`${String(currentIndex+1).padStart(2,"0")} / ${String(N.length).padStart(2,"0")}`;
     root.querySelector("#naRailCode").textContent=n[1].split(" //")[0];
     setField("status",n[4]);setField("population",n[5]);setField("capital",n[6]);setField("strength",n[7]);setField("brief",n[8]);
-    renderHistory(n[0]);renderIndex(search.value);updateButtons();
-    const active=list.querySelector(`[data-k="${n[0]}"]`);
-    active?.scrollIntoView({block:"nearest",inline:"nearest",behavior:reduced?"auto":"smooth"});
-    requestAnimationFrame(updateRailIndicator);
+    renderHistory(n[0]);syncIndexSelection({center:centerPicker});updateButtons();
   }
 
-  function show(n,{animate=true}={}){
+  function show(n,{animate=true,centerPicker=false}={}){
     if(!n)return;
-    const nextIndex=N.findIndex(x=>x[0]===n[0]);
-    const direction=nextIndex>=currentIndex?"next":"prev";
     clearTimeout(swapTimer);
     dossier.classList.remove("swap-next","swap-prev");
-    updateContent(n);
+    updateContent(n,{centerPicker});
     if(animate&&!reduced){
-      dossier.classList.add(direction==="next"?"swap-next":"swap-prev");
-      swapTimer=setTimeout(()=>dossier.classList.remove("swap-next","swap-prev"),240);
+      dossier.classList.add("swap-next");
+      swapTimer=setTimeout(()=>dossier.classList.remove("swap-next","swap-prev"),210);
     }
   }
 
@@ -158,7 +215,7 @@ export function initNations(){
 
   function step(delta){
     const index=Math.max(0,Math.min(N.length-1,currentIndex+delta));
-    if(index!==currentIndex)show(N[index],{animate:true});
+    if(index!==currentIndex)show(N[index],{animate:true,centerPicker:true});
   }
 
   function playHandoff(){
@@ -174,8 +231,14 @@ export function initNations(){
   indexClose?.addEventListener("click",()=>setIndexOpen(false));
   indexScrim?.addEventListener("click",()=>setIndexOpen(false));
   window.addEventListener("keydown",e=>{if(e.key==="Escape")setIndexOpen(false)});
-  mobileQuery.addEventListener?.("change",()=>setIndexOpen(false));
-  list.addEventListener("scroll",()=>requestAnimationFrame(updateRailIndicator),{passive:true});
+  mobileQuery.addEventListener?.("change",()=>{setIndexOpen(false);renderIndex(search.value)});
+  list.addEventListener("scroll",()=>{
+    if(!mobileQuery.matches||root.classList.contains("index-open"))return;
+    clearTimeout(pickerTimer);
+    const near=nearestPickerButton();hydrateAround(near,2);
+    pickerTimer=setTimeout(settlePicker,105);
+  },{passive:true});
+
   tabButtons.forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.naTab)));
   prev.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
 
@@ -189,12 +252,12 @@ export function initNations(){
 
   window.addEventListener("archive:select-nation",e=>{
     const n=byKey.get(e.detail?.key);if(!n)return;
-    pendingHandoff=true;setIndexOpen(false);show(n,{animate:false});
+    pendingHandoff=true;setIndexOpen(false);show(n,{animate:false,centerPicker:true});
   });
   window.addEventListener("archive:record-opened",e=>{
     if(e.detail?.key!=="nations"||!pendingHandoff)return;
     pendingHandoff=false;setTimeout(playHandoff,110);
   });
 
-  renderIndex();switchTab("overview");show(N[0],{animate:false});
+  renderIndex();switchTab("overview");show(N[0],{animate:false,centerPicker:true});
 }
