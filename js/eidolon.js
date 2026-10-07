@@ -33,7 +33,7 @@ export function initEidolon(){
 
   function loadRecords(){
     if(recordsPromise)return recordsPromise;
-    recordsPromise=import("./eidolon-records.js?v=20261007-refactor-2").then(mod=>{
+    recordsPromise=import("./eidolon-records.js?v=20261007-refactor-3").then(mod=>{
       records=mod.initEidolonRecords(root);
       return records;
     }).catch(err=>{console.warn("에이돌론 기록을 불러올 수 없음",err);return null});
@@ -43,7 +43,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-refactor-2").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-refactor-3").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("에이돌론 상세기록을 불러올 수 없음.",error);dossierPromise=null;return null});
@@ -62,7 +62,7 @@ export function initEidolon(){
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
     if(threeDModulePromise)return threeDModulePromise;
-    threeDModulePromise=import("./eidolon-3d.js?v=20261007-refactor-2").then(mod=>{
+    threeDModulePromise=import("./eidolon-3d.js?v=20261007-refactor-3").then(mod=>{
       threeDController=mod.initEidolon3D(root,{reduced});
       threeDController.setClass(current().key);
       threeDController.setFocus(root.dataset.eiFocus||"morphology");
