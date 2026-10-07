@@ -33,7 +33,7 @@ export function initEidolon(){
 
   function loadRecords(){
     if(recordsPromise)return recordsPromise;
-    recordsPromise=import("./eidolon-records.js?v=20261007-refactor-3").then(mod=>{
+    recordsPromise=import("./eidolon-records.js?v=20261008-seraph-fix").then(mod=>{
       records=mod.initEidolonRecords(root);
       return records;
     }).catch(err=>{console.warn("에이돌론 기록을 불러올 수 없음",err);return null});
