@@ -32,41 +32,41 @@ export const THEATERS=[
   {
     id:"east",code:"T-01",name:"EAST ASIA / PACIFIC",short:"EA / PAC",caption:"동아시아 · 태평양 전구",
     nodes:[
-      {id:"ncdr",type:"nation",x:49,y:26},
-      {id:"rok",type:"nation",x:58,y:29},
-      {id:"jpn",type:"nation",x:70,y:32},
-      {id:"crf",type:"nation",x:48,y:40},
-      {id:"wur",type:"nation",x:34,y:45},
-      {id:"sea",type:"nation",x:50,y:61},
-      {id:"aus",type:"nation",x:67,y:79}
+      {id:"ncdr",type:"nation",ax:49,ay:26,x:40,y:18},
+      {id:"rok",type:"nation",ax:58,ay:29,x:58,y:18},
+      {id:"jpn",type:"nation",ax:70,ay:32,x:79,y:27},
+      {id:"crf",type:"nation",ax:48,ay:40,x:41,y:47},
+      {id:"wur",type:"nation",ax:34,ay:45,x:23,y:52},
+      {id:"sea",type:"nation",ax:50,ay:61,x:49,y:66},
+      {id:"aus",type:"nation",ax:67,ay:79,x:68,y:80}
     ],
     links:[["ncdr","rok"],["ncdr","crf"],["crf","rok"],["rok","jpn"],["crf","sea"],["sea","aus"],["jpn","aus"]]
   },
   {
     id:"eurasia",code:"T-02",name:"EURASIA",short:"EURASIA",caption:"유라시아 내륙 전구",
     nodes:[
-      {id:"rus",type:"nation",x:37,y:28},
-      {id:"cadc",type:"nation",x:59,y:48},
-      {id:"ind",type:"nation",x:66,y:72}
+      {id:"rus",type:"nation",ax:37,ay:28,x:37,y:28},
+      {id:"cadc",type:"nation",ax:59,ay:48,x:59,y:48},
+      {id:"ind",type:"nation",ax:66,ay:72,x:66,y:72}
     ],
     links:[["rus","cadc"],["cadc","ind"]]
   },
   {
     id:"americas",code:"T-03",name:"ATLANTIC / AMERICAS",short:"AMERICAS",caption:"북미 · 남미 전구",
     nodes:[
-      {id:"can",type:"nation",x:64,y:23},
-      {id:"afu",type:"nation",x:65,y:36},
-      {id:"mex",type:"nation",x:61,y:49},
-      {id:"bra",type:"nation",x:83,y:68}
+      {id:"can",type:"nation",ax:64,ay:23,x:52,y:17},
+      {id:"afu",type:"nation",ax:65,ay:36,x:76,y:34},
+      {id:"mex",type:"nation",ax:61,ay:49,x:51,y:56},
+      {id:"bra",type:"nation",ax:83,ay:68,x:84,y:75}
     ],
     links:[["can","afu"],["afu","mex"],["mex","bra"]]
   },
   {
     id:"emea",code:"T-04",name:"EUROPE / MENA / AFRICA",short:"EU / MENA",caption:"유럽 · 중동 · 아프리카 전구",
     nodes:[
-      {id:"edc",type:"nation",x:34,y:23},
-      {id:"medc",type:"nation",x:65,y:43},
-      {id:"afr",type:"nation",x:47,y:67}
+      {id:"edc",type:"nation",ax:34,ay:23,x:34,y:23},
+      {id:"medc",type:"nation",ax:65,ay:43,x:65,y:43},
+      {id:"afr",type:"nation",ax:47,ay:67,x:47,y:67}
     ],
     links:[["edc","medc"],["edc","afr"],["medc","afr"]]
   }
