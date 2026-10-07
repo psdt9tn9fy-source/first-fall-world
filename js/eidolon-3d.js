@@ -72,8 +72,9 @@ export function initEidolon3D(root,{reduced=false}={}){
       modelViewer.setAttribute("alt","BRUTE class EIDOLON 3D reference model");
       modelViewer.setAttribute("camera-controls","");
       modelViewer.setAttribute("interaction-prompt","none");
-      modelViewer.setAttribute("shadow-intensity","0.65");
-      modelViewer.setAttribute("exposure","0.85");
+      modelViewer.setAttribute("shadow-intensity","1.05");
+      modelViewer.setAttribute("shadow-softness","0.75");
+      modelViewer.setAttribute("exposure","0.72");
       modelViewer.setAttribute("camera-orbit","35deg 72deg auto");
       modelViewer.setAttribute("min-camera-orbit","auto 35deg auto");
       modelViewer.setAttribute("max-camera-orbit","auto 105deg auto");
@@ -102,6 +103,9 @@ export function initEidolon3D(root,{reduced=false}={}){
 
   function applyFocus(){
     if(!modelViewer||classKey!=="brute")return;
+    root.dataset.ei3dFocus=focusKey;
+    root.classList.remove("ei-focus-pulse");
+    if(!reduced){void root.offsetWidth;root.classList.add("ei-focus-pulse");setTimeout(()=>root.classList.remove("ei-focus-pulse"),620)}
     const views={
       morphology:{orbit:"35deg 72deg 115%",target:"auto auto auto"},
       core:{orbit:"8deg 78deg 72%",target:"auto 52% auto"},
