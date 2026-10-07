@@ -151,3 +151,9 @@
 .ei-nest-topology[data-level="medium"] .m1,.ei-nest-topology[data-level="medium"] .m2{display:block!important}
 .ei-nest-topology[data-level="medium"] .g1,.ei-nest-topology[data-level="medium"] .g2{display:none!important}
 .ei-nest-topology[data-level="grand"] .ei-satellite{display:block!important}
+
+
+/* NEST status lock — prevent MAPPING/LINKED layout shift */
+.ei-nest-state{min-width:82px}
+.ei-nest-state b{display:block;width:82px;white-space:nowrap;text-align:right}
+@media(max-width:760px){.ei-nest-state{min-width:76px}.ei-nest-state b{width:76px}}
