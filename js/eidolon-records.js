@@ -64,7 +64,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
   buttons.forEach(button=>button.addEventListener("click",()=>setTab(button.dataset.eiTabBtn)));
   traceRun?.addEventListener("click",runTrace);
   nestScan?.addEventListener("click",()=>scanNest());
-  nestButtons.forEach(button=>button.addEventListener("click",()=>setTimeout(()=>scanNest(button.dataset.eiNest),0)));
+  root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"));
   setTab(root.dataset.eiTab||"profile",{silent:true});
   return {setTab};
 }
