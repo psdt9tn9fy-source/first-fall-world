@@ -1,5 +1,6 @@
 import { initIntro } from "./intro.js?v=20261007-nations-final-2";
 import {initMilitary} from "./military.js?v=20261007-command-1";
+import { initLife } from "./life.js?v=20261007-life-1";
 import { initAccess } from "./access.js?v=20261007-nations-final-2";
 import { initNavigation } from "./navigation.js?v=20261007-world-order-p1";
 import { initNations } from "./nations.js?v=20261007-world-order-p1";
@@ -13,5 +14,6 @@ initNavigation();
 initNations();
 initEidolon();
 initMilitary();
+initLife();
 initWorld();
 initWorldMobile();
