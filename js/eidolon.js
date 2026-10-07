@@ -43,7 +43,7 @@ export function initEidolon(){
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
     if(threeDModulePromise)return threeDModulePromise;
-    threeDModulePromise=import("./eidolon-3d.js?v=20261007-3d-isolation-1").then(mod=>{
+    threeDModulePromise=import("./eidolon-3d.js?v=20261007-focus-camera-1").then(mod=>{
       threeDController=mod.initEidolon3D(root,{reduced});
       threeDController.setClass(current().key);
       return threeDController;
@@ -70,6 +70,7 @@ export function initEidolon(){
     const c=current();
     focusButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiFocus===type));
     const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta");
+    threeDController?.setFocus(type);
     if(type==="core"){
       title.textContent="CORE";
       meta.textContent="POWER / COMPUTE / NEURAL";
