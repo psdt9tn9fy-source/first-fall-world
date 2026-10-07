@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-nations-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-nations-rail-1";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
@@ -26,6 +26,10 @@ export function initNations(){
 
   const list=root.querySelector("#nationList");
   const search=root.querySelector("#nationSearch");
+  const indexToggle=root.querySelector("#nationIndexToggle");
+  const indexClose=root.querySelector("#nationIndexClose");
+  const indexScrim=root.querySelector("#nationIndexScrim");
+  const mobileQuery=matchMedia("(max-width:820px)");
   const dossier=root.querySelector("#nationDossier");
   const identity=root.querySelector("#nationIdentity");
   const flag=root.querySelector("#nf");
@@ -62,10 +66,31 @@ export function initNations(){
       b.setAttribute("role","option");b.setAttribute("aria-selected",String(n[0]===currentKey));
       b.innerHTML=`<span>${String(index+1).padStart(2,"0")}</span><div><b>${n[2]}</b><small>${n[3]}</small></div><em>${n[1].split(" //")[0]}</em>`;
       b.classList.toggle("active",n[0]===currentKey);
-      b.addEventListener("click",()=>show(n,{animate:true}));
+      b.addEventListener("click",()=>{
+        show(n,{animate:true});
+        if(mobileQuery.matches)setIndexOpen(false);
+      });
       list.appendChild(b);
     });
+    const indicator=document.createElement("i");
+    indicator.className="na-rail-indicator";indicator.setAttribute("aria-hidden","true");list.appendChild(indicator);
     root.querySelector("#nationCount").textContent=`${shown} / ${N.length} RECORDS`;
+    requestAnimationFrame(updateRailIndicator);
+  }
+
+  function updateRailIndicator(){
+    const active=list.querySelector(".na-index-btn.active"),indicator=list.querySelector(".na-rail-indicator");
+    if(!active||!indicator){if(indicator)indicator.style.opacity="0";return}
+    indicator.style.opacity="1";
+    indicator.style.setProperty("--rail-y",active.offsetTop+"px");
+    indicator.style.setProperty("--rail-h",active.offsetHeight+"px");
+  }
+
+  function setIndexOpen(open){
+    if(!mobileQuery.matches)open=false;
+    root.classList.toggle("index-open",open);
+    indexToggle?.setAttribute("aria-expanded",String(open));
+    if(open)requestAnimationFrame(updateRailIndicator);
   }
 
   function linkedEvents(key){
@@ -106,6 +131,7 @@ export function initNations(){
     renderHistory(n[0]);renderIndex(search.value);updateButtons();
     const active=list.querySelector(`[data-k="${n[0]}"]`);
     active?.scrollIntoView({block:"nearest",inline:"nearest",behavior:reduced?"auto":"smooth"});
+    requestAnimationFrame(updateRailIndicator);
   }
 
   function show(n,{animate=true}={}){
@@ -144,6 +170,12 @@ export function initNations(){
   }
 
   search.addEventListener("input",()=>renderIndex(search.value));
+  indexToggle?.addEventListener("click",()=>setIndexOpen(!root.classList.contains("index-open")));
+  indexClose?.addEventListener("click",()=>setIndexOpen(false));
+  indexScrim?.addEventListener("click",()=>setIndexOpen(false));
+  window.addEventListener("keydown",e=>{if(e.key==="Escape")setIndexOpen(false)});
+  mobileQuery.addEventListener?.("change",()=>setIndexOpen(false));
+  list.addEventListener("scroll",()=>requestAnimationFrame(updateRailIndicator),{passive:true});
   tabButtons.forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.naTab)));
   prev.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
 
@@ -157,7 +189,7 @@ export function initNations(){
 
   window.addEventListener("archive:select-nation",e=>{
     const n=byKey.get(e.detail?.key);if(!n)return;
-    pendingHandoff=true;show(n,{animate:false});
+    pendingHandoff=true;setIndexOpen(false);show(n,{animate:false});
   });
   window.addEventListener("archive:record-opened",e=>{
     if(e.detail?.key!=="nations"||!pendingHandoff)return;
