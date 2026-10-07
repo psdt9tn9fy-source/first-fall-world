@@ -321,7 +321,7 @@
         <div class="ei-class-head"><span>CLASS INDEX</span><b>06 RECORDS</b></div>
         <button class="ei-class-btn" type="button" data-ei-class-btn="swarm" role="option"><span class="ei-class-mark">I</span><div><b>SWARM</b><small>RECON / INFILTRATION</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="hunter" role="option"><span class="ei-class-mark">II</span><div><b>HUNTER</b><small>TRACKING / URBAN</small></div></button>
-        <button class="ei-class-btn active" type="button" data-ei-class-btn="brute" role="option" aria-selected="true"><span>III</span><div><b>BRUTE</b><small>HEAVY ARMOR</small></div></button>
+        <button class="ei-class-btn active" type="button" data-ei-class-btn="brute" role="option" aria-selected="true"><span class="ei-class-mark">III</span><div><b>BRUTE</b><small>HEAVY ARMOR</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="dominion" role="option"><span class="ei-class-mark">IV</span><div><b>DOMINION</b><small>COMMAND TYPE</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="ark" role="option"><span class="ei-class-mark">V</span><div><b>ARK</b><small>STRATEGIC ENTITY</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="seraph" role="option"><span class="ei-class-mark">?</span><div><b>SERAPH</b><small>OUTLIER CLASS</small></div></button>
@@ -346,16 +346,14 @@
       <aside class="ei-assessment">
         <header><span>HOSTILE REFERENCE</span><b>CLASSIFIED // PUBLIC</b></header>
         <div class="ei-assess-primary"><span>CLASSIFICATION</span><b class="ei-class-lockup"><i class="ei-class-mark" data-ei-field="mark">III</i><u>//</u><i class="ei-class-name" data-ei-field="name">BRUTE</i></b><em data-ei-field="ko">브루트</em></div>
-        <dl class="ei-assess-list">
-          <div><dt>ROLE</dt><dd data-ei-field="role">HEAVY ARMOR / DIRECT ASSAULT</dd></div>
-          <div><dt>OPERATIONAL RISK</dt><dd data-ei-field="risk">CONTEXTUAL</dd></div>
-          <div><dt>CORE</dt><dd>MOST TYPES // CRITICAL ORGAN</dd></div>
-          <div><dt>NETWORK</dt><dd>ADAPTIVE INFORMATION SHARING</dd></div>
-        </dl>
-        <div class="ei-risk-wrap"><span>RISK PROTOCOL</span><div class="ei-risk-scale"><span data-risk="D">D</span><span data-risk="C">C</span><span data-risk="B">B</span><span data-risk="A">A</span><span data-risk="S">S</span></div></div>
+        <div class="ei-assess-role"><span>ROLE</span><b data-ei-field="role">HEAVY ARMOR / DIRECT ASSAULT</b></div>
+        <div class="ei-risk-wrap"><div class="ei-risk-head"><span>OPERATIONAL RISK</span><b data-ei-field="risk">CONTEXTUAL</b></div><div class="ei-risk-scale"><span data-risk="D">D</span><span data-risk="C">C</span><span data-risk="B">B</span><span data-risk="A">A</span><span data-risk="S">S</span></div></div>
         <div class="ei-focus-readout">
-          <span>ANALYSIS FOCUS</span><b id="eiFocusTitle">MORPHOLOGY</b><em id="eiFocusMeta">TANK-CLASS // HEAVY ARMOR / DIRECT ASSAULT</em>
+          <div class="ei-focus-head"><span>ANALYSIS CHANNEL</span><b id="eiFocusIndex">03 / 03</b></div>
+          <div class="ei-focus-switch" role="group" aria-label="Analysis channel"><button type="button" data-ei-focus="core">CORE</button><button type="button" data-ei-focus="network">NETWORK</button><button class="active" type="button" data-ei-focus="morphology">FORM</button></div>
+          <b id="eiFocusTitle">MORPHOLOGY</b><em id="eiFocusMeta">TANK-CLASS // HEAVY ARMOR / DIRECT ASSAULT</em>
           <p id="eiFocusBody">전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류. 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.</p>
+          <div class="ei-focus-status"><span>STATUS // <b id="eiFocusStatus">VERIFIED</b></span><button type="button" data-ei-open-info>INFORMATION ↗</button></div>
         </div>
       </aside>
 
