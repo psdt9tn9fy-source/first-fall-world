@@ -5,6 +5,12 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const buttons=[...root.querySelectorAll("[data-ei-tab-btn]")];
   const panels=[...root.querySelectorAll("[data-ei-panel]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ident=root.querySelector("[data-ei-ident-matrix]");
+  const identStatus=root.querySelector("[data-ei-profile-status]");
+  const identResult=root.querySelector("[data-ei-ident-result]");
+  const identRows=[...root.querySelectorAll("[data-ident-row]")];
+  const rescan=root.querySelector("[data-ei-rescan]");
+  const correlation=root.querySelector("[data-ei-correlation]");
   const trace=root.querySelector("[data-ei-adaptation-trace]");
   const traceStatus=root.querySelector("[data-ei-trace-status]");
   const traceNodes=[...root.querySelectorAll("[data-ei-trace-node]")];
@@ -23,8 +29,42 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const riskDetailBody=root.querySelector("#eiRiskDetailBody");
   const riskButtons=[...root.querySelectorAll(".ei-threat-matrix [data-ei-risk]")];
   const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK·SERAPH 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
-  let traceToken=0,nestToken=0,baselineRisk="B",breachToken=0;
+  let traceToken=0,nestToken=0,baselineRisk="B",breachToken=0,identToken=0;
   if(!buttons.length||!panels.length)return null;
+
+  function runIdentification(){
+    if(!ident)return;
+    const token=++identToken;
+    const seraph=root.dataset.eiClass==="seraph";
+    ident.classList.remove("locked","outlier");
+    identRows.forEach(row=>row.classList.remove("resolved"));
+    if(identStatus)identStatus.textContent="ACQUIRING";
+    if(identResult)identResult.textContent="TARGET ACQUISITION";
+    if(correlation)correlation.textContent="CORRELATING";
+    const finish=()=>{
+      if(token!==identToken)return;
+      ident.classList.add("locked");
+      if(seraph)ident.classList.add("outlier");
+      identRows.forEach(row=>row.classList.add("resolved"));
+      if(identStatus)identStatus.textContent=seraph?"INCONCLUSIVE":"VERIFIED";
+      if(identResult)identResult.textContent=seraph?"IDENTIFICATION INCOMPLETE":"IDENTIFICATION CONFIRMED";
+      if(correlation)correlation.textContent=seraph?"INSUFFICIENT // OUTLIER":"HIGH // VERIFIED";
+    };
+    if(reduced)finish();else setTimeout(finish,920);
+  }
+
+  function syncIdentification(detail={}){
+    const seraph=(detail.classKey||root.dataset.eiClass)==="seraph";
+    const mark=detail.mark||root.querySelector("[data-ei-profile-mark]")?.textContent||"?";
+    const name=detail.name||root.querySelector("[data-ei-profile-name]")?.textContent||"UNKNOWN";
+    const cls=root.querySelector('[data-ident="class"]');
+    const scale=root.querySelector('[data-ident="scale"]');
+    const role=root.querySelector('[data-ident="role"]');
+    if(cls)cls.textContent=seraph?"? // SERAPH":mark+" // "+name;
+    if(scale)scale.textContent=seraph?"VARIABLE / UNKNOWN":(root.querySelector('[data-ei-field="scale"]')?.textContent||"VARIABLE");
+    if(role)role.textContent=seraph?"OUTLIER / UNIQUE CAPABILITY":(root.querySelector('[data-ei-field="role"]')?.textContent||"UNRESOLVED");
+    runIdentification();
+  }
 
   function runTrace(){
     if(!trace)return;
@@ -106,6 +146,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
       button.setAttribute("aria-selected",String(active));
     });
     panels.forEach(panel=>panel.classList.toggle("active",panel.dataset.eiPanel===key));
+    if(key==="profile")requestAnimationFrame(runIdentification);
     if(key==="behavior")requestAnimationFrame(runTrace);
     else traceToken++;
     if(key==="nest")requestAnimationFrame(()=>scanNest());
@@ -114,11 +155,12 @@ export function initEidolonRecords(root,{onTabChange}={}){
   }
 
   buttons.forEach(button=>button.addEventListener("click",()=>setTab(button.dataset.eiTabBtn)));
+  rescan?.addEventListener("click",runIdentification);
   traceRun?.addEventListener("click",runTrace);
   nestScan?.addEventListener("click",()=>scanNest());
   root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"));
   riskButtons.forEach(button=>button.addEventListener("click",()=>viewRisk(button.dataset.eiRisk)));
-  root.addEventListener("eidolon:class-risk",event=>setBaseline(event.detail));
+  root.addEventListener("eidolon:class-risk",event=>{setBaseline(event.detail);syncIdentification(event.detail)});
   const initialKey=root.classList.contains("risk-unbounded")?"UNBOUNDED":(root.querySelector(".ei-risk-scale span.active")?.dataset.risk||"B");
   const initialName=root.querySelector("[data-ei-field=\"name\"]")?.textContent||"ENTITY";
   setBaseline({key:initialKey,name:initialName});
