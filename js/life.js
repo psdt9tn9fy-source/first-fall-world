@@ -7,7 +7,7 @@ const SCENES=[
 ];
 
 const TOPICS={
-  city:{title:"도시",copy:"SAFE ZONE의 도시는 요새화된 방위시설과 평범한 생활공간이 겹쳐 존재한다. 방벽과 대피시설은 익숙한 기반시설이 되었지만 거리의 목적은 여전히 사람이 살아가는 데 있다.",items:[["교통","철도·지하철·민간항공이 주요 생활권을 연결한다."],["도시공간","상업지구·주거지·대학가가 방위시설과 공존한다."],["대피체계","공공시설 곳곳에 비상대피 동선이 포함된다."]]},
+  city:{title:"도시",copy:"안전권(SAFE ZONE)의 도시는 요새화된 방위시설과 평범한 생활공간이 겹쳐 존재한다. 방벽과 대피시설은 익숙한 기반시설이 되었지만 거리의 목적은 여전히 사람이 살아가는 데 있다.",items:[["교통","철도·지하철·민간항공이 주요 생활권을 연결한다."],["도시공간","상업지구·주거지·대학가가 방위시설과 공존한다."],["대피체계","공공시설 곳곳에 비상대피 동선이 포함된다."]]},
   home:{title:"주거와 생활",copy:"주거공간은 전시 안전기준을 반영하지만 생활 자체는 21세기 도시와 크게 단절되지 않았다. 가족, 식사, 여가, 소비 같은 평범한 일상이 계속된다.",items:[["주거","안전권의 아파트와 주거단지는 일상적으로 운영된다."],["생활서비스","전기·통신·배달·유통망이 안정권에서 유지된다."],["비상설비","건물 단위 대피공간과 비상전력이 보편화되었다."]]},
   education:{title:"교육",copy:"일반 교육과 군 교육이 함께 존재한다. 대학과 학교는 정상적으로 운영되고, 사관학교와 전문 군 교육기관은 별도의 엘리트 경로를 형성한다.",items:[["일반대학","전공교육과 연구활동이 지속된다."],["군 교육","사관학교·부사관학교 등 군 경력 경로가 존재한다."],["사회적 위상","일부 명문 군 교육기관의 출신 배경은 강한 경력 자산이다."]]},
   work:{title:"일과 직업",copy:"장기전은 직업의 우선순위를 바꿨지만 모든 산업을 군수산업으로 바꾸지는 않았다. 행정·무역·서비스·문화·연구·제조가 함께 돌아간다.",items:[["민간경제","안전권 중심으로 일반 경제활동이 지속된다."],["군 경력","일부 공공·방산·안보 분야에서 높은 평가를 받는다."],["산업구조","민수와 군수가 긴밀하게 연결된 분야가 많다."]]},
@@ -30,7 +30,7 @@ export function initLife(){
     time.textContent=d.time;sub.textContent=d.sub;title.textContent=d.title;body.textContent=d.body;
     place.textContent=d.place;state.textContent=d.state;note.textContent=d.note;scene.dataset.scene=d.key;
     scene.querySelector(".life-scene-word").textContent=d.key==="alert"?"ALERT":"2134";
-    scene.querySelector(".life-scene-tag span").textContent=d.key==="alert"?"민방위 기록 / CIVIL ALERT":"생활기록 / CIVIL RECORD";
+    scene.querySelector(".life-scene-tag span").textContent=d.key==="alert"?"민방위 기록":"생활 기록";
     scene.querySelector(".life-scene-tag b").textContent=d.key==="alert"?"주의 단계":"정상 생활권";
     if(!reduced){scene.animate([{opacity:.35,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:260,easing:"cubic-bezier(.2,.75,.2,1)"})}
   }
