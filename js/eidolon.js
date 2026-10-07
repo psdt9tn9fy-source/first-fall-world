@@ -121,7 +121,9 @@ export function initEidolon(){
     const c=current();
     root.dataset.eiFocus=type;
     focusButtons.forEach(b=>b.classList.toggle("active",b.dataset.eiFocus===type));
-    const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta");
+    const title=q("#eiFocusTitle"),body=q("#eiFocusBody"),meta=q("#eiFocusMeta"),index=q("#eiFocusIndex"),statusEl=q("#eiFocusStatus");
+    if(index)index.textContent=type==="core"?"01 / 03":type==="network"?"02 / 03":"03 / 03";
+    if(statusEl)statusEl.textContent="SCANNING";
     threeDController?.setFocus(type);
     let copy="",status="MORPHOLOGY RECORD";
     if(type==="core"){
@@ -141,6 +143,7 @@ export function initEidolon(){
       status="MORPHOLOGY RECORD";
     }
     typeRecord(body,copy,status);
+    if(statusEl)setTimeout(()=>{if(root.dataset.eiFocus===type)statusEl.textContent="VERIFIED"},reduced?0:760);
   }
 
   function pulseScan(){
@@ -230,6 +233,7 @@ export function initEidolon(){
   infoButton.setAttribute("aria-label","Open detailed entity information");
   scanner.appendChild(infoButton);
   infoButton.addEventListener("click",()=>showLiveDossier(root.dataset.eiFocus||"morphology"));
+  root.querySelector("[data-ei-open-info]")?.addEventListener("click",()=>showLiveDossier(root.dataset.eiFocus||"morphology"));
 
   classButtons.forEach(b=>b.addEventListener("click",()=>selectClass(b.dataset.eiClassBtn)));
   tabButtons.forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.eiTabBtn)));
