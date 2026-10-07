@@ -1,4 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-character-v2";
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-character-v3";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
