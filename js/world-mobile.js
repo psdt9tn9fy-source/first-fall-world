@@ -1,5 +1,5 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-displaced-markers-1";
-import { THEATERS } from "./world-data.js?v=20261007-displaced-markers-1";
+import { N, EVENTS, ext } from "./data.js?v=20261007-eastasia-polish-1";
+import { THEATERS } from "./world-data.js?v=20261007-eastasia-polish-1";
 
 const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
