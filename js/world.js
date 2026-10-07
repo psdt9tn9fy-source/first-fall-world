@@ -71,7 +71,7 @@ export function initWorld(){
     const n=nationsByKey.get(key);clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"nation",key,iso};
     const [x,y]=centroid(feature);focusAt(x,y,1.55);
     if(n)setPanel({overline:`국가 연결 // ${iso}`,index:"N",title:n[2],className:n[3],body:n[8],status:n[4],access:"공개",record:"nations",nation:key,feed:`${n[1]} // 기록 연결 준비`});
-    else setPanel({overline:`지리 기록 // ${iso}`,index:"N",title:name,className:"NO DEDICATED 공개 RECORD",body:"현재 공개 아카이브에 독립 국가 기록이 연결되어 있지 않다.",status:"참고 정보",feed:"지리 참고 // 연결 기록 없음"});
+    else setPanel({overline:`지리 기록 // ${iso}`,index:"N",title:name,className:"전용 공개 기록 없음",body:"현재 공개 아카이브에 독립 국가 기록이 연결되어 있지 않다.",status:"참고 정보",feed:"지리 참고 // 연결 기록 없음"});
   }
   function genericCountryPanel(feature){
     const iso=feature.id||"---",name=feature.properties?.name||"미상";clearSelected();pathByIso.get(iso)?.classList.add("selected");selected={type:"country",iso};
@@ -131,7 +131,7 @@ export function initWorld(){
   document.querySelectorAll("[data-zone-filter]").forEach(btn=>btn.addEventListener("click",()=>{
     zone=btn.dataset.zoneFilter;room.dataset.zone=zone;document.querySelectorAll("[data-zone-filter]").forEach(x=>x.classList.toggle("active",x===btn));
     sectorNode.forEach((node,id)=>{const s=SECTORS.find(v=>v.id===id);node.classList.toggle("filtered",zone!=="all"&&s.zone!==zone)});
-    if(zone!=="all"&&!SECTORS.some(s=>s.zone===zone)){clearSelected();selected=null;setPanel({overline:`권역 분류 // ${ZONE_LABEL[zone]}`,index:zone==="contested"?"02":"03",title:ZONE_LABEL[zone],className:"분류 기록",body:zone==="contested"?"교전 및 회복작전이 진행 중인 유동 통제권. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.":"지속적인 인류 통제가 상실된 지역. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.",status:"NO 공개 NODES",feed:"권역 필터 // 적용 중"})}
+    if(zone!=="all"&&!SECTORS.some(s=>s.zone===zone)){clearSelected();selected=null;setPanel({overline:`권역 분류 // ${ZONE_LABEL[zone]}`,index:zone==="contested"?"02":"03",title:ZONE_LABEL[zone],className:"분류 기록",body:zone==="contested"?"교전 및 회복작전이 진행 중인 유동 통제권. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.":"지속적인 인류 통제가 상실된 지역. 현재 공개 지도에는 개별 전략 노드가 등록되지 않았다.",status:"공개 노드 없음",feed:"권역 필터 // 적용 중"})}
     else if(zone==="all"&&!selected)resetFocus();
   }));
   document.querySelectorAll(".era-track [data-era]").forEach(btn=>btn.addEventListener("click",()=>{
@@ -144,9 +144,9 @@ export function initWorld(){
   viewport.addEventListener("click",e=>{if(e.target===viewport||e.target.id==="worldSvg"||e.target.classList.contains("map-grid-fill"))resetFocus()});
   viewport.addEventListener("pointermove",e=>{
     const r=viewport.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top,vx=px/r.width*W,vy=py/r.height*H,bx=(vx-drawTx)/drawZoom,by=(vy-drawTy)/drawZoom;
-    const lon=bx/W*360-180,lat=90-by/H*180;coordinate.textContent=`LAT ${Math.abs(lat).toFixed(2)}°${lat>=0?"N":"S"} // LON ${Math.abs(lon).toFixed(2)}°${lon>=0?"E":"W"}`;
+    const lon=bx/W*360-180,lat=90-by/H*180;coordinate.textContent=`위도 ${Math.abs(lat).toFixed(2)}°${lat>=0?"N":"S"} // 경도 ${Math.abs(lon).toFixed(2)}°${lon>=0?"E":"W"}`;
   },{passive:true});
-  viewport.addEventListener("pointerleave",()=>coordinate.textContent="LAT --.-- // LON --.--");
+  viewport.addEventListener("pointerleave",()=>coordinate.textContent="위도 --.-- // 경도 --.--");
   search.addEventListener("change",()=>selectSearch(search.value));search.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();selectSearch(search.value)}});
   panel.open.addEventListener("click",()=>{
     const record=panel.open.dataset.record;if(!record)return;const nation=panel.open.dataset.nation;
