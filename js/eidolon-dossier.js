@@ -55,8 +55,11 @@ export function initEidolonDossier(root,{reduced=false}={}){
   async function show(record){
     const token=++run;
     clear();panel.scrollTop=0;
-    panel.classList.remove("ready","closing");
-    panel.classList.add("open","booting");
+    panel.classList.remove("ready","closing","booting","streaming");
+    panel.classList.add("open");
+    /* Force the open state to paint before the boot phase begins. */
+    void panel.offsetHeight;
+    panel.classList.add("booting");
     get("[data-live-state]").textContent="ACCESSING...";
     get("[data-live-foot]").textContent="LINK // ESTABLISHING";
     if(!reduced)await sleep(150); if(token!==run)return;
@@ -79,8 +82,8 @@ export function initEidolonDossier(root,{reduced=false}={}){
     panel.classList.remove("streaming");panel.classList.add("ready");
   }
   function close(){
-    ++run;panel.classList.remove("booting","streaming","ready");panel.classList.add("closing");
-    setTimeout(()=>panel.classList.remove("open","closing"),reduced?0:180);
+    const token=++run;panel.classList.remove("booting","streaming","ready");panel.classList.add("closing");
+    setTimeout(()=>{if(token===run)panel.classList.remove("open","closing")},reduced?0:180);
   }
   return {show,close};
 }
