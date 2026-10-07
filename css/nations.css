@@ -110,7 +110,7 @@
     radial-gradient(circle at 50% 48%,#13202588 0,transparent 49%),#080d0f;
   background-size:34px 34px,34px 34px,auto,auto
 }
-.wo-power:before{content:"POWER DISTRIBUTION // ROK_2134";position:absolute;left:14px;top:12px;font:650 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em;color:#485b60}
+.wo-power:before{content:"권력 구조 // 대한민국 2134";position:absolute;left:14px;top:12px;font:650 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em;color:#485b60}
 .wo-power-core{
   position:absolute;z-index:3;left:50%;top:51%;width:230px;min-height:86px;transform:translate(-50%,-50%);
   border:1px solid #7d959b;background:#0c1417e8;padding:15px 17px;display:grid;align-content:center;text-align:center;
