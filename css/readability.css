@@ -204,3 +204,37 @@
   .ei-class-nav{grid-template-columns:repeat(3,1fr)}
   .ei-class-btn{min-height:60px}
 }
+
+
+/* KOREAN-FIRST READABILITY PASS 03 */
+body{word-break:keep-all}
+.tab b{font-size:11px;letter-spacing:.04em}
+.record-identity span{font-size:10px;letter-spacing:.08em}
+.record-identity b{font-size:14px;letter-spacing:.06em}
+.situation-summary span,.panel-data span,.rail-label,.map-status span,.map-search label,
+.era-strip-head span,.era-strip-head b,.panel-overline,.panel-feed>span{font-size:10px}
+.zone-filter b,.map-status b,.map-search input,.map-tools button,.panel-class{font-size:11px}
+.sector-panel p,.era-strip p{font-size:14px}
+.world-order .wo-tabs button b{font-size:11px!important;letter-spacing:.03em!important}
+.world-order .wo-section-head b{font-size:15px!important}
+.world-order .wo-brief{font-size:15px!important}
+.ei-class-btn b{font-size:12px}
+.ei-class-btn small{font-size:9px}
+.ei-record-console .ei-tabs button{font-size:10px!important;letter-spacing:.02em!important}
+.ei-panel-copy,.ei-focus-readout p{font-size:14px}
+.mil-modes b{font-size:11px;letter-spacing:.03em}
+.mil-readout>p{font-size:14px}
+.life-view p{word-break:keep-all}
+
+@media(max-width:820px){
+  .tab b{font-size:11px}
+  .record-identity span{font-size:9px}.record-identity b{font-size:12px}
+  .ft-modules button,.ft-record-nav b,.ft-more-menu button{font-size:10px}
+  .world-order .wo-tabs button b{font-size:10px!important}
+  .world-order .wo-brief{font-size:14px!important}
+  .ei-class-btn b{font-size:9px}
+  .ei-record-console .ei-tabs button{font-size:9px!important}
+  .ei-panel-copy,.ei-focus-readout p{font-size:13px}
+  .mil-modes b{font-size:10px}
+  .mil-readout>p{font-size:13px}
+}
