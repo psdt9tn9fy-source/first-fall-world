@@ -15,7 +15,7 @@ export function initEidolon3D(root,{reduced=false}={}){
     modelStage=document.createElement("div");
     modelStage.className="ei-model-stage";
     modelStage.hidden=true;
-    modelStage.innerHTML='<div class="ei-model-status"><span>III // BRUTE</span><b>3D SPECIMEN // STANDBY</b><em>DRAG TO ORBIT</em></div><div class="ei-model-loading"><i></i><span>RETRIEVING 3D SPECIMEN</span><b>MODEL DATA // ON DEMAND</b></div>';
+    modelStage.innerHTML='<div class="ei-acquisition" aria-hidden="true"><div class="ei-lock-frame"><i></i><i></i><i></i><i></i><b></b></div><div class="ei-scan-progress"><span>ANALYSIS // <b>READY</b></span><i><u></u></i></div><div class="ei-analysis-nodes"><span class="core">CORE</span><span class="network">LINK</span><span class="form">FORM</span></div></div><div class="ei-model-status"><span>III // BRUTE</span><b>3D SPECIMEN // STANDBY</b><em>DRAG TO ORBIT</em></div><div class="ei-model-loading"><i></i><span>RETRIEVING 3D SPECIMEN</span><b>MODEL DATA // ON DEMAND</b></div>';
     target.appendChild(modelStage);
     return modelStage;
   }
@@ -104,8 +104,12 @@ export function initEidolon3D(root,{reduced=false}={}){
   function applyFocus(){
     if(!modelViewer||classKey!=="brute")return;
     root.dataset.ei3dFocus=focusKey;
-    root.classList.remove("ei-focus-pulse");
-    if(!reduced){void root.offsetWidth;root.classList.add("ei-focus-pulse");setTimeout(()=>root.classList.remove("ei-focus-pulse"),620)}
+    root.classList.remove("ei-focus-pulse","ei-acquiring");
+    const status=modelStage?.querySelector(".ei-model-status b");
+    const progress=modelStage?.querySelector(".ei-scan-progress span b");
+    if(status)status.textContent="ANALYZING // "+focusKey.toUpperCase();
+    if(progress)progress.textContent="SCANNING";
+    if(!reduced){void root.offsetWidth;root.classList.add("ei-focus-pulse","ei-acquiring");setTimeout(()=>{root.classList.remove("ei-focus-pulse","ei-acquiring");if(status)status.textContent="3D SPECIMEN // LOCKED";if(progress)progress.textContent="VERIFIED"},760)}else{if(status)status.textContent="3D SPECIMEN // LOCKED";if(progress)progress.textContent="VERIFIED"}
     const views={
       morphology:{orbit:"35deg 72deg 115%",target:"auto auto auto"},
       core:{orbit:"8deg 78deg 72%",target:"auto 52% auto"},
