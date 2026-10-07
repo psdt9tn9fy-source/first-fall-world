@@ -1,4 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-refactor-2";
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-refactor-3";
 
 const PANEL_ORDER=["basic","personality","career","relations","records"];
 
