@@ -28,7 +28,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const riskDetailCode=root.querySelector("#eiRiskDetailCode");
   const riskDetailBody=root.querySelector("#eiRiskDetailBody");
   const riskButtons=[...root.querySelectorAll(".ei-threat-matrix [data-ei-risk]")];
-  const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK·SERAPH 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
+  const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
   let traceToken=0,nestToken=0,breachToken=0,identToken=0;
   if(!buttons.length||!panels.length)return null;
   const aborter=new AbortController();
@@ -109,10 +109,10 @@ export function initEidolonRecords(root,{onTabChange}={}){
   }
 
   function setBaseline(detail={}){
-    const unbounded=detail.key==="UNBOUNDED";
+    const unbounded=detail.key==="UNBOUNDED"||detail.key==="측정 불가"||detail.classKey==="seraph";
     const key=unbounded?"S":(riskCopy[detail.key]?detail.key:"B");
     root.classList.toggle("ei-seraph-risk",unbounded);
-    if(baselineLabel)baselineLabel.textContent=unbounded?"UNBOUNDED // SERAPH":key+" // "+(detail.name||"ENTITY");
+    if(baselineLabel)baselineLabel.textContent=unbounded?"측정 불가 // SERAPH":key+" // "+(detail.name||"ENTITY");
     riskButtons.forEach(button=>{
       button.classList.toggle("baseline",!unbounded&&button.dataset.eiRisk===key);
       let tag=button.querySelector("strong");
@@ -121,17 +121,24 @@ export function initEidolonRecords(root,{onTabChange}={}){
     });
     if(unbounded){
       const token=++breachToken;
-      viewRisk("S");
+      if(threatMatrix)threatMatrix.dataset.viewRisk="UNBOUNDED";
+      riskButtons.forEach(button=>button.classList.remove("active"));
+      const meters=riskCopy.S.meters;
+      ["threat","force","coord"].forEach((name,index)=>{
+        const meter=threatMatrix?.querySelector('[data-meter="'+name+'"]');
+        if(meter)meter.style.width=meters[index]+"%";
+      });
+      if(riskDetailCode)riskDetailCode.textContent="측정 불가";
+      if(threatTier)threatTier.textContent="표준 등급 적용 불가";
+      if(threatDirective)threatDirective.textContent="별도 대응 프로토콜";
+      if(riskDetailBody)riskDetailBody.textContent="세라프는 표준 D–S 작전위험도 규격 밖의 규격외 개체다.";
+      if(viewRiskLabel)viewRiskLabel.textContent="측정 불가 // 표준 초과";
       threatMatrix?.classList.remove("breaching","breached");
       requestAnimationFrame(()=>threatMatrix?.classList.add("breaching"));
       setTimeout(()=>{
         if(token!==breachToken)return;
-        threatMatrix?.classList.remove("breaching");threatMatrix?.classList.add("breached");
-        if(riskDetailCode)riskDetailCode.textContent="UNBOUNDED";
-        if(threatTier)threatTier.textContent="STANDARD SCALE // NOT APPLICABLE";
-        if(threatDirective)threatDirective.textContent="NO STANDARD PROTOCOL";
-        if(riskDetailBody)riskDetailBody.textContent="SERAPH는 표준 D–S 작전위험도 규격 밖의 예외 개체로 취급된다.";
-        if(viewRiskLabel)viewRiskLabel.textContent="SCALE EXCEEDED";
+        threatMatrix?.classList.remove("breaching");
+        threatMatrix?.classList.add("breached");
       },reduced?0:850);
     }else{
       ++breachToken;threatMatrix?.classList.remove("breaching","breached");viewRisk(key);
@@ -160,7 +167,10 @@ export function initEidolonRecords(root,{onTabChange}={}){
   traceRun?.addEventListener("click",runTrace,{signal});
   nestScan?.addEventListener("click",()=>scanNest(),{signal});
   root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"),{signal});
-  riskButtons.forEach(button=>button.addEventListener("click",()=>viewRisk(button.dataset.eiRisk),{signal}));
+  riskButtons.forEach(button=>button.addEventListener("click",()=>{
+    if(root.classList.contains("ei-seraph-risk"))return;
+    viewRisk(button.dataset.eiRisk);
+  },{signal}));
   root.addEventListener("eidolon:class-risk",event=>{setBaseline(event.detail);syncIdentification(event.detail)},{signal});
   const initialKey=root.classList.contains("risk-unbounded")?"UNBOUNDED":(root.querySelector(".ei-risk-scale span.active")?.dataset.risk||"B");
   const initialName=root.querySelector("[data-ei-field=\"name\"]")?.textContent||"ENTITY";
