@@ -73,3 +73,21 @@
 .ei-trace-footer button:before{content:"▶";margin-right:9px;font-size:7px}
 .ei-trace-footer button:active{transform:translateY(1px);background:#172326!important}
 @media(max-width:760px){.ei-trace-footer{display:grid;grid-template-columns:1fr}.ei-trace-footer>span{max-width:none!important}.ei-trace-footer button{width:100%;min-height:48px;font-size:8px!important;margin-top:3px}}
+
+
+/* Mobile viewport containment hotfix */
+@media(max-width:820px){
+  .ei-record-console,.ei-record-console *{box-sizing:border-box}
+  .ei-record-console{width:100%;max-width:100%;min-width:0;overflow:hidden}
+  .ei-record-console .ei-panels,.ei-record-console .ei-panel,.ei-behavior-head,.ei-adaptation-trace,.ei-trace-footer,.ei-behavior-warning{width:100%;max-width:100%;min-width:0}
+  .ei-behavior-head{display:grid;grid-template-columns:minmax(0,1fr) auto}
+  .ei-behavior-head>div:first-child{min-width:0}
+  .ei-behavior-head .ei-panel-copy{overflow-wrap:anywhere}
+  .ei-adaptation-trace{grid-template-columns:minmax(0,1fr)!important;padding-left:24px!important;padding-right:0!important}
+  .ei-adaptation-trace article{width:auto;max-width:100%;min-width:0;margin:0!important}
+  .ei-adaptation-trace article>p{overflow-wrap:anywhere}
+  .ei-trace-footer{grid-template-columns:minmax(0,1fr)!important}
+  .ei-trace-footer>span{min-width:0;overflow-wrap:anywhere}
+  .ei-trace-footer button{min-width:0!important;max-width:100%}
+  .ei-behavior-warning{grid-template-columns:minmax(0,1fr)!important}
+}
