@@ -34,9 +34,9 @@ export const THEATERS=[
     nodes:[
       {id:"ncdr",type:"nation",ax:49,ay:26,x:40,y:18},
       {id:"rok",type:"nation",ax:58,ay:29,x:58,y:18},
-      {id:"jpn",type:"nation",ax:70,ay:32,x:79,y:27},
+      {id:"jpn",type:"nation",ax:70,ay:32,x:73,y:31},
       {id:"crf",type:"nation",ax:48,ay:40,x:41,y:47},
-      {id:"wur",type:"nation",ax:34,ay:45,x:23,y:52},
+      {id:"wur",type:"nation",ax:34,ay:45,x:20,y:50},
       {id:"sea",type:"nation",ax:50,ay:61,x:49,y:66},
       {id:"aus",type:"nation",ax:67,ay:79,x:68,y:80}
     ],
