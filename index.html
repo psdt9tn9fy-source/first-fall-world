@@ -211,50 +211,72 @@
 <!-- 02 / CHARACTERS -->
 <section class="view characters-view" data-view="characters">
   <div class="char-archive" id="characterArchive">
-    <header class="char-head">
-      <div><span>인물 기록 // CHARACTER ARCHIVE</span><h2>이 시대를 살아가는 사람들.</h2></div>
-      <p>2134년의 세계를 인물의 시선으로 연결한다. 국가·기관·군사체계의 설정은 각 인물 기록에서 관련 자료로 이어진다.</p>
-    </header>
+    <section class="char-stage">
+      <div class="char-stage-atmosphere" aria-hidden="true"></div>
+      <div class="char-watermark" id="characterWatermark">한서린</div>
+      <div class="char-roman-ghost" id="characterRomanGhost">HAN SEO-RIN</div>
 
-    <nav class="char-roster" id="characterRoster" aria-label="등록 인물"></nav>
-
-    <section class="char-hero">
       <div class="char-visual">
-        <div class="char-watermark" id="characterWatermark">한서린</div>
-        <div class="char-image-label">인물 식별 기록 // 001</div>
-        <div class="char-portrait" id="characterPortrait"><span class="char-portrait-name" id="characterPortraitName">韓瑞麟</span></div>
-        <div class="char-visual-index"><span>현재 등록 인물</span><b>01 / 확장형 기록</b></div>
+        <div class="char-image-label"><span>인물 기록</span><b id="characterRecordNo">001</b></div>
+        <div class="char-portrait" id="characterPortrait">
+          <span class="char-portrait-name" id="characterPortraitName">韓瑞麟</span>
+          <span class="char-portrait-empty">PORTRAIT // UNREGISTERED</span>
+        </div>
+        <div class="char-visual-index"><span>CHARACTER</span><b id="characterCounter">001 / 001</b></div>
       </div>
 
       <article class="char-summary">
-        <div class="char-record-no" id="characterRecordNo">인물 기록 001</div>
-        <h3 id="characterName">한서린</h3>
-        <div class="char-name-meta"><span id="characterHanja">韓瑞麟</span><i></i><b id="characterRoman">HAN SEO-RIN</b></div>
-        <div class="char-affiliation"><b id="characterAffiliation">중앙사관학교 제76기</b><span id="characterPosition">2학년 생도</span></div>
+        <div class="char-affiliation">
+          <span>소속</span>
+          <b id="characterAffiliation">중앙사관학교 제76기</b>
+          <em id="characterPosition">2학년 생도</em>
+        </div>
+
+        <div class="char-title-lockup">
+          <h2 id="characterName">한서린</h2>
+          <div class="char-name-meta">
+            <span id="characterHanja">韓瑞麟</span>
+            <i></i>
+            <b id="characterRoman">HAN SEO-RIN</b>
+          </div>
+        </div>
+
         <p class="char-summary-copy" id="characterSummary"></p>
         <div class="char-facts" id="characterFacts"></div>
+
         <div class="char-links">
-          <button type="button" data-char-open="nations">대한민국 국가 기록 →</button>
-          <button type="button" data-char-open="military">군사·교육체계 기록 →</button>
+          <button type="button" data-char-open="nations"><span>WORLD ORDER</span><b>대한민국 국가 기록</b><i>↗</i></button>
+          <button type="button" data-char-open="military"><span>MILITARY</span><b>군사·교육체계 기록</b><i>↗</i></button>
         </div>
       </article>
+
+      <nav class="char-roster" id="characterRoster" aria-label="등록 인물"></nav>
     </section>
 
     <section class="char-details">
+      <header class="char-detail-head">
+        <div><span>개인 기록 // PERSONNEL FILE</span><b>상세 프로필</b></div>
+        <em>열람 등급 // 공개</em>
+      </header>
       <nav class="char-detail-tabs" aria-label="인물 상세정보">
-        <button class="active" type="button" data-char-panel="basic">기본정보</button>
-        <button type="button" data-char-panel="personality">성격</button>
-        <button type="button" data-char-panel="career">경력</button>
-        <button type="button" data-char-panel="relations">관계</button>
-        <button type="button" data-char-panel="records">연결 기록</button>
+        <button class="active" type="button" data-char-panel="basic"><span>01</span><b>기본정보</b></button>
+        <button type="button" data-char-panel="personality"><span>02</span><b>성격</b></button>
+        <button type="button" data-char-panel="career"><span>03</span><b>경력</b></button>
+        <button type="button" data-char-panel="relations"><span>04</span><b>관계</b></button>
+        <button type="button" data-char-panel="records"><span>05</span><b>연결 기록</b></button>
       </nav>
       <div class="char-detail-panel">
-        <div class="char-detail-intro"><span>인물 상세기록</span><h4 id="characterPanelTitle">기본정보</h4><p id="characterPanelLead"></p></div>
+        <div class="char-detail-intro">
+          <span>현재 항목</span>
+          <h3 id="characterPanelTitle">기본정보</h3>
+          <p id="characterPanelLead"></p>
+        </div>
         <div class="char-detail-blocks" id="characterPanelBlocks"></div>
       </div>
     </section>
   </div>
 </section>
+
 
 <!-- 03 / WORLD ORDER -->
 <section class="view nations-view" data-view="nations">
