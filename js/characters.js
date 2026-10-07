@@ -1,6 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-refactor-3";
-
-const PANEL_ORDER=["basic","personality","career","relations","records"];
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261007-character-v2";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
@@ -11,6 +9,7 @@ export function initCharacters(){
   const portrait=root.querySelector("#characterPortrait");
   const portraitName=root.querySelector("#characterPortraitName");
   const watermark=root.querySelector("#characterWatermark");
+  const romanGhost=root.querySelector("#characterRomanGhost");
   const name=root.querySelector("#characterName");
   const hanja=root.querySelector("#characterHanja");
   const roman=root.querySelector("#characterRoman");
@@ -22,82 +21,112 @@ export function initCharacters(){
   const panelLead=root.querySelector("#characterPanelLead");
   const panelBlocks=root.querySelector("#characterPanelBlocks");
   const recordNo=root.querySelector("#characterRecordNo");
+  const counter=root.querySelector("#characterCounter");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let activeId=CHARACTER_ORDER[0],activePanel="basic";
+
+  let activeId=CHARACTER_ORDER[0];
+  let activePanel="basic";
 
   function renderRoster(){
-    const active=CHARACTERS[activeId];
-    const records=CHARACTER_ORDER.map(id=>{
+    roster.innerHTML=CHARACTER_ORDER.map(id=>{
       const c=CHARACTERS[id];
       return `<button class="char-roster-item ${id===activeId?"active":""}" type="button" data-char-id="${id}">
-        <span class="char-roster-mark">${c.hanja.slice(0,1)}</span>
-        <span class="char-roster-copy"><small>${c.record}</small><b>${c.name}</b><em>${c.affiliation}</em></span>
+        <span class="char-roster-mark">${c.record}</span>
+        <span class="char-roster-copy"><small>CHARACTER</small><b>${c.name}</b><em>${c.affiliation}</em></span>
       </button>`;
+    }).join("");
+
+    roster.classList.toggle("single-character",CHARACTER_ORDER.length===1);
+    roster.querySelectorAll("[data-char-id]").forEach(button=>{
+      button.addEventListener("click",()=>selectCharacter(button.dataset.charId));
     });
-    for(let i=CHARACTER_ORDER.length;i<4;i++){
-      records.push(`<button class="char-roster-item pending" type="button" disabled>
-        <span class="char-roster-mark">+</span>
-        <span class="char-roster-copy"><small>${String(i+1).padStart(3,"0")}</small><b>기록 미등록</b><em>추가 인물 대기</em></span>
-      </button>`);
-    }
-    roster.innerHTML=records.join("");
-    roster.querySelectorAll("[data-char-id]").forEach(btn=>btn.addEventListener("click",()=>selectCharacter(btn.dataset.charId)));
-    root.style.setProperty("--char-accent",active.accent);
   }
 
   function renderPanel(){
-    const c=CHARACTERS[activeId],p=c.panels[activePanel]||c.panels.basic;
-    detailTabs.forEach(btn=>btn.classList.toggle("active",btn.dataset.charPanel===activePanel));
-    panelTitle.textContent=p.title;
-    panelLead.textContent=p.lead;
-    panelBlocks.innerHTML=p.blocks.map(([label,value])=>`<article><span>${label}</span><p>${value}</p></article>`).join("");
+    const character=CHARACTERS[activeId];
+    const panel=character.panels[activePanel]||character.panels.basic;
+
+    detailTabs.forEach(button=>{
+      const active=button.dataset.charPanel===activePanel;
+      button.classList.toggle("active",active);
+      active?button.setAttribute("aria-current","true"):button.removeAttribute("aria-current");
+    });
+
+    panelTitle.textContent=panel.title;
+    panelLead.textContent=panel.lead;
+    panelBlocks.innerHTML=panel.blocks.map(([label,value])=>
+      `<article><span>${label}</span><p>${value}</p></article>`
+    ).join("");
+
     if(!reduced){
-      panelBlocks.animate([{opacity:.25,transform:"translateY(7px)"},{opacity:1,transform:"none"}],{duration:230,easing:"ease-out"});
+      panelBlocks.animate(
+        [{opacity:.18,transform:"translateY(7px)"},{opacity:1,transform:"none"}],
+        {duration:240,easing:"ease-out"}
+      );
     }
   }
 
   function renderCharacter(animate=false){
-    const c=CHARACTERS[activeId];
-    root.style.setProperty("--char-accent",c.accent);
-    recordNo.textContent=`인물 기록 ${c.record}`;
-    watermark.textContent=c.name;
-    name.textContent=c.name;
-    hanja.textContent=c.hanja;
-    roman.textContent=c.roman;
-    affiliation.textContent=c.affiliation;
-    position.textContent=c.position;
-    summary.textContent=c.summary;
-    portraitName.textContent=c.hanja;
-    facts.innerHTML=c.facts.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join("");
-    portrait.classList.toggle("has-image",Boolean(c.image));
-    portrait.style.backgroundImage=c.image?`url("${c.image}")`:"";
+    const character=CHARACTERS[activeId];
+    const index=CHARACTER_ORDER.indexOf(activeId)+1;
+
+    root.style.setProperty("--char-accent",character.accent);
+    recordNo.textContent=character.record;
+    counter.textContent=`${String(index).padStart(3,"0")} / ${String(CHARACTER_ORDER.length).padStart(3,"0")}`;
+    watermark.textContent=character.name;
+    romanGhost.textContent=character.roman;
+    name.textContent=character.name;
+    hanja.textContent=character.hanja;
+    roman.textContent=character.roman;
+    affiliation.textContent=character.affiliation;
+    position.textContent=character.position;
+    summary.textContent=character.summary;
+    portraitName.textContent=character.hanja;
+
+    facts.innerHTML=character.facts.map(([label,value])=>
+      `<div><span>${label}</span><b>${value}</b></div>`
+    ).join("");
+
+    portrait.classList.toggle("has-image",Boolean(character.image));
+    portrait.style.backgroundImage=character.image?`url("${character.image}")`:"";
+
     renderRoster();
     renderPanel();
+
     if(animate&&!reduced){
       root.classList.remove("char-switching");
       void root.offsetWidth;
       root.classList.add("char-switching");
-      setTimeout(()=>root.classList.remove("char-switching"),520);
+      setTimeout(()=>root.classList.remove("char-switching"),540);
     }
   }
 
   function selectCharacter(id){
     if(!CHARACTERS[id]||id===activeId)return;
-    activeId=id;activePanel="basic";renderCharacter(true);
+    activeId=id;
+    activePanel="basic";
+    renderCharacter(true);
   }
 
-  detailTabs.forEach(btn=>btn.addEventListener("click",()=>{activePanel=btn.dataset.charPanel;renderPanel()}));
+  detailTabs.forEach(button=>{
+    button.addEventListener("click",()=>{
+      activePanel=button.dataset.charPanel;
+      renderPanel();
+    });
+  });
 
-  root.querySelectorAll("[data-char-open]").forEach(btn=>btn.addEventListener("click",()=>{
-    const key=btn.dataset.charOpen;
-    if(key==="nations"){
-      window.dispatchEvent(new CustomEvent("archive:select-nation",{detail:{key:CHARACTERS[activeId].nationKey}}));
-    }
-    window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key}}));
-  }));
+  root.querySelectorAll("[data-char-open]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const key=button.dataset.charOpen;
+      if(key==="nations"){
+        window.dispatchEvent(new CustomEvent("archive:select-nation",{detail:{key:CHARACTERS[activeId].nationKey}}));
+      }
+      window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key}}));
+    });
+  });
 
-  window.addEventListener("archive:record-opened",e=>{
-    if(e.detail?.key==="characters")renderCharacter(false);
+  window.addEventListener("archive:record-opened",event=>{
+    if(event.detail?.key==="characters")renderCharacter(false);
   });
 
   renderCharacter(false);
