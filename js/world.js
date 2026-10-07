@@ -1,5 +1,5 @@
-import { N } from "./data.js?v=20261007-refactor-2";
-import { ZONE_LABEL, ERA, SECTORS, ROUTES } from "./world-data.js?v=20261007-refactor-2";
+import { N } from "./data.js?v=20261007-refactor-3";
+import { ZONE_LABEL, ERA, SECTORS, ROUTES } from "./world-data.js?v=20261007-refactor-3";
 
 const W=1000,H=500;
 function project(lon,lat){return[(lon+180)/360*W,(90-lat)/180*H]}
