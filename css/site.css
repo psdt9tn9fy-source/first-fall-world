@@ -53,3 +53,23 @@
   .record-transition{transition-duration:.01ms}
   .view.active{animation:none}
 }
+
+
+/* READABILITY MERGED / GLOBAL */
+body{word-break:keep-all}
+.frame-meta,.frame-meta b,.brand small,.system-state span,.system-state b{font-size:9px}
+.brand strong{font-size:20px}
+.record-identity span{font-size:10px;letter-spacing:.08em}
+.record-identity b{font-size:14px;letter-spacing:.06em}
+.kicker{font-size:11px}
+.pagehead p{font-size:14px;line-height:1.8}
+.index-row span{font-size:10px}.index-row b{font-size:15px}
+.record h3{font-size:21px}.record p{font-size:14px}.record time{font-size:32px}
+@media(max-width:820px){
+  .top{min-height:104px}
+  .brand small{font-size:8px}.brand strong{font-size:17px}
+  .record-identity span{font-size:9px}.record-identity b{font-size:12px}
+  .pagehead .kicker{font-size:9px}.pagehead p{font-size:13px}
+  .editorial .copy{font-size:15px}
+  .index-row span{font-size:9px}.index-row b{font-size:13px}
+}
