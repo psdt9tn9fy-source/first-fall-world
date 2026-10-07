@@ -31,6 +31,8 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK·SERAPH 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
   let traceToken=0,nestToken=0,breachToken=0,identToken=0;
   if(!buttons.length||!panels.length)return null;
+  const aborter=new AbortController();
+  const signal=aborter.signal;
 
   function runIdentification(){
     if(!ident)return;
@@ -153,16 +155,16 @@ export function initEidolonRecords(root,{onTabChange}={}){
     if(!silent)onTabChange?.(key);
   }
 
-  buttons.forEach(button=>button.addEventListener("click",()=>setTab(button.dataset.eiTabBtn)));
-  rescan?.addEventListener("click",runIdentification);
-  traceRun?.addEventListener("click",runTrace);
-  nestScan?.addEventListener("click",()=>scanNest());
-  root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"));
-  riskButtons.forEach(button=>button.addEventListener("click",()=>viewRisk(button.dataset.eiRisk)));
-  root.addEventListener("eidolon:class-risk",event=>{setBaseline(event.detail);syncIdentification(event.detail)});
+  buttons.forEach(button=>button.addEventListener("click",()=>setTab(button.dataset.eiTabBtn),{signal}));
+  rescan?.addEventListener("click",runIdentification,{signal});
+  traceRun?.addEventListener("click",runTrace,{signal});
+  nestScan?.addEventListener("click",()=>scanNest(),{signal});
+  root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"),{signal});
+  riskButtons.forEach(button=>button.addEventListener("click",()=>viewRisk(button.dataset.eiRisk),{signal}));
+  root.addEventListener("eidolon:class-risk",event=>{setBaseline(event.detail);syncIdentification(event.detail)},{signal});
   const initialKey=root.classList.contains("risk-unbounded")?"UNBOUNDED":(root.querySelector(".ei-risk-scale span.active")?.dataset.risk||"B");
   const initialName=root.querySelector("[data-ei-field=\"name\"]")?.textContent||"ENTITY";
   setBaseline({key:initialKey,name:initialName});
   setTab(root.dataset.eiTab||"profile",{silent:true});
-  return {setTab};
+  return {setTab,destroy(){aborter.abort();traceToken++;nestToken++;breachToken++;identToken++}};
 }
