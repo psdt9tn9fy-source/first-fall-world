@@ -43,7 +43,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-fui-v21").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-fui-clean").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
