@@ -7,8 +7,6 @@
 /* FRAME / TOP NAV */
 .frame-meta,.frame-meta b,.brand small,.record-identity span,.system-state span,.system-state b{font-size:var(--ui-label)}
 .record-identity b{font-size:13px}
-.tab span{font-size:8px}.tab b{font-size:10px}
-.tab{padding-left:15px;padding-right:15px}
 .brand strong{font-size:20px}
 
 /* GENERIC EDITORIAL RECORDS */
@@ -111,8 +109,6 @@
   .top{min-height:104px}
   .brand small{font-size:8px}.brand strong{font-size:17px}
   .record-identity span{font-size:8px}.record-identity b{font-size:11px}
-  .tabs{height:48px}
-  .tab{padding:0 14px;gap:6px}.tab span{font-size:8px}.tab b{font-size:10px}
 
   /* WORLD mobile terminal */
   .ft-header span,.ft-theater-head>span,.ft-card-code,.ft-card-foot,.ft-timeline-list span,
@@ -199,7 +195,6 @@
 }
 
 @media(max-width:380px){
-  .tab{padding-left:12px;padding-right:12px}
   .ei-class-nav{grid-template-columns:repeat(3,1fr)}
   .ei-class-btn{min-height:60px}
 }
@@ -207,7 +202,6 @@
 
 /* KOREAN-FIRST READABILITY PASS 03 */
 body{word-break:keep-all}
-.tab b{font-size:11px;letter-spacing:.04em}
 .record-identity span{font-size:10px;letter-spacing:.08em}
 .record-identity b{font-size:14px;letter-spacing:.06em}
 .situation-summary span,.panel-data span,.rail-label,.map-status span,.map-search label,
@@ -225,7 +219,6 @@ body{word-break:keep-all}
 .mil-readout>p{font-size:14px}
 
 @media(max-width:820px){
-  .tab b{font-size:11px}
   .record-identity span{font-size:9px}.record-identity b{font-size:12px}
   .ft-modules button{font-size:10px}
   .world-order .wo-tabs button b{font-size:10px!important}
