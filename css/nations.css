@@ -57,3 +57,5 @@
 .nation-handoff-core{text-align:center;display:grid;justify-items:center}.nation-handoff-core>span,.nation-handoff-core>b,.nation-handoff-core>i{font:700 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.18em;color:#7d8d92;font-style:normal}.nation-handoff-core>div{width:78px;height:78px;border-radius:50%;overflow:hidden;border:1px solid #a7c6cd;margin:15px 0;box-shadow:0 0 0 8px #b9e6ef0b,0 0 30px #b9e6ef1d;transform:scale(.55)}.nation-handoff-core img{width:100%;height:100%;object-fit:cover}.nation-handoff-core>b{color:#d7e7ea;font-size:9px}.nation-handoff-core>i{margin-top:7px;color:#59696e}
 .nation-handoff.active{visibility:visible;animation:naHandoff .62s cubic-bezier(.2,.7,.2,1) both}.nation-handoff.active .nation-handoff-core>div{animation:naFlagMorph .62s cubic-bezier(.2,.76,.2,1) both}
 @keyframes naHandoff{0%{opacity:0}18%{opacity:1}68%{opacity:1}100%{opacity:0}}@keyframes naFlagMorph{0%{transform:scale(.48);border-radius:50%}42%{transform:scale(1);border-radius:50%}100%{transform:scale(2.7);border-radius:4px;opacity:0}}
+
+.na-index-mobile-bar,.na-index-scrim{display:none}
