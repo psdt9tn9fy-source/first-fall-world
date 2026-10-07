@@ -20,3 +20,30 @@
   .ei-scanner{min-height:360px}.ei-orbit{width:225px}.ei-specimen{width:220px;height:260px}.ei-hotspot{min-width:61px}.ei-hotspot span{font-size:4px}.ei-hotspot b{font-size:5px}
   .ei-class-btn b{font-size:4px}.ei-assess-primary b{font-size:27px}
 }
+
+
+/* READABILITY MERGED / EIDOLON MOBILE CORE */
+@media(max-width:820px){
+  .ei-head h2{font-size:36px}
+  .ei-head .kicker,.ei-head-meta span,.ei-source span,.ei-source b,
+  .ei-scan-top span,.ei-scan-top b,.ei-scan-foot span,.ei-scan-foot b,
+  .ei-assessment>header span,.ei-assessment>header b{font-size:8px}
+  .ei-head-meta b{font-size:11px}
+  .ei-class-nav{grid-template-columns:repeat(3,1fr)}
+  .ei-class-btn{min-height:64px;padding:9px 3px;border-bottom:1px solid var(--ei-line2)}
+  .ei-class-btn>.ei-class-mark{font-size:16px}
+  .ei-class-btn b{font-size:9px}.ei-class-btn small{font-size:9px}
+  .ei-scanner{min-height:410px}
+  .ei-hotspot span{font-size:7px}.ei-hotspot b{font-size:8px}
+  .ei-assess-primary b{font-size:34px}.ei-assess-primary em{font-size:9px}
+  .ei-assess-role span,.ei-risk-head span,.ei-focus-head span{font-size:8px}
+  .ei-assess-role b{font-size:11px}.ei-risk-head b{font-size:10px}
+  .ei-risk-scale span{font-size:10px!important}
+  .ei-focus-switch button{font-size:9px}
+  .ei-focus-status span,.ei-focus-status button{font-size:8px}
+  .ei-focus-readout p{font-size:13px;line-height:1.7}
+}
+@media(max-width:380px){
+  .ei-class-nav{grid-template-columns:repeat(3,1fr)}
+  .ei-class-btn{min-height:60px}
+}
