@@ -184,3 +184,16 @@
   #worldMapViewport,.world-land path,.sector-marker{transition:none!important}
   .map-scanline,.sector-marker .sector-pulse{animation:none!important}
 }
+
+
+/* READABILITY MERGED / WORLD */
+.situation-summary span,.panel-data span,.rail-label,.map-status span,.map-search label,
+.era-strip-head span,.era-strip-head b,.panel-overline,.panel-feed>span{font-size:10px}
+.zone-filter span,.zone-filter em,.panel-actions button,.panel-feed div{font-size:9px}
+.zone-filter b,.map-status b,.map-search input,.map-tools button,.panel-class{font-size:11px}
+.map-loading span,.sector-marker text{font-size:10px}
+.map-legend,.era-track button b{font-size:8px}
+.zone-filter{min-height:52px;padding-top:15px;padding-bottom:15px}
+.panel-data b{font-size:12px}
+.sector-panel p{font-size:14px;line-height:1.75}
+.era-strip p{font-size:14px;line-height:1.65}
