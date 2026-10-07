@@ -151,6 +151,10 @@ export function initWorld(){
   panel.open.addEventListener("click",()=>{
     const record=panel.open.dataset.record;if(!record)return;const nation=panel.open.dataset.nation;
     if(nation)window.dispatchEvent(new CustomEvent("archive:select-nation",{detail:{key:nation}}));
+    if(record==="eidolon"&&selected?.type==="sector"){
+      const sector=SECTORS.find(s=>s.id===selected.id);
+      if(sector)window.dispatchEvent(new CustomEvent("archive:eidolon-context",{detail:{id:sector.id,name:sector.name,ko:sector.ko,zone:sector.zone}}));
+    }
     window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:record}}));
   });
   new MutationObserver(()=>{if(intro.classList.contains("hide"))loadMap()}).observe(intro,{attributes:true,attributeFilter:["class"]});
