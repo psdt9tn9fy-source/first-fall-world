@@ -43,7 +43,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-info-tab-1").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261007-dossier-doc-1").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("EIDOLON dossier unavailable.",error);dossierPromise=null;return null});
@@ -56,7 +56,7 @@ export function initEidolon(){
     if(mode==="core"){state="ANALYZING CORE";title="CORE ANALYSIS";body="코어는 동력원·연산장치·신경중추 역할을 겸한다. 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있다."}
     else if(mode==="network"){state="INTERCEPTING SHARED DATA";title="ADAPTIVE NETWORK";body="에이돌론은 인간의 무기와 전술을 학습하고 전투정보를 공유한다. 반복되는 전술은 시간이 지날수록 효과가 떨어질 수 있다."}
     else if(mode==="morphology")body=c.brief+" 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.";
-    loadDossier().then(ctrl=>ctrl?.show({state,code:"HOSTILE // "+c.mark+" // "+c.name,title,classification:c.ko+" / "+c.name,scale:c.scale,role:c.role,body}));
+    loadDossier().then(ctrl=>ctrl?.show({state,code:"HOSTILE ENTITY // "+c.mark+" // "+c.name,mark:c.mark,title,classification:c.ko+" / "+c.name,scale:c.scale,role:c.role,risk:c.risk,body,core:"대부분의 에이돌론은 발광하는 코어를 보유한다. 코어는 동력·연산·신경중추에 해당하는 핵심 기관이며, 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있어 현장에서는 파괴 또는 회수 여부를 확인한다.",network:"에이돌론의 가장 위험한 공통 특성은 전투학습과 정보공유다. 인간의 무기와 전술을 학습하고 전투정보를 공유하기 때문에 동일한 공격 방식의 반복은 시간이 지날수록 효과가 저하될 수 있다.",note:c.key==="seraph"?"기존 I–V 분류체계 밖의 특이개체. 일부 개체는 인간의 언어 또는 사고를 이해하는 정황이 있으며 고유 식별명으로 장기 추적될 수 있다.":c.key==="ark"?"도시 규모에 직접적인 위협을 가할 수 있는 전략개체. ARK 관련 교전은 S급 작전위험 대응 대상이 될 수 있다.":"형태와 크기, 세부 능력은 같은 분류 안에서도 달라질 수 있다. 본 기록은 공개 분류체계의 참고 자료이며 개별 개체의 완전한 전투 사양을 의미하지 않는다."}));
   }
 
   function load3DController(){
