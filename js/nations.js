@@ -1,4 +1,4 @@
-import { N, EVENTS, ext } from "./data.js?v=20261007-refactor-2";
+import { N, EVENTS, ext } from "./data.js?v=20261007-refactor-3";
 
 const HISTORY_TERMS={
   rok:["서울","부산","평양","백두","SEOUL","BUSAN","PYONGYANG","BAEKDU"],
