@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./css/eidolon-mobile.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/military.css?v=20261007-refactor-3">
-  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-art1">
+  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-art2">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
 <body>
@@ -235,12 +235,12 @@
         <h2 id="characterName">한서린</h2>
         <p id="characterSummary"></p>
       </div>
-      <button type="button" class="char-opening-start" data-char-start>
+      <button type="button" class="char-opening-start" data-char-start aria-controls="characterBinder" aria-expanded="false">
         <span>기록 열람 시작</span><b>↓</b>
       </button>
     </section>
 
-    <section class="char-binder" id="characterBinder">
+    <section class="char-binder" id="characterBinder" hidden>
       <header class="char-binder-head">
         <div>
           <span>PERSONNEL FILE // 001</span>
@@ -318,10 +318,9 @@
         <button type="button" data-char-next><b>다음 기록</b><span>→</span></button>
       </footer>
 
-      <nav class="char-visual-switcher" id="characterVisualSwitcher" aria-label="한서린 이미지 선택" hidden></nav>
     </section>
 
-    <footer class="char-experience-foot">
+    <footer class="char-experience-foot" hidden>
       <span>PERSONNEL RECORD // 001</span>
       <b>한서린</b>
       <em>색인 선택 또는 좌우 스와이프로 기록 전환</em>
@@ -694,4 +693,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261008-character-art1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261008-character-art2"></script></body></html>

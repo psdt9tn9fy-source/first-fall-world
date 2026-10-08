@@ -1,4 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261008-character-art1";
+import {CHARACTERS,CHARACTER_ORDER} from "./characters-data.js?v=20261008-character-art2";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
@@ -17,7 +17,7 @@ export function initCharacters(){
   const next=root.querySelector("[data-char-next]");
   const start=root.querySelector("[data-char-start]");
   const portrait=root.querySelector("#characterPortrait");
-  const visualSwitcher=root.querySelector("#characterVisualSwitcher");
+  const recordFooter=root.querySelector(".char-experience-foot");
   const name=root.querySelector("#characterName");
   const roman=root.querySelector("#characterRoman");
   const summary=root.querySelector("#characterSummary");
@@ -46,11 +46,9 @@ export function initCharacters(){
 
   root.style.setProperty("--char-accent",character.accent);
 
-  // Each illustration is loaded only when requested. Missing assets retain
-  // the existing placeholder without showing broken image elements.
+  // Scene index equals the corresponding picture. Only requested images load.
   const visuals=character.visuals||[];
   let visualRequest=0;
-  let visualStarted=false;
 
   function selectVisual(index){
     const visual=visuals[index];
@@ -65,45 +63,21 @@ export function initCharacters(){
       portrait.setAttribute("role","img");
       portrait.setAttribute("aria-label",character.name+" — "+visual.detail);
       stage?.classList.add("has-character-art");
-      if(visualSwitcher){
-        visualSwitcher.hidden=false;
-        visualSwitcher.querySelectorAll("[data-char-visual]").forEach(function(button){
-          const active=Number(button.dataset.charVisual)===index;
-          button.classList.toggle("active",active);
-          button.setAttribute("aria-pressed",String(active));
-        });
+      if(!reduced){
+        portrait.classList.remove("visual-enter");
+        void portrait.offsetWidth;
+        portrait.classList.add("visual-enter");
       }
     };
     probe.onerror=function(){
       if(request!==visualRequest)return;
-      // No network asset yet: intentionally keep the neutral placeholder.
+      portrait.style.backgroundImage="";
+      portrait.classList.remove("has-image","visual-enter");
+      portrait.removeAttribute("role");
+      portrait.removeAttribute("aria-label");
+      stage?.classList.remove("has-character-art");
     };
     probe.src=visual.src;
-  }
-
-  function initVisuals(){
-    if(visualStarted||!visuals.length)return;
-    visualStarted=true;
-    if(visualSwitcher){
-      const label=document.createElement("span");
-      label.className="char-visual-heading";
-      label.textContent="VISUAL RECORDS // 이미지 기록";
-      visualSwitcher.appendChild(label);
-      visuals.forEach(function(item,index){
-        const button=document.createElement("button");
-        button.type="button";
-        button.dataset.charVisual=String(index);
-        button.setAttribute("aria-pressed","false");
-        const number=document.createElement("span");
-        number.textContent=String(index+1).padStart(2,"0");
-        const title=document.createElement("b");
-        title.textContent=item.label;
-        button.append(number,title);
-        button.addEventListener("click",function(){selectVisual(index)});
-        visualSwitcher.appendChild(button);
-      });
-    }
-    selectVisual(0);
   }
 
   function renderCharacter(){
@@ -117,8 +91,8 @@ export function initCharacters(){
     affiliation.textContent=character.affiliation;
     position.textContent=character.position;
 
-    portrait.classList.toggle("has-image",Boolean(character.image));
-    portrait.style.backgroundImage=character.image?'url("'+character.image+'")':"";
+    portrait.classList.remove("has-image");
+    portrait.style.backgroundImage="";
 
     facts.innerHTML=character.facts.map(function(item){
       return '<div><span>'+item[0]+'</span><b>'+item[1]+'</b></div>';
@@ -176,6 +150,7 @@ export function initCharacters(){
     });
 
     updateControls();
+    if(binder&&!binder.hidden)selectVisual(target);
 
     if(binder&&animate&&!reduced){
       clearTimeout(switchTimer);
@@ -218,7 +193,18 @@ export function initCharacters(){
   });
 
   start?.addEventListener("click",function(){
-    binder?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+    if(!binder)return;
+    if(binder.hidden){
+      binder.hidden=false;
+      if(recordFooter)recordFooter.hidden=false;
+      root.classList.add("record-opened");
+      start.setAttribute("aria-expanded","true");
+      binder.classList.add("is-revealing");
+      selectVisual(activeSection);
+    }
+    requestAnimationFrame(function(){
+      binder.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+    });
   });
 
   if(stage){
@@ -266,19 +252,4 @@ export function initCharacters(){
   root.dataset.section="0";
   updateControls();
 
-  // Avoid loading the artwork while the visitor is reading other records.
-  if("IntersectionObserver" in window){
-    const observer=new IntersectionObserver(function(entries){
-      if(entries.some(entry=>entry.isIntersecting)){
-        observer.disconnect();
-        initVisuals();
-      }
-    },{rootMargin:"100px"});
-    observer.observe(root.querySelector(".char-opening")||root);
-  }else{
-    window.addEventListener("archive:record-opened",function(event){
-      if(event.detail?.key==="characters")initVisuals();
-    });
-    if(root.closest(".view")?.classList.contains("active"))initVisuals();
-  }
 }
