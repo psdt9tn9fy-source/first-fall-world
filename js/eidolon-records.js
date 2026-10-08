@@ -1,4 +1,6 @@
 const MODULES=["profile","behavior","nest","engagement"];
+const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
+
 
 export function initEidolonRecords(root,{onTabChange}={}){
   if(!root)return null;
@@ -28,11 +30,17 @@ export function initEidolonRecords(root,{onTabChange}={}){
   const riskDetailCode=root.querySelector("#eiRiskDetailCode");
   const riskDetailBody=root.querySelector("#eiRiskDetailBody");
   const riskButtons=[...root.querySelectorAll(".ei-threat-matrix [data-ei-risk]")];
-  const riskCopy={D:{tier:"ROUTINE ALERT",directive:"LOCAL READINESS",body:"일반 경계 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[22,18,12]},C:{tier:"LOCAL ENGAGEMENT",directive:"LIMITED FORCE RESPONSE",body:"소규모 교전 단계. D~C는 일반 경계·소규모 교전 범주의 작전 위험도다.",meters:[38,30,22]},B:{tier:"TACTICAL RESPONSE",directive:"TACTICAL FORCE DEPLOYMENT",body:"중형 네스트 또는 강력한 개체 대응에 사용되는 작전 위험도.",meters:[58,52,45]},A:{tier:"MAJOR FRONT",directive:"LARGE-SCALE OPERATION",body:"대규모 전선 또는 대형 네스트 공략 수준의 작전 위험도.",meters:[78,74,68]},S:{tier:"STRATEGIC / JOINT",directive:"STRATEGIC · JOINT RESPONSE",body:"ARK 또는 국가존망급 위협에 대응하는 최고 작전위험도. 전략전력과 국제공동작전이 요구될 수 있다.",meters:[100,96,100]}};
   let traceToken=0,nestToken=0,breachToken=0,identToken=0;
   if(!buttons.length||!panels.length)return null;
   const aborter=new AbortController();
   const signal=aborter.signal;
+  // Standard and SERAPH risks share the same cached meter elements.
+  const meterElements=["threat","force","coord"].map(name=>threatMatrix?.querySelector(`[data-meter="${name}"]`));
+  function renderRiskMeters(values){
+    meterElements.forEach((meter,index)=>{
+      if(meter)meter.style.width=`${values[index]}%`;
+    });
+  }
 
   function runIdentification(){
     if(!ident)return;
@@ -105,7 +113,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
     if(riskDetailBody)riskDetailBody.textContent=data.body;
     if(threatTier)threatTier.textContent=data.tier;
     if(threatDirective)threatDirective.textContent=data.directive;
-    ["threat","force","coord"].forEach((name,index)=>{const meter=threatMatrix.querySelector(`[data-meter="${name}"]`);if(meter)meter.style.width=`${data.meters[index]}%`});
+    renderRiskMeters(data.meters);
   }
 
   function setBaseline(detail={}){
@@ -123,11 +131,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
       const token=++breachToken;
       if(threatMatrix)threatMatrix.dataset.viewRisk="UNBOUNDED";
       riskButtons.forEach(button=>button.classList.remove("active"));
-      const meters=riskCopy.S.meters;
-      ["threat","force","coord"].forEach((name,index)=>{
-        const meter=threatMatrix?.querySelector('[data-meter="'+name+'"]');
-        if(meter)meter.style.width=meters[index]+"%";
-      });
+      renderRiskMeters(riskCopy.S.meters);
       if(riskDetailCode)riskDetailCode.textContent="측정 불가";
       if(threatTier)threatTier.textContent="표준 등급 적용 불가";
       if(threatDirective)threatDirective.textContent="별도 대응 프로토콜";

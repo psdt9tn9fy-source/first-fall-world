@@ -53,3 +53,12 @@ https://psdt9tn9fy-source.github.io/first-fall-world/
 - `ei-3d-capable` CSS 상태는 모델 레지스트리에서 자동 결정합니다. 새 분류 추가 시 CSS의 모델 이름 목록을 수정하지 마세요.
 - 개체별 텍스처 GLB는 화면을 열었을 때만 불러옵니다. 3D 모델이 없는 세라프는 기존 2D 스캐너를 사용합니다.
 - 사용하지 않는 옛 연표 PNG 10개는 백업 브랜치 `archive/unused-event-png-20261008`에 남겨두고 배포용 브랜치에서 제외합니다.
+
+## 코드 구조 및 정적 검증
+
+- `js/eidolon-data.js`: 개체·네스트 설정의 단일 소스
+- `js/eidolon.js`: 화면 조작 및 3D 연결
+- `js/eidolon-records.js`: 상세 분석, 작전위험도 공통 게이지
+- `js/eidolon-3d.js`: 3D 개체 등록과 카메라 동작
+- `css/intro.css`, `css/eidolon-records.css`: 선언을 바꾸지 않고 서식만 정리
+- 검증 명령: `node scripts/check-project.mjs`. 브라우저 시각·상호작용 검증은 별도.
