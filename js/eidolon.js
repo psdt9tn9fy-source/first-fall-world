@@ -78,7 +78,7 @@ export function initEidolon(){
   function sync3D(){
     threeDController?.setClass(current().key);
     const view=root.closest(".view");
-    if(["brute","swarm","hunter"].includes(current().key)&&view?.classList.contains("active"))load3DController();
+    if(["brute","swarm","hunter","dominion"].includes(current().key)&&view?.classList.contains("active"))load3DController();
   }
 
   function setRiskScale(key=""){
