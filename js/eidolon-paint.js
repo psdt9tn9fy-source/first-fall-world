@@ -239,7 +239,7 @@ export function createBrutePaint({root,modelUrl,onClose=()=>{}}){
   }
   async function open(){
     if(opening||!root||root.dataset.eiClass!=="brute")return;
-    ui();stage.hidden=false;root.classList.add("ei-paint-active");
+    ui();stage.hidden=false;root.classList.add("ei-paint-active");document.body.classList.add("ei-paint-page-open");
     opening=true;const token=++loadingToken;
     try{
       await load(token);
@@ -253,8 +253,9 @@ export function createBrutePaint({root,modelUrl,onClose=()=>{}}){
     ++loadingToken;
     if(stage)stage.hidden=true;
     root.classList.remove("ei-paint-active");
+    document.body.classList.remove("ei-paint-page-open");
     dispose();
     onClose();
   }
-  return {open,close,get active(){return !stage?.hidden}};
+  return {open,close,get active(){return !!stage&&!stage.hidden}};
 }

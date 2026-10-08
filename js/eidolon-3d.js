@@ -11,6 +11,8 @@ export function initEidolon3D(root,{reduced=false}={}){
   let materialLab=null;
   let materialState=[];
   let activeMaterial=0;
+  let paintController=null;
+  let paintModulePromise=null;
 
   // A reversible on-device preview. It never modifies the original GLB file.
   function createMaterialLab(){
@@ -47,6 +49,12 @@ export function initEidolon3D(root,{reduced=false}={}){
         </div>
         <p data-ei-material-feedback aria-live="polite"></p>
         <small>화면 미리보기 전용. 원본 GLB에는 저장되지 않으며, 재질이 1개라면 전체가 함께 변합니다.</small>
+        <section class="ei-paint-launch" aria-label="브루트 부분 채색 실험">
+          <div><b>PAINT / EXPERIMENT 01</b><span>VERTEX COLOR PREVIEW</span></div>
+          <p>부위 구분 없이 원하는 표면에 직접 색을 시험합니다.</p>
+          <button type="button" data-ei-paint-launch>부분 채색 시험 시작 ↗</button>
+          <small>회전과 채색 모드를 선택할 수 있어요. 종료하면 임시 색상은 사라집니다.</small>
+        </section>
         <section class="ei-mesh-inspector" aria-label="브루트 메시 구조 검사">
           <div class="ei-mesh-inspector-head"><b>MESH / STRUCTURE</b><span>GLB INSPECTION</span></div>
           <p class="ei-mesh-instruction">모델이 실제로 몇 개의 부품으로 나뉘는지 확인합니다.</p>
@@ -113,6 +121,28 @@ export function initEidolon3D(root,{reduced=false}={}){
     note(materials.length===1?"재질 1개: 전체 색상만 변경 가능":"재질 "+materials.length+"개 감지: 각 재질의 색상 시험 가능");
     scanner.appendChild(box);
     initMeshInspector(box,BRUTE_MODEL_URL);
+    box.querySelector("[data-ei-paint-launch]")?.addEventListener("click",async()=>{
+      if(classKey!=="brute")return;
+      const button=box.querySelector("[data-ei-paint-launch]");
+      button.disabled=true;button.textContent="준비 중…";
+      try{
+        if(!paintModulePromise)paintModulePromise=import("./eidolon-paint.js?v=20261008-brute-paint-v1");
+        const mod=await paintModulePromise;
+        if(classKey!=="brute")return;
+        if(!paintController)paintController=mod.createBrutePaint({
+          root,modelUrl:BRUTE_MODEL_URL,
+          onClose:()=>{if(modelViewer)modelViewer.style.visibility="visible";applyFocus()}
+        });
+        box.open=false;
+        if(modelViewer)modelViewer.style.visibility="hidden";
+        await paintController.open();
+      }catch(error){
+        paintModulePromise=null;
+        if(modelViewer)modelViewer.style.visibility="visible";
+        box.open=true;
+        note("페인팅 시험을 불러오지 못했습니다: "+(error?.message||"알 수 없는 오류"));
+      }finally{button.disabled=false;button.textContent="부분 채색 시험 시작 ↗"}
+    });
     materialLab=box;
     materialLab.hidden=classKey!=="brute";
   }
@@ -241,6 +271,7 @@ export function initEidolon3D(root,{reduced=false}={}){
 
   function setClass(key){
     classKey=key;
+    if(classKey!=="brute"&&paintController?.active)paintController.close();
     syncVisibility();
     if(classKey==="brute")ensureBruteModel().then?.(()=>applyFocus());
   }

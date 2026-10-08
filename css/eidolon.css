@@ -299,3 +299,37 @@
 .ei-material-lab .ei-topology .ei-topology-result{padding:10px 11px;border-left:2px solid #79afc5;background:#163044;color:#d8eef9;font-size:11px}
 .ei-topology small{color:#87a6b9;font-size:10px;line-height:1.5;word-break:keep-all}
 .ei-topology>[data-ei-topology-copy]{background:#132b3d}
+
+/* BRUTE experimental vertex paint — isolated mobile-first full-screen stage */
+.ei-paint-launch{display:grid;gap:9px;margin-top:14px;padding:13px 0 7px;border-top:1px solid #5c849c}
+.ei-paint-launch>div{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.ei-paint-launch>div b,.ei-paint-launch>div span{font:800 9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.07em;color:#b5d9ed}
+.ei-paint-launch>div span{font-size:8px;color:#83a8be}
+.ei-material-lab .ei-paint-launch p{font-size:11px;line-height:1.55;color:#b4cddd;margin:0}
+.ei-paint-launch>button{min-height:45px;border:1px solid #7ca8c9;background:#204965;color:#eff9ff;font-size:13px;font-weight:850;cursor:pointer}
+.ei-paint-launch>button:disabled{opacity:.6;cursor:wait}
+.ei-paint-launch>small{color:#89acbd;line-height:1.55;font-size:10px}
+body.ei-paint-page-open{overflow:hidden!important}
+.ei-paint-stage{position:fixed;z-index:99999;inset:0;display:flex;flex-direction:column;width:100%;height:100dvh;box-sizing:border-box;background:#07121c;color:#e6f1f7;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden}
+.ei-paint-stage[hidden]{display:none!important}
+.ei-paint-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:53px;padding:8px clamp(12px,4vw,25px);border-bottom:1px solid #395368;background:#0b1a28}
+.ei-paint-head>div{display:grid;gap:5px}
+.ei-paint-head span{font:800 10px ui-monospace,SFMono-Regular,monospace;color:#8db5cb;letter-spacing:.11em}
+.ei-paint-head b{font-size:18px;color:#e9f5fd}
+.ei-paint-head button{flex:none;min-width:72px;min-height:41px;padding:9px 10px;border:1px solid #688aa7;background:#183449;color:#f3faff;font-size:12px;font-weight:850;cursor:pointer}
+.ei-paint-viewport{position:relative;flex:1;min-height:120px;overflow:hidden;background:radial-gradient(circle at 50% 45%,#193045,#09141e 70%);touch-action:none}
+.ei-paint-canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair;outline:none}
+.ei-paint-foot{flex:none;display:grid;gap:9px;padding:11px clamp(12px,4vw,24px) 16px;background:#091722;border-top:1px solid #36556c}
+.ei-paint-foot nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ei-paint-foot nav button{min-height:42px;border:1px solid #425d72;background:#102739;color:#adc6d8;font-size:13px;font-weight:850;cursor:pointer}
+.ei-paint-foot nav button[aria-pressed="true"]{border-color:#88bfeb;background:#23516f;color:#f2fbff}
+.ei-paint-settings{display:grid;grid-template-columns:87px minmax(0,1fr) 65px 65px;align-items:center;gap:9px}
+.ei-paint-settings label{display:grid;gap:4px;color:#a9c5d6;font-size:10px;font-weight:750}
+.ei-paint-settings input[type=color]{width:100%;height:34px;padding:3px;border:1px solid #597a95;background:#132f44}
+.ei-paint-settings input[type=range]{width:100%;min-height:29px;accent-color:#9ecbe8}
+.ei-paint-settings button{min-height:36px;padding:3px;border:1px solid #567790;background:#1c384c;color:#e4f1f9;font-size:11px;font-weight:850}
+.ei-paint-foot p{margin:0;min-height:16px;color:#cbebfc;font-size:11px;line-height:1.4;word-break:keep-all}
+.ei-paint-foot small{color:#879eae;font-size:10px;line-height:1.4;word-break:keep-all}
+.ei-paint-stage button:focus-visible,.ei-paint-stage input:focus-visible{outline:2px solid #b8e0ff;outline-offset:-2px}
+@media(max-width:400px){.ei-paint-head{min-height:46px}.ei-paint-head b{font-size:16px}.ei-paint-foot{gap:7px;padding:9px 12px 12px}.ei-paint-settings{grid-template-columns:65px minmax(0,1fr) 57px 57px;gap:7px}.ei-paint-settings button{font-size:10px}}
+@media(max-height:640px){.ei-paint-head{min-height:42px}.ei-paint-foot{gap:5px;padding-top:6px;padding-bottom:6px}.ei-paint-foot nav button{min-height:34px}.ei-paint-foot small{display:none}}
