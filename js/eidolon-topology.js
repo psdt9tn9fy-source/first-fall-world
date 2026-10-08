@@ -34,6 +34,8 @@ function accessorReader(gltf,view,binary,binaryLength,index,kind){
   if(accessor.sparse)throw new Error(kind+" 희소 접근자 모델은 아직 지원하지 않습니다.");
   const bufferView=gltf.bufferViews?.[accessor.bufferView];
   if(!bufferView||bufferView.buffer!==0)throw new Error(kind+" 외부 버퍼는 지원하지 않습니다.");
+  if(bufferView.extensions?.EXT_meshopt_compression)
+    throw new Error(kind+" Meshopt 압축 형상은 현재 검사를 지원하지 않습니다.");
   const types={5120:1,5121:1,5122:2,5123:2,5125:4,5126:4};
   const size=types[accessor.componentType];
   const lanes=accessor.type==="VEC3"?3:accessor.type==="SCALAR"?1:0;
@@ -132,7 +134,7 @@ export async function analyzeGlbTopology(buffer,onProgress=()=>{}){
     if(item)item.triangles++;else components.set(key,{triangles:1});
   }
   const ranked=[...components.values()].sort((a,b)=>b.triangles-a.triangles);
-  const minimum=Math.max(10,Math.round(triangles*0.005));
+  const minimum=Math.max(1,Math.ceil(triangles*0.005));
   const significant=ranked.filter(c=>c.triangles>=minimum).length;
   const largest=ranked.slice(0,12).map((item,i)=>({
     rank:i+1,triangles:item.triangles,
