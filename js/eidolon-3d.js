@@ -99,6 +99,7 @@ export function initEidolon3D(root,{reduced=false}={}){
 
   function syncVisibility(){
     const enabled=!!modelFor();
+    root.classList.toggle("ei-3d-capable",enabled);
     if(modelStage)modelStage.hidden=!enabled;
     if(modelViewer){
       modelViewer.style.display=enabled?"block":"none";

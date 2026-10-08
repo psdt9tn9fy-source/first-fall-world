@@ -56,7 +56,7 @@
 .ei-focus-readout{padding:15px 0}.ei-focus-readout>span,.ei-focus-readout>em{display:block;font:650 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;color:#56656a;font-style:normal}.ei-focus-readout b{display:block;margin-top:7px;font:850 13px ui-monospace,SFMono-Regular,monospace;color:#cbd8da}.ei-focus-readout em{margin-top:4px;color:#819399}.ei-focus-readout p{margin:10px 0 0;font-size:10px;line-height:1.65;color:#829095}
 @media(prefers-reduced-motion:reduce){.scanning .ei-scanline,.scanning .ei-specimen{animation:none!important}.ei-specimen,.ei-class-btn:after{transition:none}}
 
-/* BRUTE 3D specimen — loaded only after EIDOLON record is opened */
+/* Shared EIDOLON 3D specimen — lazy-loaded when EIDOLON archive is opened */
 .ei-model-stage{position:absolute;z-index:4;inset:46px 10px 38px;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
 .ei-model-stage[hidden]{display:none}
 .ei-model-viewer{width:100%;height:100%;min-height:390px;background:transparent;--poster-color:transparent;touch-action:pan-y;outline:0}
@@ -66,21 +66,21 @@
 .ei-model-loading{position:absolute;z-index:5;inset:0;display:none;place-content:center;text-align:center;gap:6px;background:radial-gradient(circle,#0c1417cc 0,#050809d9 58%,#050809 100%);pointer-events:none}
 .ei-model-loading i{width:54px;height:54px;margin:0 auto 7px;border:1px solid #6f8b9145;border-top-color:#b5d2d8;border-radius:50%;animation:eiModelSpin 1.15s linear infinite}
 .ei-model-loading span,.ei-model-loading b{font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#9eb2b7}.ei-model-loading b{font-size:5px;color:#607176}
-.ei-model-pending:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-model-loading{display:grid}
-.ei-model-ready:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-specimen{opacity:0;visibility:hidden}
-.ei-model-ready:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-orbit{opacity:.5}
-.ei-model-error:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-model-stage{display:none}
-.ei-model-error:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-specimen{opacity:1;visibility:visible}
+.ei-model-pending.ei-3d-capable .ei-model-loading{display:grid}
+.ei-model-ready.ei-3d-capable .ei-specimen{opacity:0;visibility:hidden}
+.ei-model-ready.ei-3d-capable .ei-orbit{opacity:.5}
+.ei-model-error.ei-3d-capable .ei-model-stage{display:none}
+.ei-model-error.ei-3d-capable .ei-specimen{opacity:1;visibility:visible}
 @keyframes eiModelSpin{to{transform:rotate(360deg)}}
 @media(max-width:760px){.ei-model-stage{inset:42px 4px 38px}.ei-model-viewer{min-height:330px}.ei-model-status{left:10px;bottom:8px}}
 @media(prefers-reduced-motion:reduce){.ei-model-loading i{animation:none}}
 
-/* BRUTE 3D framing hotfix */
-.eidolon-lab:not(:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"])) .ei-model-stage{display:none!important}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-model-stage{align-items:center;justify-items:center}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-model-viewer{position:absolute;inset:-9% -4% -3%;width:108%;height:112%;min-height:0;filter:contrast(1.16) brightness(.88) saturate(.82)}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-target:after{content:"";position:absolute;z-index:2;inset:8% 7%;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 0 30%,#02040518 54%,#02040580 100%)}
-@media(max-width:760px){.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]) .ei-model-viewer{inset:-12% -8% -1%;width:116%;height:113%}}
+/* Shared 3D model framing */
+.eidolon-lab:not(.ei-3d-capable) .ei-model-stage{display:none!important}
+.eidolon-lab.ei-3d-capable .ei-model-stage{align-items:center;justify-items:center}
+.eidolon-lab.ei-3d-capable .ei-model-viewer{position:absolute;inset:-9% -4% -3%;width:108%;height:112%;min-height:0;filter:contrast(1.16) brightness(.88) saturate(.82)}
+.eidolon-lab.ei-3d-capable .ei-target:after{content:"";position:absolute;z-index:2;inset:8% 7%;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 0 30%,#02040518 54%,#02040580 100%)}
+@media(max-width:760px){.eidolon-lab.ei-3d-capable .ei-model-viewer{inset:-12% -8% -1%;width:116%;height:113%}}
 
 
 /* EIDOLON archive decode / analysis polish */
@@ -196,59 +196,59 @@
 .ei-focus-readout p{font-size:14px;line-height:1.75}
 
 
-/* Final BRUTE presentation: quiet HUD, legible controls, stable 3D pivot */
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-axis-x,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-axis-y,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-orbit,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scanline,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-acquisition,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-model-status{display:none!important}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-model-stage{inset:7px 3px 64px;overflow:hidden}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-model-viewer{
+/* Shared EIDOLON 3D controls: quiet HUD, legible buttons, stable pivot */
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-axis-x,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-axis-y,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-orbit,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scanline,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-acquisition,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-status{display:none!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-stage{inset:7px 3px 64px;overflow:hidden}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-viewer{
   inset:-6% -3% -2%;width:106%;height:108%;min-height:0;
   filter:contrast(1.09) brightness(.95) saturate(.98);touch-action:pan-y
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot{
   box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;
   top:auto!important;bottom:44px!important;
   width:calc((100% - 34px)/3);max-width:156px;min-width:0;min-height:47px;
   padding:7px 6px;text-align:center;background:#0a1820ed;
   border:1px solid #456475;color:#c3d4df;box-shadow:none;transform:none
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot span{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot span{
   font-size:9px;line-height:1.15;letter-spacing:.09em;color:#8fa8b9
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot b{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot b{
   margin-top:4px;font-size:12px;line-height:1.15;letter-spacing:.03em;color:#e4eff4;white-space:nowrap
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot:after{display:none!important}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.core{left:9px!important;right:auto!important}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.network{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot:after{display:none!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.core{left:9px!important;right:auto!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.network{
   left:50%!important;right:auto!important;transform:translateX(-50%)
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.morphology{left:auto!important;right:9px!important}
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.active{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.morphology{left:auto!important;right:9px!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.active{
   border-color:#b0d7e5;background:#173243;box-shadow:inset 0 -2px #a8d0df
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scan-foot{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot{
   left:12px;right:12px;bottom:15px;gap:8px
 }
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scan-foot span,
-.eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scan-foot b{
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot span,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot b{
   font-size:9px;line-height:1.2;letter-spacing:.035em
 }
 @media(max-width:760px){
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-model-stage{inset:5px 1px 59px}
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-model-viewer{
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-stage{inset:5px 1px 59px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-viewer{
     inset:-5% -3% -1%;width:106%;height:106%
   }
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot{
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot{
     bottom:40px!important;min-height:44px;width:calc((100% - 28px)/3);padding:6px 4px
   }
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.core{left:6px!important}
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot.morphology{right:6px!important}
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot span{font-size:8px}
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-hotspot b{font-size:11px}
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scan-foot span,
-  .eidolon-lab:is([data-ei-class="brute"],[data-ei-class="swarm"],[data-ei-class="hunter"],[data-ei-class="dominion"],[data-ei-class="ark"]).ei-has-3d .ei-scan-foot b{font-size:8px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.core{left:6px!important}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.morphology{right:6px!important}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot span{font-size:8px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot b{font-size:11px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot span,
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot b{font-size:8px}
 }

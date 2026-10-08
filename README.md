@@ -46,3 +46,10 @@ PC와 모바일은 동일한 전역 하단 기록 네비게이션을 사용합�
 배포 주소:
 
 https://psdt9tn9fy-source.github.io/first-fall-world/
+
+## EIDOLON 3D 유지보수
+
+- GLB 등록은 `js/eidolon-3d.js`의 `MODELS` 한 곳에서 관리합니다.
+- `ei-3d-capable` CSS 상태는 모델 레지스트리에서 자동 결정합니다. 새 분류 추가 시 CSS의 모델 이름 목록을 수정하지 마세요.
+- 개체별 텍스처 GLB는 화면을 열었을 때만 불러옵니다. 3D 모델이 없는 세라프는 기존 2D 스캐너를 사용합니다.
+- 사용하지 않는 옛 연표 PNG 10개는 백업 브랜치 `archive/unused-event-png-20261008`에 남겨두고 배포용 브랜치에서 제외합니다.
