@@ -6,7 +6,31 @@ export function initEidolon3D(root,{reduced=false}={}){
   let modelStage=null;
   let modelViewer=null;
   let classKey=root.dataset.eiClass||"brute";
-  let focusKey="morphology";
+  let focusKey=root.dataset.eiFocus||"morphology";
+  let modelLoaded=false;
+  const HOME_ORBIT="35deg 72deg 115%";
+  const HOME_TARGET="auto auto auto";
+
+  // Use real glTF bounding-box dimensions, not percentages in camera-target:
+  // camera-target only accepts lengths (e.g. 1m) and 'auto'.
+  function focusTarget(mode){
+    if(typeof modelViewer?.getBoundingBoxCenter!=="function"||
+       typeof modelViewer?.getDimensions!=="function")return HOME_TARGET;
+    const center=modelViewer.getBoundingBoxCenter();
+    const dimensions=modelViewer.getDimensions();
+    if(!center||!dimensions||
+       ![center.x,center.y,center.z,dimensions.x,dimensions.y,dimensions.z].every(Number.isFinite))
+      return HOME_TARGET;
+    // Approximate torso-core / upper sensor-network targets as fractions of
+    // the imported model's real dimensions. Keep each target deterministic.
+    const fractions=mode==="core"
+      ? {x:-0.06,y:0.09,z:0.07}
+      : {x:0.03,y:0.29,z:0.17};
+    return [center.x+dimensions.x*fractions.x,
+            center.y+dimensions.y*fractions.y,
+            center.z+dimensions.z*fractions.z]
+      .map(value=>Number(value.toFixed(4))+"m").join(" ");
+  }
   function buildModelStage(){
     if(modelStage)return modelStage;
     const target=root.querySelector(".ei-target");
@@ -44,7 +68,11 @@ export function initEidolon3D(root,{reduced=false}={}){
     if(modelStage)modelStage.hidden=!isBrute;
     if(modelViewer){
       modelViewer.style.display=isBrute?"block":"none";
-      modelViewer.removeAttribute("auto-rotate");
+      if(isBrute&&focusKey==="morphology"&&!reduced){
+        modelViewer.setAttribute("auto-rotate","");
+      }else{
+        modelViewer.removeAttribute("auto-rotate");
+      }
     }
     root.classList.toggle("ei-has-3d",isBrute&&!!modelStage);
     if(!isBrute)root.classList.remove("ei-model-pending","ei-model-ready","ei-model-error");
@@ -57,8 +85,10 @@ export function initEidolon3D(root,{reduced=false}={}){
     syncVisibility();
     root.classList.add("ei-model-pending");
     if(modelViewer){
-      root.classList.add("ei-model-ready");
-      root.classList.remove("ei-model-pending");
+      if(modelLoaded){
+        root.classList.add("ei-model-ready");
+        root.classList.remove("ei-model-pending");
+      }
       return;
     }
     try{
@@ -73,13 +103,19 @@ export function initEidolon3D(root,{reduced=false}={}){
       modelViewer.setAttribute("shadow-intensity","1.05");
       modelViewer.setAttribute("shadow-softness","0.75");
       modelViewer.setAttribute("exposure","0.72");
-      modelViewer.setAttribute("camera-orbit","35deg 72deg 115%");
-      modelViewer.setAttribute("camera-target","auto auto auto");
-      modelViewer.setAttribute("min-camera-orbit","auto 35deg auto");
-      modelViewer.setAttribute("max-camera-orbit","auto 105deg auto");
+      modelViewer.setAttribute("camera-orbit",HOME_ORBIT);
+      modelViewer.setAttribute("camera-target",HOME_TARGET);
+      modelViewer.setAttribute("min-camera-orbit","auto 25deg 30%");
+      modelViewer.setAttribute("max-camera-orbit","auto 115deg auto");
+      modelViewer.setAttribute("interpolation-decay","140");
+      modelViewer.setAttribute("rotation-per-second","10deg");
+      modelViewer.setAttribute("auto-rotate-delay","1000");
       modelViewer.addEventListener("load",()=>{
+        modelLoaded=true;
         root.classList.remove("ei-model-pending","ei-model-error");
-        root.classList.add("ei-model-ready");
+        if(classKey==="brute")root.classList.add("ei-model-ready");
+        // The model's bounding box becomes available at this point.
+        applyFocus();
       },{once:true});
       modelViewer.addEventListener("error",()=>{
         root.classList.remove("ei-model-pending","ei-model-ready");
@@ -97,9 +133,29 @@ export function initEidolon3D(root,{reduced=false}={}){
 
   function applyFocus(){
     if(!modelViewer||classKey!=="brute")return;
-    // Selection changes the archive information, not the 3D camera.
-    // User-controlled orbit and a single pivot remain fixed across all tabs.
     root.dataset.ei3dFocus=focusKey;
+
+    // Focus mode pauses rotation and flies toward a predictable location.
+    // Morphology returns to the centered original framing and resumes rotation.
+    if(focusKey==="morphology"){
+      modelViewer.removeAttribute("auto-rotate");
+      modelViewer.setAttribute("camera-target",HOME_TARGET);
+      modelViewer.setAttribute("camera-orbit",HOME_ORBIT);
+      if(modelLoaded&&typeof modelViewer.resetTurntableRotation==="function"){
+        modelViewer.resetTurntableRotation(0);
+      }
+      if(!reduced)modelViewer.setAttribute("auto-rotate","");
+      return;
+    }
+
+    modelViewer.removeAttribute("auto-rotate");
+    if(!modelLoaded)return;
+    if(typeof modelViewer.resetTurntableRotation==="function"){
+      modelViewer.resetTurntableRotation(0);
+    }
+    const orbit=focusKey==="core"?"22deg 75deg 65%":"-25deg 57deg 72%";
+    modelViewer.setAttribute("camera-target",focusTarget(focusKey));
+    modelViewer.setAttribute("camera-orbit",orbit);
   }
 
   function setClass(key){
@@ -109,7 +165,7 @@ export function initEidolon3D(root,{reduced=false}={}){
   }
 
   function setFocus(key){
-    focusKey=key||"morphology";
+    focusKey=["core","network","morphology"].includes(key)?key:"morphology";
     applyFocus();
   }
 
