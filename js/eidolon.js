@@ -62,7 +62,7 @@ export function initEidolon(){
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
     if(threeDModulePromise)return threeDModulePromise;
-    threeDModulePromise=import("./eidolon-3d.js?v=20261008-brute-focus-zoom-v3").then(mod=>{
+    threeDModulePromise=import("./eidolon-3d.js?v=20261008-brute-swarm-dual3d-v1").then(mod=>{
       threeDController=mod.initEidolon3D(root,{reduced});
       threeDController.setClass(current().key);
       threeDController.setFocus(root.dataset.eiFocus||"morphology");
@@ -78,7 +78,7 @@ export function initEidolon(){
   function sync3D(){
     threeDController?.setClass(current().key);
     const view=root.closest(".view");
-    if(current().key==="brute"&&view?.classList.contains("active"))load3DController();
+    if(["brute","swarm"].includes(current().key)&&view?.classList.contains("active"))load3DController();
   }
 
   function setRiskScale(key=""){
