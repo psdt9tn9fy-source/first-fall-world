@@ -1,3 +1,4 @@
+import {initMeshInspector} from "./eidolon-mesh.js?v=20261008-brute-mesh-inspect1";
 const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 
@@ -46,6 +47,16 @@ export function initEidolon3D(root,{reduced=false}={}){
         </div>
         <p data-ei-material-feedback aria-live="polite"></p>
         <small>화면 미리보기 전용. 원본 GLB에는 저장되지 않으며, 재질이 1개라면 전체가 함께 변합니다.</small>
+        <section class="ei-mesh-inspector" aria-label="브루트 메시 구조 검사">
+          <div class="ei-mesh-inspector-head"><b>MESH / STRUCTURE</b><span>GLB INSPECTION</span></div>
+          <p class="ei-mesh-instruction">모델이 실제로 몇 개의 부품으로 나뉘는지 확인합니다.</p>
+          <button type="button" data-ei-mesh-scan class="ei-mesh-run">메시 구조 검사 시작 ↗</button>
+          <p data-ei-mesh-state role="status" aria-live="polite">원본 GLB를 변경하지 않습니다.</p>
+          <div class="ei-mesh-stats" data-ei-mesh-stats></div>
+          <ol class="ei-mesh-list" data-ei-mesh-list></ol>
+          <p class="ei-mesh-verdict" data-ei-mesh-verdict></p>
+          <button type="button" data-ei-mesh-copy class="ei-mesh-copy" hidden>검사 결과 복사</button>
+        </section>
       </div>`;
     const select=box.querySelector("[data-ei-material-select]");
     materials.forEach((material,index)=>{
@@ -90,6 +101,7 @@ export function initEidolon3D(root,{reduced=false}={}){
     });
     note(materials.length===1?"재질 1개: 전체 색상만 변경 가능":"재질 "+materials.length+"개 감지: 각 재질의 색상 시험 가능");
     scanner.appendChild(box);
+    initMeshInspector(box,BRUTE_MODEL_URL);
     materialLab=box;
     materialLab.hidden=classKey!=="brute";
   }
