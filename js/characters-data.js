@@ -10,6 +10,12 @@ export const CHARACTERS={
     roman:"HAN SEO-RIN",
     accent:"#315ee8",
     image:null,
+    visuals:[
+      {src:"./assets/characters/han-seorin-main.webp",label:"전장",detail:"전신·작전 현장"},
+      {src:"./assets/characters/han-seorin-salute.webp",label:"경례",detail:"정복·경례"},
+      {src:"./assets/characters/han-seorin-casual.webp",label:"사복",detail:"일상복"},
+      {src:"./assets/characters/han-seorin-portrait.webp",label:"인물",detail:"정복·상반신"}
+    ],
     nation:"대한민국",
     nationKey:"rok",
     affiliation:"중앙사관학교 제76기",
