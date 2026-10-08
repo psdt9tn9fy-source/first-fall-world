@@ -1,5 +1,5 @@
 /* #2134 EIDOLON 3D. Single model-viewer shared by available species.
-   BRUTE, SWARM and HUNTER lazy-load their textured GLBs only when selected. */
+   BRUTE, SWARM, HUNTER and DOMINION lazy-load textured GLBs only when selected. */
 const MODELS={
   brute:{
     url:"./assets/eidolon/brute.glb?v=20261008-brute-textured2k-v1",
@@ -21,6 +21,13 @@ const MODELS={
     coreOrbit:"18deg 76deg 68%",networkOrbit:"-24deg 60deg 76%",
     coreOffset:{x:-.04,y:.08,z:.05},
     networkOffset:{x:.05,y:.24,z:.12}
+  },
+  dominion:{
+    url:"./assets/eidolon/dominion.glb?v=20261008-dominion-textured-v1",
+    label:"DOMINION",homeOrbit:"32deg 73deg 120%",
+    coreOrbit:"17deg 78deg 63%",networkOrbit:"-27deg 58deg 78%",
+    coreOffset:{x:0,y:.12,z:.10},
+    networkOffset:{x:.05,y:.30,z:.08}
   }
 };
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
