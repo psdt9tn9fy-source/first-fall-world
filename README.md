@@ -62,3 +62,17 @@ https://psdt9tn9fy-source.github.io/first-fall-world/
 - `js/eidolon-3d.js`: 3D 개체 등록과 카메라 동작
 - `css/intro.css`, `css/eidolon-records.css`: 선언을 바꾸지 않고 서식만 정리
 - 검증 명령: `node scripts/check-project.mjs`. 브라우저 시각·상호작용 검증은 별도.
+
+## 모듈 경계 (2026-10-08)
+
+- `js/eidolon-records.js`: 개체기록 탭 전환 및 서브 컨트롤러의 생성·해제만 담당
+- `js/eidolon-records-profile.js`: 식별 화면, 재분석, 세라프 식별불가
+- `js/eidolon-records-behavior.js`: 학습/적응 진행 애니메이션
+- `js/eidolon-records-nest.js`: 네스트 도식 상태 및 스캔 제어. 향후 네스트 3D 구현은 여기에서 연계
+- `js/eidolon-records-risk.js`: 위험도 D~S 및 세라프 규격외 표시
+- `css/eidolon*.css`: 공통 화면, 3D, 상세정보, 분석 HUD, 3D 조작 UI로 구분
+- `css/eidolon-records*.css`: 기록 공통, 행동, 네스트, 교전, 개체 식별, 가독성 보정으로 구분
+
+CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위가 보존됩니다. `scripts/check-project.mjs`는 기존 CSS와 분리된 CSS의 연결 결과가 동일한지 검사합니다. 의도적으로 디자인을 수정할 때만 검증 스냅샷을 변경하세요.
+
+`backup/before-modular-refactor-20261008` 브랜치에는 구조 변경 전의 파일이 보존돼 있습니다.

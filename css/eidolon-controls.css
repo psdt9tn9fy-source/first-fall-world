@@ -1,0 +1,56 @@
+/* Shared EIDOLON 3D controls: quiet HUD, legible buttons, stable pivot */
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-axis-x,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-axis-y,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-orbit,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scanline,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-acquisition,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-status{display:none!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-stage{inset:7px 3px 64px;overflow:hidden}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-viewer{
+  inset:-6% -3% -2%;width:106%;height:108%;min-height:0;
+  filter:contrast(1.09) brightness(.95) saturate(.98);touch-action:pan-y
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot{
+  box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  top:auto!important;bottom:44px!important;
+  width:calc((100% - 34px)/3);max-width:156px;min-width:0;min-height:47px;
+  padding:7px 6px;text-align:center;background:#0a1820ed;
+  border:1px solid #456475;color:#c3d4df;box-shadow:none;transform:none
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot span{
+  font-size:9px;line-height:1.15;letter-spacing:.09em;color:#8fa8b9
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot b{
+  margin-top:4px;font-size:12px;line-height:1.15;letter-spacing:.03em;color:#e4eff4;white-space:nowrap
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot:after{display:none!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.core{left:9px!important;right:auto!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.network{
+  left:50%!important;right:auto!important;transform:translateX(-50%)
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.morphology{left:auto!important;right:9px!important}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.active{
+  border-color:#b0d7e5;background:#173243;box-shadow:inset 0 -2px #a8d0df
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot{
+  left:12px;right:12px;bottom:15px;gap:8px
+}
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot span,
+.eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot b{
+  font-size:9px;line-height:1.2;letter-spacing:.035em
+}
+@media(max-width:760px){
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-stage{inset:5px 1px 59px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-model-viewer{
+    inset:-5% -3% -1%;width:106%;height:106%
+  }
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot{
+    bottom:40px!important;min-height:44px;width:calc((100% - 28px)/3);padding:6px 4px
+  }
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.core{left:6px!important}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot.morphology{right:6px!important}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot span{font-size:8px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-hotspot b{font-size:11px}
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot span,
+  .eidolon-lab.ei-3d-capable.ei-has-3d .ei-scan-foot b{font-size:8px}
+}

@@ -1,0 +1,80 @@
+/* Shared EIDOLON classification system */
+.eidolon-view{--ei-mark-font:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--ei-mark-weight:900;--ei-mark-track:-.08em}
+.ei-class-mark{display:inline-block;font-family:var(--ei-mark-font);font-weight:var(--ei-mark-weight);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:var(--ei-mark-track);line-height:1;text-align:center;font-style:normal}
+.ei-class-btn>.ei-class-mark{width:34px;font-size:16px}
+.ei-class-lockup{display:flex!important;align-items:baseline;gap:.34em;font-family:var(--ei-mark-font);font-style:normal}
+.ei-class-lockup .ei-class-mark{min-width:2.35em;text-align:left}
+.ei-class-lockup u,.ei-class-lockup>i{font-style:normal;text-decoration:none;color:#71858a;font-weight:700}
+.ei-class-lockup .ei-class-name,.ei-class-lockup>b{font-style:normal;font-weight:inherit;letter-spacing:inherit}
+.ei-assess-primary .ei-class-lockup .ei-class-mark{min-width:2.25em}
+#eiProfileTitle.ei-class-lockup{margin:0;gap:.32em}
+#eiProfileTitle.ei-class-lockup .ei-class-mark{min-width:2.35em}
+.ei-fui-title-mark{display:inline-block;min-width:2.35em;font-family:var(--ei-mark-font);font-weight:var(--ei-mark-weight);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;letter-spacing:var(--ei-mark-track);line-height:1;text-align:left}
+
+
+/* 3D acquisition / progressive analysis HUD */
+.ei-acquisition{position:absolute;z-index:8;inset:11% 10% 12%;pointer-events:none}
+.ei-lock-frame{position:absolute;inset:15% 22%;transition:inset .36s cubic-bezier(.2,.75,.2,1),opacity .2s;opacity:.45}
+.ei-lock-frame>i{position:absolute;width:28px;height:28px;border-color:#a6bdc2;border-style:solid;opacity:.72}.ei-lock-frame>i:nth-child(1){left:0;top:0;border-width:1px 0 0 1px}.ei-lock-frame>i:nth-child(2){right:0;top:0;border-width:1px 1px 0 0}.ei-lock-frame>i:nth-child(3){right:0;bottom:0;border-width:0 1px 1px 0}.ei-lock-frame>i:nth-child(4){left:0;bottom:0;border-width:0 0 1px 1px}
+.ei-lock-frame>b{position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid #a9c0c5;border-radius:50%;transform:translate(-50%,-50%);opacity:.55}
+.ei-scan-progress{position:absolute;left:0;right:0;bottom:0;display:grid;gap:5px}.ei-scan-progress>span{display:flex;justify-content:space-between;font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;color:#61777c}.ei-scan-progress>span b{color:#9db2b7}.ei-scan-progress>i{display:block;height:1px;background:#35464a;overflow:hidden}.ei-scan-progress>i>u{display:block;width:100%;height:100%;background:#9fb8bd;transform:scaleX(1);transform-origin:left;text-decoration:none}
+.ei-analysis-nodes span{position:absolute;padding:3px 5px;border:1px solid #42565b;background:#071012c9;font:700 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em;color:#80969b;opacity:.18;transition:opacity .2s,transform .25s}.ei-analysis-nodes .core{left:52%;top:54%;transform:translate(18px,-50%)}.ei-analysis-nodes .network{left:54%;top:28%;transform:translate(20px,-50%)}.ei-analysis-nodes .form{left:12%;top:18%}
+.eidolon-lab[data-ei3d-focus="core"] .ei-analysis-nodes .core,.eidolon-lab[data-ei3d-focus="network"] .ei-analysis-nodes .network,.eidolon-lab[data-ei3d-focus="morphology"] .ei-analysis-nodes .form{opacity:.9}
+.eidolon-lab[data-ei3d-focus="core"] .ei-lock-frame{inset:34% 34% 28%}.eidolon-lab[data-ei3d-focus="network"] .ei-lock-frame{inset:18% 29% 43%}.eidolon-lab[data-ei3d-focus="morphology"] .ei-lock-frame{inset:10% 20% 8%}
+.eidolon-lab.ei-acquiring .ei-lock-frame{inset:23% 29%;opacity:1}.eidolon-lab.ei-acquiring .ei-scan-progress>i>u{animation:eiAcquireProgress .72s cubic-bezier(.2,.7,.2,1) both}.eidolon-lab.ei-acquiring .ei-analysis-nodes span{opacity:.08}
+@keyframes eiAcquireProgress{0%{transform:scaleX(.03)}100%{transform:scaleX(1)}}
+@media(max-width:760px){.ei-acquisition{inset:10% 7% 11%}.ei-lock-frame>i{width:21px;height:21px}.ei-scan-progress>span{font-size:5px}.ei-analysis-nodes span{font-size:4px}.eidolon-lab[data-ei3d-focus="core"] .ei-lock-frame{inset:35% 31% 27%}.eidolon-lab[data-ei3d-focus="network"] .ei-lock-frame{inset:18% 27% 44%}}
+@media(prefers-reduced-motion:reduce){.ei-lock-frame,.ei-analysis-nodes span{transition:none}.eidolon-lab.ei-acquiring .ei-scan-progress>i>u{animation:none}}
+
+
+/* Compact entity status / analysis console */
+.ei-assess-list{display:none}
+.ei-assess-role{padding:14px 18px;border-top:1px solid #263438;border-bottom:1px solid #263438;display:grid;gap:6px}
+.ei-assess-role span,.ei-risk-head span,.ei-focus-head span{font:700 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#64767b}
+.ei-assess-role b{font:500 10px/1.35 ui-monospace,SFMono-Regular,monospace;letter-spacing:.04em;color:#bdc9cc}
+.ei-risk-wrap{padding:13px 18px 15px;border-bottom:1px solid #263438}
+.ei-risk-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.ei-risk-head b{font:750 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em;color:#91a3a8}
+.ei-risk-scale{position:relative;display:grid!important;grid-template-columns:repeat(5,1fr);gap:0!important;border:0!important}
+.ei-risk-scale:before{content:"";position:absolute;left:8%;right:8%;top:50%;height:1px;background:#35464a}
+.ei-risk-scale span{position:relative;z-index:1;min-height:24px!important;border:0!important;background:transparent!important;display:grid!important;place-items:center;font:800 7px ui-monospace,SFMono-Regular,monospace!important;color:#596a6f!important}
+.ei-risk-scale span:before{content:"";position:absolute;width:5px;height:5px;border:1px solid #53676c;background:#070b0d;transform:rotate(45deg)}
+
+.ei-focus-readout{padding:15px 18px 17px!important}
+.ei-focus-head{display:flex;align-items:center;justify-content:space-between}.ei-focus-head>b{margin:0!important;font-size:6px!important;color:#65787d!important;letter-spacing:.12em}
+.ei-focus-switch{display:grid;grid-template-columns:repeat(3,1fr);margin:10px 0 14px;border-top:1px solid #2d3d41;border-bottom:1px solid #2d3d41}
+.ei-focus-switch button{appearance:none;border:0;border-right:1px solid #26363a;background:transparent;color:#65777c;padding:9px 4px;font:750 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.11em;cursor:pointer}.ei-focus-switch button:last-child{border-right:0}.ei-focus-switch button.active{background:#10191c;color:#d1dcde;box-shadow:inset 0 -1px #9aafb4}
+.ei-focus-status{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:10px;border-top:1px solid #243236}.ei-focus-status span,.ei-focus-status button{font:700 5px ui-monospace,SFMono-Regular,monospace;letter-spacing:.12em}.ei-focus-status span{color:#61757a}.ei-focus-status span b{color:#9db2b7}.ei-focus-status button{appearance:none;border:0;background:transparent;color:#91a6ab;padding:5px 0;cursor:pointer}
+@media(max-width:760px){.ei-assess-role{padding:12px 14px}.ei-risk-wrap{padding:12px 14px 13px}.ei-focus-readout{padding:13px 14px 15px!important}.ei-focus-switch button{min-height:34px;font-size:6px}.ei-risk-scale span{min-height:27px!important}}
+
+
+/* Operational risk readout */
+.ei-risk-head>b{display:flex;align-items:baseline;gap:.35em}
+.ei-risk-head>b i{font-style:normal;color:#d1dddf;font-size:11px}
+.ei-risk-head>b em{font-style:normal;color:#a0b1b5}
+
+/* Operational risk — entity baseline */
+.ei-risk-scale span.active{color:#d6e1e3!important;text-shadow:0 0 9px #a9c1c766!important}
+.ei-risk-scale span.active:before{width:10px!important;height:10px!important;border-color:#b3c8cd!important;background:#172327!important;box-shadow:0 0 0 3px #82999f18,0 0 13px #a9c1c74d!important}
+
+
+/* READABILITY MERGED / EIDOLON CORE */
+.ei-head .kicker,.ei-head-meta span,.ei-source span,.ei-source b,
+.ei-class-head span,.ei-class-head b,.ei-scan-top span,.ei-scan-top b,.ei-scan-foot span,.ei-scan-foot b,
+.ei-assessment>header span,.ei-assessment>header b,.ei-assess-primary span,
+.ei-assess-role span,.ei-risk-head span,.ei-focus-head span{font-size:9px}
+.ei-head-meta b{font-size:12px}
+.ei-class-btn{min-height:76px;grid-template-columns:40px 1fr;gap:10px;padding:10px 9px}
+.ei-class-btn>.ei-class-mark{width:40px;font-size:18px}
+.ei-class-btn b{font-size:12px}.ei-class-btn small{font-size:9px;line-height:1.35}
+.ei-hotspot span{font-size:7px}.ei-hotspot b{font-size:9px}
+.ei-assess-primary em{font-size:10px}
+.ei-assess-list dt,.ei-risk-wrap>span,.ei-focus-readout>span,.ei-focus-readout>em,
+.ei-model-status span,.ei-model-status b,.ei-model-status em{font-size:8px}
+.ei-assess-list dd{font-size:11px}
+.ei-risk-scale span{font-size:10px!important}
+.ei-focus-head>b{font-size:9px!important}
+.ei-focus-switch button{font-size:9px}
+.ei-focus-status span,.ei-focus-status button{font-size:8px}
+.ei-focus-readout p{font-size:14px;line-height:1.75}
+
+
