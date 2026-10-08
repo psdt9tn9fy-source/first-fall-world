@@ -7,6 +7,92 @@ export function initEidolon3D(root,{reduced=false}={}){
   let modelViewer=null;
   let classKey=root.dataset.eiClass||"brute";
   let focusKey="morphology";
+  let materialLab=null;
+  let materialState=[];
+  let activeMaterial=0;
+
+  // A reversible on-device preview. It never modifies the original GLB file.
+  function createMaterialLab(){
+    const materials=modelViewer?.model?.materials;
+    if(!Array.isArray(materials)||!materials.length)return;
+    const scanner=root.querySelector("#eiScanner");
+    if(!scanner)return;
+    materialState=materials.map(material=>({
+      material,
+      base:Array.from(material.pbrMetallicRoughness?.baseColorFactor||[1,1,1,1]),
+      metallic:material.pbrMetallicRoughness?.metallicFactor,
+      roughness:material.pbrMetallicRoughness?.roughnessFactor
+    }));
+    if(materialLab)materialLab.remove();
+    const box=document.createElement("details");
+    box.className="ei-material-lab";
+    box.innerHTML=`
+      <summary><span>BRUTE / 재질 검사</span><b>COLOR TEST ↗</b></summary>
+      <div class="ei-material-lab-inner">
+        <div class="ei-material-lab-heading"><span>LIVE MATERIAL ANALYSIS</span><b data-ei-material-count></b></div>
+        <label for="eiMaterialSelect">변경할 재질</label>
+        <select id="eiMaterialSelect" data-ei-material-select></select>
+        <div class="ei-material-palettes" role="group" aria-label="재질 색상 시험">
+          <button type="button" data-ei-paint="#657780" style="--paint:#657780" aria-label="슬레이트 그레이" title="슬레이트"></button>
+          <button type="button" data-ei-paint="#354a63" style="--paint:#354a63" aria-label="청회색" title="청회색"></button>
+          <button type="button" data-ei-paint="#7a3f39" style="--paint:#7a3f39" aria-label="산화 적색" title="산화 적색"></button>
+          <button type="button" data-ei-paint="#637a72" style="--paint:#637a72" aria-label="청록색" title="청록색"></button>
+          <button type="button" data-ei-paint="#b08e58" style="--paint:#b08e58" aria-label="황동색" title="황동색"></button>
+        </div>
+        <div class="ei-material-actions">
+          <label for="eiMaterialCustom">직접 색상</label>
+          <input id="eiMaterialCustom" type="color" data-ei-material-custom value="#657780" aria-label="선택한 재질의 색상">
+          <button type="button" data-ei-material-reset>전체 초기화</button>
+        </div>
+        <p data-ei-material-feedback aria-live="polite"></p>
+        <small>화면 미리보기 전용. 원본 GLB에는 저장되지 않으며, 재질이 1개라면 전체가 함께 변합니다.</small>
+      </div>`;
+    const select=box.querySelector("[data-ei-material-select]");
+    materials.forEach((material,index)=>{
+      const option=document.createElement("option");
+      option.value=String(index);
+      option.textContent=String(index+1).padStart(2,"0")+" / "+(material.name||"재질 "+(index+1));
+      select.appendChild(option);
+    });
+    box.querySelector("[data-ei-material-count]").textContent=materials.length+" MATERIAL"+(materials.length===1?"":"S");
+    const feedback=box.querySelector("[data-ei-material-feedback]");
+    function note(message){if(feedback)feedback.textContent=message}
+    function paint(color){
+      const item=materialState[activeMaterial];
+      if(!item?.material?.pbrMetallicRoughness?.setBaseColorFactor)return note("이 재질은 브라우저에서 색상 변경이 지원되지 않습니다.");
+      try{
+        item.material.pbrMetallicRoughness.setBaseColorFactor(color);
+        note((item.material.name||"재질 "+(activeMaterial+1))+" / "+color+" 적용 · 임시");
+      }catch(err){note("재질 색상을 변경할 수 없습니다.")}
+    }
+    select.addEventListener("change",()=>{
+      activeMaterial=Math.max(0,Math.min(materialState.length-1,Number(select.value)||0));
+      note("선택 재질: "+(materialState[activeMaterial].material.name||"재질 "+(activeMaterial+1)));
+    });
+    box.querySelectorAll("[data-ei-paint]").forEach(button=>{
+      button.addEventListener("click",()=>paint(button.dataset.eiPaint));
+    });
+    box.querySelector("[data-ei-material-custom]").addEventListener("input",event=>paint(event.target.value));
+    box.querySelector("[data-ei-material-reset]").addEventListener("click",()=>{
+      materialState.forEach(item=>{
+        try{
+          const pbr=item.material.pbrMetallicRoughness;
+          pbr?.setBaseColorFactor(item.base);
+          if(Number.isFinite(item.metallic))pbr?.setMetallicFactor(item.metallic);
+          if(Number.isFinite(item.roughness))pbr?.setRoughnessFactor(item.roughness);
+        }catch(err){/* Some imported materials are read-only. */}
+      });
+      note("모든 재질을 원본 색상으로 되돌렸습니다.");
+    });
+    box.addEventListener("toggle",()=>{
+      if(box.open&&!reduced)modelViewer?.removeAttribute("auto-rotate");
+      if(!box.open)applyFocus();
+    });
+    note(materials.length===1?"재질 1개: 전체 색상만 변경 가능":"재질 "+materials.length+"개 감지: 각 재질의 색상 시험 가능");
+    scanner.appendChild(box);
+    materialLab=box;
+    materialLab.hidden=classKey!=="brute";
+  }
 
   function buildModelStage(){
     if(modelStage)return modelStage;
@@ -43,6 +129,10 @@ export function initEidolon3D(root,{reduced=false}={}){
   function syncVisibility(){
     const isBrute=classKey==="brute";
     if(modelStage)modelStage.hidden=!isBrute;
+    if(materialLab){
+      materialLab.hidden=!isBrute;
+      if(!isBrute)materialLab.open=false;
+    }
     if(modelViewer){
       modelViewer.style.display=isBrute?"block":"none";
       if(isBrute&&!reduced)modelViewer.setAttribute("auto-rotate","");
@@ -86,6 +176,7 @@ export function initEidolon3D(root,{reduced=false}={}){
       modelViewer.addEventListener("load",()=>{
         root.classList.remove("ei-model-pending","ei-model-error");
         root.classList.add("ei-model-ready");
+        createMaterialLab();
       },{once:true});
       modelViewer.addEventListener("error",()=>{
         root.classList.remove("ei-model-pending","ei-model-ready");
@@ -121,7 +212,7 @@ export function initEidolon3D(root,{reduced=false}={}){
     }
     modelViewer.setAttribute("camera-orbit",view.orbit);
     modelViewer.setAttribute("camera-target",view.target);
-    if(focusKey==="morphology"&&!reduced)modelViewer.setAttribute("auto-rotate","");
+    if(focusKey==="morphology"&&!reduced&&!materialLab?.open)modelViewer.setAttribute("auto-rotate","");
     else modelViewer.removeAttribute("auto-rotate");
   }
 

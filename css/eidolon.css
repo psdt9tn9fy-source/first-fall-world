@@ -194,3 +194,51 @@
 .ei-focus-switch button{font-size:9px}
 .ei-focus-status span,.ei-focus-status button{font-size:8px}
 .ei-focus-readout p{font-size:14px;line-height:1.75}
+
+/* BRUTE materials — mobile-safe, reversible on-device preview */
+.ei-material-lab{
+  position:absolute;z-index:22;right:10px;bottom:47px;
+  width:min(288px,calc(100% - 20px));max-height:calc(100% - 65px);
+  border:1px solid #537086;background:#08131cf2;color:#dce9f1;
+  box-shadow:0 13px 35px #000d;backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);overflow-y:auto;overscroll-behavior:contain
+}
+.ei-material-lab[hidden]{display:none!important}
+.ei-material-lab summary{
+  list-style:none;display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:11px 12px;cursor:pointer;
+  font:800 10px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em
+}
+.ei-material-lab summary::-webkit-details-marker{display:none}
+.ei-material-lab summary b{font-size:9px;color:#83a9bd}
+.ei-material-lab summary:focus-visible,.ei-material-lab button:focus-visible,
+.ei-material-lab select:focus-visible{outline:2px solid #afd8ee;outline-offset:-2px}
+.ei-material-lab-inner{border-top:1px solid #334b5d;padding:12px;display:grid;gap:9px}
+.ei-material-lab-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ei-material-lab-heading span,.ei-material-lab-heading b{
+  font:750 9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;color:#8eacbd
+}
+.ei-material-lab-heading b{color:#dce9f1}
+.ei-material-lab label{font-size:11px;color:#a5bbc9;font-weight:750}
+.ei-material-lab select{
+  min-height:40px;min-width:0;width:100%;background:#0e2130;color:#ecf4fb;
+  border:1px solid #46647b;border-radius:0;padding:8px;font-size:16px
+}
+.ei-material-palettes{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:3px 0}
+.ei-material-palettes button{
+  height:36px;border:1px solid #a4bec766;background:var(--paint);cursor:pointer;
+  box-shadow:inset 0 0 0 2px #08131c88
+}
+.ei-material-actions{display:grid;grid-template-columns:1fr 45px auto;align-items:center;gap:9px}
+.ei-material-actions input[type=color]{width:45px;height:39px;border:1px solid #506b81;padding:2px;background:#0d1e2d}
+.ei-material-actions button{
+  min-height:39px;padding:0 9px;border:1px solid #4e6c81;background:#182c3c;color:#e3edf4;
+  font-size:11px;font-weight:800;cursor:pointer
+}
+.ei-material-lab p{min-height:22px;margin:0;color:#b6cbd7;font-size:11px;line-height:1.5;word-break:keep-all}
+.ei-material-lab small{color:#8098a7;font-size:10px;line-height:1.5;word-break:keep-all}
+@media(max-width:760px){
+  .ei-material-lab{right:6px;bottom:41px;width:min(276px,calc(100% - 12px))}
+  .ei-material-lab summary{padding:10px}
+}
+@media(prefers-reduced-motion:reduce){.ei-material-lab{scroll-behavior:auto}}
