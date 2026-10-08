@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./css/eidolon-mobile.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/military.css?v=20261007-refactor-3">
-  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v7">
+  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v8">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
 <body>
@@ -212,123 +212,111 @@
 <section class="view characters-view" data-view="characters">
   <div class="char-experience" id="characterArchive" data-section="0">
     <section class="char-hero" data-char-opening aria-label="한서린 인물 기록 표지">
-      <div class="char-hero-top">
-        <span>I.D.A. // PERSONNEL ARCHIVE</span>
-        <span>기록 001 · 열람 등급 공개</span>
+      <div class="char-hero-head">
+        <span>I.D.A. / PERSONNEL ARCHIVE</span><b>FILE 001</b>
       </div>
       <div class="char-hero-layout">
+        <figure class="char-hero-image">
+          <img id="characterCover" alt="한서린" decoding="async" loading="lazy">
+          <figcaption>대한민국 중앙사관학교 / 제76기</figcaption>
+        </figure>
         <div class="char-hero-copy">
-          <span class="char-hero-roman" id="characterRoman">HAN SEO-RIN</span>
+          <span class="char-roman" id="characterRoman">HAN SEO-RIN</span>
           <h2 id="characterName">한서린</h2>
           <p id="characterSummary"></p>
-          <div class="char-hero-affiliation" data-char-hero-affiliation>대한민국 중앙사관학교 // 제76기</div>
-          <button type="button" class="char-opening-start" data-char-start aria-controls="characterBinder" aria-expanded="false">
-            <span>기록 열람 시작</span><b aria-hidden="true">↗</b>
+          <div class="char-hero-meta">2134 <i></i> CADET / CENTRAL ACADEMY</div>
+          <button type="button" data-char-start class="char-start" aria-controls="characterBinder" aria-expanded="false">
+            <span>기록 열람 시작</span><b aria-hidden="true">→</b>
           </button>
         </div>
-        <div class="char-hero-cover">
-          <img id="characterCover" alt="한서린 — 전장 모습" loading="lazy" decoding="async">
-          <div class="char-hero-cover-caption"><span>VISUAL RECORD / 001</span><b>제76기 · 2134</b></div>
-        </div>
       </div>
-      <div class="char-hero-bottom"><span>PERSONNEL FILE // 001</span><span data-char-hero-hint>RECORD ACCESS REQUIRED</span></div>
+      <div class="char-hero-foot"><span>PERSONNEL RECORD // ACCESS READY</span><span>01 — 04</span></div>
     </section>
 
-    <div class="char-dossier" id="characterBinder" hidden>
-      <nav class="char-index" aria-label="인물 기록 바로가기">
-        <button type="button" data-char-tab="0" aria-current="location"><span>01</span><b>신상</b><em>IDENTITY</em></button>
-        <button type="button" data-char-tab="1"><span>02</span><b>성격</b><em>PERSONALITY</em></button>
-        <button type="button" data-char-tab="2"><span>03</span><b>경력</b><em>HISTORY</em></button>
-        <button type="button" data-char-tab="3"><span>04</span><b>연결</b><em>LINKS</em></button>
+    <section class="char-dossier" id="characterBinder" hidden aria-label="한서린의 인물 기록">
+      <header class="char-dossier-head">
+        <div><span>PERSONNEL / 001</span><b>한서린</b></div>
+        <button type="button" data-char-close aria-label="인물 소개로 돌아가기"><span>표지로</span><b>↖</b></button>
+      </header>
+
+      <nav class="char-index" aria-label="인물 기록 선택">
+        <button type="button" data-char-tab="0" aria-current="location"><span>01</span><b>신상</b></button>
+        <button type="button" data-char-tab="1"><span>02</span><b>성격</b></button>
+        <button type="button" data-char-tab="2"><span>03</span><b>경력</b></button>
+        <button type="button" data-char-tab="3"><span>04</span><b>연결</b></button>
       </nav>
 
-      <div class="char-dossier-columns">
-        <aside class="char-art-rail" aria-label="현재 기록의 인물 사진">
-          <div class="char-art-frame">
-            <img id="characterPortrait" alt="한서린" decoding="async">
-            <div class="char-art-watermark" aria-hidden="true">001</div>
-            <span class="char-art-sequence" id="characterImageCounter">01 / 04</span>
-          </div>
-          <div class="char-art-caption">
-            <div><span>VISUAL ARCHIVE</span><b id="characterImageLabel">전장</b></div>
-            <em id="characterImageDetail">전신·작전 현장</em>
-          </div>
-          <div class="char-art-axis" aria-hidden="true"><i></i><span>2134 // I.D.A.</span></div>
-        </aside>
-
-        <div class="char-narrative">
-          <article class="char-chapter" data-char-page="0" id="charRecordIdentity">
-            <header class="char-chapter-heading">
-              <span>01 / IDENTIFICATION <i></i> 신상 기록</span>
-              <h3 id="characterIdentityName">한서린</h3>
-              <p><b id="characterAffiliation">중앙사관학교 제76기</b><em id="characterPosition">2학년 생도</em></p>
-            </header>
-            <figure class="char-mobile-photo">
-              <img data-char-mobile-image="0" alt="한서린의 전장 모습" decoding="async" loading="lazy">
-              <figcaption>VISUAL 01 / 전장</figcaption>
-            </figure>
-            <p class="char-chapter-lead" id="characterBasicLead"></p>
+      <div class="char-track" id="characterTrack" tabindex="0" aria-label="인물 기록. 좌우로 스와이프하거나 방향키로 이동하세요.">
+        <article class="char-slide" data-char-slide="0" aria-label="01 신상">
+          <figure class="char-slide-image">
+            <img data-char-image="0" alt="한서린의 전장 모습" decoding="async" loading="lazy">
+            <figcaption><span>VISUAL / 01</span><b>전장</b></figcaption>
+          </figure>
+          <div class="char-slide-info">
+            <div class="char-slide-kicker">01 / IDENTIFICATION</div>
+            <h3 id="characterIdentityName">한서린</h3>
+            <p class="char-slide-lead"><b id="characterAffiliation">중앙사관학교 제76기</b><span id="characterPosition">2학년 생도</span></p>
             <dl class="char-facts" id="characterFacts"></dl>
-            <div class="char-detail-list" id="characterBasic"></div>
-            <div class="char-chapter-end"><span>PERSONNEL / ID VERIFIED</span><b>01 — 04</b></div>
-          </article>
+            <p class="char-slide-note" id="characterIdentityNote"></p>
+          </div>
+        </article>
 
-          <article class="char-chapter" data-char-page="1" id="charRecordPersonality">
-            <header class="char-chapter-heading">
-              <span>02 / OBSERVATION <i></i> 성격 기록</span>
-              <h3>거리감 뒤의<br>작은 변화.</h3>
-              <p>PERSONALITY // OBSERVED BEHAVIOR</p>
-            </header>
-            <figure class="char-mobile-photo">
-              <img data-char-mobile-image="1" alt="한서린의 사복 모습" decoding="async" loading="lazy">
-              <figcaption>VISUAL 02 / 사복</figcaption>
-            </figure>
-            <p class="char-chapter-lead" id="characterPersonalityLead"></p>
-            <div class="char-detail-list char-observation-list" id="characterObservation"></div>
-            <div class="char-chapter-end"><span>RECORD / PERSONALITY</span><b>02 — 04</b></div>
-          </article>
+        <article class="char-slide" data-char-slide="1" aria-label="02 성격">
+          <figure class="char-slide-image">
+            <img data-char-image="1" alt="한서린의 사복 모습" decoding="async" loading="lazy">
+            <figcaption><span>VISUAL / 02</span><b>일상</b></figcaption>
+          </figure>
+          <div class="char-slide-info">
+            <div class="char-slide-kicker">02 / PERSONALITY</div>
+            <h3>차가운 첫인상,<br>서툰 다정함.</h3>
+            <p class="char-slide-lead" id="characterPersonalityLead"></p>
+            <div class="char-glance" id="characterPersonality"></div>
+          </div>
+        </article>
 
-          <article class="char-chapter" data-char-page="2" id="charRecordCareer">
-            <header class="char-chapter-heading">
-              <span>03 / SERVICE HISTORY <i></i> 경력 기록</span>
-              <h3>가문의 이름보다,<br>자신의 기록으로.</h3>
-              <p>CADET // CENTRAL ACADEMY</p>
-            </header>
-            <figure class="char-mobile-photo">
-              <img data-char-mobile-image="2" alt="한서린의 정복 경례 모습" decoding="async" loading="lazy">
-              <figcaption>VISUAL 03 / 경례</figcaption>
-            </figure>
-            <p class="char-chapter-lead" id="characterCareerLead"></p>
-            <div class="char-detail-list char-career-list" id="characterCareer"></div>
-            <div class="char-chapter-end"><span>RECORD / CAREER TRACE</span><b>03 — 04</b></div>
-          </article>
+        <article class="char-slide" data-char-slide="2" aria-label="03 경력">
+          <figure class="char-slide-image">
+            <img data-char-image="2" alt="한서린의 정복 경례 모습" decoding="async" loading="lazy">
+            <figcaption><span>VISUAL / 03</span><b>정복</b></figcaption>
+          </figure>
+          <div class="char-slide-info">
+            <div class="char-slide-kicker">03 / SERVICE HISTORY</div>
+            <h3>가문보다,<br>자신의 실력.</h3>
+            <p class="char-slide-lead" id="characterCareerLead"></p>
+            <div class="char-glance char-glance-career" id="characterCareer"></div>
+          </div>
+        </article>
 
-          <article class="char-chapter" data-char-page="3" id="charRecordConnections">
-            <header class="char-chapter-heading">
-              <span>04 / LINKED RECORDS <i></i> 연결 기록</span>
-              <h3>한 사람에서<br>세계로.</h3>
-              <p>RELATED FILES // PUBLIC ACCESS</p>
-            </header>
-            <figure class="char-mobile-photo">
-              <img data-char-mobile-image="3" alt="한서린의 정복 상반신 모습" decoding="async" loading="lazy">
-              <figcaption>VISUAL 04 / 인물</figcaption>
-            </figure>
-            <p class="char-chapter-lead" id="characterRelationsLead"></p>
-            <div class="char-detail-list" id="characterRelations"></div>
-            <div class="char-related-heading">CROSS-REFERENCE // 연결된 세계관 기록</div>
+        <article class="char-slide" data-char-slide="3" aria-label="04 연결">
+          <figure class="char-slide-image">
+            <img data-char-image="3" alt="한서린의 정복 상반신 모습" decoding="async" loading="lazy">
+            <figcaption><span>VISUAL / 04</span><b>인물</b></figcaption>
+          </figure>
+          <div class="char-slide-info">
+            <div class="char-slide-kicker">04 / LINKED RECORDS</div>
+            <h3>한 사람에서<br>세계로.</h3>
+            <p class="char-slide-lead" id="characterRelationsLead"></p>
             <div class="char-world-links">
-              <button type="button" data-char-open="nations"><span>WORLD ORDER // 01</span><b>대한민국</b><em>국가 기록 열람 <i aria-hidden="true">↗</i></em></button>
-              <button type="button" data-char-open="military"><span>MILITARY // 02</span><b>중앙사관학교</b><em>군사 교육체계 열람 <i aria-hidden="true">↗</i></em></button>
+              <button type="button" data-char-open="nations"><span>WORLD ORDER</span><b>대한민국</b><em aria-hidden="true">↗</em></button>
+              <button type="button" data-char-open="military"><span>MILITARY</span><b>중앙사관학교</b><em aria-hidden="true">↗</em></button>
             </div>
-            <div class="char-chapter-end"><span>PERSONNEL RECORD / END</span><b>04 — 04</b></div>
-          </article>
-        </div>
+            <p class="char-slide-note">명문 군인가문 출신 · 개별 인물 관계 미공개</p>
+          </div>
+        </article>
       </div>
-      <footer class="char-dossier-foot"><span>PERSONNEL RECORD // 001</span><b>한서린</b><em>스크롤하여 기록 열람 · 상단 색인으로 바로 이동</em></footer>
-    </div>
+
+      <footer class="char-pager">
+        <button type="button" data-char-prev aria-label="이전 기록"><b aria-hidden="true">←</b><span>이전</span></button>
+        <div class="char-pager-center">
+          <span class="char-pager-count" id="characterPageNumber">01 <i>/</i> 04</span>
+          <div class="char-pager-progress" aria-hidden="true"><i data-char-progress="0" class="active"></i><i data-char-progress="1"></i><i data-char-progress="2"></i><i data-char-progress="3"></i></div>
+          <em>좌우로 넘겨 기록 열람</em>
+        </div>
+        <button type="button" data-char-next aria-label="다음 기록"><span>다음</span><b aria-hidden="true">→</b></button>
+      </footer>
+    </section>
   </div>
 </section>
-
 
 <!-- 03 / WORLD ORDER -->
 <section class="view nations-view" data-view="nations">
@@ -694,4 +682,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261008-character-v7"></script></body></html>
+<script type="module" src="./js/main.js?v=20261008-character-v8"></script></body></html>
