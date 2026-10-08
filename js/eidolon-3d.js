@@ -1,5 +1,5 @@
 import {initMeshInspector} from "./eidolon-mesh.js?v=20261008-brute-topology1";
-const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";
+const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261008-brute-textured2k-v1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 
 export function initEidolon3D(root,{reduced=false}={}){
