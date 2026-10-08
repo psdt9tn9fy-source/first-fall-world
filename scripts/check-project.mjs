@@ -13,7 +13,7 @@ const models=[...model.matchAll(/^\s+(\w+):\{\s*\n\s*url:"\.\/assets\/eidolon\/(
 assert.equal(cls.length,6,"6 classes");assert.equal(models.length,5,"5 GLB models");
 for(const [,name,file] of models){assert(cls.includes(name));assert(existsSync(join(root,"assets/eidolon",file)),file)}
 assert(!models.some(([,name])=>name==="seraph"));
-assert(css.includes(".ei-3d-capable"));
+assert(read("css/eidolon-controls.css").includes(".ei-3d-capable"));
 assert(model.includes('root.classList.toggle("ei-3d-capable",enabled)'));
 assert(entry.includes('./eidolon-data.js?v='));
 assert(records.includes("initRiskRecord"),"Risk controller not connected");
