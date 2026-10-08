@@ -1,3 +1,20 @@
+export const CHARACTER_COUNTRIES=[
+  {key:"rok",name:"대한민국",nationKeys:["rok"]},
+  {key:"jpn",name:"일본",nationKeys:["jpn"]},
+  {key:"china",name:"중국",nationKeys:["crf","ncdr","wur"],note:"중화재건연방 · 화북방위공화국 · 서부연합공화국"},
+  {key:"afu",name:"아메리카 연방연합",nationKeys:["afu"]},
+  {key:"rus",name:"러시아 연방",nationKeys:["rus"]},
+  {key:"edc",name:"유럽방위공동체",nationKeys:["edc"]},
+  {key:"ind",name:"인도공화국",nationKeys:["ind"]},
+  {key:"can",name:"캐나다",nationKeys:["can"]},
+  {key:"mex",name:"멕시코",nationKeys:["mex"]},
+  {key:"bra",name:"브라질",nationKeys:["bra"]},
+  {key:"aus",name:"호주",nationKeys:["aus"]},
+  {key:"sea",name:"동남아시아 방위협력권",nationKeys:["sea"]},
+  {key:"afr",name:"아프리카 방위협력권",nationKeys:["afr"]},
+  {key:"cadc",name:"중앙아시아 공동방위체",nationKeys:["cadc"]},
+  {key:"medc",name:"중동 공동방위체",nationKeys:["medc"]}
+];
 export const CHARACTER_ORDER=["seorin"];
 
 export const CHARACTERS={
@@ -8,6 +25,11 @@ export const CHARACTERS={
     hanja:"",
     visualCode:"76TH // CADET",
     roman:"HAN SEO-RIN",
+    personTitle:"서툰 다정함.",
+    careerTitle:"가문보다 실력.",
+    linksTitle:"세계와의 연결.",
+    institution:"중앙사관학교",
+    relatedNote:"명문 군인가문 출신 · 개별 인물 관계 미공개",
     accent:"#315ee8",
     image:null,
     visuals:[

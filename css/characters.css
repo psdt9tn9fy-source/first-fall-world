@@ -205,3 +205,82 @@
   .char-glance article{padding:7px 6px 7px 0}
 }
 @media(prefers-reduced-motion:reduce){.char-dossier{animation:none}.char-pager-progress i{transition:none}}
+
+/* V9 — NATIONAL PERSONNEL INDEX */
+.char-directory{min-height:min(72svh,720px);border:1px solid var(--char-line);background:radial-gradient(ellipse at 70% 0,#19293b,#0a121c 65%);box-shadow:0 26px 65px #0008;overflow:hidden}
+.char-directory[hidden]{display:none!important}
+.char-directory-head{padding:25px 28px 21px}
+.char-directory-eyebrow,.char-directory-filter-label,.char-directory-section-head span,.char-directory-count span,.char-directory-foot{font:750 10px ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em;color:#8199b1}
+.char-directory-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-top:13px}
+.char-directory-intro h2{margin:0;font-size:clamp(37px,6vw,62px);letter-spacing:-.06em}
+.char-directory-intro p{margin:8px 0 0;color:#adbdcb;font-size:14px;line-height:1.65}
+.char-directory-count{text-align:right;min-width:86px;padding-left:13px;border-left:1px solid #33485b}
+.char-directory-count span{display:block;font-size:8px}
+.char-directory-count strong{display:block;font:900 31px ui-monospace,SFMono-Regular,monospace;color:#f0f5ff}
+.char-directory-filters{padding:14px 21px 11px;background:#0b1724;border-block:1px solid #2b3c4c}
+.char-directory-filter-label{display:block;margin-bottom:11px;font-size:9px}
+.char-country-list{display:flex;gap:7px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:#506986 transparent;overscroll-behavior-x:contain}
+.char-country-list button{flex:none;display:flex;align-items:center;gap:12px;min-height:41px;padding:8px 13px;border:1px solid #31495f;background:#101e2c;color:#afc0d0;white-space:nowrap;cursor:pointer}
+.char-country-list button b{font-size:13px}
+.char-country-list button span{font:800 10px ui-monospace,SFMono-Regular,monospace;color:#7290b3}
+.char-country-list button[aria-pressed="true"]{color:#f4f9ff;border-color:#7197d4;background:#243d5f}
+.char-country-list button:focus-visible,.char-directory-card:focus-visible,.char-directory-link:focus-visible,.char-dossier-head-actions button:focus-visible{outline:2px solid #a7c9ff;outline-offset:-2px}
+.char-directory-filters small{color:#738ba3;font-size:9px}
+.char-directory-body{min-height:250px;padding:24px 28px 28px}
+.char-directory-section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:20px}
+.char-directory-section-head span{font-size:9px}
+.char-directory-section-head h3{font-size:26px;margin:6px 0 0}
+.char-directory-section-head>b{font:750 10px ui-monospace,SFMono-Regular,monospace;color:#b0c0d3}
+.char-directory-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,260px));gap:14px}
+.char-directory-card{display:flex;flex-direction:column;min-width:0;padding:0;border:1px solid #3a526c;background:#101e2b;color:#eaf1f9;text-align:left;overflow:hidden;cursor:pointer;transition:border-color .16s,transform .16s}
+.char-directory-card:hover{transform:translateY(-3px);border-color:#779ddd}
+.char-directory-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 20%;background:#162b42}
+.char-directory-card-info{display:grid;gap:6px;padding:13px}
+.char-directory-card-code{font:750 9px ui-monospace,SFMono-Regular,monospace;color:#89a8cb}
+.char-directory-card-name{font-size:23px;letter-spacing:-.04em}
+.char-directory-card-meta{color:#9dafc0;font-size:12px;line-height:1.45}
+.char-directory-card-cta{margin-top:6px;padding-top:10px;border-top:1px solid #34495c;color:#c9deff;font-size:12px;font-weight:800}
+.char-directory-empty{display:grid;align-content:center;gap:9px;min-height:180px;padding:25px;border:1px dashed #344b60;background:#0c1925}
+.char-directory-empty[hidden]{display:none!important}
+.char-directory-empty span{color:#7b96b6;font:800 9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em}
+.char-directory-empty b{font-size:20px}
+.char-directory-empty p{margin:0;color:#9bafc0;font-size:13px}
+.char-directory-empty small{color:#8ca5c2;font-size:12px}
+.char-directory-foot{display:flex;justify-content:space-between;gap:12px;padding:15px 21px;border-top:1px solid #2e4257;font-size:9px}
+.char-directory-link{display:flex;align-items:center;gap:10px;padding:8px 11px;border:1px solid #42638c;background:#1a304a;color:#d1e1f6;cursor:pointer;font-size:12px;font-weight:850}
+.char-directory-link b{font-size:16px}
+.char-dossier-head-actions{display:flex;align-items:center;gap:4px}
+.char-dossier-head-actions button{min-height:40px;padding:0 10px;border:0;background:none;color:#c5d7e7;cursor:pointer;font-size:12px;font-weight:800}
+.char-dossier-head-actions button:hover{background:#213449}
+@media(max-width:820px){
+  .char-directory{min-height:max(440px,calc(100svh - 240px))}
+  .char-directory-head{padding:18px 14px 15px}
+  .char-directory-eyebrow{font-size:8px}
+  .char-directory-intro h2{font-size:36px}
+  .char-directory-intro p{font-size:12px;line-height:1.5}
+  .char-directory-count{min-width:58px}
+  .char-directory-count span{font-size:7px}
+  .char-directory-count strong{font-size:26px}
+  .char-directory-filters{padding:12px 10px 7px}
+  .char-country-list button{min-height:38px;padding:7px 10px}
+  .char-country-list button b{font-size:12px}
+  .char-directory-body{padding:18px 13px 25px}
+  .char-directory-section-head h3{font-size:22px}
+  .char-directory-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .char-directory-card img{aspect-ratio:1/1}
+  .char-directory-card-info{padding:10px}
+  .char-directory-card-name{font-size:20px}
+  .char-directory-card-meta{font-size:10px}
+  .char-directory-card-cta{font-size:10px}
+  .char-directory-foot{font-size:8px;padding:12px}
+  .char-directory-foot span:last-child{display:none}
+  .char-directory-link{font-size:11px;padding:7px 9px}
+  .char-dossier-head-actions button{padding:0 6px;font-size:11px}
+}
+@media(max-width:380px){
+  .char-directory-intro h2{font-size:32px}
+  .char-directory-card-name{font-size:18px}
+  .char-directory-card-meta{font-size:9px}
+  .char-dossier-head-actions button{padding:0 4px}
+}
+@media(prefers-reduced-motion:reduce){.char-directory-card{transition:none}}

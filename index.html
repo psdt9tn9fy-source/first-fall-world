@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./css/eidolon-mobile.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/military.css?v=20261007-refactor-3">
-  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v8">
+  <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
 <body>
@@ -211,14 +211,44 @@
 <!-- 02 / CHARACTERS -->
 <section class="view characters-view" data-view="characters">
   <div class="char-experience" id="characterArchive" data-section="0">
+
+    <section class="char-directory" id="characterDirectory" hidden aria-label="국가별 인물 명부">
+      <header class="char-directory-head">
+        <div class="char-directory-eyebrow">I.D.A. // PERSONNEL DIRECTORY · 2134</div>
+        <div class="char-directory-intro">
+          <div><h2>인물 명부</h2><p>국가와 방위공동체를 선택해 등록 인물의 기록을 열람하십시오.</p></div>
+          <div class="char-directory-count"><span>PUBLIC PERSONNEL</span><strong id="characterTotalCount">01</strong></div>
+        </div>
+      </header>
+      <div class="char-directory-filters">
+        <span class="char-directory-filter-label">NATIONAL / REGIONAL AFFILIATION</span>
+        <nav class="char-country-list" id="characterCountryTabs" aria-label="국가별 인물 분류"></nav>
+        <small>← 좌우로 넘겨 국가 선택 →</small>
+      </div>
+      <div class="char-directory-body">
+        <div class="char-directory-section-head">
+          <div><span>SELECTED AFFILIATION</span><h3 id="characterCountryName">대한민국</h3></div>
+          <b id="characterCountryCount">01 / 등록 인물</b>
+        </div>
+        <div class="char-directory-cards" id="characterCardList"></div>
+        <div class="char-directory-empty" id="characterDirectoryEmpty" hidden>
+          <span>NO PUBLIC PERSONNEL RECORD</span>
+          <b>공개된 인물 기록이 없습니다.</b>
+          <p>추가 인물이 등록되면 해당 국가의 명부에 표시됩니다.</p>
+          <small id="characterCountryNote"></small>
+        </div>
+      </div>
+      <footer class="char-directory-foot"><span>PERSONNEL ARCHIVE // PUBLIC DATA</span><span>등록된 인물만 열람할 수 있습니다.</span></footer>
+    </section>
+
     <section class="char-hero" data-char-opening aria-label="한서린 인물 기록 표지">
       <div class="char-hero-head">
-        <span>I.D.A. / PERSONNEL ARCHIVE</span><b>FILE 001</b>
+        <span>I.D.A. / PERSONNEL ARCHIVE</span><button type="button" class="char-directory-link" data-char-directory-open>국가별 인물 <b aria-hidden="true">↗</b></button>
       </div>
       <div class="char-hero-layout">
         <figure class="char-hero-image">
           <img id="characterCover" alt="한서린" decoding="async" loading="lazy">
-          <figcaption>대한민국 중앙사관학교 / 제76기</figcaption>
+          <figcaption id="characterCoverCaption">대한민국 중앙사관학교 / 제76기</figcaption>
         </figure>
         <div class="char-hero-copy">
           <span class="char-roman" id="characterRoman">HAN SEO-RIN</span>
@@ -235,8 +265,8 @@
 
     <section class="char-dossier" id="characterBinder" hidden aria-label="한서린의 인물 기록">
       <header class="char-dossier-head">
-        <div><span>PERSONNEL / 001</span><b>한서린</b></div>
-        <button type="button" data-char-close aria-label="인물 소개로 돌아가기"><span>표지로</span><b>↖</b></button>
+        <div><span id="characterFileBadge">PERSONNEL / 001</span><b id="characterDossierName">한서린</b></div>
+        <div class="char-dossier-head-actions"><button type="button" data-char-close aria-label="인물 소개로 돌아가기">표지로 ↖</button><button type="button" data-char-directory-open>전체 인물 ☷</button></div>
       </header>
 
       <nav class="char-index" aria-label="인물 기록 선택">
@@ -268,7 +298,7 @@
           </figure>
           <div class="char-slide-info">
             <div class="char-slide-kicker">02 / PERSONALITY</div>
-            <h3>서툰 다정함.</h3>
+            <h3 id="characterPersonalityTitle">서툰 다정함.</h3>
             <p class="char-slide-lead" id="characterPersonalityLead"></p>
             <div class="char-glance" id="characterPersonality"></div>
           </div>
@@ -281,7 +311,7 @@
           </figure>
           <div class="char-slide-info">
             <div class="char-slide-kicker">03 / SERVICE HISTORY</div>
-            <h3>가문보다 실력.</h3>
+            <h3 id="characterCareerTitle">가문보다 실력.</h3>
             <p class="char-slide-lead" id="characterCareerLead"></p>
             <div class="char-glance char-glance-career" id="characterCareer"></div>
           </div>
@@ -294,13 +324,13 @@
           </figure>
           <div class="char-slide-info">
             <div class="char-slide-kicker">04 / LINKED RECORDS</div>
-            <h3>세계와의 연결.</h3>
+            <h3 id="characterLinksTitle">세계와의 연결.</h3>
             <p class="char-slide-lead" id="characterRelationsLead"></p>
             <div class="char-world-links">
-              <button type="button" data-char-open="nations"><span>WORLD ORDER</span><b>대한민국</b><em aria-hidden="true">↗</em></button>
-              <button type="button" data-char-open="military"><span>MILITARY</span><b>중앙사관학교</b><em aria-hidden="true">↗</em></button>
+              <button type="button" data-char-open="nations"><span>WORLD ORDER</span><b id="characterLinkedNation">대한민국</b><em aria-hidden="true">↗</em></button>
+              <button type="button" data-char-open="military"><span>MILITARY</span><b id="characterLinkedInstitution">중앙사관학교</b><em aria-hidden="true">↗</em></button>
             </div>
-            <p class="char-slide-note">명문 군인가문 출신 · 개별 인물 관계 미공개</p>
+            <p class="char-slide-note" id="characterLinkedNote">명문 군인가문 출신 · 개별 인물 관계 미공개</p>
           </div>
         </article>
       </div>
@@ -682,4 +712,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261008-character-v8"></script></body></html>
+<script type="module" src="./js/main.js?v=20261008-character-v9"></script></body></html>
