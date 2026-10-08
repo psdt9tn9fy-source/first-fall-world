@@ -1,0 +1,61 @@
+/* ERA STRIP */
+.era-strip{border-top:1px solid #293034;padding:12px 14px 14px}
+.era-strip-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:10px}
+.era-strip-head span,.era-strip-head b{
+  font:600 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.14em
+}
+.era-strip-head span{color:#576368}.era-strip-head b{color:#8f9da2}
+.era-track{display:grid;grid-template-columns:repeat(5,1fr);background:#252d30;gap:1px;border:1px solid #252d30}
+.era-track button{
+  border:0;background:#080a0b;color:#59656a;padding:10px 9px;text-align:left;cursor:pointer;min-width:0
+}
+.era-track button span{display:block;font:700 11px ui-monospace,SFMono-Regular,monospace;color:#818f94}
+.era-track button b{display:block;margin-top:3px;font:600 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.era-track button:hover,.era-track button.active{background:#101518;color:#dce8ea}
+.era-track button.active span{color:#d7e9ed}
+.era-strip p{margin:10px 0 0;color:#657277;font-size:10px;line-height:1.6}
+
+/* DETAIL PANEL */
+.sector-panel{padding:22px 20px;display:flex;flex-direction:column;min-width:0}
+.panel-overline{font:600 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.17em;color:#5d696e}
+.panel-index{font:800 clamp(44px,5vw,70px)/.8 ui-monospace,SFMono-Regular,monospace;letter-spacing:-.08em;color:#273135;margin:26px 0 8px}
+.sector-panel h3{font-size:clamp(28px,3vw,44px);line-height:.92;letter-spacing:-.055em;margin:0;color:#e7edef;overflow-wrap:anywhere}
+.panel-class{margin-top:10px;font:700 8px ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;color:#849399}
+.sector-panel p{color:#899599;font-size:12px;line-height:1.8;margin:25px 0}
+.panel-data{border-top:1px solid #293034;margin-top:2px}
+.panel-data div{display:grid;grid-template-columns:74px 1fr;align-items:center;padding:11px 0;border-bottom:1px solid #22292c}
+.panel-data b{margin:0;text-align:right;font-size:9px}
+.panel-actions{display:grid;gap:7px;margin-top:18px}
+.panel-actions button{
+  border:1px solid #303a3e;background:#080a0b;color:#718086;min-height:38px;padding:0 11px;text-align:left;
+  font:700 7px ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em;cursor:pointer
+}
+.panel-actions button span{float:right}.panel-actions button:hover:not(:disabled){color:#e8f2f4;border-color:#768b91}
+.panel-actions button:disabled{opacity:.35;cursor:not-allowed}
+.panel-feed{margin-top:auto;padding-top:25px}
+.panel-feed>span{font:600 6px ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#4d595e}
+.panel-feed div{border-left:1px solid #526268;margin-top:8px;padding-left:9px;color:#69777c;font:600 7px/1.5 ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em}
+
+@media(max-width:1100px){
+  .situation-layout{grid-template-columns:106px minmax(0,1fr) 260px}
+  .situation-summary{grid-template-columns:1fr}.situation-summary div{padding:4px 14px}.situation-summary div:not(:first-child){display:none}
+  .map-toolbar{grid-template-columns:1fr auto}.map-search{grid-column:1/-1;grid-row:2;border-left:0;border-top:1px solid #20272a;padding:7px 0 0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #worldMapViewport,.world-land path,.sector-marker{transition:none!important}
+  .map-scanline,.sector-marker .sector-pulse{animation:none!important}
+}
+
+
+/* READABILITY MERGED / WORLD */
+.situation-summary span,.panel-data span,.rail-label,.map-status span,.map-search label,
+.era-strip-head span,.era-strip-head b,.panel-overline,.panel-feed>span{font-size:10px}
+.zone-filter span,.zone-filter em,.panel-actions button,.panel-feed div{font-size:9px}
+.zone-filter b,.map-status b,.map-search input,.map-tools button,.panel-class{font-size:11px}
+.map-loading span,.sector-marker text{font-size:10px}
+.map-legend,.era-track button b{font-size:8px}
+.zone-filter{min-height:52px;padding-top:15px;padding-bottom:15px}
+.panel-data b{font-size:12px}
+.sector-panel p{font-size:14px;line-height:1.75}
+.era-strip p{font-size:14px;line-height:1.65}

@@ -1,0 +1,99 @@
+/* WORLD ORDER / READABILITY PASS 02 */
+@media(min-width:821px){
+  .world-order .na-head>div span,.world-order .na-head p{font-size:9px;line-height:1.55}
+  .world-order .na-head>div b{font-size:clamp(44px,4.8vw,66px);margin-top:9px}
+  .world-order .na-layout{grid-template-columns:286px minmax(0,1fr)}
+  .world-order .na-data-rail{display:none}
+  .world-order .na-index{padding:24px 20px 24px 0}
+  .world-order .na-index-head{gap:17px;margin-bottom:12px}
+  .world-order .na-index-head span,.world-order .na-index-head b,.world-order .na-search span{font-size:8px}
+  .world-order .na-search{min-height:42px}.world-order .na-search span{padding:0 11px}.world-order .na-search input{font-size:10px;padding:10px 11px}
+  .world-order .na-index-btn{grid-template-columns:30px minmax(0,1fr) auto;gap:11px;padding:15px 7px;min-height:67px}
+  .world-order .na-index-btn>span,.world-order .na-index-btn>em{font-size:8px}
+  .world-order .na-index-btn div b{font-size:14px;line-height:1.25}
+  .world-order .na-index-btn div small{font-size:7px;line-height:1.35;margin-top:5px}
+  .world-order .na-index-btn.active{padding-left:14px}
+
+  .world-order .na-dossier{padding:32px 40px 42px}
+  .world-order .na-identity{grid-template-columns:minmax(210px,280px) 1fr;gap:38px;min-height:250px}
+  .world-order .na-flag-frame>span{font-size:7px;padding:6px 7px}
+  .world-order .na-code{font-size:10px}
+  .world-order .na-identity h2{font-size:clamp(52px,5.8vw,82px);margin:13px 0 10px}
+  .world-order .na-eng{font-size:11px;line-height:1.5}
+  .world-order .na-state-line{margin-top:22px;padding-top:14px}
+  .world-order .na-state-line span,.world-order .na-state-line i{font-size:8px}
+  .world-order .na-state-line b{font-size:12px}
+
+  .world-order .wo-tabs{display:grid;grid-template-columns:repeat(5,1fr);margin-top:34px;border:1px solid #2c383c}
+  .world-order .wo-tabs button{
+    min-height:64px;margin:0;padding:0 14px;border-right:1px solid #263236;background:#080c0e;
+    grid-template-columns:26px 1fr
+  }
+  .world-order .wo-tabs button:last-child{border-right:0}
+  .world-order .wo-tabs button span{font-size:8px}
+  .world-order .wo-tabs button b{font-size:10px;letter-spacing:.08em}
+  .world-order .wo-tabs button:after{left:0;right:0;height:2px}
+  .world-order .wo-tabs button.active{background:#11191c}
+  .world-order .wo-tabs button.active b{color:#f1f6f7}
+
+  .world-order .wo-panels{min-height:600px}
+  .world-order .wo-panels .na-panel{padding-top:32px}
+  .world-order .wo-section-head{grid-template-columns:175px minmax(0,1fr) auto;padding-bottom:16px}
+  .world-order .wo-section-head span,.world-order .wo-section-head em{font-size:8px}
+  .world-order .wo-section-head b{font-size:14px}
+  .world-order .wo-brief{font-size:15px;line-height:1.85;margin-top:23px;max-width:900px}
+
+  .world-order .wo-gov-lead{grid-template-columns:minmax(280px,.8fr) 1.2fr;gap:48px;padding:30px 0 10px}
+  .world-order .wo-gov-lead span{font-size:8px}
+  .world-order .wo-gov-lead b{font-size:20px;margin-top:10px}
+  .world-order .wo-gov-lead em{font-size:13px;margin-top:7px}
+  .world-order .wo-gov-lead p,.world-order .wo-copy{font-size:13px;line-height:1.85}
+
+  .world-order .wo-power{min-height:430px;margin-top:20px}
+  .world-order .wo-power:before{font-size:7px;left:17px;top:15px}
+  .world-order .wo-power-core{width:270px;min-height:100px;padding:18px 20px}
+  .world-order .wo-power-core span,.world-order .wo-power-core em{font-size:7px}
+  .world-order .wo-power-core b{font-size:12px;margin:9px 0 5px}
+  .world-order .wo-power-node{width:210px;min-height:90px;padding:16px 17px}
+  .world-order .wo-power-node span{font-size:8px}
+  .world-order .wo-power-node b{font-size:15px;margin-top:10px}
+  .world-order .wo-power-node i{font-size:8px}
+
+  .world-order .wo-metric-grid article{min-height:145px;padding:20px}
+  .world-order .wo-metric-grid span,.world-order .wo-defense-facts span{font-size:8px}
+  .world-order .wo-metric-grid b{font-size:19px;margin-top:18px}
+  .world-order .wo-metric-grid i{font-size:8px}
+
+  .world-order .wo-defense-route{padding:22px;margin-top:28px}
+  .world-order .wo-defense-route>span{font-size:8px}
+  .world-order .wo-defense-route>b{font-size:15px;margin:11px 0 22px}
+  .world-order .wo-defense-route i{min-width:98px;padding:11px 12px;font-size:8px}
+  .world-order .wo-defense-facts article{min-height:96px;padding:17px 18px}
+  .world-order .wo-defense-facts b{font-size:14px}
+  .world-order .wo-record-link{min-height:70px;padding:0 20px}
+  .world-order .wo-record-link span{font-size:8px}.world-order .wo-record-link b{font-size:10px}
+
+  .world-order .wo-institution-card{grid-template-columns:145px minmax(0,1fr) 250px;padding:28px;gap:32px;margin-top:28px}
+  .world-order .wo-inst-no b,.world-order .wo-inst-title>span,.world-order .wo-institution-card dt{font-size:8px}
+  .world-order .wo-inst-title h3{font-size:36px}
+  .world-order .wo-inst-title p{font-size:13px;line-height:1.8}
+  .world-order .wo-institution-card dd{font-size:13px}
+  .world-order .wo-institution-card dl div{padding:14px 0}
+
+  .world-order .na-history{margin-top:20px}
+  .world-order .na-history article{grid-template-columns:68px 1fr auto;gap:16px;padding:16px 0}
+  .world-order .na-history time{font-size:12px}
+  .world-order .na-history div b{font-size:14px}
+  .world-order .na-history div span,.world-order .na-history em{font-size:8px}
+  .world-order .wo-pending span,.world-order .wo-pending b{font-size:8px}
+}
+
+
+/* READABILITY MERGED / WORLD ORDER */
+.world-order .na-index-head span,.world-order .na-index-head b,.world-order .na-search span,
+.world-order .na-state-line span,.world-order .na-state-line i{font-size:9px}
+.world-order .wo-power-core span,.world-order .wo-power-core em,
+.world-order .wo-inst-no b,.world-order .wo-inst-title>span,.world-order .wo-institution-card dt{font-size:9px}
+.world-order .wo-tabs button b{font-size:11px!important;letter-spacing:.03em!important}
+.world-order .wo-section-head b{font-size:15px!important}
+.world-order .wo-brief{font-size:15px!important}

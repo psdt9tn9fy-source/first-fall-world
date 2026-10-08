@@ -40,4 +40,58 @@ for(const group of cssGroups){
     lastIndex=where;
   }
 }
+
+/* WORLD ORDER regression guards. Shared flag URLs and map projection are source-of-truth. */
+const nationsJs=read("js/nations.js"),mobileJs=read("js/world-mobile.js"),worldJs=read("js/world.js");
+const nationData=read("js/nations-data.js"),flagUtils=read("js/flag-utils.js"),mapGeometry=read("js/world-geometry.js");
+const mobileData=read("js/world-mobile-data.js");
+assert(nationsJs.includes('./nations-data.js?v='),"Nation state data import missing");
+assert(nationsJs.includes('./flag-utils.js?v='),"Nation flags must use shared helper");
+assert(mobileJs.includes('./flag-utils.js?v='),"Mobile flags must use shared helper");
+assert(mobileJs.includes('./world-mobile-data.js?v='),"Mobile world configuration import missing");
+assert(worldJs.includes('./world-geometry.js?v='),"World map projection import missing");
+assert(!nationsJs.includes("const STATE_RECORDS="),"State records are still embedded in UI");
+assert(!mobileJs.includes("function flagUrl("),"Mobile flags are duplicated");
+assert(!worldJs.includes("function geomPath("),"Projection implementation duplicated");
+assert(nationData.includes('export const STATE_RECORDS=')&&nationData.includes('export const HISTORY_TERMS='));
+assert(mobileData.includes('export const THEATER_ART=')&&mobileData.includes('export const ERA_WINDOWS='));
+assert(mapGeometry.includes("export function centroid("));
+assert(flagUtils.includes('export function flagUrl('));
+for(const [key,extension] of Object.entries({afr:"png",rok:"jpg",afu:"jpg"})){
+  assert(existsSync(join(root,`assets/flags-hq/${key}-2134.${extension}`)),"Missing flag: "+key);
+}
+
+/* Nation/world CSS is split into feature stylesheets without changing cascade order. */
+const worldCssGroups=[{"original":"css/nations.css","parts":["css/nations.css","css/nations-dossier.css","css/nations-readability.css"],"hash":"79bfbc2d"},{"original":"css/nations-mobile.css","parts":["css/nations-mobile.css","css/nations-mobile-dossier.css","css/nations-mobile-readability.css"],"hash":"3ba5ce64"},{"original":"css/world.css","parts":["css/world.css","css/world-map.css","css/world-panel.css"],"hash":"4970fdbe"},{"original":"css/world-mobile.css","parts":["css/world-mobile.css","css/world-mobile-readability.css"],"hash":"732db4a4"}];
+for(const group of worldCssGroups){
+  const combined=group.parts.map(read).join("");
+  assert.equal(cssChecksum(combined),group.hash,"Original CSS changed: "+group.original);
+  let prev=-1;
+  for(const path of group.parts){
+    const index=cssHrefOrder.indexOf(path);
+    assert(index>prev,"Nation/world cascade order broken: "+path);
+    prev=index;
+  }
+}
+
+/* Verify local JavaScript imports and linked stylesheets exist at deploy paths. */
+import {readdirSync} from "node:fs";
+for(const filename of readdirSync(join(root,"js")).filter(name=>name.endsWith(".js"))){
+  const source=read("js/"+filename);
+  for(const match of source.matchAll(/(?:from\s*|import\(\s*)["'](\.[^"']+)["']/g)){
+    const imported=match[1].split("?")[0];
+    assert(existsSync(join(root,"js",imported)),`Missing local import in ${filename}: ${imported}`);
+  }
+}
+for(const rel of cssHrefOrder)assert(existsSync(join(root,rel)),"Missing CSS link: "+rel);
+
+/* Deterministic smoke tests for the extracted browser-independent helpers. */
+const {flagUrl:makeFlagUrl}=await import("../js/flag-utils.js");
+const {project:toWorldXY,geomPath:makeGeometryPath,centroid:findCentroid}=await import("../js/world-geometry.js");
+assert.equal(makeFlagUrl("rok"),"./assets/flags-hq/rok-2134.jpg");
+assert.equal(makeFlagUrl("afr"),"./assets/flags-hq/afr-2134.png");
+assert.deepEqual(toWorldXY(0,0),[500,250]);
+assert.deepEqual(toWorldXY(-180,90),[0,0]);
+assert(makeGeometryPath({type:"Polygon",coordinates:[[[0,0],[10,0],[0,10]]]}).startsWith("M"));
+assert.equal(findCentroid({geometry:{type:"Polygon",coordinates:[[[0,0],[10,0],[0,10]]]}}).length,2);
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, CSS and entrypoints");

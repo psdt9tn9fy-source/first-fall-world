@@ -76,3 +76,7 @@ https://psdt9tn9fy-source.github.io/first-fall-world/
 CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위가 보존됩니다. `scripts/check-project.mjs`는 기존 CSS와 분리된 CSS의 연결 결과가 동일한지 검사합니다. 의도적으로 디자인을 수정할 때만 검증 스냅샷을 변경하세요.
 
 `backup/before-modular-refactor-20261008` 브랜치에는 구조 변경 전의 파일이 보존돼 있습니다.
+
+### 검증 추가사항
+
+`node scripts/check-project.mjs`은 이제 모든 로컬 JS 모듈 참조, CSS 로드 경로, 분리한 지도 투영 함수와 공유 국기 URL까지 확인합니다. 국가·세계 CSS는 원본 내용을 유지하면서 기능별 파일로 분리했고, 검사기에서 원본과 합본 체크섬·연결 순서를 검증합니다.
