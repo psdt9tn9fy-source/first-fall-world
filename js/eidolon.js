@@ -62,7 +62,7 @@ export function initEidolon(){
   function load3DController(){
     if(threeDController)return Promise.resolve(threeDController);
     if(threeDModulePromise)return threeDModulePromise;
-    threeDModulePromise=import("./eidolon-3d.js?v=20261008-brute-textured2k-v1").then(mod=>{
+    threeDModulePromise=import("./eidolon-3d.js?v=20261008-brute-clean-focus-v2").then(mod=>{
       threeDController=mod.initEidolon3D(root,{reduced});
       threeDController.setClass(current().key);
       threeDController.setFocus(root.dataset.eiFocus||"morphology");
@@ -233,9 +233,9 @@ export function initEidolon(){
     if(e.key==="ArrowLeft"||e.key==="ArrowUp"){e.preventDefault();stepClass(-1)}
     if(e.key==="ArrowRight"||e.key==="ArrowDown"){e.preventDefault();stepClass(1)}
   });
-  scanner.addEventListener("pointerdown",e=>{if(e.target.closest?.(".ei-model-stage,.ei-live-dossier,.ei-info-tab"))return;pointerX=e.clientX;scanner.setPointerCapture?.(e.pointerId)});
+  scanner.addEventListener("pointerdown",e=>{if(e.target.closest?.(".ei-model-stage,.ei-live-dossier,.ei-info-tab,.ei-hotspot,button,a,input,select,textarea")){pointerX=null;return}pointerX=e.clientX});
   scanner.addEventListener("pointerup",e=>{
-    if(e.target.closest?.(".ei-live-dossier,.ei-info-tab")){pointerX=null;return}
+    if(e.target.closest?.(".ei-live-dossier,.ei-info-tab,.ei-hotspot,button,a,input,select,textarea")){pointerX=null;return}
     if(pointerX===null)return;
     const dx=e.clientX-pointerX;pointerX=null;
     if(Math.abs(dx)>52)stepClass(dx<0?1:-1);
