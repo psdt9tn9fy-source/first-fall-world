@@ -1,4 +1,4 @@
-import {initMeshInspector} from "./eidolon-mesh.js?v=20261008-brute-mesh-inspect1";
+import {initMeshInspector} from "./eidolon-mesh.js?v=20261008-brute-topology1";
 const BRUTE_MODEL_URL="./assets/eidolon/brute.glb?v=20261007-brute-3d-1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 
@@ -56,6 +56,17 @@ export function initEidolon3D(root,{reduced=false}={}){
           <ol class="ei-mesh-list" data-ei-mesh-list></ol>
           <p class="ei-mesh-verdict" data-ei-mesh-verdict></p>
           <button type="button" data-ei-mesh-copy class="ei-mesh-copy" hidden>검사 결과 복사</button>
+        </section>
+        <section class="ei-topology" aria-label="브루트 표면 연결 분석">
+          <div class="ei-topology-heading"><b>SURFACE / CONNECTIONS</b><span>READ-ONLY SCAN</span></div>
+          <p>메시가 하나여도 내부 표면이 여러 덩어리로 나뉘는지 검사합니다.</p>
+          <button type="button" data-ei-topology-run>표면 분리 가능성 분석 ↗</button>
+          <p data-ei-topology-state role="status" aria-live="polite">약 13MB의 모델을 읽으며 원본은 수정하지 않습니다.</p>
+          <div class="ei-topology-stats" data-ei-topology-stats></div>
+          <ol class="ei-topology-islands" data-ei-topology-islands></ol>
+          <p class="ei-topology-result" data-ei-topology-result></p>
+          <small data-ei-topology-caution></small>
+          <button type="button" data-ei-topology-copy hidden>분석 결과 복사</button>
         </section>
       </div>`;
     const select=box.querySelector("[data-ei-material-select]");

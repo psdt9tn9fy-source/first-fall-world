@@ -271,3 +271,31 @@
 .ei-mesh-list li span{font-size:10px;color:#91adc1}
 .ei-material-lab .ei-mesh-verdict{margin:0;padding:10px;border-left:2px solid #85b2cf;background:#122b3b;color:#d3e8f4!important;font-size:11px;line-height:1.55}
 @media(max-width:760px){.ei-mesh-stats b{font-size:20px}}
+
+/* On-demand topology / connected surface islands */
+.ei-topology{
+  display:grid;gap:9px;margin-top:11px;padding-top:13px;
+  border-top:1px solid #4b6a7c
+}
+.ei-topology-heading{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.ei-topology-heading b,.ei-topology-heading span{
+  color:#b9d9e9;font:800 9px ui-monospace,SFMono-Regular,monospace;
+  letter-spacing:.07em
+}
+.ei-topology-heading span{font-size:8px;color:#86aabc}
+.ei-material-lab .ei-topology>p{margin:0;color:#b8cdda;font-size:11px;line-height:1.5}
+.ei-topology>button{
+  min-height:42px;padding:9px;border:1px solid #608aa6;
+  background:#213e58;color:#f0f7ff;font-size:12px;font-weight:850;cursor:pointer
+}
+.ei-topology>button:disabled{opacity:.6;cursor:wait}
+.ei-topology>button[hidden]{display:none!important}
+.ei-topology-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.ei-topology-stats>div{display:grid;gap:4px;padding:10px;border:1px solid #36566c;background:#102635}
+.ei-topology-stats span{color:#85a5b7;font-size:10px;font-weight:750}
+.ei-topology-stats b{color:#e9f4fc;font:850 20px ui-monospace,SFMono-Regular,monospace}
+.ei-topology-islands{list-style:none;margin:0;padding:0;display:grid;gap:0;max-height:130px;overflow:auto}
+.ei-topology-islands li{padding:7px 2px;border-bottom:1px solid #2c475a;color:#aecadc;font-size:11px}
+.ei-material-lab .ei-topology .ei-topology-result{padding:10px 11px;border-left:2px solid #79afc5;background:#163044;color:#d8eef9;font-size:11px}
+.ei-topology small{color:#87a6b9;font-size:10px;line-height:1.5;word-break:keep-all}
+.ei-topology>[data-ei-topology-copy]{background:#132b3d}

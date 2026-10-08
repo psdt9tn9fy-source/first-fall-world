@@ -1,3 +1,4 @@
+import {inspectTopologyUrl} from "./eidolon-topology.js?v=20261008-brute-topology1";
 /* Lightweight GLB metadata inspection; no geometry or texture manipulation.
    The GLB JSON chunk is stored first, before its binary geometry payload. */
 const GLB_MAGIC=0x46546c67;
@@ -83,9 +84,79 @@ export function initMeshInspector(box,modelUrl){
   const verdict=box.querySelector("[data-ei-mesh-verdict]");
   const list=box.querySelector("[data-ei-mesh-list]");
   const copy=box.querySelector("[data-ei-mesh-copy]");
+  const topologyButton=box.querySelector("[data-ei-topology-run]");
+  const topologyState=box.querySelector("[data-ei-topology-state]");
+  const topologyStats=box.querySelector("[data-ei-topology-stats]");
+  const topologyIslands=box.querySelector("[data-ei-topology-islands]");
+  const topologyResult=box.querySelector("[data-ei-topology-result]");
+  const topologyCaution=box.querySelector("[data-ei-topology-caution]");
+  const topologyCopy=box.querySelector("[data-ei-topology-copy]");
   if(!scan||!state||!stats||!list)return;
   let report=null;
+  let topologyReport=null;
   let working=false;
+  let topologyWorking=false;
+  function topologyText(){
+    if(!topologyReport)return "";
+    const result=topologyReport;
+    return ["BRUTE / 표면 연결 분석",
+      "정점 "+result.vertices+" | 삼각형 "+result.triangles,
+      "인덱스 연결 덩어리 "+result.rawIslands,
+      "접합 후 연결 덩어리 "+result.weldedIslands,
+      "유의미한 표면 덩어리 "+result.significantIslands,
+      ...result.largest.map(item=>"영역 "+item.rank+": 삼각형 "+item.triangles+" ("+item.share+"%)"),
+      "판정: "+result.verdict,"주의: "+result.accuracy].join("\n");
+  }
+  async function scanTopology(){
+    if(topologyWorking||!topologyButton)return;
+    topologyWorking=true;
+    topologyButton.disabled=true;topologyButton.textContent="표면 분석 중…";
+    topologyReport=null;
+    topologyStats?.replaceChildren();
+    topologyIslands?.replaceChildren();
+    if(topologyResult)topologyResult.textContent="";
+    if(topologyCaution)topologyCaution.textContent="";
+    if(topologyCopy)topologyCopy.hidden=true;
+    try{
+      const result=await inspectTopologyUrl(modelUrl,message=>{
+        if(topologyState)topologyState.textContent=message;
+      });
+      topologyReport=result;
+      for(const [label,value] of [
+        ["정점",result.vertices],["삼각형",result.triangles],
+        ["연결 영역",result.weldedIslands],["주요 영역",result.significantIslands]
+      ]){
+        const cell=document.createElement("div");
+        const text=document.createElement("span");text.textContent=label;
+        const count=document.createElement("b");count.textContent=value.toLocaleString("ko-KR");
+        cell.append(text,count);topologyStats?.appendChild(cell);
+      }
+      result.largest.forEach(item=>{
+        const row=document.createElement("li");
+        row.textContent="영역 "+item.rank+" / 삼각형 "+item.triangles.toLocaleString("ko-KR")+"개 · "+item.share+"%";
+        topologyIslands?.appendChild(row);
+      });
+      if(topologyResult)topologyResult.textContent=result.verdict;
+      if(topologyCaution)topologyCaution.textContent=result.accuracy;
+      if(topologyState)topologyState.textContent="SURFACE CHECK COMPLETE // 정점 이음새 근사 접합 적용";
+      if(topologyCopy)topologyCopy.hidden=false;
+    }catch(error){
+      if(topologyState)topologyState.textContent="표면 분석 실패: "+(error?.message||"지원하지 않는 형식입니다.");
+    }finally{
+      topologyWorking=false;
+      topologyButton.disabled=false;topologyButton.textContent="다시 표면 분석";
+    }
+  }
+  topologyButton?.addEventListener("click",scanTopology);
+  topologyCopy?.addEventListener("click",async()=>{
+    if(!topologyReport)return;
+    try{
+      await navigator.clipboard.writeText(topologyText());
+      topologyState.textContent="표면 분석 결과를 복사했습니다.";
+    }catch(error){
+      topologyState.textContent="복사 실패 · 결과 화면을 캡처해 주세요.";
+    }
+  });
   function reportText(){
     if(!report)return "";
     return ["BRUTE / GLB 구조 검사",
