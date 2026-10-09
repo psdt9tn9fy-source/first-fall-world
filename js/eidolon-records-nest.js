@@ -1,5 +1,5 @@
 /* Nest topology map for medium/grand and small nest 3D reconnaissance. */
-import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-lidar-live-sync-v3";
+import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-n02-v1";
 export function initNestRecord(root,{reduced,signal}){
   const nestTopology=root.querySelector("[data-ei-nest-topology]");
   const nestStatus=root.querySelector("[data-ei-nest-status]");
@@ -18,10 +18,10 @@ export function initNestRecord(root,{reduced,signal}){
     }
     nestTopology.dataset.level=level;
     recon.setLevel(level);
-    if(level==="small"){
+    if(level==="small"||level==="medium"){
       nestTopology.classList.remove("scanning","scanned");
       if(nestStatus)nestStatus.textContent="3D RECON";
-      if(nestCore)nestCore.textContent="SMALL";
+      if(nestCore)nestCore.textContent=level.toUpperCase();
       recon.replay();
       return;
     }

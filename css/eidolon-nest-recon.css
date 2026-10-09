@@ -1,7 +1,9 @@
-/* N-01 only: the satellite reconnaissance model and UI are isolated from standard topology & SERAPH. */
+/* Shared satellite station; N-03 topology and SERAPH records stay independent. */
 .eidolon-lab .ei-nest-recon{display:none}
 .eidolon-lab[data-ei-nest="small"]:not(.seraph-mode) .ei-nest-recon{display:block}
 .eidolon-lab[data-ei-nest="small"]:not(.seraph-mode) .ei-nest-topology{display:none}
+.eidolon-lab[data-ei-nest="medium"]:not(.seraph-mode) .ei-nest-recon{display:block}
+.eidolon-lab[data-ei-nest="medium"]:not(.seraph-mode) .ei-nest-topology{display:none}
 .ei-nest-recon{
   position:relative;isolation:isolate;min-height:390px;margin-top:9px;
   border:1px solid #49606b;overflow:hidden;color:#d4e5e9;
@@ -98,6 +100,35 @@
   font:750 10px ui-monospace,SFMono-Regular,monospace;letter-spacing:.04em
 }
 .ei-nest-recon-tools button.active{background:#21333c;border-color:#a1d8eb;color:#e7faff;box-shadow:inset 2px 0 #95d7eb}
+.ei-nest-recon-tools button[hidden]{display:none}
+.ei-nest-recon-intel{display:none}
+.ei-nest-recon[data-level="medium"]{
+  min-height:480px;border-color:#aa8654;
+  background:radial-gradient(ellipse at 50% 48%,#3a3022 0%,#191b1c 45%,#080b0e 100%)
+}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-reticle{
+  width:190px;height:130px;border-radius:0;border-color:#e5b87899;
+  box-shadow:0 0 0 28px #e5b87809
+}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-reticle::before{border-radius:0;border-color:#e5b87838}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-meter i{background:#e5b878;box-shadow:0 0 12px #e5b87866}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-log{border-color:#e5b878}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-intel{
+  display:block;position:absolute;z-index:7;left:14px;bottom:78px;max-width:210px;
+  padding:11px 13px;border-left:2px solid #e5b878;background:#10100dea;pointer-events:none
+}
+.ei-nest-recon-intel span{display:block;color:#e5b878;font:700 9px ui-monospace,monospace;letter-spacing:.08em}
+.ei-nest-recon-intel strong{display:block;margin-top:5px;font-size:14px;color:#f0ddbd}
+.ei-nest-recon-intel dl{margin:9px 0}
+.ei-nest-recon-intel dl div{display:flex;gap:13px;justify-content:space-between;font-size:10px;line-height:1.8}
+.ei-nest-recon-intel dt{color:#b6aa95}
+.ei-nest-recon-intel dd{margin:0;color:#eee0c8}
+.ei-nest-recon-intel p{margin:0;color:#aa9d88;font-size:9px;line-height:1.5}
+/* N-02 reveals the actual model during every phase, without a mesh/point overlay. */
+.ei-nest-recon.loaded[data-level="medium"] model-viewer{opacity:1}
+.ei-nest-recon[data-level="medium"] .ei-nest-recon-lidar{display:none}
+.ei-nest-recon[data-level="medium"].scanning .ei-nest-recon-reticle{animation:eiNestTargetAcquire 1.6s ease-out}
+@keyframes eiNestTargetAcquire{from{opacity:.2;transform:translate(-50%,-50%) scale(1.3)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .ei-nest-recon-tools button:focus-visible,.ei-nest-recon-local:focus-visible{outline:2px solid #b2ebff;outline-offset:3px}
 .ei-nest-recon-log{
   position:absolute;z-index:7;right:12px;top:56px;max-width:45%;
@@ -136,9 +167,17 @@
   .ei-nest-recon-reticle{width:112px;height:112px}
   .ei-nest-recon-legal{bottom:64px;font-size:8px}
   .ei-nest-recon-meter{left:9px;right:9px}
+  .ei-nest-recon[data-level="medium"]{min-height:460px}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-intel{left:9px;bottom:83px;padding:8px;max-width:178px}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-view{inset:100px 0 130px;mask-image:none}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-tools{display:flex;width:auto;gap:4px}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-log{top:96px;max-width:46%;padding:7px}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-head{align-items:flex-start;gap:8px}
+  .ei-nest-recon[data-level="medium"] .ei-nest-recon-head b{text-align:right;max-width:44%}
 }
 @media(prefers-reduced-motion:reduce){
   .ei-nest-recon.scanning .ei-nest-recon-sweep{animation:none!important}
   .ei-nest-recon .ei-nest-recon-lidar{transition:none!important}
   .ei-nest-recon model-viewer,.ei-nest-recon-meter i{transition:none!important}
+  .ei-nest-recon[data-level="medium"].scanning .ei-nest-recon-reticle{animation:none!important}
 }

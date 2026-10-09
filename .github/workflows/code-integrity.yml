@@ -22,3 +22,5 @@ jobs:
           done
       - name: Check model assets and module links
         run: node scripts/check-project.mjs
+      - name: Check nest reconnaissance lifecycle
+        run: node scripts/check-nest-recon.mjs

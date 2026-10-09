@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-behavior.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-nest.css?v=20261008-structure-v1">
-  <link rel="stylesheet" href="./css/eidolon-nest-recon.css?v=20261009-lidar-live-sync-v3">
+  <link rel="stylesheet" href="./css/eidolon-nest-recon.css?v=20261009-n02-v1">
   <link rel="stylesheet" href="./css/eidolon-records-engagement.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-profile.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
@@ -662,7 +662,7 @@
           </div>
 
           <div class="ei-nest-recon" data-ei-nest-recon data-mode="tactical" aria-label="소형 네스트 3D 정찰 재구성">
-            <div class="ei-nest-recon-head"><span>ORBITAL RECON // N-01</span><b data-ei-nest-recon-status>AWAITING 3D DATA</b></div>
+            <div class="ei-nest-recon-head"><span data-ei-nest-recon-title>ORBITAL RECON // N-01</span><b data-ei-nest-recon-status>AWAITING 3D DATA</b></div>
             <div class="ei-nest-recon-view">
               <model-viewer data-ei-nest-viewer camera-controls auto-rotate interaction-prompt="none"
                 camera-orbit="45deg 55deg 125%" min-camera-orbit="auto 22deg 70%" max-camera-orbit="auto 82deg 220%"
@@ -676,6 +676,12 @@
               <button type="button" class="active" data-ei-nest-mode="tactical" aria-pressed="true">TACTICAL</button>
               <button type="button" data-ei-nest-mode="lidar" aria-pressed="false">LIDAR</button>
               <button type="button" data-ei-nest-mode="thermal" aria-pressed="false">THERMAL</button>
+              <button type="button" data-ei-nest-reset>시점 초기화 ↺</button>
+            </div>
+            <div class="ei-nest-recon-intel" aria-label="N-02 거점 분석">
+              <span>N-02 // FORTRESS</span><strong>외계 기계 성채</strong>
+              <dl><div><dt>거점 기능</dt><dd>생산 · 수리 · 보급</dd></div><div><dt>전략 역할</dt><dd>지역 통제</dd></div></dl>
+              <p>참고 모델 분석 · 실제 관측치 아님</p>
             </div>
             <div class="ei-nest-recon-log" data-ei-nest-log aria-live="polite">참고 모델을 불러오는 중…</div>
             <div class="ei-nest-recon-fallback" data-ei-nest-fallback>
@@ -820,4 +826,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-lidar-live-sync-v3"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-n02-v1"></script></body></html>

@@ -102,7 +102,7 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - `js/eidolon-nest-recon.js` / `css/eidolon-nest-recon.css`: 3D 모델 lazy-loading, 위성 정찰 재구성 애니메이션, TACTICAL/LIDAR/THERMAL 화면 모드.
 - 정식 GLB 저장 위치: **`assets/nest/small.glb`** (GitHub Pages 정적 파일). 원본을 웹용으로 최적화한 GLB를 이 경로에 업로드하면 자동 표시된다.
 - 아직 GLB가 업로드되지 않았다면 로컬 GLB 미리보기 버튼을 통해 자신의 컴퓨터/모바일에서 일시적으로 모델을 로드할 수 있다. 이 동작은 서버에 업로드하거나 저장하지 않는다.
-- N-02/N-03 기존 네트워크 그래프와 SERAPH 미확인 네스트 기록은 그대로 유지한다.
+- N-02는 공유 3D 정찰 화면을 사용하고 N-03 네트워크 그래프와 SERAPH 미확인 네스트 기록은 유지한다.
 - 화면의 LIDAR/THERMAL 필터와 재구성 퍼센트는 시각적 효과이며 실제 측정된 수치가 아니다.
 
 ### 실제 네스트 메시 기반 LIDAR 재구성 (2026-10-09)
@@ -125,3 +125,12 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - Reverted the hide-on-touch LIDAR canvas behavior. Mesh-derived cloud is redrawn continuously against the current model-viewer camera while visible (max ~40 fps), including gestures.
 - No trailing timeout, no blank frames while dragging. Pauses animation when the tab/document is hidden.
 - A faint real 3D model is kept as the scan background to prevent blank content even during slow mobile redraw.
+
+### N-02 중형 네스트 3D 정찰 (2026-10-09)
+
+- `assets/nest/medium.glb`를 소형과 같은 model-viewer로 표시한다. 규모를 전환하면 모델·시점·HUD가 함께 전환된다.
+- 중형 전용 황금빛 타깃 HUD, 성채/생산 거점 기록, CSS 스캔 라인과 분석 단계 표시를 제공한다. 실제 위성·열영상 측정치가 아닌 참고 모델 연출이다.
+- 드래그 회전, 휠/두 손가락 확대, 시점 초기화와 TACTICAL/THERMAL 모드를 지원한다. 중형에는 LIDAR 점군 추출을 실행하지 않는다.
+- 선택한 모델만 지연 로딩하며 숨겨진 탭/문서에서 자동 회전과 스캔 타이머를 중단한다. 동작 감소 설정을 지원한다.
+- `node scripts/check-nest-recon.mjs`는 빠른 모델 전환, 재시도, 소형 복귀, SERAPH, 화면 숨김과 동작 감소 설정을 검사한다.
+- 변경 전 복구 지점: `backup/before-n02-20261009`.

@@ -1,7 +1,7 @@
 # NEST 3D assets
 
-Upload the optimized `small-nest.glb` from ChatGPT and name it **small.glb** in this folder.
+Production assets: **small.glb** (N-01) and **medium.glb** (N-02).
 
-The N-01 recon viewer loads `./assets/nest/small.glb`. N-02 and N-03 remain the previous topology UI until new models are added.
+The shared recon viewer loads the selected asset only when the nest tab opens. N-01 retains its existing mesh LIDAR; N-02 uses the textured model and CSS HUD with TACTICAL/THERMAL modes. N-03 keeps the topology UI.
 
-This folder intentionally includes only instructions for now; the local uploaded binary is not yet committed to GitHub.
+If an asset fails to load, use the GLB local preview button to select a file from your device. This preview stays local and is tracked separately for each nest scale; it does not upload a file to GitHub.
