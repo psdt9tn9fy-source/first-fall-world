@@ -43,6 +43,31 @@ const FORCES={
   special:{title:"특수 전력",body:"정예 인원과 특수 장비를 활용해 일반 부대와 구분되는 임무를 수행하는 전력이다. 특수 능력이나 고도화된 장비의 도입 여부는 각국의 제도와 기술 수준에 따라 다르다.",facts:["특수 임무 · 제한적 운용","정예 인원 · 특수 장비","지상 · 정보 지원"]},
   support:{title:"지원 전력",body:"보급·정비·의무·통신·정보 체계를 통해 여러 전투 전력이 지속적으로 작전할 수 있도록 뒷받침한다. 장기전에서는 전선의 유지와 복구에 필수적이다.",facts:["전력 유지 · 작전 지속","보급 · 정비 · 의무 · 정보","전 군종 공통"]}
 };
+/* Comparative rank-career stages; these are not standardized national rank names. */
+const RANK_GROUPS={
+  officer:{name:"장교",stages:[
+    {name:"초급 장교",brief:"소부대 지휘",body:"임관 이후 소부대 지휘와 기본 참모 업무를 맡는 단계다. 진출 경로에는 사관학교·기타 장교 양성 과정 등이 포함될 수 있다.",facts:["임관 · 초급 지휘","부대 지휘 · 참모 실무","사관학교 등 양성 과정"]},
+    {name:"중견 장교",brief:"중간 지휘",body:"지휘 및 참모 경험을 바탕으로 중간 규모 부대를 지휘하거나 작전 계획 업무를 담당하는 경력 단계다.",facts:["중간 지휘","작전 계획 · 부대 운용","경력 · 진급 심사"]},
+    {name:"상급 장교",brief:"상위 지휘·참모",body:"상위 부대의 지휘와 정책·작전 기획에 참여하는 장교 경력 단계다. 세부 지위와 계급 명칭은 국가별로 다르다.",facts:["상위 지휘","작전·조직 관리","장기간 경력"]},
+    {name:"장성급 장교",brief:"최상위 군 지휘",body:"군 전체 또는 대규모 작전 조직의 전략·작전 지휘를 맡는 장교 계층이다. 모든 장교가 이 단계로 진급하는 것은 아니다.",facts:["전략·작전 지휘","대규모 조직 지휘","엄격한 선발"]}
+  ]},
+  nco:{name:"부사관",stages:[
+    {name:"초급 부사관",brief:"실무 지휘",body:"부사관으로 임용된 뒤 분대급·현장 단위의 지휘와 숙련 업무를 담당하는 초기 경력 단계다.",facts:["현장 초급 지휘","병력 관리 · 실무","부사관 선발·교육"]},
+    {name:"중견 부사관",brief:"숙련 지휘",body:"축적된 현장 경험을 바탕으로 인원과 장비 운용, 실무 지도 역할을 수행한다.",facts:["현장 지휘","훈련·정비·실무 지도","경력 · 평가"]},
+    {name:"상급 부사관",brief:"부대 운영",body:"부대의 인원 관리와 실무 조직 운영을 지원하고 경험을 후배 인원에게 전수하는 선임 경력 단계다.",facts:["선임 실무 관리","부대 운영 · 지도","전문성"]},
+    {name:"최상급 부사관",brief:"최선임 실무",body:"장기 근무 경험을 토대로 부대 지휘부에 현장 의견을 제공하고 인력 양성과 조직 운영을 지원한다.",facts:["최선임 실무","지휘부 보좌 · 인력 양성","장기 경력"]}
+  ]},
+  enlisted:{name:"병",stages:[
+    {name:"입대·훈련",brief:"기초 교육",body:"기초 군사교육과 직무훈련을 받고 현장 임무를 준비하는 단계다. 계급 명칭은 국가별로 다르다.",facts:["기초 교육","훈련 · 보직 배정","초기 복무"]},
+    {name:"초급 병",brief:"기본 임무",body:"지휘체계에 따라 보직별 임무를 수행하며 장비와 전술에 숙달하는 초기 복무 단계다.",facts:["일선 실무","기본 임무 수행","직무 숙련"]},
+    {name:"숙련 병",brief:"현장 숙련",body:"축적한 경험을 바탕으로 복잡한 임무를 수행하고 동료의 현장 적응을 지원할 수 있는 단계다.",facts:["숙련 인력","현장 임무 · 지원","경력 축적"]},
+    {name:"선임 병",brief:"선임 실무",body:"경험 많은 병 인원으로서 후배 인원을 도울 수 있는 경력 단계다. 국가와 제도에 따라 부사관 지원 경로가 열릴 수 있다.",facts:["선임 인력","실무 · 후배 지원","부사관 지원 가능"]}
+  ]}
+};
+const CAREER_ROUTES={
+  "enlisted-nco":{group:"nco",title:"병 → 부사관 지원",body:"병 복무 경력을 바탕으로 부사관 선발·교육을 거쳐 임용될 수 있는 경로다. 지원 자격과 심사 기준은 국가별로 다르며 자동 진급을 의미하지 않는다.",facts:["병 복무 경력","지원 · 선발 · 교육","부사관 임용 심사"]},
+  "academy-officer":{group:"officer",title:"군 교육기관 → 장교 임관",body:"중앙사관학교 등 장교 양성 교육기관을 통해 장교로 진출하는 경로다. 중앙사관학교는 세계관의 엘리트 교육기관이지만, 국가별로 다른 장교 양성 경로도 존재한다.",facts:["중앙사관학교 등","교육 · 평가 · 임관","초급 장교"]}
+};
 export function initMilitary(){
   const root=document.querySelector("#milCommand");
   if(!root)return;
@@ -59,9 +84,14 @@ export function initMilitary(){
   const orgBriefs=[...root.querySelectorAll("[data-mil-org-brief]")];
   const forceNodes=[...root.querySelectorAll("[data-mil-force]")];
   const forceLinks=[...root.querySelectorAll("[data-mil-force-link]")];
+  const rankGroups=[...root.querySelectorAll("[data-mil-rank-group]")];
+  const rankStages=[...root.querySelectorAll("[data-mil-rank-stage]")];
+  const rankNames=[...root.querySelectorAll("[data-mil-rank-name]")];
+  const rankBriefs=[...root.querySelectorAll("[data-mil-rank-brief]")];
+  const careerButtons=[...root.querySelectorAll("[data-mil-career]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const timers=new Set();
-  let token=0,branchKey="land",forceKey="ground";
+  let token=0,branchKey="land",forceKey="ground",rankGroupKey="officer";
   const schedule=(fn,delay)=>{const id=setTimeout(()=>{timers.delete(id);fn()},delay);timers.add(id)};
   function cancelRoute(){
     token++;
@@ -145,6 +175,48 @@ export function initMilitary(){
       "전력 유형 // "+String(current+1).padStart(2,"0")+" / 05");
     route.textContent=replay?"전력 연결 // "+String(current+1).padStart(2,"0"):"선택됨 // "+detail.title;
   }
+  function selectRankStage(index,{replay=false}={}){
+    const group=RANK_GROUPS[rankGroupKey];
+    if(root.dataset.mode!=="rank"||!group?.stages[index])return;
+    if(!replay)cancelRoute();
+    const level=group.stages[index];
+    rankStages.forEach((node,i)=>{
+      const active=i===index;
+      node.classList.toggle("active",active);
+      node.classList.toggle("passed",i<index);
+      node.setAttribute("aria-pressed",String(active));
+    });
+    renderReadout(level.name,level.body,level.facts,["경력 범주","주요 역할","진출·진급"],
+      group.name+" // "+String(index+1).padStart(2,"0")+" / 04");
+    route.textContent=replay?"경력 단계 // "+String(index+1).padStart(2,"0"):"선택됨 // "+level.name;
+  }
+  function setRankGroup(key){
+    const group=RANK_GROUPS[key];
+    if(!group||root.dataset.mode!=="rank")return;
+    cancelRoute();
+    rankGroupKey=key;
+    rankGroups.forEach(button=>{
+      const active=button.dataset.milRankGroup===key;
+      button.classList.toggle("active",active);
+      button.setAttribute("aria-pressed",String(active));
+    });
+    rankNames.forEach((node,i)=>node.textContent=group.stages[i].name);
+    rankBriefs.forEach((node,i)=>node.textContent=group.stages[i].brief);
+    q("[data-mil-title]").textContent=group.name+" 경력 단계";
+    selectRankStage(0);
+  }
+  function selectCareer(key){
+    const career=CAREER_ROUTES[key];
+    if(root.dataset.mode!=="rank"||!career)return;
+    setRankGroup(career.group);
+    careerButtons.forEach(button=>{
+      const active=button.dataset.milCareer===key;
+      button.classList.toggle("active",active);
+    });
+    renderReadout(career.title,career.body,career.facts,["출발 경로","전환 요건","도착 경로"],
+      "경력 전환 // "+(key==="enlisted-nco"?"01":"02"));
+    route.textContent="경력 경로 // "+career.title;
+  }
   function setMode(key){
     const mode=MODES[key];
     if(!mode)return;
@@ -157,8 +229,8 @@ export function initMilitary(){
     });
     q("[data-mil-kicker]").textContent=mode.kick;
     q("[data-mil-title]").textContent=mode.title;
-    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":key==="force"?"선택 전력 // 통합 전력망":"현재 기록";
-    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":key==="force"?"전력 연계 재생 ":"지휘 흐름 재생 ";
+    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":key==="force"?"선택 전력 // 통합 전력망":key==="rank"?"계급·경력 // 인사 기록":"현재 기록";
+    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":key==="force"?"전력 연계 재생 ":key==="rank"?"경력 단계 재생 ":"지휘 흐름 재생 ";
     if(key==="command"){
       selectLevel("national");
     }else if(key==="structure"){
@@ -169,6 +241,10 @@ export function initMilitary(){
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
       selectForce(forceKey);
+    }else if(key==="rank"){
+      nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
+      lines.forEach(line=>line.classList.remove("passed"));
+      setRankGroup(rankGroupKey);
     }else{
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
@@ -177,6 +253,22 @@ export function initMilitary(){
     }
   }
   function runRoute(){
+    if(root.dataset.mode==="rank"){
+      cancelRoute();
+      const steps=RANK_GROUPS[rankGroupKey].stages;
+      if(reduced){selectRankStage(steps.length-1,{replay:true});route.textContent="단계 확인 완료";return}
+      stage.classList.add("routing");
+      const current=token;
+      steps.forEach((_,index)=>schedule(()=>{
+        if(token!==current||root.dataset.mode!=="rank")return;
+        selectRankStage(index,{replay:true});
+        if(index===steps.length-1){
+          route.textContent="단계 확인 완료";
+          schedule(()=>{if(token===current)stage.classList.remove("routing")},340);
+        }
+      },140+index*300));
+      return;
+    }
     if(root.dataset.mode==="force"){
       cancelRoute();
       const keys=Object.keys(FORCES);
@@ -235,13 +327,16 @@ export function initMilitary(){
   branchButtons.forEach(button=>button.addEventListener("click",()=>setBranch(button.dataset.milBranch)));
   orgNodes.forEach(node=>node.addEventListener("click",()=>selectFormation(Number(node.dataset.milUnit))));
   forceNodes.forEach(node=>node.addEventListener("click",()=>selectForce(node.dataset.milForce)));
+  rankGroups.forEach(button=>button.addEventListener("click",()=>setRankGroup(button.dataset.milRankGroup)));
+  rankStages.forEach(node=>node.addEventListener("click",()=>selectRankStage(Number(node.dataset.milRankStage))));
+  careerButtons.forEach(button=>button.addEventListener("click",()=>selectCareer(button.dataset.milCareer)));
   nodes.forEach(node=>node.addEventListener("click",()=>{
     if(root.dataset.mode!=="command")setMode("command");
     selectLevel(node.dataset.milNode);
   }));
   q("[data-mil-route-btn]")?.addEventListener("click",runRoute);
   window.addEventListener("archive:record-opened",event=>{
-    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"))runRoute();
+    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"||root.dataset.mode==="rank"))runRoute();
     else if(event.detail?.key!=="military")cancelRoute();
   });
   setMode("command");

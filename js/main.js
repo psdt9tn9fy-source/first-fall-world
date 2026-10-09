@@ -1,5 +1,5 @@
 import { initIntro } from "./intro.js?v=20261007-refactor-3";
-import {initMilitary} from "./military.js?v=20261009-military-force-v1";
+import {initMilitary} from "./military.js?v=20261009-military-rank-v1";
 import { initCharacters } from "./characters.js?v=20261008-character-v9";
 import { initAccess } from "./access.js?v=20261007-refactor-3";
 import { initNavigation } from "./navigation.js?v=20261007-refactor-3";

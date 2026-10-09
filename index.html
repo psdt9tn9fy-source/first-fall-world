@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-seraph.css?v=20261009-seraph-polish-v2">
   <link rel="stylesheet" href="./css/eidolon-records-seraph.css?v=20261009-seraph-records-v1">
-  <link rel="stylesheet" href="./css/military.css?v=20261009-military-force-v1">
+  <link rel="stylesheet" href="./css/military.css?v=20261009-military-rank-v1">
   <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
@@ -818,6 +818,25 @@
           <button type="button" class="mil-force-node n-support" data-mil-force="support" aria-pressed="false"><span>05 / SUPPORT</span><b>지원 전력</b></button>
           <span class="mil-force-caption">전력 분류 예시 / 국가별 구성 상이</span>
         </div>
+        <div class="mil-rank" data-mil-rank-board aria-label="계급·경력 단계와 진출 경로">
+          <div class="mil-rank-groups" role="group" aria-label="신분 구분">
+            <button type="button" class="active" data-mil-rank-group="officer" aria-pressed="true"><span>01</span><b>장교</b></button>
+            <button type="button" data-mil-rank-group="nco" aria-pressed="false"><span>02</span><b>부사관</b></button>
+            <button type="button" data-mil-rank-group="enlisted" aria-pressed="false"><span>03</span><b>병</b></button>
+          </div>
+          <div class="mil-rank-path"><span>초기 단계</span><i aria-hidden="true"></i><span>상위 단계</span></div>
+          <div class="mil-rank-track" role="group" aria-label="선택 신분의 경력 단계">
+            <button class="mil-rank-step active" type="button" data-mil-rank-stage="0" aria-pressed="true"><span>01</span><b data-mil-rank-name>초급 장교</b><small data-mil-rank-brief>소부대 지휘</small></button>
+            <button class="mil-rank-step" type="button" data-mil-rank-stage="1" aria-pressed="false"><span>02</span><b data-mil-rank-name>중견 장교</b><small data-mil-rank-brief>중간 지휘</small></button>
+            <button class="mil-rank-step" type="button" data-mil-rank-stage="2" aria-pressed="false"><span>03</span><b data-mil-rank-name>상급 장교</b><small data-mil-rank-brief>상위 지휘·참모</small></button>
+            <button class="mil-rank-step" type="button" data-mil-rank-stage="3" aria-pressed="false"><span>04</span><b data-mil-rank-name>장성급 장교</b><small data-mil-rank-brief>최상위 군 지휘</small></button>
+          </div>
+          <div class="mil-rank-careers" role="group" aria-label="경력 전환·진출 경로">
+            <button type="button" data-mil-career="enlisted-nco"><span>전환 경로</span><b>병 → 부사관 지원 <i aria-hidden="true">↗</i></b></button>
+            <button type="button" data-mil-career="academy-officer"><span>양성 경로</span><b>사관학교 → 장교 임관 <i aria-hidden="true">↗</i></b></button>
+          </div>
+          <p class="mil-rank-note">공통 경력 단계 예시 · 실제 계급명·진급 자격은 국가별로 상이</p>
+        </div>
         <div class="mil-route-state"><span>전달 상태</span><b data-mil-route>대기</b></div>
       </section>
       <aside class="mil-readout" aria-live="polite" aria-atomic="true"><header><span data-mil-readout-heading>선택 계층 // 지휘 구조</span><b data-mil-readout-code>지휘 단계 // 01 / 05</b></header><h3 data-mil-readout-title>국가 지휘부</h3><p data-mil-readout-body>국가의 전쟁 목표와 방위 정책을 정하고, 전략적 우선순위와 군사력 운용 방향을 결정한다. 구체적인 체계는 국가마다 다르다.</p><div class="mil-facts" data-mil-facts><div><span>지휘 범위</span><b>국가 전략</b></div><div><span>주요 역할</span><b>정책·우선순위 결정</b></div><div><span>연결 계층</span><b>합동지휘부</b></div></div><button type="button" data-mil-route-btn>지휘 흐름 재생 <span>→</span></button></aside>
@@ -851,4 +870,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-military-force-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-military-rank-v1"></script></body></html>

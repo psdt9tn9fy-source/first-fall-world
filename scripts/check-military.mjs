@@ -26,6 +26,10 @@ function createFixture(reduced=false){
   const forceKeys=["ground","naval","air","special","support"];
   const forceNodes=forceKeys.map(milForce=>element({milForce}));
   const forceLinks=forceKeys.map(milForceLink=>element({milForceLink}));
+  const rankGroups=["officer","nco","enlisted"].map(milRankGroup=>element({milRankGroup}));
+  const rankStages=[0,1,2,3].map(milRankStage=>element({milRankStage:String(milRankStage)}));
+  const rankNames=rankStages.map(()=>element()),rankBriefs=rankStages.map(()=>element());
+  const careerButtons=["enlisted-nco","academy-officer"].map(milCareer=>element({milCareer}));
   const orgUnits=[0,1,2,3].map(milUnit=>element({milUnit:String(milUnit)}));
   const names=orgUnits.map(()=>element()),briefs=orgUnits.map(()=>element());
   const factLabels=[element(),element(),element()],facts=[element(),element(),element()];
@@ -38,7 +42,10 @@ function createFixture(reduced=false){
     ["[data-mil-facts] span",factLabels],["[data-mil-facts] b",facts],
     ["[data-mil-branch]",branches],["[data-mil-unit]",orgUnits],
     ["[data-mil-org-name]",names],["[data-mil-org-brief]",briefs],
-    ["[data-mil-force]",forceNodes],["[data-mil-force-link]",forceLinks]
+    ["[data-mil-force]",forceNodes],["[data-mil-force-link]",forceLinks],
+    ["[data-mil-rank-group]",rankGroups],["[data-mil-rank-stage]",rankStages],
+    ["[data-mil-rank-name]",rankNames],["[data-mil-rank-brief]",rankBriefs],
+    ["[data-mil-career]",careerButtons]
   ]);
   const root={
     dataset:{},
@@ -64,7 +71,7 @@ function createFixture(reduced=false){
       fn();
     }
   }
-  return {root,modeButtons,commandNodes,branches,orgUnits,forceNodes,forceLinks,names,briefs,byId,facts,events,flush,
+  return {root,modeButtons,commandNodes,branches,orgUnits,forceNodes,forceLinks,rankGroups,rankStages,rankNames,rankBriefs,careerButtons,names,briefs,byId,facts,events,flush,
     get title(){return byId.get("[data-mil-readout-title]").textContent},
     get description(){return byId.get("[data-mil-readout-body]").textContent},
     get route(){return byId.get("[data-mil-route]").textContent}};
@@ -153,4 +160,40 @@ rf.modeButtons[2].click();
 rf.byId.get("[data-mil-route-btn]").click();
 assert.equal(rf.title,"지원 전력");
 assert.equal(rf.route,"연계 완료");
-console.log("PASS: military command, 3 formation branches, 5 force domains, readout, replay and reduced motion");
+// 04 rank classification, progression, and career entry buttons must not affect earlier tabs.
+f.modeButtons[3].click();
+assert.equal(f.root.dataset.mode,"rank");
+assert.equal(f.title,"초급 장교");
+assert.equal(f.rankStages[0].getAttribute("aria-pressed"),"true");
+f.rankStages[2].click();
+assert.equal(f.title,"상급 장교");
+assert.equal(f.rankStages[2].getAttribute("aria-pressed"),"true");
+f.rankGroups[1].click();
+assert.equal(f.title,"초급 부사관");
+assert.equal(f.rankNames[3].textContent,"최상급 부사관");
+f.rankGroups[2].click();
+assert.equal(f.title,"입대·훈련");
+f.rankStages[3].click();
+assert.equal(f.title,"선임 병");
+f.careerButtons[0].click();
+assert.equal(f.title,"병 → 부사관 지원");
+assert.equal(f.rankGroups[1].getAttribute("aria-pressed"),"true");
+assert.match(f.description,/자동 진급을 의미하지 않는다/);
+f.careerButtons[1].click();
+assert.equal(f.title,"군 교육기관 → 장교 임관");
+assert.equal(f.rankGroups[0].getAttribute("aria-pressed"),"true");
+assert.match(f.description,/중앙사관학교/);
+f.byId.get("[data-mil-route-btn]").click();
+f.flush();
+assert.equal(f.title,"장성급 장교");
+assert.equal(f.route,"단계 확인 완료");
+f.modeButtons[2].click();
+assert.equal(f.title,"지원 전력","Rank tab should preserve force selection");
+f.modeButtons[0].click();
+assert.equal(f.title,"국가 지휘부","Rank tab should not affect command");
+const rr=createFixture(true);
+rr.modeButtons[3].click();
+rr.byId.get("[data-mil-route-btn]").click();
+assert.equal(rr.title,"장성급 장교");
+assert.equal(rr.route,"단계 확인 완료");
+console.log("PASS: military command, 3 formation branches, 5 force domains, 3 rank paths, career entries, replay and reduced motion");

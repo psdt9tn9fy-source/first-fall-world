@@ -248,4 +248,12 @@ assert(military.includes("function selectForce("),"Force-specific readout missin
 assert(military.includes('root.dataset.mode==="force"'),"Force network playback missing");
 assert(militaryCSS.includes('.mil-command[data-mode="force"] .mil-network{display:none}'),"Force network overlay collision");
 assert(militaryCSS.includes('.mil-command[data-mode="force"] .mil-force{display:block}'),"Force panel not visible");
+for(const group of ["officer","nco","enlisted"])assert(index.includes('data-mil-rank-group="'+group+'"'),"Rank group selector missing: "+group);
+for(let i=0;i<4;i++)assert(index.includes('data-mil-rank-stage="'+i+'"'),"Rank stage missing: "+i);
+for(const career of ["enlisted-nco","academy-officer"])assert(index.includes('data-mil-career="'+career+'"'),"Career transition button missing");
+assert(military.includes("const RANK_GROUPS="),"Rank groups missing");
+assert(military.includes("function setRankGroup("),"Rank group controller missing");
+assert(military.includes("function selectCareer("),"Career path handler missing");
+assert(militaryCSS.includes('.mil-command[data-mode="rank"] .mil-network{display:none}'),"Rank must not overlay command tree");
+assert(militaryCSS.includes('.mil-command[data-mode="rank"] .mil-rank{display:grid}'),"Rank board hidden");
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");
