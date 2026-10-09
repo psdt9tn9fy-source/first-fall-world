@@ -256,4 +256,13 @@ assert(military.includes("function setRankGroup("),"Rank group controller missin
 assert(military.includes("function selectCareer("),"Career path handler missing");
 assert(militaryCSS.includes('.mil-command[data-mode="rank"] .mil-network{display:none}'),"Rank must not overlay command tree");
 assert(militaryCSS.includes('.mil-command[data-mode="rank"] .mil-rank{display:grid}'),"Rank board hidden");
+for(const type of ["frontline","city","nest","reserve","rear"]){
+  assert(index.includes('data-mil-deployment="'+type+'"'),"Deployment zone missing: "+type);
+  assert(index.includes('data-mil-deploy-route="'+type+'"'),"Deployment map link missing: "+type);
+}
+assert(military.includes("const DEPLOYMENT_ZONES="),"Deployment records missing");
+assert(military.includes("function selectDeployment("),"Deployment selection missing");
+assert(military.includes('root.dataset.mode==="deployment"'),"Deployment replay missing");
+assert(militaryCSS.includes('.mil-command[data-mode="deployment"] .mil-network{display:none}'),"Deployment board overlays command");
+assert(militaryCSS.includes('.mil-command[data-mode="deployment"] .mil-deployment{display:block}'),"Deployment board hidden");
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");

@@ -30,6 +30,9 @@ function createFixture(reduced=false){
   const rankStages=[0,1,2,3].map(milRankStage=>element({milRankStage:String(milRankStage)}));
   const rankNames=rankStages.map(()=>element()),rankBriefs=rankStages.map(()=>element());
   const careerButtons=["enlisted-nco","academy-officer"].map(milCareer=>element({milCareer}));
+  const deploymentKeys=["frontline","city","nest","reserve","rear"];
+  const deploymentButtons=deploymentKeys.map(milDeployment=>element({milDeployment}));
+  const deploymentRoutes=deploymentKeys.map(milDeployRoute=>element({milDeployRoute}));
   const orgUnits=[0,1,2,3].map(milUnit=>element({milUnit:String(milUnit)}));
   const names=orgUnits.map(()=>element()),briefs=orgUnits.map(()=>element());
   const factLabels=[element(),element(),element()],facts=[element(),element(),element()];
@@ -45,7 +48,8 @@ function createFixture(reduced=false){
     ["[data-mil-force]",forceNodes],["[data-mil-force-link]",forceLinks],
     ["[data-mil-rank-group]",rankGroups],["[data-mil-rank-stage]",rankStages],
     ["[data-mil-rank-name]",rankNames],["[data-mil-rank-brief]",rankBriefs],
-    ["[data-mil-career]",careerButtons]
+    ["[data-mil-career]",careerButtons],
+    ["[data-mil-deployment]",deploymentButtons],["[data-mil-deploy-route]",deploymentRoutes]
   ]);
   const root={
     dataset:{},
@@ -71,7 +75,7 @@ function createFixture(reduced=false){
       fn();
     }
   }
-  return {root,modeButtons,commandNodes,branches,orgUnits,forceNodes,forceLinks,rankGroups,rankStages,rankNames,rankBriefs,careerButtons,names,briefs,byId,facts,events,flush,
+  return {root,modeButtons,commandNodes,branches,orgUnits,forceNodes,forceLinks,rankGroups,rankStages,rankNames,rankBriefs,careerButtons,deploymentButtons,deploymentRoutes,names,briefs,byId,facts,events,flush,
     get title(){return byId.get("[data-mil-readout-title]").textContent},
     get description(){return byId.get("[data-mil-readout-body]").textContent},
     get route(){return byId.get("[data-mil-route]").textContent}};
@@ -196,4 +200,45 @@ rr.modeButtons[3].click();
 rr.byId.get("[data-mil-route-btn]").click();
 assert.equal(rr.title,"장성급 장교");
 assert.equal(rr.route,"단계 확인 완료");
-console.log("PASS: military command, 3 formation branches, 5 force domains, 3 rank paths, career entries, replay and reduced motion");
+// 05 deployment: choosing a zone, replaying conceptual map, cancellation and reduced-motion support.
+f.modeButtons[4].click();
+assert.equal(f.root.dataset.mode,"deployment");
+assert.equal(f.title,"전선 방어");
+assert.equal(f.deploymentButtons[0].getAttribute("aria-pressed"),"true");
+assert(f.deploymentRoutes[0].classes.has("active"));
+f.deploymentButtons[1].click();
+assert.equal(f.title,"도시 안전권");
+assert.match(f.description,/민간인의 생활/);
+assert.equal(f.deploymentButtons[0].getAttribute("aria-pressed"),"false");
+assert(!f.deploymentRoutes[0].classes.has("active"));
+f.deploymentButtons[2].click();
+assert.equal(f.title,"네스트 대응");
+assert.match(f.description,/N-01~N-03/);
+f.deploymentButtons[3].click();
+assert.equal(f.title,"기동 예비전력");
+f.deploymentButtons[4].click();
+assert.equal(f.title,"후방 보급");
+assert.equal(f.facts[0].textContent,"보급 · 수리 · 회복");
+f.deploymentButtons[0].click();
+f.byId.get("[data-mil-route-btn]").click();
+f.flush();
+assert.equal(f.title,"후방 보급");
+assert.equal(f.route,"구역 확인 완료");
+assert(f.deploymentRoutes[3].classes.has("passed"));
+f.modeButtons[1].click();
+assert.equal(f.title,"군단");
+f.modeButtons[4].click();
+assert.equal(f.title,"후방 보급","Returning to deployments should preserve selected zone");
+f.modeButtons[0].click();
+assert.equal(f.title,"국가 지휘부");
+const rd=createFixture(true);
+rd.modeButtons[4].click();
+rd.byId.get("[data-mil-route-btn]").click();
+assert.equal(rd.title,"후방 보급");
+assert.equal(rd.route,"구역 확인 완료");
+const cancel=createFixture();
+cancel.modeButtons[4].click();
+cancel.byId.get("[data-mil-route-btn]").click();
+cancel.modeButtons[3].click();cancel.flush();
+assert.equal(cancel.title,"초급 장교","Changing tabs must cancel deployment playback");
+console.log("PASS: all 5 military tabs, deployment sectors, readout, cancel/replay, reduced motion");

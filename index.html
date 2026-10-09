@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-seraph.css?v=20261009-seraph-polish-v2">
   <link rel="stylesheet" href="./css/eidolon-records-seraph.css?v=20261009-seraph-records-v1">
-  <link rel="stylesheet" href="./css/military.css?v=20261009-military-rank-v1">
+  <link rel="stylesheet" href="./css/military.css?v=20261009-military-deployment-v1">
   <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
@@ -837,6 +837,27 @@
           </div>
           <p class="mil-rank-note">공통 경력 단계 예시 · 실제 계급명·진급 자격은 국가별로 상이</p>
         </div>
+        <div class="mil-deployment" data-mil-deploy-board aria-label="작전 구역 배치 시뮬레이션">
+          <svg class="mil-deploy-map" viewBox="0 0 800 470" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="mil-deploy-contour" d="M0 75 Q170 0 310 96 T800 74 M0 132 Q155 48 312 148 T800 144 M0 226 Q154 124 329 220 T800 236 M0 331 Q189 232 363 330 T800 355 M0 420 Q185 310 380 408 T800 422"/>
+            <path class="mil-deploy-gridline" d="M112 0 L156 470 M290 0 L340 470 M504 0 L550 470 M684 0 L742 470 M0 116 H800 M0 236 H800 M0 358 H800"/>
+            <path class="mil-deploy-boundary" d="M35 110 L200 46 L345 100 L440 40 L714 93 L766 205 L681 367 L510 427 L296 408 L89 335 Z"/>
+            <path data-mil-deploy-route="frontline" d="M400 235 L151 100"/>
+            <path data-mil-deploy-route="city" d="M400 235 L654 113"/>
+            <path data-mil-deploy-route="nest" d="M400 235 L395 175"/>
+            <path data-mil-deploy-route="reserve" d="M400 235 L143 355"/>
+            <path data-mil-deploy-route="rear" d="M400 235 L663 357"/>
+            <circle cx="400" cy="235" r="16" class="mil-deploy-origin"/>
+            <circle cx="400" cy="235" r="30" class="mil-deploy-ring"/>
+          </svg>
+          <div class="mil-deploy-label"><span>OPERATIONAL SECTORS // CONCEPT MODEL</span><b>2134 / 배치 구역 개요</b></div>
+          <button type="button" class="mil-deploy-zone zone-frontline active" data-mil-deployment="frontline" aria-pressed="true"><span>01 / FRONT</span><b>전선 방어</b></button>
+          <button type="button" class="mil-deploy-zone zone-city" data-mil-deployment="city" aria-pressed="false"><span>02 / CIVIL</span><b>도시 안전권</b></button>
+          <button type="button" class="mil-deploy-zone zone-nest" data-mil-deployment="nest" aria-pressed="false"><span>03 / NEST</span><b>네스트 대응</b></button>
+          <button type="button" class="mil-deploy-zone zone-reserve" data-mil-deployment="reserve" aria-pressed="false"><span>04 / RESERVE</span><b>기동 예비전력</b></button>
+          <button type="button" class="mil-deploy-zone zone-rear" data-mil-deployment="rear" aria-pressed="false"><span>05 / REAR</span><b>후방 보급</b></button>
+          <div class="mil-deploy-legend"><span>국가별 실제 배치 · 병력 규모 · 지리 좌표 아님</span><b>5 SECTOR TYPES</b></div>
+        </div>
         <div class="mil-route-state"><span>전달 상태</span><b data-mil-route>대기</b></div>
       </section>
       <aside class="mil-readout" aria-live="polite" aria-atomic="true"><header><span data-mil-readout-heading>선택 계층 // 지휘 구조</span><b data-mil-readout-code>지휘 단계 // 01 / 05</b></header><h3 data-mil-readout-title>국가 지휘부</h3><p data-mil-readout-body>국가의 전쟁 목표와 방위 정책을 정하고, 전략적 우선순위와 군사력 운용 방향을 결정한다. 구체적인 체계는 국가마다 다르다.</p><div class="mil-facts" data-mil-facts><div><span>지휘 범위</span><b>국가 전략</b></div><div><span>주요 역할</span><b>정책·우선순위 결정</b></div><div><span>연결 계층</span><b>합동지휘부</b></div></div><button type="button" data-mil-route-btn>지휘 흐름 재생 <span>→</span></button></aside>
@@ -870,4 +891,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-military-rank-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-military-deployment-v1"></script></body></html>

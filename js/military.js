@@ -68,6 +68,14 @@ const CAREER_ROUTES={
   "enlisted-nco":{group:"nco",title:"병 → 부사관 지원",body:"병 복무 경력을 바탕으로 부사관 선발·교육을 거쳐 임용될 수 있는 경로다. 지원 자격과 심사 기준은 국가별로 다르며 자동 진급을 의미하지 않는다.",facts:["병 복무 경력","지원 · 선발 · 교육","부사관 임용 심사"]},
   "academy-officer":{group:"officer",title:"군 교육기관 → 장교 임관",body:"중앙사관학교 등 장교 양성 교육기관을 통해 장교로 진출하는 경로다. 중앙사관학교는 세계관의 엘리트 교육기관이지만, 국가별로 다른 장교 양성 경로도 존재한다.",facts:["중앙사관학교 등","교육 · 평가 · 임관","초급 장교"]}
 };
+/* Conceptual defense zones, not verified locations or actual troop deployments. */
+const DEPLOYMENT_ZONES={
+  frontline:{title:"전선 방어",body:"에이돌론의 접근과 전선 변화를 관측하며 방어선을 유지하는 구역이다. 적 개체 유형과 작전 위험도에 따라 정찰·기동·방어 전력을 조정한다.",facts:["접근 차단 · 전선 유지","지상 · 항공 · 정보","적 개체 · 전선 변화"]},
+  city:{title:"도시 안전권",body:"민간인의 생활이 계속되는 방위 권역이다. 대피 체계와 핵심 기반시설을 보호하며, 군 작전과 민간 행정의 역할을 구분해 운용한다.",facts:["민간 보호 · 기반시설","방공 · 경계 · 민간 협조","안전권 변화"]},
+  nest:{title:"네스트 대응",body:"에이돌론 네스트 주변의 접근 감시와 봉쇄, 구조 분석을 다루는 작전 구역이다. 대응 절차는 네스트 규모(N-01~N-03)와 개체 위협에 따라 달라진다.",facts:["감시 · 봉쇄 · 위협 분석","정찰 · 특수 · 합동 지원","네스트 규모 · 위험도"]},
+  reserve:{title:"기동 예비전력",body:"전선 변화나 돌발 상황에 대응하기 위해 전개 가능한 전력을 보존·조정하는 영역이다. 투입 여부는 지휘 판단과 현장 정보에 따라 결정된다.",facts:["신속 대응 · 전선 보강","기동 · 항공 지원","현장 상황 · 지휘 판단"]},
+  rear:{title:"후방 보급",body:"전방 부대의 지속적인 작전을 지원하는 지역이다. 물자 보급과 장비 수리, 의무·통신 체계를 유지하고 손실된 전력을 회복하도록 돕는다.",facts:["보급 · 수리 · 회복","수송 · 정비 · 의무","보급로 · 기반시설"]}
+};
 export function initMilitary(){
   const root=document.querySelector("#milCommand");
   if(!root)return;
@@ -89,9 +97,11 @@ export function initMilitary(){
   const rankNames=[...root.querySelectorAll("[data-mil-rank-name]")];
   const rankBriefs=[...root.querySelectorAll("[data-mil-rank-brief]")];
   const careerButtons=[...root.querySelectorAll("[data-mil-career]")];
+  const deploymentButtons=[...root.querySelectorAll("[data-mil-deployment]")];
+  const deploymentRoutes=[...root.querySelectorAll("[data-mil-deploy-route]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const timers=new Set();
-  let token=0,branchKey="land",forceKey="ground",rankGroupKey="officer";
+  let token=0,branchKey="land",forceKey="ground",rankGroupKey="officer",deploymentKey="frontline";
   const schedule=(fn,delay)=>{const id=setTimeout(()=>{timers.delete(id);fn()},delay);timers.add(id)};
   function cancelRoute(){
     token++;
@@ -217,6 +227,29 @@ export function initMilitary(){
       "경력 전환 // "+(key==="enlisted-nco"?"01":"02"));
     route.textContent="경력 경로 // "+career.title;
   }
+  function selectDeployment(key,{replay=false}={}){
+    const zone=DEPLOYMENT_ZONES[key];
+    if(root.dataset.mode!=="deployment"||!zone)return;
+    if(!replay)cancelRoute();
+    deploymentKey=key;
+    const sequence=Object.keys(DEPLOYMENT_ZONES);
+    const index=sequence.indexOf(key);
+    deploymentButtons.forEach(button=>{
+      const position=sequence.indexOf(button.dataset.milDeployment);
+      const active=button.dataset.milDeployment===key;
+      button.classList.toggle("active",active);
+      button.classList.toggle("passed",replay&&position<index);
+      button.setAttribute("aria-pressed",String(active));
+    });
+    deploymentRoutes.forEach(routeLine=>{
+      const position=sequence.indexOf(routeLine.dataset.milDeployRoute);
+      routeLine.classList.toggle("active",routeLine.dataset.milDeployRoute===key);
+      routeLine.classList.toggle("passed",replay&&position<index);
+    });
+    renderReadout(zone.title,zone.body,zone.facts,["배치 목적","주요 전력","판단 요소"],
+      "작전 구역 // "+String(index+1).padStart(2,"0")+" / 05");
+    route.textContent=replay?"구역 확인 // "+String(index+1).padStart(2,"0"):"선택 구역 // "+zone.title;
+  }
   function setMode(key){
     const mode=MODES[key];
     if(!mode)return;
@@ -229,8 +262,8 @@ export function initMilitary(){
     });
     q("[data-mil-kicker]").textContent=mode.kick;
     q("[data-mil-title]").textContent=mode.title;
-    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":key==="force"?"선택 전력 // 통합 전력망":key==="rank"?"계급·경력 // 인사 기록":"현재 기록";
-    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":key==="force"?"전력 연계 재생 ":key==="rank"?"경력 단계 재생 ":"지휘 흐름 재생 ";
+    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":key==="force"?"선택 전력 // 통합 전력망":key==="rank"?"계급·경력 // 인사 기록":key==="deployment"?"선택 구역 // 작전 배치":"현재 기록";
+    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":key==="force"?"전력 연계 재생 ":key==="rank"?"경력 단계 재생 ":key==="deployment"?"작전 구역 순차 확인 ":"지휘 흐름 재생 ";
     if(key==="command"){
       selectLevel("national");
     }else if(key==="structure"){
@@ -245,6 +278,10 @@ export function initMilitary(){
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
       setRankGroup(rankGroupKey);
+    }else if(key==="deployment"){
+      nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
+      lines.forEach(line=>line.classList.remove("passed"));
+      selectDeployment(deploymentKey);
     }else{
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
@@ -253,6 +290,22 @@ export function initMilitary(){
     }
   }
   function runRoute(){
+    if(root.dataset.mode==="deployment"){
+      cancelRoute();
+      const keys=Object.keys(DEPLOYMENT_ZONES);
+      if(reduced){selectDeployment(keys[keys.length-1],{replay:true});route.textContent="구역 확인 완료";return}
+      stage.classList.add("routing");
+      const current=token;
+      keys.forEach((key,index)=>schedule(()=>{
+        if(token!==current||root.dataset.mode!=="deployment")return;
+        selectDeployment(key,{replay:true});
+        if(index===keys.length-1){
+          route.textContent="구역 확인 완료";
+          schedule(()=>{if(token===current)stage.classList.remove("routing")},360);
+        }
+      },140+index*290));
+      return;
+    }
     if(root.dataset.mode==="rank"){
       cancelRoute();
       const steps=RANK_GROUPS[rankGroupKey].stages;
@@ -330,13 +383,14 @@ export function initMilitary(){
   rankGroups.forEach(button=>button.addEventListener("click",()=>setRankGroup(button.dataset.milRankGroup)));
   rankStages.forEach(node=>node.addEventListener("click",()=>selectRankStage(Number(node.dataset.milRankStage))));
   careerButtons.forEach(button=>button.addEventListener("click",()=>selectCareer(button.dataset.milCareer)));
+  deploymentButtons.forEach(button=>button.addEventListener("click",()=>selectDeployment(button.dataset.milDeployment)));
   nodes.forEach(node=>node.addEventListener("click",()=>{
     if(root.dataset.mode!=="command")setMode("command");
     selectLevel(node.dataset.milNode);
   }));
   q("[data-mil-route-btn]")?.addEventListener("click",runRoute);
   window.addEventListener("archive:record-opened",event=>{
-    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"||root.dataset.mode==="rank"))runRoute();
+    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"||root.dataset.mode==="rank"||root.dataset.mode==="deployment"))runRoute();
     else if(event.detail?.key!=="military")cancelRoute();
   });
   setMode("command");
