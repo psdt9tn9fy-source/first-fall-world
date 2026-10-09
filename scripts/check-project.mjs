@@ -190,4 +190,18 @@ seraphTest.setClass("hunter");
 assert.equal(tabs[1].textContent,"ORIGINAL behavior");
 assert.equal(header.textContent,"4개 항목 // 공개");
 seraphTest.destroy();
-console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, CSS and entrypoints");
+/* Small N-01 recon preserves the standard medium/grand topology and SERAPH archive. */
+const reconJS=read("js/eidolon-nest-recon.js");
+const reconCSS=read("css/eidolon-nest-recon.css");
+assert(index.includes("data-ei-nest-recon"),"N-01 model stage absent");
+assert(index.includes('data-ei-nest-file'),"N-01 local GLB preview absent");
+assert(index.includes('./css/eidolon-nest-recon.css?v='),"N-01 CSS link absent");
+assert(read("js/eidolon-records-nest.js").includes("initNestRecon(root"),"N-01 JS lifecycle disconnected");
+assert(records.includes("nest.setActive(true)"),"Nest tab activation disconnected");
+assert(reconJS.includes('./assets/nest/small.glb?v='),"N-01 production GLB URL absent");
+assert(reconJS.includes('URL.createObjectURL(file)'),"N-01 local preview must support binary uploads");
+assert(reconJS.includes("prefers-reduced-motion")===false,"Motion fallback centralized in recon CSS");
+assert(reconCSS.includes(':not(.seraph-mode)'),"N-01 must not override SERAPH");
+assert(reconCSS.includes('data-ei-nest="small"'),"N-01 CSS must not override other nest scales");
+// Production model is optional until user commits small-nest.glb; missing file must show local preview UI.
+console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, N-01 recon, CSS and entrypoints");

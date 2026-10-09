@@ -2,7 +2,7 @@
 import { initProfileRecord } from "./eidolon-records-profile.js?v=20261009-seraph-records-v1";
 import { initSeraphRecords } from "./eidolon-records-seraph.js?v=20261009-seraph-records-v1";
 import { initBehaviorRecord } from "./eidolon-records-behavior.js?v=20261009-seraph-records-v1";
-import { initNestRecord } from "./eidolon-records-nest.js?v=20261009-seraph-records-v1";
+import { initNestRecord } from "./eidolon-records-nest.js?v=20261009-nest-recon-v1";
 import { initRiskRecord } from "./eidolon-records-risk.js?v=20261009-seraph-records-v1";
 
 const MODULES=["profile","behavior","nest","engagement"];
@@ -33,6 +33,7 @@ export function initEidolonRecords(root,{onTabChange}={}){
       requestAnimationFrame(()=>{if(root.dataset.eiTab==="behavior"&&root.dataset.eiClass!=="seraph")behavior.runTrace()});
     }else behavior.cancel();
     if(key==="nest"&&root.dataset.eiClass!=="seraph"){
+      nest.setActive(true);
       requestAnimationFrame(()=>{if(root.dataset.eiTab==="nest"&&root.dataset.eiClass!=="seraph")nest.scanNest()});
     }else nest.cancel();
     seraph.setTab(key);
@@ -46,7 +47,10 @@ export function initEidolonRecords(root,{onTabChange}={}){
     profile.syncIdentification(event.detail);
     if(seraphSelected){behavior.cancel();nest.cancel()}
     else if(root.dataset.eiTab==="behavior")requestAnimationFrame(()=>{if(root.dataset.eiClass!=="seraph")behavior.runTrace()});
-    else if(root.dataset.eiTab==="nest")requestAnimationFrame(()=>{if(root.dataset.eiClass!=="seraph")nest.scanNest()});
+    else if(root.dataset.eiTab==="nest"){
+      nest.setActive(true);
+      requestAnimationFrame(()=>{if(root.dataset.eiClass!=="seraph")nest.scanNest()});
+    }
     seraph.setTab(root.dataset.eiTab);
   },{signal});
   setTab(root.dataset.eiTab||"profile",{silent:true});

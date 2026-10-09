@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="./css/eidolon-records.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-behavior.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-nest.css?v=20261008-structure-v1">
+  <link rel="stylesheet" href="./css/eidolon-nest-recon.css?v=20261009-nest-recon-v1">
   <link rel="stylesheet" href="./css/eidolon-records-engagement.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-profile.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
@@ -659,6 +660,36 @@
             <button type="button" data-ei-nest="medium"><span>N-02</span><b>중형</b></button>
             <button type="button" data-ei-nest="grand"><span>N-03</span><b>대형</b></button>
           </div>
+
+          <div class="ei-nest-recon" data-ei-nest-recon data-mode="tactical" aria-label="소형 네스트 3D 정찰 재구성">
+            <div class="ei-nest-recon-head"><span>ORBITAL RECON // N-01</span><b data-ei-nest-recon-status>AWAITING 3D DATA</b></div>
+            <div class="ei-nest-recon-view">
+              <model-viewer data-ei-nest-viewer camera-controls auto-rotate interaction-prompt="none"
+                camera-orbit="45deg 55deg 125%" min-camera-orbit="auto 22deg 70%" max-camera-orbit="auto 82deg 220%"
+                shadow-intensity="1" exposure="1" environment-image="neutral" loading="eager"
+                alt="소형 네스트의 Meshy 3D 참고 모델. 드래그하여 회전하고 확대할 수 있습니다."></model-viewer>
+            </div>
+            <i class="ei-nest-recon-sweep" aria-hidden="true"></i>
+            <i class="ei-nest-recon-reticle" aria-hidden="true"></i>
+            <div class="ei-nest-recon-tools" role="group" aria-label="정찰 화면 모드">
+              <button type="button" class="active" data-ei-nest-mode="tactical" aria-pressed="true">TACTICAL</button>
+              <button type="button" data-ei-nest-mode="lidar" aria-pressed="false">LIDAR</button>
+              <button type="button" data-ei-nest-mode="thermal" aria-pressed="false">THERMAL</button>
+            </div>
+            <div class="ei-nest-recon-log" data-ei-nest-log aria-live="polite">참고 모델을 불러오는 중…</div>
+            <div class="ei-nest-recon-fallback" data-ei-nest-fallback>
+              <strong>3D MODEL // WAITING</strong>
+              <p>네스트 GLB 파일을 연결하면 3D 재구성과 스캔 연출이 시작됩니다.</p>
+              <button class="ei-nest-recon-local" data-ei-nest-local type="button">GLB 로컬 미리보기 ↗</button>
+              <input data-ei-nest-file type="file" accept=".glb,model/gltf-binary" hidden>
+            </div>
+            <span class="ei-nest-recon-legal">SIMULATED RECON // 실제 위성 관측치 아님</span>
+            <div class="ei-nest-recon-meter"><i data-ei-nest-bar></i></div>
+            <div class="ei-nest-recon-foot">
+              <span data-ei-nest-phase>MODEL DATA // STANDBY</span>
+              <b data-ei-nest-percent>0%</b>
+            </div>
+          </div>
           <div class="ei-nest-topology" data-ei-nest-topology data-level="small">
             <div class="ei-nest-grid" aria-hidden="true"></div>
             <div class="ei-nest-links" aria-hidden="true">
@@ -788,4 +819,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-seraph-records-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-nest-recon-v1"></script></body></html>
