@@ -33,7 +33,7 @@ export function initSeraphArchive(root,{reduced=false}={}){
   const labels=new Map(buttons.map(button=>[button,button.querySelector("b")||button]));
   const originals=new Map([...labels].map(([button,label])=>[button,label.textContent]));
   const names={core:"내부",network:"통신",morphology:"외형"};
-  let active=false,timer=0;
+  let active=false,timer=0,bootTimer=0;
   function description(key){return CHANNELS[key]||CHANNELS.morphology}
   function setFocus(key="morphology"){
     const data=description(key);
@@ -52,7 +52,16 @@ export function initSeraphArchive(root,{reduced=false}={}){
     visual.classList.add("reacquiring");
     timer=setTimeout(()=>visual.classList.remove("reacquiring"),750);
   }
+  function boot(){
+    clearTimeout(bootTimer);
+    root.classList.remove("ei-seraph-boot");
+    if(reduced)return;
+    void root.offsetWidth;
+    root.classList.add("ei-seraph-boot");
+    bootTimer=setTimeout(()=>root.classList.remove("ei-seraph-boot"),980);
+  }
   function setClass(key){
+    const wasActive=active;
     active=key==="seraph";
     root.classList.toggle("seraph-archive-ready",active);
     if(scannerHeading)scannerHeading.textContent=active?"목격 기록 // 비검증 실루엣":originalHeading;
@@ -60,9 +69,13 @@ export function initSeraphArchive(root,{reduced=false}={}){
       const original=originals.get(button);
       label.textContent=active?(names[button.dataset.eiFocus]||original):original;
     }
-    if(active){setFocus(root.dataset.eiFocus||"morphology");pulse()}
-    else{
+    if(active){
+      setFocus(root.dataset.eiFocus||"morphology");
+      if(!wasActive){pulse();boot()}
+    }else{
       clearTimeout(timer);
+      clearTimeout(bootTimer);
+      root.classList.remove("ei-seraph-boot");
       visual?.classList.remove("reacquiring");
       delete root.dataset.eiSeraphFocus;
     }

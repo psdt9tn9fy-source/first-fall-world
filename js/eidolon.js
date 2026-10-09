@@ -1,5 +1,5 @@
 import { CLASSES, NESTS } from "./eidolon-data.js?v=20261009-seraph-v1";
-import { initSeraphArchive } from "./eidolon-seraph.js?v=20261009-seraph-v1";
+import { initSeraphArchive } from "./eidolon-seraph.js?v=20261009-seraph-polish-v2";
 
 export function initEidolon(){
   const root=document.querySelector("#eidolonLab");

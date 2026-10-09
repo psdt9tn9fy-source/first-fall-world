@@ -69,21 +69,52 @@
 .eidolon-lab.seraph-mode .ei-seraph-title b{font-size:clamp(27px,3vw,44px);font-weight:900;letter-spacing:.13em;line-height:1;color:#e9e7e7}
 .eidolon-lab.seraph-mode .ei-seraph-title em{font-size:9px;font-style:normal;color:#c2b6ba}
 .eidolon-lab.seraph-mode .ei-seraph-readout{
-  bottom:22px;display:grid;gap:6px;border-top:1px solid #afa2a67c;padding-top:14px
+  /* Reserve a separate opaque telemetry bay BELOW the three controls. */
+  bottom:16px;display:grid;gap:5px;
+  padding:12px 14px 12px 16px;box-sizing:border-box;
+  border:1px solid #a9959d8c;border-left:2px solid #d1aab5;
+  border-radius:2px;
+  background:linear-gradient(105deg,rgba(4,5,8,.98),rgba(12,10,14,.96));
+  box-shadow:0 0 0 1px #0008,inset 0 0 28px #000b,0 14px 24px #0008;
+  backdrop-filter:blur(6px)
+}
+.eidolon-lab.seraph-mode .ei-seraph-readout::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,#e9c6cf80,transparent 72%);pointer-events:none
+}
+.eidolon-lab.seraph-mode .ei-seraph-readout>*{
+  position:relative;z-index:1;
+  text-shadow:0 2px 6px #000,0 0 16px #000
 }
 .eidolon-lab.seraph-mode .ei-seraph-readout span{font-size:9px;letter-spacing:.15em;color:#c18c93}
 .eidolon-lab.seraph-mode .ei-seraph-readout strong{font-size:12px;letter-spacing:.1em;color:#f0e8eb}
 .eidolon-lab.seraph-mode .ei-seraph-readout small{font-size:10px;color:#c4babc;line-height:1.5}
 .eidolon-lab.seraph-mode .ei-hotspot{
-  top:auto!important;bottom:78px!important;width:clamp(76px,26%,114px);min-width:0;
-  border:1px solid #817174;background:#090b0eea;padding:9px;color:#baafb2;text-align:left
+  /* Controls occupy an upper row; readout is not allowed underneath. */
+  top:auto!important;bottom:168px!important;width:clamp(76px,26%,114px);min-width:0;
+  min-height:63px;box-sizing:border-box;z-index:10;overflow:hidden;
+  border:1px solid #a38a94;
+  background:linear-gradient(145deg,rgba(8,9,12,.99),rgba(18,14,19,.98));
+  box-shadow:0 7px 22px #000b,inset 0 0 0 1px #ffffff08;
+  backdrop-filter:blur(7px);
+  padding:11px 12px;color:#d0c1c7;text-align:left;
+  text-shadow:0 2px 5px #000,0 0 10px #000
 }
+.eidolon-lab.seraph-mode .ei-hotspot::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 5px,#e1cbd308 6px,transparent 7px);
+  opacity:.45
+}
+.eidolon-lab.seraph-mode .ei-hotspot>span,
+.eidolon-lab.seraph-mode .ei-hotspot>b{position:relative;z-index:1}
 .eidolon-lab.seraph-mode .ei-hotspot:after{display:none}
 .eidolon-lab.seraph-mode .ei-hotspot.core{left:14px!important;right:auto!important}
 .eidolon-lab.seraph-mode .ei-hotspot.network{left:50%!important;right:auto!important;transform:translateX(-50%)}
 .eidolon-lab.seraph-mode .ei-hotspot.morphology{left:auto!important;right:14px!important}
 .eidolon-lab.seraph-mode .ei-hotspot.active{
-  border-color:#dbc3c7;background:#292027;box-shadow:inset 0 -2px #b78991
+  border-color:#e3bbc7;background:linear-gradient(145deg,#36242c,#20171c);
+  box-shadow:inset 0 -3px #c999a6,0 0 18px #a8677c33;
+  animation:eiSeraphIdleInterference 8s steps(1,end) infinite
 }
 .eidolon-lab.seraph-mode .ei-hotspot b{font-size:11px;color:#e5dadd}
 .eidolon-lab.seraph-mode .ei-hotspot span{font-size:9px}
@@ -104,18 +135,89 @@
   .eidolon-lab.seraph-mode .ei-seraph-title b{font-size:29px}
   .eidolon-lab.seraph-mode .ei-seraph-title span,.eidolon-lab.seraph-mode .ei-seraph-title em{font-size:8px}
   .eidolon-lab.seraph-mode .ei-seraph-corners{inset:14px 14px 63px}
-  .eidolon-lab.seraph-mode .ei-seraph-readout{left:16px;right:16px;bottom:20px}
+  .eidolon-lab.seraph-mode .ei-seraph-readout{left:12px;right:12px;bottom:14px;padding:11px 12px 11px 13px}
   .eidolon-lab.seraph-mode .ei-seraph-readout strong{font-size:10px}
   .eidolon-lab.seraph-mode .ei-seraph-readout small{font-size:9px}
-  .eidolon-lab.seraph-mode .ei-hotspot{width:calc((100% - 42px)/3);bottom:72px!important;padding:8px}
+  .eidolon-lab.seraph-mode .ei-hotspot{width:calc((100% - 42px)/3);bottom:162px!important;min-height:61px;padding:10px 9px}
   .eidolon-lab.seraph-mode .ei-hotspot.core{left:9px!important}
   .eidolon-lab.seraph-mode .ei-hotspot.morphology{right:9px!important}
   .eidolon-lab.seraph-mode .ei-hotspot b{font-size:10px}
   .eidolon-lab.seraph-mode .ei-hotspot span{font-size:8px}
 }
+
+/* A single high-energy entry event, followed by quiet occasional interference. */
+.eidolon-lab.seraph-mode .ei-seraph-visual{pointer-events:none}
+.eidolon-lab.seraph-mode .ei-seraph-visual::before{
+  content:"";position:absolute;inset:0;z-index:8;pointer-events:none;opacity:0;
+  background:
+    linear-gradient(transparent 14%,#f6e5ed3d 14.4%,transparent 16%),
+    linear-gradient(transparent 41%,#d1bdca6b 41.7%,transparent 43%),
+    linear-gradient(transparent 74%,#fff4fa40 74.4%,transparent 76%),
+    repeating-linear-gradient(0deg,#f8e7ec08 0 2px,transparent 3px 6px);
+  mix-blend-mode:screen
+}
+.eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-visual::before{
+  animation:eiSeraphSignalBurst .96s steps(2,end) both
+}
+.eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-portrait{
+  animation:eiSeraphMaterialize .96s steps(2,end) both
+}
+.eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-title,
+.eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-readout{
+  animation:eiSeraphTelemetryIn .96s steps(1,end) both
+}
+.eidolon-lab.seraph-mode.ei-seraph-boot .ei-hotspot{
+  animation:eiSeraphControlSync .96s steps(1,end) both
+}
+@keyframes eiSeraphSignalBurst{
+  0%,8%{opacity:0;transform:translateX(0)}
+  10%,15%{opacity:.95;transform:translateX(-7px)}
+  18%,27%{opacity:.18;transform:translateX(9px)}
+  29%,38%{opacity:.85;transform:translateX(-5px)}
+  40%,48%{opacity:0}
+  52%,59%{opacity:.75;transform:translateX(4px)}
+  64%,73%{opacity:.35;transform:translateX(-2px)}
+  78%,100%{opacity:0;transform:none}
+}
+@keyframes eiSeraphMaterialize{
+  0%,8%{opacity:0;filter:grayscale(1) blur(11px) contrast(2)}
+  10%,17%{opacity:.85;transform:translateX(-9px);filter:grayscale(1) contrast(2.1)}
+  19%,29%{opacity:.16;transform:translateX(8px);filter:blur(6px)}
+  32%,46%{opacity:.88;transform:translateX(-5px);filter:grayscale(1) contrast(1.6)}
+  50%,61%{opacity:.28;transform:translateX(5px)}
+  65%,78%{opacity:.82;transform:translateX(-2px)}
+  84%,100%{opacity:.9;transform:none;filter:grayscale(1) contrast(1.18) brightness(.81)}
+}
+@keyframes eiSeraphTelemetryIn{
+  0%,13%,28%,45%{opacity:0}
+  15%,26%,32%,43%{opacity:1}
+  53%,100%{opacity:1}
+}
+@keyframes eiSeraphControlSync{
+  0%,33%{opacity:0;filter:brightness(2)}
+  35%,42%{opacity:.95;filter:brightness(1.65)}
+  44%,52%{opacity:.38}
+  56%,100%{opacity:1;filter:brightness(1)}
+}
+@keyframes eiSeraphIdleInterference{
+  0%,92%,95%,100%{filter:brightness(1)}
+  93%{filter:brightness(1.14)}
+  94%{filter:brightness(.9)}
+}
+/* Focus is never sacrificed to the decorative signal failure. */
+.eidolon-lab.seraph-mode .ei-hotspot:focus-visible{
+  outline:2px solid #f4cad7;outline-offset:3px
+}
+
 @media(prefers-reduced-motion:reduce){
   .eidolon-lab.seraph-mode .ei-seraph-sweep,
   .eidolon-lab.seraph-mode .ei-seraph-visual:after,
-  .eidolon-lab.seraph-mode .ei-seraph-visual.reacquiring .ei-seraph-portrait{animation:none!important}
+  .eidolon-lab.seraph-mode .ei-seraph-visual.reacquiring .ei-seraph-portrait,
+  .eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-portrait,
+  .eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-visual::before,
+  .eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-title,
+  .eidolon-lab.seraph-mode.ei-seraph-boot .ei-seraph-readout,
+  .eidolon-lab.seraph-mode.ei-seraph-boot .ei-hotspot,
+  .eidolon-lab.seraph-mode .ei-hotspot.active{animation:none!important}
   .eidolon-lab.seraph-mode .ei-seraph-portrait{transition:none}
 }
