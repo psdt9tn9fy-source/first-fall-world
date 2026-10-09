@@ -79,8 +79,8 @@ export function initEidolonDossier(root,{reduced=false}={}){
     await reveal("core",get("[data-live-core]"),record.core||"",token,7);if(token!==run)return;
     await reveal("network",get("[data-live-network]"),record.network||"",token,7);if(token!==run)return;
     await reveal("note",get("[data-live-note]"),record.note||"",token,7);if(token!==run)return;
-    get("[data-live-state]").textContent="RECORD VERIFIED";
-    get("[data-live-foot]").textContent="LINK // VERIFIED";
+    get("[data-live-state]").textContent=record.unverified?"RECORD INCOMPLETE":"RECORD VERIFIED";
+    get("[data-live-foot]").textContent=record.unverified?"LINK // UNVERIFIED":"LINK // VERIFIED";
     panel.classList.remove("streaming");panel.classList.add("ready");
   }
   function close(){

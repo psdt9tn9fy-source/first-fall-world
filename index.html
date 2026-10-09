@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="./css/eidolon-records-engagement.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-profile.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
+  <link rel="stylesheet" href="./css/eidolon-seraph.css?v=20261009-seraph-v1">
   <link rel="stylesheet" href="./css/military.css?v=20261007-refactor-3">
   <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
@@ -541,6 +542,17 @@
         <div class="ei-scan-top"><span>참고 형상 // 개체별 형태 차이</span><b id="eiTaxonomyState">공개 분류 // 확인 완료</b></div>
         <div class="ei-target" aria-hidden="true">
           <i class="ei-axis-x"></i><i class="ei-axis-y"></i><div class="ei-orbit"></div>
+          <div class="ei-seraph-visual" data-ei-seraph-visual aria-hidden="true">
+            <img class="ei-seraph-portrait" src="./assets/eidolon/seraph-silhouette.webp?v=20261009-seraph-v1" alt="" loading="lazy" decoding="async">
+            <div class="ei-seraph-haze"></div><div class="ei-seraph-grain"></div><i class="ei-seraph-sweep"></i>
+            <div class="ei-seraph-corners"><i></i><i></i><i></i><i></i></div>
+            <div class="ei-seraph-title"><span>IRREGULAR // ?</span><b>SERAPH</b><em>외형 참고 / 비검증</em></div>
+            <div class="ei-seraph-readout">
+              <span>I.D.A. // FRAGMENTARY RECORD</span>
+              <strong data-ei-seraph-channel>HUMAN-LIKE // SIGHTING ONLY</strong>
+              <small data-ei-seraph-message>검증된 표본 없음 · 목격 기록 기반 재구성</small>
+            </div>
+          </div>
           <div class="ei-specimen">
             <i class="ei-limb l1"></i><i class="ei-limb l2"></i><i class="ei-limb l3"></i><i class="ei-limb l4"></i><i class="ei-limb l5"></i><i class="ei-limb l6"></i>
             <i class="ei-body"></i><i class="ei-core"></i>
@@ -596,7 +608,7 @@
           </div>
           <p class="ei-profile-brief" id="eiProfileBody">전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.</p>
           <button class="ei-profile-rescan" type="button" data-ei-rescan>개체 다시 분석 <span>↻</span></button>
-          <div class="ei-seraph-notice" id="eiSeraphNotice" hidden><span>규격외 기록</span><b>표준 I–V 분류 적용 불가 // 별도 식별 가능</b></div>
+          <div class="ei-seraph-notice" id="eiSeraphNotice" hidden><span>규격외 기록</span><b>I–V 분류 미적용 // 확인된 실물 표본 없음</b></div>
         </section>
 
         <section class="ei-panel" data-ei-panel="behavior">
@@ -728,4 +740,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261008-world-order-structure-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-seraph-v1"></script></body></html>

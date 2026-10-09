@@ -1,4 +1,5 @@
-import { CLASSES, NESTS } from "./eidolon-data.js?v=20261008-code-clean-v1";
+import { CLASSES, NESTS } from "./eidolon-data.js?v=20261009-seraph-v1";
+import { initSeraphArchive } from "./eidolon-seraph.js?v=20261009-seraph-v1";
 
 export function initEidolon(){
   const root=document.querySelector("#eidolonLab");
@@ -16,11 +17,14 @@ export function initEidolon(){
   const q=id=>root.querySelector(id);
   const field=(name,value)=>root.querySelectorAll('[data-ei-field="'+name+'"]').forEach(el=>el.textContent=value);
   const current=()=>CLASSES[classIndex];
+  const seraphArchive=initSeraphArchive(root,{reduced});
 
   function loadRecords(){
     if(recordsPromise)return recordsPromise;
-    recordsPromise=import("./eidolon-records.js?v=20261008-structure-v1").then(mod=>{
+    recordsPromise=import("./eidolon-records.js?v=20261009-seraph-v1").then(mod=>{
       records=mod.initEidolonRecords(root);
+      const c=current();
+      root.dispatchEvent(new CustomEvent("eidolon:class-risk",{detail:{key:c.key==="seraph"?"측정 불가":c.riskKey,classKey:c.key,mark:c.mark,name:c.name,risk:c.risk}}));
       return records;
     }).catch(err=>{console.warn("에이돌론 기록을 불러올 수 없음",err);return null});
     return recordsPromise;
@@ -29,7 +33,7 @@ export function initEidolon(){
   function loadDossier(){
     if(dossier)return Promise.resolve(dossier);
     if(dossierPromise)return dossierPromise;
-    dossierPromise=import("./eidolon-dossier.js?v=20261007-refactor-3").then(mod=>{
+    dossierPromise=import("./eidolon-dossier.js?v=20261009-seraph-v1").then(mod=>{
       dossier=mod.initEidolonDossier(root,{reduced});
       return dossier;
     }).catch(error=>{console.warn("에이돌론 상세기록을 불러올 수 없음.",error);dossierPromise=null;return null});
@@ -38,6 +42,18 @@ export function initEidolon(){
 
   function showLiveDossier(mode="morphology"){
     const c=current();
+    if(c.key==="seraph"){
+      const info=seraphArchive.description(mode);
+      loadDossier().then(ctrl=>ctrl?.show({
+        unverified:true,state:"자료 부족 // 미확인",code:"적성 개체 // ? // 세라프",
+        mark:"?",title:info.title,classification:"SERAPH / 규격외",
+        scale:c.scale,role:c.role,risk:c.risk,
+        body:info.body,core:seraphArchive.description("core").body,
+        network:seraphArchive.description("network").body,
+        note:"검증된 포획 표본이나 확정된 외형 기록이 없다. 공개 정보는 단편적인 목격담에 의존하며, 참고 이미지가 실제 개체의 외형과 일치한다고 단정할 수 없다."
+      }));
+      return;
+    }
     let state="개체 식별 완료",title=c.mark+" // "+c.name,body=c.brief;
     if(mode==="core"){state="코어 분석 중";title="코어 분석";body="코어는 동력원·연산장치·신경중추 역할을 겸한다. 일부 개체는 외형이 파괴되어도 코어가 온전하면 재가동할 수 있다."}
     else if(mode==="network"){state="공유 데이터 수신 중";title="적응 네트워크";body="에이돌론은 인간의 무기와 전술을 학습하고 전투정보를 공유한다. 반복되는 전술은 시간이 지날수록 효과가 떨어질 수 있다."}
@@ -112,6 +128,14 @@ export function initEidolon(){
     if(index)index.textContent=type==="core"?"01 / 03":type==="network"?"02 / 03":"03 / 03";
     if(statusEl)statusEl.textContent="분석 중";
     threeDController?.setFocus(type);
+    if(c.key==="seraph"){
+      const info=seraphArchive.setFocus(type);
+      title.textContent=info.title;
+      meta.textContent=info.meta;
+      typeRecord(body,info.body,"자료 미확인");
+      if(statusEl)statusEl.textContent="검증 불가";
+      return;
+    }
     let copy="",status="형태 기록";
     if(type==="core"){
       title.textContent="CORE";
@@ -130,7 +154,7 @@ export function initEidolon(){
       status="형태 기록";
     }
     typeRecord(body,copy,status);
-    if(statusEl)setTimeout(()=>{if(root.dataset.eiFocus===type)statusEl.textContent="확인됨"},reduced?0:760);
+    if(statusEl)setTimeout(()=>{if(root.dataset.eiFocus===type&&root.dataset.eiClass!=="seraph")statusEl.textContent="확인됨"},reduced?0:760);
   }
 
   function pulseScan(){
@@ -147,6 +171,7 @@ export function initEidolon(){
     const c=current();
     root.dataset.eiClass=c.key;
     root.classList.toggle("seraph-mode",c.key==="seraph");
+    seraphArchive.setClass(c.key);
     classButtons.forEach(b=>{
       const active=b.dataset.eiClassBtn===c.key;
       b.classList.toggle("active",active);

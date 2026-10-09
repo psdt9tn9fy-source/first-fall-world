@@ -7,6 +7,17 @@ export function initProfileRecord(root,{reduced,signal}){
   const correlation=root.querySelector("[data-ei-correlation]");
   const rescan=root.querySelector("[data-ei-rescan]");
   let identToken=0;
+  const evidenceRows=identRows.slice(3,6).map(row=>({
+    row,body:row.querySelector("b")?.textContent||"",status:row.querySelector("em")?.textContent||""
+  }));
+  function syncEvidenceRows(seraph){
+    const unknown=[["표본 미확보","검증 불가"],["인간형 목격 보고","불확실"],["자료 없음","미확인"]];
+    evidenceRows.forEach(({row,body,status},index)=>{
+      const text=row.querySelector("b"),statusEl=row.querySelector("em");
+      if(text)text.textContent=seraph?unknown[index][0]:body;
+      if(statusEl)statusEl.textContent=seraph?unknown[index][1]:status;
+    });
+  }
 
   function runIdentification(){
     if(!ident)return;
@@ -37,8 +48,9 @@ export function initProfileRecord(root,{reduced,signal}){
     const scale=root.querySelector('[data-ident="scale"]');
     const role=root.querySelector('[data-ident="role"]');
     if(cls)cls.textContent=seraph?"? // SERAPH":mark+" // "+name;
-    if(scale)scale.textContent=seraph?"VARIABLE / UNKNOWN":(root.querySelector('[data-ei-field="scale"]')?.textContent||"VARIABLE");
-    if(role)role.textContent=seraph?"OUTLIER / UNIQUE CAPABILITY":(root.querySelector('[data-ei-field="role"]')?.textContent||"UNRESOLVED");
+    if(scale)scale.textContent=seraph?"HUMAN-SIZED / UNVERIFIED":(root.querySelector('[data-ei-field="scale"]')?.textContent||"VARIABLE");
+    if(role)role.textContent=seraph?"OUTLIER / INSUFFICIENT EVIDENCE":(root.querySelector('[data-ei-field="role"]')?.textContent||"UNRESOLVED");
+    syncEvidenceRows(seraph);
     runIdentification();
   }
 

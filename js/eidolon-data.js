@@ -5,7 +5,7 @@ export const CLASSES=[
   {key:"brute",mark:"III",name:"브루트",ko:"BRUTE",scale:"전차급",role:"중장갑 / 직접 돌격",brief:"전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.",risk:"B급 // 표준",riskKey:"B"},
   {key:"dominion",mark:"IV",name:"도미니언",ko:"DOMINION",scale:"지휘형",role:"지휘 / 전술 통제",brief:"주변 개체와 전술을 통제하는 지휘형. 단독 전투력뿐 아니라 전장 전체에 영향을 준다.",risk:"A급 // 표준",riskKey:"A"},
   {key:"ark",mark:"V",name:"아크",ko:"ARK",scale:"수십~수백 m",role:"전략 개체 / 도시급 위협",brief:"수십~수백 m급 전략개체. 도시급 위협으로 분류되며 S급 작전위험 대응 대상이 될 수 있다.",risk:"S급 대응",riskKey:"S"},
-  {key:"seraph",mark:"?",name:"세라프",ko:"SERAPH",scale:"가변 / 미상",role:"규격외 / 고유 능력",brief:"기존 I~V 등급 밖의 희귀 특이개체. 고유 능력과 압도적 전투력을 가지며 일부는 인간의 언어·사고를 이해하는 정황이 있다.",risk:"측정 불가 // 표준 초과",riskKey:""}
+  {key:"seraph",mark:"?",name:"세라프",ko:"SERAPH",scale:"인간 크기 추정 / 미확인",role:"규격외 / 관측 자료 부족",brief:"I~V 분류체계 바깥에 놓인 미확인 개체. 인간과 비슷한 크기와 실루엣의 목격 보고가 있으나 확보된 실물 표본이나 검증된 신체 구조 자료는 없다.",risk:"측정 불가 // 표준 초과",riskKey:""}
 ];
 
 export const NESTS={

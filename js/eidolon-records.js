@@ -1,5 +1,5 @@
 /* Entity database coordinator: controls navigation only; each panel owns its behavior. */
-import { initProfileRecord } from "./eidolon-records-profile.js?v=20261008-structure-v1";
+import { initProfileRecord } from "./eidolon-records-profile.js?v=20261009-seraph-v1";
 import { initBehaviorRecord } from "./eidolon-records-behavior.js?v=20261008-structure-v1";
 import { initNestRecord } from "./eidolon-records-nest.js?v=20261008-structure-v1";
 import { initRiskRecord } from "./eidolon-records-risk.js?v=20261008-structure-v1";

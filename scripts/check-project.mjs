@@ -94,4 +94,19 @@ assert.deepEqual(toWorldXY(0,0),[500,250]);
 assert.deepEqual(toWorldXY(-180,90),[0,0]);
 assert(makeGeometryPath({type:"Polygon",coordinates:[[[0,0],[10,0],[0,10]]]}).startsWith("M"));
 assert.equal(findCentroid({geometry:{type:"Polygon",coordinates:[[[0,0],[10,0],[0,10]]]}}).length,2);
+
+/* SERAPH observation: protect unknown readings and reference image. */
+const seraphController=read("js/eidolon-seraph.js"),seraphCSS=read("css/eidolon-seraph.css");
+const profileController=read("js/eidolon-records-profile.js"),dossierController=read("js/eidolon-dossier.js");
+assert(seraphController.includes("HUMAN-LIKE // SIGHTING ONLY"),"SERAPH sighting visual missing");
+assert(seraphController.includes("INTERNAL STRUCTURE // NO DATA"),"SERAPH interior wrongly assumed");
+assert(seraphController.includes("NETWORK // UNVERIFIED"),"SERAPH network wrongly assumed");
+assert(entry.includes('./eidolon-seraph.js?v='),"SERAPH module missing");
+assert(index.includes('data-ei-seraph-visual'),"SERAPH stage missing");
+assert(index.includes('seraph-silhouette.webp'),"SERAPH image not referenced");
+assert(existsSync(join(root,"assets/eidolon/seraph-silhouette.webp")),"SERAPH image not found");
+assert(index.includes('./css/eidolon-seraph.css?v='),"SERAPH CSS not linked");
+assert(seraphCSS.includes(".seraph-mode"),"SERAPH CSS must be scoped");
+assert(profileController.includes("syncEvidenceRows(seraph)"),"SERAPH evidence records wrongly verified");
+assert(dossierController.includes('record.unverified?"RECORD INCOMPLETE"'),"SERAPH detailed record verification incorrect");
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, CSS and entrypoints");
