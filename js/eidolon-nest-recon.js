@@ -1,4 +1,5 @@
-/* N-01 recon station — 3D asset loaded on demand; no fictional telemetry is presented as measured data. */
+/* N-01 recon station: true GLB geometry-based LIDAR overlaid on the textured model. */
+import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-mesh-v1";
 const MODEL_URL="./assets/nest/small.glb?v=20261009-nest-recon-v1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 const PHASES=[
@@ -21,6 +22,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   const fileInput=stage.querySelector("[data-ei-nest-file]");
   const fileButton=stage.querySelector("[data-ei-nest-local]");
   const modeBtns=[...stage.querySelectorAll("[data-ei-nest-mode]")];
+  const lidar=initNestLidar(stage,viewer,{reduced,signal});
   let level="small",tabActive=false,loaded=false,remoteTried=false;
   let scanToken=0,loadToken=0,localObjectURL=null,viewerPromise=null;
   const timers=new Set();
@@ -36,6 +38,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   function setMode(mode){
     if(!["tactical","lidar","thermal"].includes(mode))return;
     stage.dataset.mode=mode;
+    lidar.setMode(mode);
     modeBtns.forEach(button=>{
       const active=button.dataset.eiNestMode===mode;
       button.classList.toggle("active",active);
@@ -44,7 +47,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   }
   function setMessage(value){if(log)log.textContent=value}
   function fail(message="3D 파일 연결 대기"){
-    loaded=false;stage.classList.remove("loaded","scanning");
+    loaded=false;lidar.setActive(false);stage.classList.remove("loaded","scanning");
     stage.classList.add("missing");
     if(prompt)prompt.hidden=false;
     updateStatus(message);
@@ -56,7 +59,10 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     if(!loaded)return;
     clearTimers();
     stage.classList.remove("scanning","scanned");
+    stage.dataset.scanPhase="link";
+    lidar.setPhase("link");
     if(reduced){
+      stage.dataset.scanPhase="complete";lidar.setPhase("complete");
       stage.classList.add("scanned");stage.classList.remove("scanning");
       if(phase)phase.textContent=PHASES[4][0];
       updateProgress(100);updateStatus("RECONSTRUCTION COMPLETE");
@@ -65,9 +71,11 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     void stage.offsetWidth;
     stage.classList.add("scanning");
     const token=scanToken;
+    const steps=["link","terrain","wire","acquire","complete"];
     PHASES.forEach(([label,value,text],index)=>{
       schedule(()=>{
         if(token!==scanToken||!tabActive||level!=="small")return;
+        stage.dataset.scanPhase=steps[index];lidar.setPhase(steps[index]);
         if(phase)phase.textContent=label;
         updateProgress(value);setMessage(text);
         updateStatus(index===PHASES.length-1?"RECONSTRUCTION COMPLETE":"RECONSTRUCTING");
@@ -80,6 +88,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   function updateVisibility(){
     const on=level==="small"&&tabActive&&root.dataset.eiClass!=="seraph";
     if(viewer)viewer.autoRotate=on&&loaded&&!reduced;
+    lidar.setActive(on);
     if(!on){clearTimers();stage.classList.remove("scanning");}
     if(on){
       if(loaded&&!stage.classList.contains("scanned")&&!stage.classList.contains("scanning"))play();
@@ -107,6 +116,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   async function loadSource(url){
     const token=++loadToken;
     stage.classList.remove("missing","loaded","scanned");
+    stage.dataset.scanPhase="link";lidar.setPhase("link");lidar.setActive(false);
     if(prompt)prompt.hidden=true;
     updateStatus("RETRIEVING 3D MODEL");
     if(phase)phase.textContent="LINK ESTABLISHING";
@@ -124,11 +134,15 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     remoteTried=true;
     loadSource(MODEL_URL);
   }
-  viewer?.addEventListener("load",()=>{
+  viewer?.addEventListener("load",async()=>{
     loaded=true;stage.classList.remove("missing");stage.classList.add("loaded");
     if(prompt)prompt.hidden=true;
     viewer.autoRotate=tabActive&&level==="small"&&!reduced;
-    if(tabActive&&level==="small")play();
+    // Extract actual mesh samples from the cached GLB before starting the reveal.
+    await lidar.load(viewer.src);
+    if(tabActive&&level==="small"&&loaded){
+      lidar.setActive(true);play();
+    }
   },{signal});
   viewer?.addEventListener("error",()=>{
     fail("3D 파일을 찾지 못했음");
@@ -150,6 +164,6 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     setLevel(next){level=next;updateVisibility()},
     setActive(active){tabActive=active;updateVisibility()},
     replay(){if(root.dataset.eiClass==="seraph"||level!=="small")return;if(loaded)play();else ensureRemote()},
-    destroy(){clearTimers();loadToken++;if(localObjectURL)URL.revokeObjectURL(localObjectURL);}
+    destroy(){clearTimers();loadToken++;lidar.destroy();if(localObjectURL)URL.revokeObjectURL(localObjectURL);}
   };
 }

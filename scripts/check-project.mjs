@@ -203,5 +203,32 @@ assert(reconJS.includes('URL.createObjectURL(file)'),"N-01 local preview must su
 assert(reconJS.includes("prefers-reduced-motion")===false,"Motion fallback centralized in recon CSS");
 assert(reconCSS.includes(':not(.seraph-mode)'),"N-01 must not override SERAPH");
 assert(reconCSS.includes('data-ei-nest="small"'),"N-01 CSS must not override other nest scales");
-// Production model is optional until user commits small-nest.glb; missing file must show local preview UI.
+assert(existsSync(join(root,"assets/nest/small.glb")),"Uploaded N-01 GLB missing");
+assert(reconJS.includes("initNestLidar(stage,viewer"),"Real LIDAR renderer not connected");
+assert(index.includes("data-ei-nest-lidar"),"Geometry scan canvas missing");
+assert(reconCSS.includes(".ei-nest-recon-lidar"),"LIDAR surface CSS missing");
+const {extractReconSamples,projectNestPoint}=await import("../js/eidolon-nest-lidar.js");
+// This synthetic mesh checks GLB parsing, sparse vertex sampling, index reads and camera projection.
+const syntheticDoc={
+  meshes:[{primitives:[{attributes:{POSITION:0},indices:1,mode:4}]}],
+  accessors:[{bufferView:0,componentType:5126,count:3,type:"VEC3",min:[0,0,0],max:[1,1,0]},
+             {bufferView:1,componentType:5123,count:3,type:"SCALAR"}],
+  bufferViews:[{buffer:0,byteOffset:0,byteLength:36},{buffer:0,byteOffset:36,byteLength:6}]
+};
+const encode=new TextEncoder(),jsonRaw=encode.encode(JSON.stringify(syntheticDoc)),jsonLength=Math.ceil(jsonRaw.length/4)*4;
+const blob=new ArrayBuffer(20+jsonLength+8+44),v=new DataView(blob);
+v.setUint32(0,0x46546c67,true);v.setUint32(4,2,true);v.setUint32(8,blob.byteLength,true);
+v.setUint32(12,jsonLength,true);v.setUint32(16,0x4e4f534a,true);
+new Uint8Array(blob,20,jsonRaw.length).set(jsonRaw);
+new Uint8Array(blob,20+jsonRaw.length,jsonLength-jsonRaw.length).fill(0x20);
+v.setUint32(20+jsonLength,44,true);v.setUint32(24+jsonLength,0x004e4942,true);
+const geoStart=28+jsonLength;
+[0,0,0,1,0,0,0,1,0].forEach((x,i)=>v.setFloat32(geoStart+i*4,x,true));
+[0,1,2].forEach((x,i)=>v.setUint16(geoStart+36+i*2,x,true));
+const samples=extractReconSamples(blob);
+assert.equal(samples.points.length,3,"LIDAR position sampling");
+assert.equal(samples.triangles.length,1,"LIDAR triangle sampling");
+const projected=projectNestPoint([0,0,0],{theta:0,phi:Math.PI/2,radius:2},[0,0,0],800,400,45);
+assert(Math.abs(projected[0]-400)<1e-8&&Math.abs(projected[1]-200)<1e-8,"LIDAR camera projection");
+// The GLB-derived point and wire stages are not placeholder CSS shapes.
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, N-01 recon, CSS and entrypoints");

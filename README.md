@@ -104,3 +104,11 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - 아직 GLB가 업로드되지 않았다면 로컬 GLB 미리보기 버튼을 통해 자신의 컴퓨터/모바일에서 일시적으로 모델을 로드할 수 있다. 이 동작은 서버에 업로드하거나 저장하지 않는다.
 - N-02/N-03 기존 네트워크 그래프와 SERAPH 미확인 네스트 기록은 그대로 유지한다.
 - 화면의 LIDAR/THERMAL 필터와 재구성 퍼센트는 시각적 효과이며 실제 측정된 수치가 아니다.
+
+### 실제 네스트 메시 기반 LIDAR 재구성 (2026-10-09)
+
+- `js/eidolon-nest-lidar.js` extracts up to 3300 sampled 3D vertices and 1550 real mesh triangles from uploaded N-01 GLB without another WebGL renderer; no synthetic points are fabricated.
+- Canvas overlay uses <model-viewer>'s current camera orbit, zoom, and target to project 3D points and wire segments while the model is rotated.
+- Entry: sparse topographic points → mesh wire segment reconstruction → gradually visible textured model. LIDAR mode continues to show mesh-derived point/line scanning.
+- Scanning is paused when tab is hidden; mobile caps pixel density. Reduced-motion skips the animated entrance.
+- This is a **geometry-based visual reconstruction effect**, not actual orbiting satellite/thermal measurement.
