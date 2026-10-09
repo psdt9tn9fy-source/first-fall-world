@@ -223,4 +223,13 @@ assert(!reconJS.toLowerCase().includes("lidar"),"LIDAR runtime should no longer 
 assert(!reconCSS.toLowerCase().includes("lidar"),"LIDAR CSS should be removed");
 assert(reconCSS.includes('[data-scan-phase="terrain"]'),"3D scan phase styling missing");
 assert(data.includes('sub:"지역 통제 / 생산·수리 / 보급"'),"Medium description is not shared with existing summary area");
-console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, shared N-01/N-02 recon, CSS and entrypoints");
+const military=read("js/military.js"),militaryCSS=read("css/military.css");
+assert(index.includes('data-mil-node="operations"'),"MILITARY operations node missing");
+assert(index.includes("작전사령부"),"MILITARY command label missing");
+assert(military.includes('key:"operations"'),"MILITARY operations details missing");
+assert(military.includes("function selectLevel("),"MILITARY node selection must update readout");
+assert(military.includes("node.setAttribute(\"aria-pressed\""),"MILITARY accessible selection missing");
+assert(militaryCSS.includes(".mil-node.passed"),"MILITARY progression missing");
+assert(read("js/nations-data.js").includes("국가 → 합동 → 작전 → 현장"),"State/MILITARY terminology inconsistent");
+assert(!index.includes('data-mil-node="theater"'),"Deprecated command-node name returned");
+console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");

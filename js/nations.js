@@ -1,4 +1,4 @@
-import { HISTORY_TERMS, STATE_RECORDS } from "./nations-data.js?v=20261008-world-order-structure-v1";
+import { HISTORY_TERMS, STATE_RECORDS } from "./nations-data.js?v=20261009-military-command-v1";
 import { flagUrl } from "./flag-utils.js?v=20261008-world-order-structure-v1";
 import { N, EVENTS } from "./data.js?v=20261007-refactor-3";
 
