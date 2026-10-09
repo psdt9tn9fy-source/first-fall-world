@@ -2,7 +2,7 @@
 import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-live-sync-v3";
 const MODELS={
   small:{url:"./assets/nest/small.glb?v=20261009-nest-recon-v1",code:"N-01",name:"소형 네스트",orbit:"45deg 55deg 125%"},
-  medium:{url:"./assets/nest/medium.glb?v=20261009-n02-v1",code:"N-02",name:"중형 네스트",orbit:"35deg 65deg 135%"}
+  medium:{url:"./assets/nest/medium.glb?v=20261009-n02-v2",code:"N-02",name:"중형 네스트",orbit:"35deg 65deg 135%"}
 };
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 const PHASES=[
@@ -197,7 +197,14 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   },{signal});
   modeBtns.forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.eiNestMode),{signal}));
   stage.querySelector("[data-ei-nest-reset]")?.addEventListener("click",()=>{
-    if(viewer&&supported())viewer.cameraOrbit=MODELS[level].orbit;
+    if(!viewer||!supported()||!loaded)return;
+    viewer.cameraOrbit=MODELS[level].orbit;
+    viewer.cameraTarget="auto auto auto";
+    viewer.fieldOfView="auto";
+    // Gestures change the live camera without changing its attribute. Reapply
+    // even an unchanged orbit/target through model-viewer's reactive lifecycle.
+    for(const property of ["cameraOrbit","cameraTarget","fieldOfView"])viewer.requestUpdate(property);
+    viewer.jumpCameraToGoal();
   },{signal});
   document.addEventListener("visibilitychange",updateVisibility,{signal});
   setMode("tactical");

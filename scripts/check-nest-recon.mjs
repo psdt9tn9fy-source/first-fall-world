@@ -11,6 +11,9 @@ for(const name of ['small','medium']){
   assert(doc.meshes?.length&&doc.scenes?.length,`${name}: model geometry`);
 }
 class Element {
+  updates=[];jumped=false;
+  requestUpdate(property){this.updates.push(property)}
+  jumpCameraToGoal(){this.jumped=true}
   dataset={};style={};textContent='';hidden=false;listeners=new Map();classes=new Set();
   classList={add:(...xs)=>xs.forEach(x=>this.classes.add(x)),remove:(...xs)=>xs.forEach(x=>this.classes.delete(x)),contains:x=>this.classes.has(x),toggle:(x,on)=>on?this.classes.add(x):this.classes.delete(x)};
   addEventListener(name,fn){this.listeners.set(name,fn)}
@@ -49,6 +52,7 @@ assert(f.modes[1].hidden);assert.equal(f.elements.get('[data-ei-nest-recon-title
 await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'tactical');
 await f.modes[2].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
 f.viewer.cameraOrbit='changed';await f.elements.get('[data-ei-nest-reset]').emit('click');assert.equal(f.viewer.cameraOrbit,'35deg 65deg 135%');
+assert.deepEqual(f.viewer.updates,['cameraOrbit','cameraTarget','fieldOfView']);assert(f.viewer.jumped);assert.equal(f.viewer.cameraTarget,'auto auto auto');
 f.controller.setActive(false);assert(!f.viewer.autoRotate);assert(!f.lidarActive);
 f.controller.setActive(true);assert(f.viewer.autoRotate);
 f.document.hidden=true;await f.document.emit('visibilitychange');assert(!f.viewer.autoRotate);

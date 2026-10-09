@@ -1,5 +1,5 @@
 /* Nest topology map for medium/grand and small nest 3D reconnaissance. */
-import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-n02-v1";
+import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-n02-v2";
 export function initNestRecord(root,{reduced,signal}){
   const nestTopology=root.querySelector("[data-ei-nest-topology]");
   const nestStatus=root.querySelector("[data-ei-nest-status]");
