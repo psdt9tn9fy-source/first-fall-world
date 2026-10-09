@@ -236,10 +236,12 @@ assert(reconJS.includes('stage.classList.contains("scanning")||stage.dataset.mod
   "Auto rotation must pause during geometry scan and LIDAR");
 assert(reconJS.includes("syncRotation();"),"Rotation lifecycle not synchronized");
 const lidarModule=read("js/eidolon-nest-lidar.js");
-assert(lidarModule.includes("cameraMoving=true"),"Camera-change overlay stale-frame gate missing");
-assert(lidarModule.includes('stage.classList.remove("lidar-visible")'),"Old point cloud remains visible during user orbit");
-assert(lidarModule.includes("clearTimeout(cameraIdleTimer)"),"Motion settling must cancel older redraws");
-assert(reconCSS.includes('[data-mode="lidar"] model-viewer{opacity:0}'),"LIDAR must not double-render textured specimen");
+assert(lidarModule.includes("frameId=requestAnimationFrame(tick)"),"Geometry overlay must refresh continuously while LIDAR is visible");
+assert(lidarModule.includes('viewer.addEventListener("camera-change",onCameraChange'),"Camera events must request live LIDAR render");
+assert(!lidarModule.includes('stage.classList.remove("lidar-visible")'),"Touch must never blank the point cloud");
+assert(!lidarModule.includes("cameraMoving=true"),"Stale-frame hide-on-touch workaround must be removed");
+assert(lidarModule.includes("cancelAnimationFrame(frameId)"),"LIDAR loop must stop when hidden");
+assert(reconCSS.includes('[data-mode="lidar"] model-viewer{'),"3D model must remain visible as LIDAR backdrop");
 assert(!reconCSS.includes('transition:opacity .24s ease'),"LIDAR ghost trail fade still enabled");
 // The GLB-derived point and wire stages are not placeholder CSS shapes.
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, N-01 recon, CSS and entrypoints");

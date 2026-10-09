@@ -69,29 +69,33 @@ export function initNestLidar(stage,viewer,{signal,reduced=false}={}){
   if(!canvas||!viewer)return {load(){},setActive(){},setMode(){},setPhase(){},destroy(){}};
   const ctx=canvas.getContext("2d",{alpha:true});
   if(!ctx)return {load(){},setActive(){},setMode(){},setPhase(){},destroy(){}};
-  let geometry=null,active=false,mode="tactical",phase="link",pending=false,disposed=false;
-  let cameraMoving=false,cameraIdleTimer=0;
+  let geometry=null,active=false,mode="tactical",phase="link",disposed=false;
+  let frameId=0,lastPaint=0;
   let fetchedUrl="",loadId=0,fetcher=null,resizeObserver=null;
-  // Never display a frame projected from a stale camera. Overlays are recomputed after motion settles.
-  function shouldDraw(){return active&&!cameraMoving&&geometry&&(mode==="lidar"||phase==="terrain"||phase==="wire");}
-  function stopMotion(){
-    clearTimeout(cameraIdleTimer);
-    cameraMoving=false;
+  // Render in lockstep with frame updates. Touch must never hide the point cloud.
+  function shouldDraw(){
+    return active&&!!geometry&&(mode==="lidar"||phase==="terrain"||phase==="wire");
   }
-  function onCameraChange(){
-    if(!active||!geometry)return;
-    clearTimeout(cameraIdleTimer);
-    cameraMoving=true;
-    stage.classList.remove("lidar-visible");
-    cameraIdleTimer=setTimeout(()=>{
-      cameraMoving=false;
-      requestDraw();
-    },145);
+  function tick(time){
+    frameId=0;
+    if(disposed)return;
+    if(shouldDraw()&&document.visibilityState!=="hidden"){
+      // Cap re-projection to ~40 fps so the model remains responsive on mobile.
+      if(time-lastPaint>=25){lastPaint=time;draw()}
+      frameId=requestAnimationFrame(tick);
+    }else draw();
   }
   function requestDraw(){
-    if(pending||disposed)return;
-    pending=true;
-    requestAnimationFrame(()=>{pending=false;draw()});
+    if(!frameId&&!disposed)frameId=requestAnimationFrame(tick);
+  }
+  function stopLoop(){
+    if(frameId)cancelAnimationFrame(frameId);
+    frameId=0;
+  }
+  function onCameraChange(){requestDraw()}
+  function onVisibilityChange(){
+    if(document.visibilityState==="hidden")stopLoop();
+    else requestDraw();
   }
   function draw(){
     const w=canvas.clientWidth,h=canvas.clientHeight;
@@ -150,24 +154,17 @@ export function initNestLidar(stage,viewer,{signal,reduced=false}={}){
     }
   }
   viewer.addEventListener("camera-change",onCameraChange,{signal});
+  document.addEventListener("visibilitychange",onVisibilityChange,{signal});
   if(typeof ResizeObserver!=="undefined"){
     resizeObserver=new ResizeObserver(requestDraw);resizeObserver.observe(canvas);
   }
   return {
     load,
-    setActive(value){
-      active=!!value;
-      if(!active){stopMotion();stage.classList.remove("lidar-visible");}
-      requestDraw();
-    },
-    setMode(value){
-      mode=value;
-      stopMotion();
-      requestDraw();
-    },
+    setActive(value){active=!!value;requestDraw()},
+    setMode(value){mode=value;requestDraw()},
     setPhase(value){phase=value;requestDraw()},
     destroy(){
-      disposed=true;loadId++;fetcher?.abort();resizeObserver?.disconnect();stopMotion();
+      disposed=true;loadId++;fetcher?.abort();resizeObserver?.disconnect();stopLoop();
       geometry=null;stage.classList.remove("lidar-ready","lidar-visible");
       canvas.width=0;canvas.height=0;
     }

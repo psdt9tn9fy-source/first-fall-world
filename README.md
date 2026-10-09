@@ -119,3 +119,9 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - When the user manually turns/zooms the model, the independent 2D point canvas is hidden immediately and redrawn after camera motion settles (145 ms), avoiding visibly detached stale points.
 - LIDAR mode no longer draws the textured model simultaneously; its geometry-derived canvas remains interactive through the transparent viewer.
 - Unnecessary canvas opacity transitions removed; CSS changes are scoped solely to N-01.
+
+### N-01 touch LIDAR hotfix (2026-10-09)
+
+- Reverted the hide-on-touch LIDAR canvas behavior. Mesh-derived cloud is redrawn continuously against the current model-viewer camera while visible (max ~40 fps), including gestures.
+- No trailing timeout, no blank frames while dragging. Pauses animation when the tab/document is hidden.
+- A faint real 3D model is kept as the scan background to prevent blank content even during slow mobile redraw.

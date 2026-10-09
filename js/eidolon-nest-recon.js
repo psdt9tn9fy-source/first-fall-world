@@ -1,5 +1,5 @@
 /* N-01 recon station: true GLB geometry-based LIDAR overlaid on the textured model. */
-import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-sync-v2";
+import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-live-sync-v3";
 const MODEL_URL="./assets/nest/small.glb?v=20261009-nest-recon-v1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 const PHASES=[
