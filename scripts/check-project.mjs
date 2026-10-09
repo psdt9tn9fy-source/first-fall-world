@@ -204,44 +204,18 @@ assert(reconJS.includes("prefers-reduced-motion")===false,"Motion fallback centr
 assert(reconCSS.includes(':not(.seraph-mode)'),"N-01 must not override SERAPH");
 assert(reconCSS.includes('data-ei-nest="small"'),"N-01 CSS must not override other nest scales");
 assert(existsSync(join(root,"assets/nest/small.glb")),"Uploaded N-01 GLB missing");
-assert(reconJS.includes("initNestLidar(stage,viewer"),"Real LIDAR renderer not connected");
-assert(index.includes("data-ei-nest-lidar"),"Geometry scan canvas missing");
-assert(reconCSS.includes(".ei-nest-recon-lidar"),"LIDAR surface CSS missing");
-const {extractReconSamples,projectNestPoint}=await import("../js/eidolon-nest-lidar.js");
-// This synthetic mesh checks GLB parsing, sparse vertex sampling, index reads and camera projection.
-const syntheticDoc={
-  meshes:[{primitives:[{attributes:{POSITION:0},indices:1,mode:4}]}],
-  accessors:[{bufferView:0,componentType:5126,count:3,type:"VEC3",min:[0,0,0],max:[1,1,0]},
-             {bufferView:1,componentType:5123,count:3,type:"SCALAR"}],
-  bufferViews:[{buffer:0,byteOffset:0,byteLength:36},{buffer:0,byteOffset:36,byteLength:6}]
-};
-const encode=new TextEncoder(),jsonRaw=encode.encode(JSON.stringify(syntheticDoc)),jsonLength=Math.ceil(jsonRaw.length/4)*4;
-const blob=new ArrayBuffer(20+jsonLength+8+44),v=new DataView(blob);
-v.setUint32(0,0x46546c67,true);v.setUint32(4,2,true);v.setUint32(8,blob.byteLength,true);
-v.setUint32(12,jsonLength,true);v.setUint32(16,0x4e4f534a,true);
-new Uint8Array(blob,20,jsonRaw.length).set(jsonRaw);
-new Uint8Array(blob,20+jsonRaw.length,jsonLength-jsonRaw.length).fill(0x20);
-v.setUint32(20+jsonLength,44,true);v.setUint32(24+jsonLength,0x004e4942,true);
-const geoStart=28+jsonLength;
-[0,0,0,1,0,0,0,1,0].forEach((x,i)=>v.setFloat32(geoStart+i*4,x,true));
-[0,1,2].forEach((x,i)=>v.setUint16(geoStart+36+i*2,x,true));
-const samples=extractReconSamples(blob);
-assert.equal(samples.points.length,3,"LIDAR position sampling");
-assert.equal(samples.triangles.length,1,"LIDAR triangle sampling");
-const projected=projectNestPoint([0,0,0],{theta:0,phi:Math.PI/2,radius:2},[0,0,0],800,400,45);
-assert(Math.abs(projected[0]-400)<1e-8&&Math.abs(projected[1]-200)<1e-8,"LIDAR camera projection");
-// LIDAR must never present a stale frame on top of the WebGL model.
-assert(reconJS.includes("function syncRotation()"),"Scan/camera rotation guard missing");
-assert(reconJS.includes('stage.classList.contains("scanning")||stage.dataset.mode==="lidar"'),
-  "Auto rotation must pause during geometry scan and LIDAR");
-assert(reconJS.includes("syncRotation();"),"Rotation lifecycle not synchronized");
-const lidarModule=read("js/eidolon-nest-lidar.js");
-assert(lidarModule.includes("frameId=requestAnimationFrame(tick)"),"Geometry overlay must refresh continuously while LIDAR is visible");
-assert(lidarModule.includes('viewer.addEventListener("camera-change",onCameraChange'),"Camera events must request live LIDAR render");
-assert(!lidarModule.includes('stage.classList.remove("lidar-visible")'),"Touch must never blank the point cloud");
-assert(!lidarModule.includes("cameraMoving=true"),"Stale-frame hide-on-touch workaround must be removed");
-assert(lidarModule.includes("cancelAnimationFrame(frameId)"),"LIDAR loop must stop when hidden");
-assert(reconCSS.includes('[data-mode="lidar"] model-viewer{'),"3D model must remain visible as LIDAR backdrop");
-assert(!reconCSS.includes('transition:opacity .24s ease'),"LIDAR ghost trail fade still enabled");
-// The GLB-derived point and wire stages are not placeholder CSS shapes.
-console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, N-01 recon, CSS and entrypoints");
+assert(existsSync(join(root,"assets/nest/medium.glb")),"Uploaded N-02 GLB missing");
+assert(reconJS.includes('./assets/nest/medium.glb?v='),"N-02 production GLB URL absent");
+assert(index.includes('data-ei-nest-recon-title'),"Shared N-01/N-02 3D title missing");
+assert(index.includes('data-ei-nest-reset'),"Camera reset missing");
+assert(index.includes('data-ei-nest-mode="tactical"'),"TACTICAL mode missing");
+assert(index.includes('data-ei-nest-mode="thermal"'),"THERMAL mode missing");
+assert(!index.includes('data-ei-nest-mode="lidar"'),"Removed LIDAR button returned");
+assert(!index.includes('data-ei-nest-lidar'),"LIDAR canvas must be removed");
+assert(!index.includes('ei-nest-dossier'),"Additional N-02 dossier cards should not be present");
+assert(!index.includes('ei-nest-recon-intel'),"Duplicate N-02 panel must be removed");
+assert(!reconJS.toLowerCase().includes("lidar"),"LIDAR runtime should no longer load");
+assert(!reconCSS.toLowerCase().includes("lidar"),"LIDAR CSS should be removed");
+assert(reconCSS.includes('[data-scan-phase="terrain"]'),"3D scan phase styling missing");
+assert(data.includes('sub:"지역 통제 / 생산·수리 / 보급"'),"Medium description is not shared with existing summary area");
+console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, shared N-01/N-02 recon, CSS and entrypoints");

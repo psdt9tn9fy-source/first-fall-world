@@ -2,7 +2,7 @@
 import { initProfileRecord } from "./eidolon-records-profile.js?v=20261009-seraph-records-v1";
 import { initSeraphRecords } from "./eidolon-records-seraph.js?v=20261009-seraph-records-v1";
 import { initBehaviorRecord } from "./eidolon-records-behavior.js?v=20261009-seraph-records-v1";
-import { initNestRecord } from "./eidolon-records-nest.js?v=20261009-n02-v2";
+import { initNestRecord } from "./eidolon-records-nest.js?v=20261009-nest-clean-v1";
 import { initRiskRecord } from "./eidolon-records-risk.js?v=20261009-seraph-records-v1";
 
 const MODULES=["profile","behavior","nest","engagement"];

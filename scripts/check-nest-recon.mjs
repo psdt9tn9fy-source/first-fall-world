@@ -28,45 +28,46 @@ function fixture(reduced=false){
   document.hidden=false;root.dataset.eiClass='brute';
   root.querySelector=()=>stage;
   stage.querySelector=s=>{if(!elements.has(s))elements.set(s,new Element());return elements.get(s)};
-  const modes=['tactical','lidar','thermal'].map(mode=>{const e=new Element();e.dataset.eiNestMode=mode;return e});
+  const modes=['tactical','thermal'].map(mode=>{const e=new Element();e.dataset.eiNestMode=mode;return e});
   stage.querySelectorAll=()=>modes;
-  const pending=new Map();let id=0,lidarLoads=0,lidarActive=false;
-  const lidar={setActive:on=>lidarActive=on,setMode(){},setPhase(){},async load(){lidarLoads++},destroy(){}};
+  const pending=new Map();let id=0;
   const init=runInNewContext(source+'\ninitNestRecon',{
-    initNestLidar:()=>lidar,document,customElements:{get:()=>true},
+    document,customElements:{get:()=>true},
     setTimeout:fn=>{pending.set(++id,fn);return id},clearTimeout:id=>pending.delete(id),URL
   });
   const controller=init(root,{reduced}),viewer=elements.get('[data-ei-nest-viewer]');
   const flush=async()=>{await Promise.resolve();await Promise.resolve()};
   const finish=()=>{for(const fn of [...pending.values()])fn();pending.clear()};
-  return {controller,viewer,stage,root,document,modes,elements,flush,finish,get lidarLoads(){return lidarLoads},get lidarActive(){return lidarActive}};
+  return {controller,viewer,stage,root,document,modes,elements,flush,finish};
 }
 const f=fixture();
 assert(!f.viewer.src,'Model must be lazy loaded');
 f.controller.setLevel('medium');f.controller.setActive(true);await f.flush();
 assert.match(f.viewer.src,/medium\.glb/);
 await f.viewer.emit('load');f.finish();
-assert.equal(f.lidarLoads,0,'N-02 must not parse a point cloud');assert(!f.lidarActive);
+assert.equal(f.modes.length,2,'Only TACTICAL and THERMAL should exist');
 assert(f.stage.classList.contains('scanned'));assert(f.viewer.autoRotate);
-assert(f.modes[1].hidden);assert.equal(f.elements.get('[data-ei-nest-recon-title]').textContent,'ORBITAL RECON // N-02');
-await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'tactical');
-await f.modes[2].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
+assert.equal(f.elements.get('[data-ei-nest-recon-title]').textContent,'ORBITAL RECON // N-02');
+await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
+await f.modes[0].emit('click');assert.equal(f.stage.dataset.mode,'tactical');
 f.viewer.cameraOrbit='changed';await f.elements.get('[data-ei-nest-reset]').emit('click');assert.equal(f.viewer.cameraOrbit,'35deg 65deg 135%');
 assert.deepEqual(f.viewer.updates,['cameraOrbit','cameraTarget','fieldOfView']);assert(f.viewer.jumped);assert.equal(f.viewer.cameraTarget,'auto auto auto');
-f.controller.setActive(false);assert(!f.viewer.autoRotate);assert(!f.lidarActive);
+f.controller.setActive(false);assert(!f.viewer.autoRotate) ;
 f.controller.setActive(true);assert(f.viewer.autoRotate);
 f.document.hidden=true;await f.document.emit('visibilitychange');assert(!f.viewer.autoRotate);
 f.document.hidden=false;await f.document.emit('visibilitychange');assert(f.viewer.autoRotate);
 f.controller.setLevel('small');await f.flush();assert.match(f.viewer.src,/small\.glb/);
-await f.viewer.emit('load');f.finish();assert.equal(f.lidarLoads,1);assert(f.lidarActive);assert(!f.modes[1].hidden);
-await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'lidar');assert(!f.viewer.autoRotate);
+await f.viewer.emit('load');f.finish();
+assert.equal(f.stage.dataset.mode,'tactical');
+await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
+assert(f.viewer.autoRotate,'3D rotation must continue in THERMAL mode');
 f.controller.setLevel('medium');f.controller.setLevel('small');f.controller.setLevel('medium');await f.flush();
-assert.match(f.viewer.src,/medium\.glb/);await f.viewer.emit('load');f.finish();assert.equal(f.lidarLoads,1);
-f.controller.setLevel('grand');await f.flush();assert(!f.viewer.src);assert(!f.lidarActive);assert(!f.viewer.autoRotate);
+assert.match(f.viewer.src,/medium\.glb/);await f.viewer.emit('load');f.finish();
+f.controller.setLevel('grand');await f.flush();assert(!f.viewer.src) ;assert(!f.viewer.autoRotate);
 f.controller.setLevel('medium');await f.flush();await f.viewer.emit('error');assert(f.stage.classList.contains('missing'));
 f.controller.replay();await f.flush();await f.viewer.emit('load');f.finish();assert(f.stage.classList.contains('loaded'));
-f.root.dataset.eiClass='seraph';f.controller.setActive(false);assert(!f.viewer.autoRotate);assert(!f.lidarActive);
+f.root.dataset.eiClass='seraph';f.controller.setActive(false);assert(!f.viewer.autoRotate) ;
 f.controller.destroy();
 const r=fixture(true);r.controller.setLevel('medium');r.controller.setActive(true);await r.flush();await r.viewer.emit('load');
 assert(!r.viewer.autoRotate);assert(r.stage.classList.contains('scanned'));assert.equal(r.elements.get('[data-ei-nest-percent]').textContent,'100%');r.controller.destroy();
-console.log('PASS: N-02 model, modes, lazy loading, rapid switching, N-01 LIDAR isolation, N-03, SERAPH, visibility, retry and reduced motion');
+console.log('PASS: N-02 model, modes, lazy loading, rapid switching, N-01/N-02 two-mode layout, N-03, SERAPH, visibility, retry and reduced motion');
