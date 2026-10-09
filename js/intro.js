@@ -40,6 +40,7 @@ function skipIntro(){
   document.body.classList.remove("intro-lock");
 }
 skip.addEventListener("click",skipIntro);
+if(matchMedia("(prefers-reduced-motion: reduce)").matches){skipIntro();return}
 setTimeout(()=>{
   if(introSkipped)return;
   let lastShown=2000,lastYearInt=2000,nextEvent=0,lastEventYear=null,sameYearSlot=0;

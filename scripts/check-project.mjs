@@ -265,4 +265,13 @@ assert(military.includes("function selectDeployment("),"Deployment selection mis
 assert(military.includes('root.dataset.mode==="deployment"'),"Deployment replay missing");
 assert(militaryCSS.includes('.mil-command[data-mode="deployment"] .mil-network{display:none}'),"Deployment board overlays command");
 assert(militaryCSS.includes('.mil-command[data-mode="deployment"] .mil-deployment{display:block}'),"Deployment board hidden");
-console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");
+const viewNames=[...index.matchAll(/data-view="([^"]+)"/g)].map(match=>match[1]);
+assert.deepEqual(viewNames,["world","characters","nations","eidolon","military","archive"],"Six main views must remain accessible");
+const htmlIds=[...index.matchAll(/ id="([^"]+)"/g)].map(match=>match[1]);
+assert.equal(htmlIds.length,new Set(htmlIds).size,"Duplicate HTML ids break cross-record links");
+for(const id of ["historyArchive","historyMore","historyEntries","historyPeriodName","historyCount"])
+  assert(index.includes('id="'+id+'"'),"History archive element missing: "+id);
+assert(index.includes('./css/archive.css?v='),"History archive CSS missing");
+assert(main.includes('./archive.js?v=')&&main.includes('initArchive();'),"History archive module disconnected");
+assert(read("js/intro.js").includes('if(matchMedia("(prefers-reduced-motion: reduce)").matches){skipIntro();return}'),"Reduced-motion intro bypass missing");
+console.log("PASS: six sections, 3D assets, module links, V1 history archive, a11y and regressions");

@@ -137,3 +137,12 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - 군사 기록 05는 전선 방어·도시 안전권·네스트 대응·기동 예비전력·후방 보급이라는 5개의 기능별 작전 구역을 도식화한다.
 - 각 구역을 선택하면 기존 우측 정보 패널에 배치 목적, 주요 전력, 작전 판단 요소가 갱신된다. 순차 확인 재생 및 모바일·동작 감소 모드를 지원한다.
 - 도식은 국가별 실제 지리·병력 배치·좌표·병력 규모를 나타내지 않으며, 개념적 작전 구역 예시다.
+
+## V1 baseline — 2026-10-09
+
+- The first public baseline keeps all six records, the world and nation interfaces, character archive, all five EIDOLON species GLBs, the three nest GLBs, SERAPH fallback and five military modules.
+- 06 / 역사 기록 now reads the existing EVENTS chronology directly, with four era filters and incremental display instead of a four-entry placeholder.
+- The opening can be skipped at any time; prefers-reduced-motion skips the long animated sequence.
+- CI: project module/assets/style integrity; EIDOLON nest lifecycle; MILITARY five-tab interactions; archive chronology completeness.
+- Version 1 is a functional baseline, not a claim of complete country-by-country military data or fully verified rendering on every device. Desktop/mobile visual audit must be separately verified in a real browser.
+- Additional national armed forces, academy details, weapon catalogs and expanded characters are V2 work, not launch blockers.

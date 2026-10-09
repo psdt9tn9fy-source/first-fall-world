@@ -26,3 +26,5 @@ jobs:
         run: node scripts/check-nest-recon.mjs
       - name: Check military hierarchy interactions
         run: node scripts/check-military.mjs
+      - name: Check V1 historical archive
+        run: node scripts/check-archive.mjs
