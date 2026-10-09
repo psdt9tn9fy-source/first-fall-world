@@ -1,7 +1,8 @@
-/* Shared N-01/N-02 satellite recon. Only stable textured 3D modes are exposed. */
+/* Shared N-01 / N-02 / N-03 satellite recon. Only stable textured 3D modes are exposed. */
 const MODELS={
   small:{url:"./assets/nest/small.glb?v=20261009-nest-recon-v1",code:"N-01",name:"소형 네스트",orbit:"45deg 55deg 125%"},
-  medium:{url:"./assets/nest/medium.glb?v=20261009-n02-v2",code:"N-02",name:"중형 네스트",orbit:"35deg 65deg 135%"}
+  medium:{url:"./assets/nest/medium.glb?v=20261009-n02-v2",code:"N-02",name:"중형 네스트",orbit:"35deg 65deg 135%"},
+  grand:{url:"./assets/nest/grand.glb?v=20261009-n03-v1",code:"N-03",name:"대형 네스트",orbit:"40deg 58deg 145%"}
 };
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 const PHASES=[
@@ -16,6 +17,13 @@ const MEDIUM_PHASES=[
   ["TOPOGRAPHIC RECONSTRUCTION",35,"거점 외곽 탐지"],
   ["STRUCTURAL RECONSTRUCTION",68,"중형 네스트 구조 재구성"],
   ["TARGET ACQUISITION",92,"지역 거점 확인"],
+  ["SCAN COMPLETE // REFERENCE MODEL",100,"3D 참고 모델 표시 완료"]
+];
+const GRAND_PHASES=[
+  ["SATELLITE LINK // SIMULATED",12,"원격 관측 채널 동기화"],
+  ["TOPOGRAPHIC RECONSTRUCTION",35,"광역 거점 외곽 탐지"],
+  ["STRUCTURAL RECONSTRUCTION",68,"대형 네스트 구조 재구성"],
+  ["TARGET ACQUISITION",92,"전략 거점 확인"],
   ["SCAN COMPLETE // REFERENCE MODEL",100,"3D 참고 모델 표시 완료"]
 ];
 export function initNestRecon(root,{reduced=false,signal}={}){
@@ -78,7 +86,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   }
   function play(){
     if(!loaded||!isVisible())return;
-    const phases=level==="medium"?MEDIUM_PHASES:PHASES;
+    const phases=level==="grand"?GRAND_PHASES:level==="medium"?MEDIUM_PHASES:PHASES;
     clearTimers();
     stage.classList.remove("scanning","scanned");
     stage.dataset.scanPhase="link";

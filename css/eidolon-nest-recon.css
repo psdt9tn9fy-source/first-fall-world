@@ -1,9 +1,11 @@
-/* Shared satellite station; N-03 topology and SERAPH records stay independent. */
+/* Shared N-01 / N-02 / N-03 satellite station; SERAPH records remain independent. */
 .eidolon-lab .ei-nest-recon{display:none}
 .eidolon-lab[data-ei-nest="small"]:not(.seraph-mode) .ei-nest-recon{display:block}
 .eidolon-lab[data-ei-nest="small"]:not(.seraph-mode) .ei-nest-topology{display:none}
 .eidolon-lab[data-ei-nest="medium"]:not(.seraph-mode) .ei-nest-recon{display:block}
 .eidolon-lab[data-ei-nest="medium"]:not(.seraph-mode) .ei-nest-topology{display:none}
+.eidolon-lab[data-ei-nest="grand"]:not(.seraph-mode) .ei-nest-recon{display:block}
+.eidolon-lab[data-ei-nest="grand"]:not(.seraph-mode) .ei-nest-topology{display:none}
 .ei-nest-recon{
   position:relative;isolation:isolate;min-height:390px;margin-top:9px;
   border:1px solid #49606b;overflow:hidden;color:#d4e5e9;
@@ -83,6 +85,8 @@
 }
 .ei-nest-recon-tools button.active{background:#21333c;border-color:#a1d8eb;color:#e7faff;box-shadow:inset 2px 0 #95d7eb}
 .ei-nest-recon[data-level="medium"]{min-height:420px}
+.ei-nest-recon[data-level="grand"]{min-height:440px;border-color:#6d5356}
+.ei-nest-recon[data-level="grand"] .ei-nest-recon-meter i{background:#d6a6aa;box-shadow:0 0 12px #d17d8566}
 .ei-nest-recon-tools button:focus-visible,.ei-nest-recon-local:focus-visible{outline:2px solid #b2ebff;outline-offset:3px}
 .ei-nest-recon-log{
   position:absolute;z-index:7;right:12px;top:56px;max-width:45%;
@@ -122,6 +126,7 @@
   .ei-nest-recon-legal{bottom:64px;font-size:8px}
   .ei-nest-recon-meter{left:9px;right:9px}
   .ei-nest-recon[data-level="medium"]{min-height:390px}
+  .ei-nest-recon[data-level="grand"]{min-height:410px}
 }
 @media(prefers-reduced-motion:reduce){
   .ei-nest-recon.scanning .ei-nest-recon-sweep{animation:none!important}

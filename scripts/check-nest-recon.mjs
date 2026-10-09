@@ -2,7 +2,7 @@
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 import assert from 'node:assert/strict';
-for(const name of ['small','medium']){
+for(const name of ['small','medium','grand']){
   const binary=readFileSync(new URL(`../assets/nest/${name}.glb`,import.meta.url));
   assert.equal(binary.readUInt32LE(0),0x46546c67,`${name}: GLB magic`);
   assert.equal(binary.readUInt32LE(4),2,`${name}: glTF version`);
@@ -63,11 +63,20 @@ await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
 assert(f.viewer.autoRotate,'3D rotation must continue in THERMAL mode');
 f.controller.setLevel('medium');f.controller.setLevel('small');f.controller.setLevel('medium');await f.flush();
 assert.match(f.viewer.src,/medium\.glb/);await f.viewer.emit('load');f.finish();
-f.controller.setLevel('grand');await f.flush();assert(!f.viewer.src) ;assert(!f.viewer.autoRotate);
+f.controller.setLevel('grand');await f.flush();assert.match(f.viewer.src,/grand\.glb/);
+await f.viewer.emit('load');f.finish();
+assert.equal(f.elements.get('[data-ei-nest-recon-title]').textContent,'ORBITAL RECON // N-03');
+assert(f.stage.classList.contains('scanned'));assert(f.viewer.autoRotate);
+assert.equal(f.modes.length,2);
+await f.modes[1].emit('click');assert.equal(f.stage.dataset.mode,'thermal');
+f.viewer.cameraOrbit='changed';await f.elements.get('[data-ei-nest-reset]').emit('click');
+assert.equal(f.viewer.cameraOrbit,'40deg 58deg 145%');
+f.controller.setActive(false);assert(!f.viewer.autoRotate);
+f.controller.setActive(true);assert(f.viewer.autoRotate);
 f.controller.setLevel('medium');await f.flush();await f.viewer.emit('error');assert(f.stage.classList.contains('missing'));
 f.controller.replay();await f.flush();await f.viewer.emit('load');f.finish();assert(f.stage.classList.contains('loaded'));
 f.root.dataset.eiClass='seraph';f.controller.setActive(false);assert(!f.viewer.autoRotate) ;
 f.controller.destroy();
 const r=fixture(true);r.controller.setLevel('medium');r.controller.setActive(true);await r.flush();await r.viewer.emit('load');
 assert(!r.viewer.autoRotate);assert(r.stage.classList.contains('scanned'));assert.equal(r.elements.get('[data-ei-nest-percent]').textContent,'100%');r.controller.destroy();
-console.log('PASS: N-02 model, modes, lazy loading, rapid switching, N-01/N-02 two-mode layout, N-03, SERAPH, visibility, retry and reduced motion');
+console.log('PASS: N-01/N-02/N-03 models, modes, lazy loading, switching, SERAPH, visibility, retry and reduced motion');

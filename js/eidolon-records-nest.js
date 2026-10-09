@@ -1,5 +1,5 @@
-/* Nest topology map for medium/grand and small nest 3D reconnaissance. */
-import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-nest-clean-v1";
+/* Common N-01/N-02/N-03 3D reconnaissance; keep SERAPH isolation. */
+import { initNestRecon } from "./eidolon-nest-recon.js?v=20261009-n03-v1";
 export function initNestRecord(root,{reduced,signal}){
   const nestTopology=root.querySelector("[data-ei-nest-topology]");
   const nestStatus=root.querySelector("[data-ei-nest-status]");
@@ -18,7 +18,7 @@ export function initNestRecord(root,{reduced,signal}){
     }
     nestTopology.dataset.level=level;
     recon.setLevel(level);
-    if(level==="small"||level==="medium"){
+    if(level==="small"||level==="medium"||level==="grand"){
       nestTopology.classList.remove("scanning","scanned");
       if(nestStatus)nestStatus.textContent="3D RECON";
       if(nestCore)nestCore.textContent=level.toUpperCase();
