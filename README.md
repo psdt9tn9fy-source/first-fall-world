@@ -112,3 +112,10 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - Entry: sparse topographic points → mesh wire segment reconstruction → gradually visible textured model. LIDAR mode continues to show mesh-derived point/line scanning.
 - Scanning is paused when tab is hidden; mobile caps pixel density. Reduced-motion skips the animated entrance.
 - This is a **geometry-based visual reconstruction effect**, not actual orbiting satellite/thermal measurement.
+
+### N-01 LIDAR 잔상 방지 (2026-10-09)
+
+- Automatically rotating the model is disabled during the scan sequence and while **LIDAR** is selected; rotation resumes in normal TACTICAL/THERMAL after the scan.
+- When the user manually turns/zooms the model, the independent 2D point canvas is hidden immediately and redrawn after camera motion settles (145 ms), avoiding visibly detached stale points.
+- LIDAR mode no longer draws the textured model simultaneously; its geometry-derived canvas remains interactive through the transparent viewer.
+- Unnecessary canvas opacity transitions removed; CSS changes are scoped solely to N-01.

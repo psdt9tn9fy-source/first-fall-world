@@ -70,8 +70,24 @@ export function initNestLidar(stage,viewer,{signal,reduced=false}={}){
   const ctx=canvas.getContext("2d",{alpha:true});
   if(!ctx)return {load(){},setActive(){},setMode(){},setPhase(){},destroy(){}};
   let geometry=null,active=false,mode="tactical",phase="link",pending=false,disposed=false;
+  let cameraMoving=false,cameraIdleTimer=0;
   let fetchedUrl="",loadId=0,fetcher=null,resizeObserver=null;
-  function shouldDraw(){return active&&geometry&&(mode==="lidar"||phase==="terrain"||phase==="wire"||phase==="acquire");}
+  // Never display a frame projected from a stale camera. Overlays are recomputed after motion settles.
+  function shouldDraw(){return active&&!cameraMoving&&geometry&&(mode==="lidar"||phase==="terrain"||phase==="wire");}
+  function stopMotion(){
+    clearTimeout(cameraIdleTimer);
+    cameraMoving=false;
+  }
+  function onCameraChange(){
+    if(!active||!geometry)return;
+    clearTimeout(cameraIdleTimer);
+    cameraMoving=true;
+    stage.classList.remove("lidar-visible");
+    cameraIdleTimer=setTimeout(()=>{
+      cameraMoving=false;
+      requestDraw();
+    },145);
+  }
   function requestDraw(){
     if(pending||disposed)return;
     pending=true;
@@ -133,16 +149,25 @@ export function initNestLidar(stage,viewer,{signal,reduced=false}={}){
       console.warn("LIDAR surface extraction unavailable; retaining textured model",e);
     }
   }
-  viewer.addEventListener("camera-change",requestDraw,{signal});
+  viewer.addEventListener("camera-change",onCameraChange,{signal});
   if(typeof ResizeObserver!=="undefined"){
     resizeObserver=new ResizeObserver(requestDraw);resizeObserver.observe(canvas);
   }
   return {
-    load,setActive(value){active=!!value;requestDraw()},
-    setMode(value){mode=value;requestDraw()},
+    load,
+    setActive(value){
+      active=!!value;
+      if(!active){stopMotion();stage.classList.remove("lidar-visible");}
+      requestDraw();
+    },
+    setMode(value){
+      mode=value;
+      stopMotion();
+      requestDraw();
+    },
     setPhase(value){phase=value;requestDraw()},
     destroy(){
-      disposed=true;loadId++;fetcher?.abort();resizeObserver?.disconnect();
+      disposed=true;loadId++;fetcher?.abort();resizeObserver?.disconnect();stopMotion();
       geometry=null;stage.classList.remove("lidar-ready","lidar-visible");
       canvas.width=0;canvas.height=0;
     }

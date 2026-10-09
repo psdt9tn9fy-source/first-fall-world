@@ -21,7 +21,7 @@ export function initEidolon(){
 
   function loadRecords(){
     if(recordsPromise)return recordsPromise;
-    recordsPromise=import("./eidolon-records.js?v=20261009-lidar-mesh-v1").then(mod=>{
+    recordsPromise=import("./eidolon-records.js?v=20261009-lidar-sync-v2").then(mod=>{
       records=mod.initEidolonRecords(root);
       const c=current();
       root.dispatchEvent(new CustomEvent("eidolon:class-risk",{detail:{key:c.key==="seraph"?"측정 불가":c.riskKey,classKey:c.key,mark:c.mark,name:c.name,risk:c.risk}}));

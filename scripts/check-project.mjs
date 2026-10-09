@@ -230,5 +230,16 @@ assert.equal(samples.points.length,3,"LIDAR position sampling");
 assert.equal(samples.triangles.length,1,"LIDAR triangle sampling");
 const projected=projectNestPoint([0,0,0],{theta:0,phi:Math.PI/2,radius:2},[0,0,0],800,400,45);
 assert(Math.abs(projected[0]-400)<1e-8&&Math.abs(projected[1]-200)<1e-8,"LIDAR camera projection");
+// LIDAR must never present a stale frame on top of the WebGL model.
+assert(reconJS.includes("function syncRotation()"),"Scan/camera rotation guard missing");
+assert(reconJS.includes('stage.classList.contains("scanning")||stage.dataset.mode==="lidar"'),
+  "Auto rotation must pause during geometry scan and LIDAR");
+assert(reconJS.includes("syncRotation();"),"Rotation lifecycle not synchronized");
+const lidarModule=read("js/eidolon-nest-lidar.js");
+assert(lidarModule.includes("cameraMoving=true"),"Camera-change overlay stale-frame gate missing");
+assert(lidarModule.includes('stage.classList.remove("lidar-visible")'),"Old point cloud remains visible during user orbit");
+assert(lidarModule.includes("clearTimeout(cameraIdleTimer)"),"Motion settling must cancel older redraws");
+assert(reconCSS.includes('[data-mode="lidar"] model-viewer{opacity:0}'),"LIDAR must not double-render textured specimen");
+assert(!reconCSS.includes('transition:opacity .24s ease'),"LIDAR ghost trail fade still enabled");
 // The GLB-derived point and wire stages are not placeholder CSS shapes.
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, N-01 recon, CSS and entrypoints");

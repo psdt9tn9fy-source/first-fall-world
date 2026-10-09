@@ -1,5 +1,5 @@
 /* N-01 recon station: true GLB geometry-based LIDAR overlaid on the textured model. */
-import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-mesh-v1";
+import {initNestLidar} from "./eidolon-nest-lidar.js?v=20261009-lidar-sync-v2";
 const MODEL_URL="./assets/nest/small.glb?v=20261009-nest-recon-v1";
 const MODEL_VIEWER_SRC="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
 const PHASES=[
@@ -35,10 +35,19 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     if(percent)percent.textContent=value+"%";
     if(bar)bar.style.width=value+"%";
   }
+  // Texture rotation is suspended whenever geometry-derived scan data is visible.
+  // A distinct canvas cannot render at precisely the model-viewer's WebGL frame boundary.
+  function syncRotation(){
+    if(!viewer)return;
+    const visible=level==="small"&&tabActive&&loaded&&root.dataset.eiClass!=="seraph";
+    const displayingScan=stage.classList.contains("scanning")||stage.dataset.mode==="lidar";
+    viewer.autoRotate=visible&&!reduced&&!displayingScan;
+  }
   function setMode(mode){
     if(!["tactical","lidar","thermal"].includes(mode))return;
     stage.dataset.mode=mode;
     lidar.setMode(mode);
+    syncRotation();
     modeBtns.forEach(button=>{
       const active=button.dataset.eiNestMode===mode;
       button.classList.toggle("active",active);
@@ -48,6 +57,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   function setMessage(value){if(log)log.textContent=value}
   function fail(message="3D 파일 연결 대기"){
     loaded=false;lidar.setActive(false);stage.classList.remove("loaded","scanning");
+    syncRotation();
     stage.classList.add("missing");
     if(prompt)prompt.hidden=false;
     updateStatus(message);
@@ -64,12 +74,14 @@ export function initNestRecon(root,{reduced=false,signal}={}){
     if(reduced){
       stage.dataset.scanPhase="complete";lidar.setPhase("complete");
       stage.classList.add("scanned");stage.classList.remove("scanning");
+      syncRotation();
       if(phase)phase.textContent=PHASES[4][0];
       updateProgress(100);updateStatus("RECONSTRUCTION COMPLETE");
       setMessage(PHASES[4][2]);return;
     }
     void stage.offsetWidth;
     stage.classList.add("scanning");
+    syncRotation();
     const token=scanToken;
     const steps=["link","terrain","wire","acquire","complete"];
     PHASES.forEach(([label,value,text],index)=>{
@@ -81,15 +93,16 @@ export function initNestRecon(root,{reduced=false,signal}={}){
         updateStatus(index===PHASES.length-1?"RECONSTRUCTION COMPLETE":"RECONSTRUCTING");
         if(index===PHASES.length-1){
           stage.classList.remove("scanning");stage.classList.add("scanned");
+          syncRotation();
         }
       },index*390);
     });
   }
   function updateVisibility(){
     const on=level==="small"&&tabActive&&root.dataset.eiClass!=="seraph";
-    if(viewer)viewer.autoRotate=on&&loaded&&!reduced;
     lidar.setActive(on);
     if(!on){clearTimers();stage.classList.remove("scanning");}
+    syncRotation();
     if(on){
       if(loaded&&!stage.classList.contains("scanned")&&!stage.classList.contains("scanning"))play();
       else ensureRemote();
@@ -137,7 +150,7 @@ export function initNestRecon(root,{reduced=false,signal}={}){
   viewer?.addEventListener("load",async()=>{
     loaded=true;stage.classList.remove("missing");stage.classList.add("loaded");
     if(prompt)prompt.hidden=true;
-    viewer.autoRotate=tabActive&&level==="small"&&!reduced;
+    syncRotation();
     // Extract actual mesh samples from the cached GLB before starting the reveal.
     await lidar.load(viewer.src);
     if(tabActive&&level==="small"&&loaded){
