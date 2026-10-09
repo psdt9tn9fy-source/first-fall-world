@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-seraph.css?v=20261009-seraph-polish-v2">
   <link rel="stylesheet" href="./css/eidolon-records-seraph.css?v=20261009-seraph-records-v1">
-  <link rel="stylesheet" href="./css/military.css?v=20261009-military-command-v1">
+  <link rel="stylesheet" href="./css/military.css?v=20261009-military-structure-v1">
   <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
@@ -786,9 +786,23 @@
           <button type="button" class="mil-node n3" data-mil-node="front" aria-pressed="false"><span>04</span><b>현장지휘부</b></button>
           <button type="button" class="mil-node n4" data-mil-node="unit" aria-pressed="false"><span>05</span><b>개별 부대</b></button>
         </div>
+        <div class="mil-org" data-mil-org aria-label="군종별 부대 편제 예시">
+          <div class="mil-org-branches" role="group" aria-label="군종 선택">
+            <button type="button" class="active" data-mil-branch="land" aria-pressed="true"><span>01</span><b>지상군</b></button>
+            <button type="button" data-mil-branch="sea" aria-pressed="false"><span>02</span><b>해상군</b></button>
+            <button type="button" data-mil-branch="air" aria-pressed="false"><span>03</span><b>항공군</b></button>
+          </div>
+          <div class="mil-org-tree" role="group" aria-label="부대 편제 계층 선택">
+            <button type="button" class="mil-org-unit active" data-mil-unit="0" aria-pressed="true"><span>01</span><b data-mil-org-name>군단</b><small data-mil-org-brief>광역 작전</small></button>
+            <button type="button" class="mil-org-unit" data-mil-unit="1" aria-pressed="false"><span>02</span><b data-mil-org-name>사단</b><small data-mil-org-brief>통합 전투</small></button>
+            <button type="button" class="mil-org-unit" data-mil-unit="2" aria-pressed="false"><span>03</span><b data-mil-org-name>여단</b><small data-mil-org-brief>독립 작전</small></button>
+            <button type="button" class="mil-org-unit" data-mil-unit="3" aria-pressed="false"><span>04</span><b data-mil-org-name>대대</b><small data-mil-org-brief>현장 전술</small></button>
+          </div>
+          <p class="mil-org-note">편제 예시 // 실제 군종·국가별 명칭과 계층은 다를 수 있음</p>
+        </div>
         <div class="mil-route-state"><span>전달 상태</span><b data-mil-route>대기</b></div>
       </section>
-      <aside class="mil-readout" aria-live="polite" aria-atomic="true"><header><span>선택 계층 // 지휘 구조</span><b data-mil-readout-code>지휘 단계 // 01 / 05</b></header><h3 data-mil-readout-title>국가 지휘부</h3><p data-mil-readout-body>국가의 전쟁 목표와 방위 정책을 정하고, 전략적 우선순위와 군사력 운용 방향을 결정한다. 구체적인 체계는 국가마다 다르다.</p><div class="mil-facts" data-mil-facts><div><span>지휘 범위</span><b>국가 전략</b></div><div><span>주요 역할</span><b>정책·우선순위 결정</b></div><div><span>연결 계층</span><b>합동지휘부</b></div></div><button type="button" data-mil-route-btn>지휘 흐름 재생 <span>→</span></button></aside>
+      <aside class="mil-readout" aria-live="polite" aria-atomic="true"><header><span data-mil-readout-heading>선택 계층 // 지휘 구조</span><b data-mil-readout-code>지휘 단계 // 01 / 05</b></header><h3 data-mil-readout-title>국가 지휘부</h3><p data-mil-readout-body>국가의 전쟁 목표와 방위 정책을 정하고, 전략적 우선순위와 군사력 운용 방향을 결정한다. 구체적인 체계는 국가마다 다르다.</p><div class="mil-facts" data-mil-facts><div><span>지휘 범위</span><b>국가 전략</b></div><div><span>주요 역할</span><b>정책·우선순위 결정</b></div><div><span>연결 계층</span><b>합동지휘부</b></div></div><button type="button" data-mil-route-btn>지휘 흐름 재생 <span>→</span></button></aside>
     </div>
     <footer class="mil-social"><span>군사사회 // 공개 기록</span><p>안전권에서는 민간의 일상이 계속된다. 동시에 군 경력과 출신 교육기관은 장기전 사회에서 중요한 경력 자산으로 기능한다.</p></footer>
   </div>
@@ -819,4 +833,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-military-command-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-military-structure-v1"></script></body></html>

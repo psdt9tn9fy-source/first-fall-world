@@ -232,4 +232,13 @@ assert(military.includes("node.setAttribute(\"aria-pressed\""),"MILITARY accessi
 assert(militaryCSS.includes(".mil-node.passed"),"MILITARY progression missing");
 assert(read("js/nations-data.js").includes("국가 → 합동 → 작전 → 현장"),"State/MILITARY terminology inconsistent");
 assert(!index.includes('data-mil-node="theater"'),"Deprecated command-node name returned");
+assert(index.includes('data-mil-org'),"MILITARY formation panel missing");
+for(const branch of ["land","sea","air"])assert(index.includes('data-mil-branch="'+branch+'"'),branch+" selector missing");
+for(let i=0;i<4;i++)assert(index.includes('data-mil-unit="'+i+'"'),"Formation node "+i+" missing");
+assert(military.includes("const FORMATIONS="),"Military formation data missing");
+assert(military.includes("function setBranch("),"Formation branch controller missing");
+assert(military.includes("function selectFormation("),"Formation node selection missing");
+assert(military.includes('root.dataset.mode==="structure"'),"Structure playback missing");
+assert(militaryCSS.includes('.mil-command[data-mode="structure"] .mil-network{display:none}'),"Command tree must not overlay formations");
+assert(militaryCSS.includes('.mil-command[data-mode="structure"] .mil-org{display:grid}'),"Formation view hidden");
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");

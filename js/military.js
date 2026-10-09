@@ -13,6 +13,28 @@ const COMMAND_LEVELS=[
   {key:"front",title:"현장지휘부",body:"전선의 변화와 적성 개체의 위협을 반영해 현장 임무를 조정하고, 예하 부대에 작전 지시를 전달한다.",facts:["현장 전술","임무 배분·상황 통제","개별 부대"]},
   {key:"unit",title:"개별 부대",body:"정찰·방어·기동·지원 등의 현장 임무를 수행하고, 전투 상황과 필요한 지원 정보를 상급 지휘부에 보고한다.",facts:["임무 수행","현장 대응·보고","상급 지휘부"]}
 ];
+
+/* Representative formations only: actual hierarchies differ by country. */
+const FORMATIONS={
+  land:{name:"지상군",levels:[
+    {name:"군단",brief:"광역 작전",body:"여러 사단과 지원 전력을 통합해 넓은 지역의 지상 작전을 수행하는 상위 부대 편제 예시다.",facts:["광역 지상 작전","다수 부대 통합","사단"]},
+    {name:"사단",brief:"통합 전투",body:"보병·기갑·포병·지원 병과를 통합 운용하는 지상군의 주요 전투 편제 예시다.",facts:["주요 전투 편제","제병협동 작전","여단·연대"]},
+    {name:"여단",brief:"독립 작전",body:"여러 대대와 지원 요소를 편성해 특정 지역에서 독립적 전술 임무를 수행하는 부대 예시다.",facts:["전술 기동 부대","공격·방어·지원","대대"]},
+    {name:"대대",brief:"현장 전술",body:"여러 중대와 지원 인원으로 구성되어 현장에서 구체적인 전투 임무를 수행하는 부대 예시다.",facts:["현장 전술 단위","전투 임무 수행","중대"]}
+  ]},
+  sea:{name:"해상군",levels:[
+    {name:"함대",brief:"해역 통제",body:"특정 해역에서 여러 함정과 해상 전력을 통합 운용하는 상위 해군 편제 예시다.",facts:["광역 해역 작전","해상 전력 통합","전단"]},
+    {name:"전단",brief:"임무 전력",body:"유사한 작전 목적을 가진 전대와 함정들을 묶어 운용하는 해상 부대 편제 예시다.",facts:["임무 중심 편성","해상 전력 조정","전대"]},
+    {name:"전대",brief:"전술 운용",body:"여러 함정 또는 해상 전력을 전술 임무에 맞춰 묶은 부대 편제 예시다.",facts:["해상 전술 단위","함정 공동 운용","개별 함정"]},
+    {name:"함정",brief:"현장 작전",body:"임무별 승조원과 장비를 갖추고 경계·호위·전투·지원 등의 해상 임무를 수행한다.",facts:["해상 임무 수행","독립·협동 기동","함정 승조원"]}
+  ]},
+  air:{name:"항공군",levels:[
+    {name:"항공작전부대",brief:"항공 전력 통합",body:"항공 작전 전력을 통합·조정하는 상위 조직의 일반화된 편제 예시다. 실제 명칭과 소속은 국가마다 다르다.",facts:["항공 작전 조정","공중 전력 배분","비행단"]},
+    {name:"비행단",brief:"기지·전력 운용",body:"항공기와 정비·지원 기능을 함께 운용하며 항공 전력의 지속적인 작전을 뒷받침하는 편제 예시다.",facts:["항공 전력 운영","기지·지원 통합","비행대대"]},
+    {name:"비행대대",brief:"임무 수행",body:"작전 목적에 맞는 항공기와 인력으로 구성되어 구체적인 항공 임무를 담당하는 편제 예시다.",facts:["항공 전투 단위","임무 계획·실행","편대"]},
+    {name:"편대",brief:"전술 비행",body:"여러 항공기가 전술 임무를 수행하도록 구성된 비행 단위 예시다. 실제 구성 규모는 운용 방식에 따라 다르다.",facts:["전술 비행 단위","항공기 공동 기동","개별 항공기"]}
+  ]}
+};
 export function initMilitary(){
   const root=document.querySelector("#milCommand");
   if(!root)return;
@@ -23,9 +45,13 @@ export function initMilitary(){
   const lines=[...root.querySelectorAll(".mil-line")];
   const factLabels=[...root.querySelectorAll("[data-mil-facts] span")];
   const factValues=[...root.querySelectorAll("[data-mil-facts] b")];
+  const branchButtons=[...root.querySelectorAll("[data-mil-branch]")];
+  const orgNodes=[...root.querySelectorAll("[data-mil-unit]")];
+  const orgNames=[...root.querySelectorAll("[data-mil-org-name]")];
+  const orgBriefs=[...root.querySelectorAll("[data-mil-org-brief]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const timers=new Set();
-  let token=0;
+  let token=0,branchKey="land";
   const schedule=(fn,delay)=>{const id=setTimeout(()=>{timers.delete(id);fn()},delay);timers.add(id)};
   function cancelRoute(){
     token++;
@@ -57,6 +83,35 @@ export function initMilitary(){
     renderReadout(level.title,level.body,level.facts,["지휘 범위","주요 역할","연결 계층"],"지휘 단계 // "+String(index+1).padStart(2,"0")+" / 05");
     route.textContent=replay?"지휘 신호 전달 // "+String(index+1).padStart(2,"0"):"선택됨 // "+level.title;
   }
+  function selectFormation(index,{replay=false}={}){
+    const formation=FORMATIONS[branchKey];
+    if(root.dataset.mode!=="structure"||!formation||!formation.levels[index])return;
+    if(!replay)cancelRoute();
+    const unit=formation.levels[index];
+    orgNodes.forEach((node,i)=>{
+      node.classList.toggle("active",i===index);
+      node.classList.toggle("passed",i<index);
+      node.setAttribute("aria-pressed",String(i===index));
+    });
+    renderReadout(unit.name,unit.body,unit.facts,["편제 규모","주요 임무","하위 단위"],
+      formation.name+" // "+String(index+1).padStart(2,"0")+" / 04");
+    route.textContent=replay?"편제 흐름 // "+String(index+1).padStart(2,"0"):"선택됨 // "+unit.name;
+  }
+  function setBranch(key){
+    const formation=FORMATIONS[key];
+    if(!formation)return;
+    cancelRoute();
+    branchKey=key;
+    branchButtons.forEach(button=>{
+      const selected=button.dataset.milBranch===key;
+      button.classList.toggle("active",selected);
+      button.setAttribute("aria-pressed",String(selected));
+    });
+    orgNames.forEach((node,i)=>node.textContent=formation.levels[i].name);
+    orgBriefs.forEach((node,i)=>node.textContent=formation.levels[i].brief);
+    q("[data-mil-title]").textContent=formation.name+" 편제";
+    selectFormation(0);
+  }
   function setMode(key){
     const mode=MODES[key];
     if(!mode)return;
@@ -69,8 +124,14 @@ export function initMilitary(){
     });
     q("[data-mil-kicker]").textContent=mode.kick;
     q("[data-mil-title]").textContent=mode.title;
+    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":"현재 기록";
+    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":"지휘 흐름 재생 ";
     if(key==="command"){
       selectLevel("national");
+    }else if(key==="structure"){
+      nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
+      lines.forEach(line=>line.classList.remove("passed"));
+      setBranch(branchKey);
     }else{
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
@@ -79,6 +140,22 @@ export function initMilitary(){
     }
   }
   function runRoute(){
+    if(root.dataset.mode==="structure"){
+      cancelRoute();
+      const steps=FORMATIONS[branchKey].levels;
+      if(reduced){selectFormation(steps.length-1,{replay:true});route.textContent="확인 완료";return}
+      stage.classList.add("routing");
+      const current=token;
+      steps.forEach((_,index)=>schedule(()=>{
+        if(token!==current||root.dataset.mode!=="structure")return;
+        selectFormation(index,{replay:true});
+        if(index===steps.length-1){
+          route.textContent="확인 완료";
+          schedule(()=>{if(token===current)stage.classList.remove("routing")},340);
+        }
+      },120+index*320));
+      return;
+    }
     if(root.dataset.mode!=="command")setMode("command");
     cancelRoute();
     if(reduced){
@@ -102,13 +179,15 @@ export function initMilitary(){
     });
   }
   buttons.forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.milMode)));
+  branchButtons.forEach(button=>button.addEventListener("click",()=>setBranch(button.dataset.milBranch)));
+  orgNodes.forEach(node=>node.addEventListener("click",()=>selectFormation(Number(node.dataset.milUnit))));
   nodes.forEach(node=>node.addEventListener("click",()=>{
     if(root.dataset.mode!=="command")setMode("command");
     selectLevel(node.dataset.milNode);
   }));
   q("[data-mil-route-btn]")?.addEventListener("click",runRoute);
   window.addEventListener("archive:record-opened",event=>{
-    if(event.detail?.key==="military"&&root.dataset.mode==="command")runRoute();
+    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"))runRoute();
     else if(event.detail?.key!=="military")cancelRoute();
   });
   setMode("command");

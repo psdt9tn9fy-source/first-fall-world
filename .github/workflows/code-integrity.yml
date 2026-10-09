@@ -24,3 +24,5 @@ jobs:
         run: node scripts/check-project.mjs
       - name: Check nest reconnaissance lifecycle
         run: node scripts/check-nest-recon.mjs
+      - name: Check military hierarchy interactions
+        run: node scripts/check-military.mjs
