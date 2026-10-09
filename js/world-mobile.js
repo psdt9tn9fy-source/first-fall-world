@@ -3,7 +3,6 @@ import { flagUrl } from "./flag-utils.js?v=20261008-world-order-structure-v1";
 import { N, EVENTS } from "./data.js?v=20261007-refactor-3";
 import { THEATERS } from "./world-data.js?v=20261007-refactor-3";
 
-const mobileQuery=matchMedia("(max-width: 820px)");
 const nations=new Map(N.map(n=>[n[0],n]));
 export function initWorldMobile(){
   const terminal=document.querySelector("#fieldTerminal");
@@ -89,7 +88,7 @@ export function initWorldMobile(){
   }
 
   function worldReady(){
-    return mobileQuery.matches&&terminal.closest(".view")?.classList.contains("active")&&(!intro||intro.classList.contains("hide"));
+    return terminal.closest(".view")?.classList.contains("active")&&(!intro||intro.classList.contains("hide"));
   }
 
   function loadTheaterFlags(index){
@@ -110,7 +109,7 @@ export function initWorldMobile(){
   }
 
   function showDiscoveryHint(){
-    if(!mobileQuery.matches||!discoveryHint)return;
+    if(!discoveryHint)return;
     let seen=false;
     try{seen=localStorage.getItem("ida-field-terminal-hint-v1")==="1"}catch(e){}
     if(seen)return;
@@ -257,6 +256,5 @@ export function initWorldMobile(){
   }
   if(intro)new MutationObserver(maybeShowDiscovery).observe(intro,{attributes:true,attributeFilter:["class"]});
   window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="world")maybeShowDiscovery()});
-  mobileQuery.addEventListener?.("change",e=>{if(!e.matches)setSheetState("closed");else maybeShowDiscovery()});
   renderDeck();renderTimeline("2134");maybeShowDiscovery();
 }

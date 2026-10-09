@@ -146,3 +146,9 @@ CSS 파일들의 **연결 순서를 유지**해야 기존 디자인 우선순위
 - CI: project module/assets/style integrity; EIDOLON nest lifecycle; MILITARY five-tab interactions; archive chronology completeness.
 - Version 1 is a functional baseline, not a claim of complete country-by-country military data or fully verified rendering on every device. Desktop/mobile visual audit must be separately verified in a real browser.
 - Additional national armed forces, academy details, weapon catalogs and expanded characters are V2 work, not launch blockers.
+
+### V1 world interface consolidation — 2026-10-09
+- The WORLD landing view now uses a single theater/timeline/status terminal at desktop and mobile widths, replacing the old desktop SVG world map in the visible UI.
+- The older SVG map markup/controller is preserved but no longer initialized or shown; retain it only for deliberate rollback or future reuse.
+- The terminal loads national flags on both device sizes and keeps nation record navigation. Desktop uses `css/world-terminal-desktop.css` to adapt spacing and dossier presentation.
+- Intentional CSS change: the world terminal was formerly constrained to <=820px. The world-mobile stylesheet and its snapshot checksum now apply across breakpoints.

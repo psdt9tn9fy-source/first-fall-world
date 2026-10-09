@@ -62,7 +62,7 @@ for(const [key,extension] of Object.entries({afr:"png",rok:"jpg",afu:"jpg"})){
 }
 
 /* Nation/world CSS is split into feature stylesheets without changing cascade order. */
-const worldCssGroups=[{"original":"css/nations.css","parts":["css/nations.css","css/nations-dossier.css","css/nations-readability.css"],"hash":"79bfbc2d"},{"original":"css/nations-mobile.css","parts":["css/nations-mobile.css","css/nations-mobile-dossier.css","css/nations-mobile-readability.css"],"hash":"3ba5ce64"},{"original":"css/world.css","parts":["css/world.css","css/world-map.css","css/world-panel.css"],"hash":"4970fdbe"},{"original":"css/world-mobile.css","parts":["css/world-mobile.css","css/world-mobile-readability.css"],"hash":"732db4a4"}];
+const worldCssGroups=[{"original":"css/nations.css","parts":["css/nations.css","css/nations-dossier.css","css/nations-readability.css"],"hash":"79bfbc2d"},{"original":"css/nations-mobile.css","parts":["css/nations-mobile.css","css/nations-mobile-dossier.css","css/nations-mobile-readability.css"],"hash":"3ba5ce64"},{"original":"css/world.css","parts":["css/world.css","css/world-map.css","css/world-panel.css"],"hash":"4970fdbe"},{"original":"css/world-mobile.css","parts":["css/world-mobile.css","css/world-mobile-readability.css"],"hash":"5695361f"}];
 for(const group of worldCssGroups){
   const combined=group.parts.map(read).join("");
   assert.equal(cssChecksum(combined),group.hash,"Original CSS changed: "+group.original);
@@ -274,4 +274,10 @@ for(const id of ["historyArchive","historyMore","historyEntries","historyPeriodN
 assert(index.includes('./css/archive.css?v='),"History archive CSS missing");
 assert(main.includes('./archive.js?v=')&&main.includes('initArchive();'),"History archive module disconnected");
 assert(read("js/intro.js").includes('if(matchMedia("(prefers-reduced-motion: reduce)").matches){skipIntro();return}'),"Reduced-motion intro bypass missing");
-console.log("PASS: six sections, 3D assets, module links, V1 history archive, a11y and regressions");
+assert(index.includes('./css/world-terminal-desktop.css?v='),"Desktop terminal style missing");
+assert(main.includes('initWorldMobile();')&&!main.includes('initWorld();'),"Legacy desktop map must not initialize");
+assert(!mobileJs.includes('const mobileQuery=matchMedia("(max-width: 820px)")'),"World terminal still restricted to mobile");
+assert(mobileJs.includes('return terminal.closest(".view")?.classList.contains("active")'),"World terminal visibility gate incorrect");
+assert(read("css/world-mobile.css").includes("@media(min-width:0px)"),"Shared world terminal CSS not applied on desktop");
+assert(read("css/world-terminal-desktop.css").includes("@media(min-width:821px)"),"Desktop terminal layout not responsive");
+console.log("PASS: six sections, 3D assets, cross-device world terminal, V1 history archive and regressions");

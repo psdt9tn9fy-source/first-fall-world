@@ -1,0 +1,74 @@
+/* Desktop presentation of the same mobile field terminal; no parallel world UI. */
+@media(min-width:821px){
+ .archive-shell[data-active-record="world"]{padding:12px 12px 128px}
+ .archive-shell[data-active-record="world"] .main{width:min(1160px,calc(100% - 22px));margin:0 auto;padding:0}
+ .archive-shell[data-active-record="world"] .situation-room{min-height:calc(100dvh - 25px)}
+ .field-terminal{width:100%;min-height:calc(100dvh - 30px);padding:24px 30px 130px;border-color:#34454a}
+ .ft-header{padding:2px 3px 19px}
+ .ft-header span{font-size:10px;letter-spacing:.16em}
+ .ft-header b{font-size:35px}
+ .ft-link{font-size:11px}
+ .ft-modules button{min-height:58px;font-size:14px;cursor:pointer}
+ .ft-theater-head{padding:22px 4px 18px;gap:8px}
+ .ft-theater-head>span{font-size:10px}
+ .ft-theater-head b{font-size:clamp(29px,3.5vw,42px)}
+ .ft-theater-head em{font-size:12px}
+ .ft-theater-head small{font-size:14px}
+ .ft-world-index{gap:8px;padding-bottom:15px}
+ .ft-world-index button{padding:10px 15px;font-size:11px;cursor:pointer}
+ .ft-theater-deck{gap:12px;padding-right:0}
+ .ft-theater-card{flex:0 0 100%;min-width:100%}
+ .ft-card-code,.ft-card-foot{font-size:10px}
+ .ft-card-code{padding:10px 4px}
+ .ft-card-foot{padding:11px 5px}
+ .ft-schematic{height:clamp(460px,56dvh,620px);min-height:460px}
+ .ft-map-watermark>b{font-size:clamp(75px,10vw,135px)}
+ .ft-map-watermark>span{font-size:12px}
+ .ft-map-watermark>small{font-size:9px}
+ .ft-locator{right:15px;top:15px;width:124px;height:69px}
+ .ft-locator img{width:118px;height:62px}
+ .ft-locator span{font-size:8px}
+ .ft-node{width:88px;height:86px}
+ .ft-flag-marker{left:13px;top:3px;width:62px;height:62px}
+ .ft-flag-fallback{font-size:11px}
+ .ft-node>b{top:69px;font-size:11px;white-space:nowrap;padding:3px 6px}
+ .ft-node>small{display:none}
+ .ft-target-lock{width:120px;height:120px}
+ .ft-target-lock span{font-size:9px}
+ .ft-target-lock b{font-size:13px;top:57px}
+ .ft-theater-footer{padding:10px 0}
+ .ft-theater-dots button{width:32px;height:3px;cursor:pointer}
+ .ft-swipe-cue{font-size:11px}
+ .ft-discovery-hint{width:min(360px,55%);padding:19px 20px}
+ .ft-discovery-hint span{font-size:13px}.ft-discovery-hint b{font-size:10px}
+ .ft-era-row button{padding:13px 18px;font-size:13px;cursor:pointer}
+ .ft-timeline{padding-top:20px}
+ .ft-timeline-list{max-height:min(65dvh,720px)}
+ .ft-timeline-list article{grid-template-columns:90px 1fr 40px;padding:19px 8px}
+ .ft-timeline-list time{font-size:15px}.ft-timeline-list b{font-size:17px}.ft-timeline-list span{font-size:10px}.ft-timeline-list em{font-size:10px}
+ .ft-status{padding-top:20px}
+ .ft-status-hero{padding:28px}
+ .ft-status-hero span{font-size:11px}.ft-status-hero b{font-size:70px}.ft-status-hero strong{font-size:14px}
+ .ft-zone-list{gap:8px;border:0;background:transparent}
+ .ft-zone-list article{padding:22px;min-height:145px;border:1px solid #303c40}
+ .ft-zone-list b{font-size:18px}.ft-zone-list p{font-size:14px}
+ .ft-status-actions button{font-size:13px;min-height:58px;padding:0 18px;cursor:pointer}
+ .ft-dossier{left:auto;right:max(24px,calc((100vw - 1160px)/2 + 32px));bottom:104px;width:min(420px,calc(100vw - 48px));height:min(570px,72dvh);padding:0 20px 20px}
+ .ft-dossier[data-state="medium"],.ft-dossier[data-state="full"]{transform:translateY(0)}
+ .ft-dossier-head{margin:0 -20px 15px;padding:0 15px}
+ .ft-dossier-grab{font-size:10px;cursor:pointer}
+ .ft-dossier-code{font-size:10px}.ft-dossier h3{font-size:35px}.ft-dossier-class{font-size:10px}
+ .ft-dossier p{font-size:14px;line-height:1.75}
+ .ft-dossier-data span{font-size:10px}.ft-dossier-data b{font-size:12px}
+ .ft-dossier-open{min-height:52px;font-size:12px;cursor:pointer}
+ .ft-node:focus-visible,.ft-modules button:focus-visible,.ft-world-index button:focus-visible,.ft-era-row button:focus-visible,
+ .ft-status-actions button:focus-visible,.ft-dossier button:focus-visible,.ft-theater-dots button:focus-visible{outline:2px solid #c4e6ed;outline-offset:3px}
+}
+@media(min-width:821px) and (max-width:1050px){
+ .field-terminal{padding:20px 22px 125px}
+ .ft-schematic{height:clamp(415px,54dvh,520px);min-height:415px}
+ .ft-node{width:78px;height:77px}
+ .ft-flag-marker{left:12px;top:3px;width:54px;height:54px}
+ .ft-node>b{top:61px;font-size:10px}
+ .ft-dossier{width:min(360px,42vw)}
+}
