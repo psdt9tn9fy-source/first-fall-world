@@ -23,6 +23,9 @@ function createFixture(reduced=false){
   const modeButtons=["command","structure","force","rank","deployment"].map(milMode=>element({milMode}));
   const commandNodes=["national","joint","operations","front","unit"].map(milNode=>element({milNode}));
   const branches=["land","sea","air"].map(milBranch=>element({milBranch}));
+  const forceKeys=["ground","naval","air","special","support"];
+  const forceNodes=forceKeys.map(milForce=>element({milForce}));
+  const forceLinks=forceKeys.map(milForceLink=>element({milForceLink}));
   const orgUnits=[0,1,2,3].map(milUnit=>element({milUnit:String(milUnit)}));
   const names=orgUnits.map(()=>element()),briefs=orgUnits.map(()=>element());
   const factLabels=[element(),element(),element()],facts=[element(),element(),element()];
@@ -34,7 +37,8 @@ function createFixture(reduced=false){
     [".mil-line",[element(),element(),element(),element()]],
     ["[data-mil-facts] span",factLabels],["[data-mil-facts] b",facts],
     ["[data-mil-branch]",branches],["[data-mil-unit]",orgUnits],
-    ["[data-mil-org-name]",names],["[data-mil-org-brief]",briefs]
+    ["[data-mil-org-name]",names],["[data-mil-org-brief]",briefs],
+    ["[data-mil-force]",forceNodes],["[data-mil-force-link]",forceLinks]
   ]);
   const root={
     dataset:{},
@@ -60,7 +64,7 @@ function createFixture(reduced=false){
       fn();
     }
   }
-  return {root,modeButtons,commandNodes,branches,orgUnits,names,briefs,byId,facts,events,flush,
+  return {root,modeButtons,commandNodes,branches,orgUnits,forceNodes,forceLinks,names,briefs,byId,facts,events,flush,
     get title(){return byId.get("[data-mil-readout-title]").textContent},
     get description(){return byId.get("[data-mil-readout-body]").textContent},
     get route(){return byId.get("[data-mil-route]").textContent}};
@@ -111,4 +115,42 @@ r.modeButtons[1].click();
 r.byId.get("[data-mil-route-btn]").click();
 assert.equal(r.title,"대대");
 assert.equal(r.route,"확인 완료");
-console.log("PASS: military command preservation, 3 branch selection, 4 formation nodes, replay, reduced motion");
+
+// Interactive force network: each domain updates the shared readout and highlighted link.
+f.modeButtons[2].click();
+assert.equal(f.root.dataset.mode,"force");
+assert.equal(f.title,"지상 전력");
+assert.equal(f.forceNodes[0].getAttribute("aria-pressed"),"true");
+assert(f.forceLinks[0].classes.has("active"));
+f.forceNodes[1].click();
+assert.equal(f.title,"해상 전력");
+assert.match(f.description,/해상 교통로/);
+assert.equal(f.forceNodes[0].getAttribute("aria-pressed"),"false");
+assert(f.forceLinks[1].classes.has("active"));
+assert(!f.forceLinks[0].classes.has("active"));
+f.forceNodes[2].click();
+assert.equal(f.title,"항공 전력");
+f.forceNodes[3].click();
+assert.equal(f.title,"특수 전력");
+assert.match(f.description,/국가/);
+f.forceNodes[4].click();
+assert.equal(f.title,"지원 전력");
+assert.equal(f.facts[0].textContent,"전력 유지 · 작전 지속");
+f.forceNodes[0].click();
+f.byId.get("[data-mil-route-btn]").click();
+f.flush();
+assert.equal(f.title,"지원 전력");
+assert.equal(f.route,"연계 완료");
+assert(f.forceLinks[3].classes.has("passed"));
+f.modeButtons[1].click();
+assert.equal(f.title,"군단");
+f.modeButtons[2].click();
+assert.equal(f.title,"지원 전력","Reentering force mode must preserve selection");
+f.modeButtons[0].click();
+assert.equal(f.title,"국가 지휘부","Force tab must not corrupt command hierarchy");
+const rf=createFixture(true);
+rf.modeButtons[2].click();
+rf.byId.get("[data-mil-route-btn]").click();
+assert.equal(rf.title,"지원 전력");
+assert.equal(rf.route,"연계 완료");
+console.log("PASS: military command, 3 formation branches, 5 force domains, readout, replay and reduced motion");

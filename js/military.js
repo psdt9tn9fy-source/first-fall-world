@@ -35,6 +35,14 @@ const FORMATIONS={
     {name:"편대",brief:"전술 비행",body:"여러 항공기가 전술 임무를 수행하도록 구성된 비행 단위 예시다. 실제 구성 규모는 운용 방식에 따라 다르다.",facts:["전술 비행 단위","항공기 공동 기동","개별 항공기"]}
   ]}
 };
+/* Combined operational capabilities, not a nation-specific order of battle. */
+const FORCES={
+  ground:{title:"지상 전력",body:"도시와 전선의 방어, 거점 확보, 지상 기동을 담당하는 기본 전력이다. 보병·기갑·화력 지원을 상황에 따라 결합하며 전쟁 환경에 맞춰 장비와 전술이 발전했다.",facts:["방어 · 기동 · 거점 확보","보병 · 기갑 · 화력","항공 · 지원 전력"]},
+  naval:{title:"해상 전력",body:"해상 교통로를 보호하고 연안 방어와 해상 수송을 수행하는 전력이다. 함정·잠수함과 지원 함대의 역할은 각국의 해역과 산업 기반에 따라 달라진다.",facts:["해역 방어 · 수송로 확보","수상함 · 잠수함","항공 · 지원 전력"]},
+  air:{title:"항공 전력",body:"정찰과 요격, 공중 방어 및 지상·해상 작전 지원을 담당한다. 유·무인 항공전력의 구성과 운용 방식은 국가마다 차이가 있다.",facts:["정찰 · 요격 · 공중 지원","유·무인 항공기","지상 · 해상 전력"]},
+  special:{title:"특수 전력",body:"정예 인원과 특수 장비를 활용해 일반 부대와 구분되는 임무를 수행하는 전력이다. 특수 능력이나 고도화된 장비의 도입 여부는 각국의 제도와 기술 수준에 따라 다르다.",facts:["특수 임무 · 제한적 운용","정예 인원 · 특수 장비","지상 · 정보 지원"]},
+  support:{title:"지원 전력",body:"보급·정비·의무·통신·정보 체계를 통해 여러 전투 전력이 지속적으로 작전할 수 있도록 뒷받침한다. 장기전에서는 전선의 유지와 복구에 필수적이다.",facts:["전력 유지 · 작전 지속","보급 · 정비 · 의무 · 정보","전 군종 공통"]}
+};
 export function initMilitary(){
   const root=document.querySelector("#milCommand");
   if(!root)return;
@@ -49,9 +57,11 @@ export function initMilitary(){
   const orgNodes=[...root.querySelectorAll("[data-mil-unit]")];
   const orgNames=[...root.querySelectorAll("[data-mil-org-name]")];
   const orgBriefs=[...root.querySelectorAll("[data-mil-org-brief]")];
+  const forceNodes=[...root.querySelectorAll("[data-mil-force]")];
+  const forceLinks=[...root.querySelectorAll("[data-mil-force-link]")];
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const timers=new Set();
-  let token=0,branchKey="land";
+  let token=0,branchKey="land",forceKey="ground";
   const schedule=(fn,delay)=>{const id=setTimeout(()=>{timers.delete(id);fn()},delay);timers.add(id)};
   function cancelRoute(){
     token++;
@@ -112,6 +122,29 @@ export function initMilitary(){
     q("[data-mil-title]").textContent=formation.name+" 편제";
     selectFormation(0);
   }
+  function selectForce(key,{replay=false}={}){
+    const detail=FORCES[key];
+    if(root.dataset.mode!=="force"||!detail)return;
+    if(!replay)cancelRoute();
+    forceKey=key;
+    const order=Object.keys(FORCES);
+    const current=order.indexOf(key);
+    forceNodes.forEach(node=>{
+      const index=order.indexOf(node.dataset.milForce);
+      const active=node.dataset.milForce===key;
+      node.classList.toggle("active",active);
+      node.classList.toggle("passed",replay&&index<current);
+      node.setAttribute("aria-pressed",String(active));
+    });
+    forceLinks.forEach(link=>{
+      const index=order.indexOf(link.dataset.milForceLink);
+      link.classList.toggle("active",link.dataset.milForceLink===key);
+      link.classList.toggle("passed",replay&&index<current);
+    });
+    renderReadout(detail.title,detail.body,detail.facts,["주요 임무","전력 구성","연계 대상"],
+      "전력 유형 // "+String(current+1).padStart(2,"0")+" / 05");
+    route.textContent=replay?"전력 연결 // "+String(current+1).padStart(2,"0"):"선택됨 // "+detail.title;
+  }
   function setMode(key){
     const mode=MODES[key];
     if(!mode)return;
@@ -124,14 +157,18 @@ export function initMilitary(){
     });
     q("[data-mil-kicker]").textContent=mode.kick;
     q("[data-mil-title]").textContent=mode.title;
-    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":"현재 기록";
-    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":"지휘 흐름 재생 ";
+    q("[data-mil-readout-heading]").textContent=key==="structure"?"선택 편제 // 군종별 조직":key==="command"?"선택 계층 // 지휘 구조":key==="force"?"선택 전력 // 통합 전력망":"현재 기록";
+    q("[data-mil-route-btn]").firstChild.textContent=key==="structure"?"편제 흐름 재생 ":key==="force"?"전력 연계 재생 ":"지휘 흐름 재생 ";
     if(key==="command"){
       selectLevel("national");
     }else if(key==="structure"){
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
       setBranch(branchKey);
+    }else if(key==="force"){
+      nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
+      lines.forEach(line=>line.classList.remove("passed"));
+      selectForce(forceKey);
     }else{
       nodes.forEach(node=>{node.classList.remove("active","passed");node.setAttribute("aria-pressed","false")});
       lines.forEach(line=>line.classList.remove("passed"));
@@ -140,6 +177,22 @@ export function initMilitary(){
     }
   }
   function runRoute(){
+    if(root.dataset.mode==="force"){
+      cancelRoute();
+      const keys=Object.keys(FORCES);
+      if(reduced){selectForce(keys[keys.length-1],{replay:true});route.textContent="연계 완료";return}
+      stage.classList.add("routing");
+      const current=token;
+      keys.forEach((key,index)=>schedule(()=>{
+        if(token!==current||root.dataset.mode!=="force")return;
+        selectForce(key,{replay:true});
+        if(index===keys.length-1){
+          route.textContent="연계 완료";
+          schedule(()=>{if(token===current)stage.classList.remove("routing")},380);
+        }
+      },140+index*280));
+      return;
+    }
     if(root.dataset.mode==="structure"){
       cancelRoute();
       const steps=FORMATIONS[branchKey].levels;
@@ -181,13 +234,14 @@ export function initMilitary(){
   buttons.forEach(button=>button.addEventListener("click",()=>setMode(button.dataset.milMode)));
   branchButtons.forEach(button=>button.addEventListener("click",()=>setBranch(button.dataset.milBranch)));
   orgNodes.forEach(node=>node.addEventListener("click",()=>selectFormation(Number(node.dataset.milUnit))));
+  forceNodes.forEach(node=>node.addEventListener("click",()=>selectForce(node.dataset.milForce)));
   nodes.forEach(node=>node.addEventListener("click",()=>{
     if(root.dataset.mode!=="command")setMode("command");
     selectLevel(node.dataset.milNode);
   }));
   q("[data-mil-route-btn]")?.addEventListener("click",runRoute);
   window.addEventListener("archive:record-opened",event=>{
-    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"))runRoute();
+    if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"))runRoute();
     else if(event.detail?.key!=="military")cancelRoute();
   });
   setMode("command");

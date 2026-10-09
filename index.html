@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="./css/eidolon-records-readability.css?v=20261008-structure-v1">
   <link rel="stylesheet" href="./css/eidolon-seraph.css?v=20261009-seraph-polish-v2">
   <link rel="stylesheet" href="./css/eidolon-records-seraph.css?v=20261009-seraph-records-v1">
-  <link rel="stylesheet" href="./css/military.css?v=20261009-military-structure-v1">
+  <link rel="stylesheet" href="./css/military.css?v=20261009-military-force-v1">
   <link rel="stylesheet" href="./css/characters.css?v=20261008-character-v9">
   <link rel="stylesheet" href="./css/record-nav.css?v=20261007-refactor-3">
 </head>
@@ -800,6 +800,24 @@
           </div>
           <p class="mil-org-note">편제 예시 // 실제 군종·국가별 명칭과 계층은 다를 수 있음</p>
         </div>
+        <div class="mil-force" data-mil-force-board aria-label="통합 전력망 · 전력 유형 선택">
+          <svg class="mil-force-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <line data-mil-force-link="ground" x1="50" y1="49" x2="18" y2="19"></line>
+            <line data-mil-force-link="naval" x1="50" y1="49" x2="82" y2="19"></line>
+            <line data-mil-force-link="air" x1="50" y1="49" x2="16" y2="66"></line>
+            <line data-mil-force-link="special" x1="50" y1="49" x2="84" y2="66"></line>
+            <line data-mil-force-link="support" x1="50" y1="49" x2="50" y2="88"></line>
+          </svg>
+          <div class="mil-force-core" aria-hidden="true">
+            <span>I.D.A. / 2134</span><b>통합 전력</b><small>COMBINED FORCES</small>
+          </div>
+          <button type="button" class="mil-force-node n-ground active" data-mil-force="ground" aria-pressed="true"><span>01 / GROUND</span><b>지상 전력</b></button>
+          <button type="button" class="mil-force-node n-naval" data-mil-force="naval" aria-pressed="false"><span>02 / NAVAL</span><b>해상 전력</b></button>
+          <button type="button" class="mil-force-node n-air" data-mil-force="air" aria-pressed="false"><span>03 / AIR</span><b>항공 전력</b></button>
+          <button type="button" class="mil-force-node n-special" data-mil-force="special" aria-pressed="false"><span>04 / SPECIAL</span><b>특수 전력</b></button>
+          <button type="button" class="mil-force-node n-support" data-mil-force="support" aria-pressed="false"><span>05 / SUPPORT</span><b>지원 전력</b></button>
+          <span class="mil-force-caption">전력 분류 예시 / 국가별 구성 상이</span>
+        </div>
         <div class="mil-route-state"><span>전달 상태</span><b data-mil-route>대기</b></div>
       </section>
       <aside class="mil-readout" aria-live="polite" aria-atomic="true"><header><span data-mil-readout-heading>선택 계층 // 지휘 구조</span><b data-mil-readout-code>지휘 단계 // 01 / 05</b></header><h3 data-mil-readout-title>국가 지휘부</h3><p data-mil-readout-body>국가의 전쟁 목표와 방위 정책을 정하고, 전략적 우선순위와 군사력 운용 방향을 결정한다. 구체적인 체계는 국가마다 다르다.</p><div class="mil-facts" data-mil-facts><div><span>지휘 범위</span><b>국가 전략</b></div><div><span>주요 역할</span><b>정책·우선순위 결정</b></div><div><span>연결 계층</span><b>합동지휘부</b></div></div><button type="button" data-mil-route-btn>지휘 흐름 재생 <span>→</span></button></aside>
@@ -833,4 +851,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-military-structure-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261009-military-force-v1"></script></body></html>

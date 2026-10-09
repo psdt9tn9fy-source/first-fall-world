@@ -241,4 +241,11 @@ assert(military.includes("function selectFormation("),"Formation node selection 
 assert(military.includes('root.dataset.mode==="structure"'),"Structure playback missing");
 assert(militaryCSS.includes('.mil-command[data-mode="structure"] .mil-network{display:none}'),"Command tree must not overlay formations");
 assert(militaryCSS.includes('.mil-command[data-mode="structure"] .mil-org{display:grid}'),"Formation view hidden");
+for(const type of ["ground","naval","air","special","support"])assert(index.includes('data-mil-force="'+type+'"'),"Military force node missing: "+type);
+assert(index.includes('data-mil-force-link="ground"'),"Force network lines missing");
+assert(military.includes("const FORCES="),"Force definitions missing");
+assert(military.includes("function selectForce("),"Force-specific readout missing");
+assert(military.includes('root.dataset.mode==="force"'),"Force network playback missing");
+assert(militaryCSS.includes('.mil-command[data-mode="force"] .mil-network{display:none}'),"Force network overlay collision");
+assert(militaryCSS.includes('.mil-command[data-mode="force"] .mil-force{display:block}'),"Force panel not visible");
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, MILITARY command and shared N-01/N-02 recon, CSS and entrypoints");
