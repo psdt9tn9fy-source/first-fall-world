@@ -9,6 +9,11 @@ export function initBehaviorRecord(root,{reduced,signal}){
   function runTrace(){
     if(!trace)return;
     const token=++traceToken;
+    if(root.dataset.eiClass==="seraph"){
+      trace.classList.remove("running","complete");
+      if(traceStatus)traceStatus.textContent="INSUFFICIENT DATA";
+      return;
+    }
     trace.classList.remove("complete");
     trace.classList.add("running");
     traceNodes.forEach(node=>node.classList.remove("active"));
@@ -23,6 +28,6 @@ export function initBehaviorRecord(root,{reduced,signal}){
   }
 
 
-  traceRun?.addEventListener("click",runTrace,{signal});
+  traceRun?.addEventListener("click",()=>{if(root.dataset.eiClass!=="seraph")runTrace()},{signal});
   return {runTrace,cancel(){traceToken++},destroy(){traceToken++}};
 }

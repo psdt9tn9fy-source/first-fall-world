@@ -7,10 +7,15 @@ export function initProfileRecord(root,{reduced,signal}){
   const correlation=root.querySelector("[data-ei-correlation]");
   const rescan=root.querySelector("[data-ei-rescan]");
   let identToken=0;
+  const summaryStatuses=identRows.slice(0,3).map(row=>row.querySelector("em")?.textContent||"");
   const evidenceRows=identRows.slice(3,6).map(row=>({
     row,body:row.querySelector("b")?.textContent||"",status:row.querySelector("em")?.textContent||""
   }));
   function syncEvidenceRows(seraph){
+    identRows.slice(0,3).forEach((row,index)=>{
+      const badge=row.querySelector("em");
+      if(badge)badge.textContent=seraph?"미검증":summaryStatuses[index];
+    });
     const unknown=[["표본 미확보","검증 불가"],["인간형 목격 보고","불확실"],["자료 없음","미확인"]];
     evidenceRows.forEach(({row,body,status},index)=>{
       const text=row.querySelector("b"),statusEl=row.querySelector("em");

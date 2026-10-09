@@ -1,0 +1,188 @@
+/* SERAPH exclusive dossier content. Original D-S/standard records stay intact. */
+.eidolon-lab .ei-seraph-record{display:none}
+.eidolon-lab.seraph-mode .ei-seraph-record{display:block}
+.eidolon-lab.seraph-mode .ei-panel[data-ei-panel="behavior"] > :not(.ei-seraph-record),
+.eidolon-lab.seraph-mode .ei-panel[data-ei-panel="nest"] > :not(.ei-seraph-record),
+.eidolon-lab.seraph-mode .ei-panel[data-ei-panel="engagement"] > :not(.ei-seraph-record):not(.ei-seraph-breach){display:none}
+.eidolon-lab.seraph-mode .ei-record-console{
+  border-color:#57454d;background:#08080b;--seraph-line:#55424b;--seraph-ink:#eddee4;--seraph-muted:#b9a6ae
+}
+.eidolon-lab.seraph-mode .ei-record-console > header{
+  background:linear-gradient(90deg,#1c141b,#08090d);border-bottom-color:#5b434e
+}
+.eidolon-lab.seraph-mode .ei-record-console > header em{color:#d1a8b8}
+.eidolon-lab.seraph-mode .ei-tabs{background:#100d13;border-color:#4d3c45}
+.eidolon-lab.seraph-mode .ei-tabs button{
+  color:#b4a0a9;background:#0f0c12;border-color:#40303a;letter-spacing:.06em
+}
+.eidolon-lab.seraph-mode .ei-tabs button.active{
+  color:#f2e4ea!important;background:#2c1c29!important;box-shadow:inset 0 -2px #d8a4b8
+}
+.eidolon-lab.seraph-mode .ei-panels{background:linear-gradient(135deg,#100d13,#07090c 70%)}
+.eidolon-lab.seraph-mode .ei-seraph-record{
+  color:var(--seraph-ink);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  border:1px solid #59454e;background:linear-gradient(135deg,#151017 0%,#08090c 80%);
+  box-shadow:inset 0 1px #fff1,0 20px 40px #0004;overflow:hidden;position:relative
+}
+.eidolon-lab.seraph-mode .ei-seraph-record::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.34;
+  background:repeating-linear-gradient(0deg,transparent 0 6px,#eacbd00b 7px,transparent 8px)
+}
+.eidolon-lab.seraph-mode .ei-seraph-record > *{position:relative;z-index:1}
+.eidolon-lab.seraph-mode .ei-seraph-record-top{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;
+  padding:12px 17px;border-bottom:1px solid #5a454f;background:#211720
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-top span{
+  color:#e4b7c6;font-weight:850;font-size:10px;letter-spacing:.1em
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-top b{
+  color:#e1d3d9;font-weight:700;font-size:10px;letter-spacing:.025em
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-heading{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:20px 18px 4px
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-heading small{
+  color:#d39eaf;font-size:10px;letter-spacing:.14em
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-heading h3{
+  margin:9px 0 8px;font-size:clamp(20px,3vw,29px);color:#f6eaf0;line-height:1.3
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-heading p{
+  margin:0;max-width:680px;color:#c1b0b9;font-size:13px;line-height:1.8
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-heading > strong{
+  flex:none;color:#ba8799;text-align:right;line-height:1.5;
+  font-size:10px;letter-spacing:.06em
+}
+.eidolon-lab.seraph-mode .ei-seraph-fact-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:18px
+}
+.eidolon-lab.seraph-mode .ei-seraph-fact-grid article{
+  min-width:0;padding:16px 12px;border:1px solid #59434e;background:#1a141c;display:grid;gap:8px
+}
+.eidolon-lab.seraph-mode .ei-seraph-fact-grid article span,
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict span,
+.eidolon-lab.seraph-mode .ei-seraph-verdict span{font-size:10px;color:#d0a4b3;letter-spacing:.06em}
+.eidolon-lab.seraph-mode .ei-seraph-fact-grid article b,
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict b,
+.eidolon-lab.seraph-mode .ei-seraph-verdict b{
+  font-size:15px;color:#f5e6eb;overflow-wrap:anywhere
+}
+.eidolon-lab.seraph-mode .ei-seraph-fact-grid article em,
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict em{
+  font-size:11px;color:#bdaab4;font-style:normal
+}
+.eidolon-lab.seraph-mode .ei-seraph-record-note{
+  margin:0;padding:13px 18px 17px;color:#c5b3bd;font-size:12px;line-height:1.75;
+  border-top:1px solid #3f303b;background:#100e14
+}
+.eidolon-lab.seraph-mode .ei-seraph-profile{margin-top:15px}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-tabs{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:19px 18px 0
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-tabs button{
+  display:flex;align-items:center;gap:9px;min-width:0;min-height:52px;padding:12px 11px;
+  text-align:left;cursor:pointer;color:#cfbbc4;background:#171118;
+  border:1px solid #55404a;font:750 12px ui-monospace,SFMono-Regular,Consolas,monospace
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-tabs button span{font-size:10px;color:#ad7c8f}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-tabs button.active{
+  background:#30202b;border-color:#dbadc0;color:#fff2f6;box-shadow:inset 0 -2px #cb9aae
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-tabs button:focus-visible{outline:2px solid #ecc0d0;outline-offset:3px}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-detail{
+  position:relative;min-height:155px;margin:10px 18px 20px;padding:19px 17px 17px;
+  border:1px solid #6b535f;background:radial-gradient(ellipse at 90% 10%,#4a2a3c30,transparent 55%),#0b0a0f
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-meta{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.06em;color:#d49daf
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-meta em{color:#edc1d0;font-style:normal}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-detail h4{
+  margin:17px 0 7px;color:#f4e5ea;font-size:18px;letter-spacing:-.02em
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-detail p{
+  margin:0;color:#cfc1c8;font-size:13px;line-height:1.85
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-error{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:18px;
+  border-top:1px solid #392b37;padding-top:12px;color:#b38a99;font-size:10px
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-error i{
+  width:7px;height:7px;flex:none;background:#d5a3b5;box-shadow:0 0 8px #e7aaba88
+}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-error b{margin-left:auto;color:#e3b0c4}
+.eidolon-lab.seraph-mode .ei-seraph-evidence-detail.ei-seraph-interference{
+  animation:eiSeraphEvidenceInterference .45s steps(2,end)
+}
+@keyframes eiSeraphEvidenceInterference{
+  0%{filter:brightness(1.6);clip-path:inset(0 0 65% 0)}
+  22%{filter:brightness(.7);clip-path:inset(30% 0 0 0)}
+  40%{filter:brightness(1.3);transform:translateX(2px);clip-path:inset(0)}
+  67%{filter:brightness(.85);transform:translateX(-2px)}
+  100%{filter:none;transform:none;clip-path:none}
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-network{
+  min-height:248px;margin:18px;position:relative;overflow:hidden;
+  border:1px solid #594550;background:radial-gradient(ellipse at center,#211623,#090a0e 73%);
+  display:flex;align-items:center;justify-content:center;gap:30px;padding:32px 20px 53px
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-grid{
+  position:absolute;inset:0;opacity:.34;pointer-events:none;
+  background:linear-gradient(#65515e30 1px,transparent 1px),linear-gradient(90deg,#65515e30 1px,transparent 1px);
+  background-size:24px 24px
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-terminal{
+  position:relative;z-index:1;display:grid;justify-items:center;gap:7px;min-width:105px;
+  padding:15px 20px;background:#17121a;border:1px solid #68505e;text-align:center
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-terminal span{font-size:10px;color:#d0a9b7}
+.eidolon-lab.seraph-mode .ei-seraph-null-terminal b{font-size:32px;color:#f5e4ed;line-height:1}
+.eidolon-lab.seraph-mode .ei-seraph-null-terminal em{font-style:normal;color:#bca8b1;font-size:10px}
+.eidolon-lab.seraph-mode .ei-seraph-null-path{
+  width:clamp(32px,15vw,124px);height:2px;position:relative;z-index:1;
+  background:repeating-linear-gradient(90deg,#b4899b 0 8px,transparent 9px 19px)
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-network p{
+  position:absolute;z-index:1;bottom:15px;left:12px;right:12px;text-align:center;
+  color:#b698a8;font-size:10px;letter-spacing:.04em;margin:0
+}
+.eidolon-lab.seraph-mode .ei-seraph-null-network p strong{color:#f0dce5}
+.eidolon-lab.seraph-mode .ei-seraph-verdict{
+  margin:0 18px 19px;padding:16px 17px;display:grid;gap:7px;
+  border-left:2px solid #d0a2b3;background:#1b141d
+}
+.eidolon-lab.seraph-mode .ei-seraph-verdict p{margin:4px 0 0;color:#cdbdc5;font-size:12px;line-height:1.8}
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:18px
+}
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict > div{
+  display:grid;gap:8px;min-width:0;padding:16px 13px;border:1px solid #634957;
+  background:linear-gradient(145deg,#251923,#120f16)
+}
+.eidolon-lab.seraph-mode .ei-seraph-risk-verdict b{font-size:17px;letter-spacing:.02em}
+.eidolon-lab.seraph-mode .ei-panel[data-ei-panel="engagement"] > .ei-seraph-breach{
+  margin:0 0 13px;background:#20111a;border-color:#a27285
+}
+@media(max-width:820px){
+  .eidolon-lab.seraph-mode .ei-panel{padding:15px 9px 21px}
+  .eidolon-lab.seraph-mode .ei-tabs button{font-size:10px;line-height:1.3;padding:7px 4px;min-height:56px;letter-spacing:0}
+  .eidolon-lab.seraph-mode .ei-seraph-record-heading{padding:18px 14px 5px;gap:10px}
+  .eidolon-lab.seraph-mode .ei-seraph-record-heading > strong{font-size:9px}
+  .eidolon-lab.seraph-mode .ei-seraph-record-heading p{font-size:12px}
+  .eidolon-lab.seraph-mode .ei-seraph-fact-grid,
+  .eidolon-lab.seraph-mode .ei-seraph-risk-verdict{grid-template-columns:1fr;gap:7px;padding:12px}
+  .eidolon-lab.seraph-mode .ei-seraph-fact-grid article{padding:12px}
+  .eidolon-lab.seraph-mode .ei-seraph-evidence-tabs{padding:12px 11px 0;gap:5px}
+  .eidolon-lab.seraph-mode .ei-seraph-evidence-tabs button{min-height:49px;padding:9px 7px;font-size:11px;gap:5px}
+  .eidolon-lab.seraph-mode .ei-seraph-evidence-detail{margin:9px 11px 14px;padding:14px}
+  .eidolon-lab.seraph-mode .ei-seraph-null-network{margin:11px;gap:10px;padding:26px 8px 47px;min-height:220px}
+  .eidolon-lab.seraph-mode .ei-seraph-null-terminal{padding:12px 9px;min-width:80px}
+  .eidolon-lab.seraph-mode .ei-seraph-null-path{width:45px}
+  .eidolon-lab.seraph-mode .ei-seraph-verdict{margin:0 11px 12px;padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .eidolon-lab.seraph-mode .ei-seraph-evidence-detail.ei-seraph-interference{animation:none}
+}

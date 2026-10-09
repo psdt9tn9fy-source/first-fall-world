@@ -45,7 +45,8 @@ export function initRiskRecord(root,{reduced,signal}){
       const token=++breachToken;
       if(threatMatrix)threatMatrix.dataset.viewRisk="UNBOUNDED";
       riskButtons.forEach(button=>button.classList.remove("active"));
-      renderRiskMeters(riskCopy.S.meters);
+      // Lack of verified data is not a maximum measured reading.
+      renderRiskMeters([0,0,0]);
       if(riskDetailCode)riskDetailCode.textContent="측정 불가";
       if(threatTier)threatTier.textContent="표준 등급 적용 불가";
       if(threatDirective)threatDirective.textContent="별도 대응 프로토콜";

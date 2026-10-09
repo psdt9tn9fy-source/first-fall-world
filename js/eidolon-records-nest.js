@@ -9,6 +9,11 @@ export function initNestRecord(root,{reduced,signal}){
   function scanNest(level=root.dataset.eiNest||"small"){
     if(!nestTopology)return;
     const token=++nestToken;
+    if(root.dataset.eiClass==="seraph"){
+      nestTopology.classList.remove("scanning","scanned");
+      if(nestStatus)nestStatus.textContent="NO VERIFIED LINK";
+      return;
+    }
     nestTopology.dataset.level=level;
     nestTopology.classList.remove("scanned");
     nestTopology.classList.add("scanning");
@@ -19,7 +24,7 @@ export function initNestRecord(root,{reduced,signal}){
   }
 
 
-  nestScan?.addEventListener("click",()=>scanNest(),{signal});
+  nestScan?.addEventListener("click",()=>{if(root.dataset.eiClass!=="seraph")scanNest()},{signal});
   root.addEventListener("eidolon:nest-change",event=>scanNest(event.detail?.key||root.dataset.eiNest||"small"),{signal});
   return {scanNest,cancel(){nestToken++},destroy(){nestToken++}};
 }

@@ -19,8 +19,8 @@ assert(entry.includes('./eidolon-data.js?v='));
 assert(records.includes("initRiskRecord"),"Risk controller not connected");
 const riskModule=read("js/eidolon-records-risk.js");
 assert(riskModule.includes("renderRiskMeters(data.meters)"));
-assert(riskModule.includes("renderRiskMeters(riskCopy.S.meters)"));
-for(const module of ["profile","behavior","nest","risk"])assert(records.includes(`./eidolon-records-${module}.js?v=`),module+" module missing");
+assert(riskModule.includes("renderRiskMeters([0,0,0])"),"Unknown SERAPH meters must not be fabricated as S-tier");
+for(const module of ["profile","behavior","nest","risk","seraph"])assert(records.includes(`./eidolon-records-${module}.js?v=`),module+" module missing");
 for(const [s,path] of [[index,"./js/main.js?v="],[index,"./css/intro.css?v="],[index,"./css/eidolon-records.css?v="],[main,"./eidolon.js?v="],[entry,"./eidolon-3d.js?v="]])assert(s.includes(path),path);
 for(const name of ["intro","eidolon-records"]){const s=read(`css/${name}.css`);assert.equal((s.match(/\{/g)||[]).length,(s.match(/\}/g)||[]).length,name+" braces")}
 
@@ -117,4 +117,77 @@ assert(seraphController.includes("if(!wasActive){pulse();boot()}"),"SERAPH boot 
 assert(seraphController.includes('root.classList.remove("ei-seraph-boot")'),"SERAPH boot lifecycle not cleaned up");
 assert(profileController.includes("syncEvidenceRows(seraph)"),"SERAPH evidence records wrongly verified");
 assert(dossierController.includes('record.unverified?"RECORD INCOMPLETE"'),"SERAPH detailed record verification incorrect");
+const seraphRecords=read("js/eidolon-records-seraph.js");
+const seraphRecordCSS=read("css/eidolon-records-seraph.css");
+assert(records.includes("initSeraphRecords(root"),"SERAPH record controller is not initialized");
+assert(records.includes("seraph.setClass(event.detail?.classKey)"),"SERAPH record lifecycle disconnected");
+assert(records.includes("seraph.setTab(key)"),"SERAPH tab lifecycle disconnected");
+for(const id of ["profile","behavior","nest","engagement"])
+  assert(index.includes('data-seraph-panel="'+id+'"'),"SERAPH record tab missing: "+id);
+for(const item of ["form","contact","combat"])
+  assert(seraphRecords.includes(item+':{'),"SERAPH evidence source missing: "+item);
+assert(index.includes('data-ei-seraph-evidence-detail'),"Evidence details missing");
+assert(index.includes('./css/eidolon-records-seraph.css?v='),"SERAPH lower dossier CSS not included");
+assert(seraphRecordCSS.includes('.ei-panel[data-ei-panel="behavior"] > :not(.ei-seraph-record)'),"Standard behavior view not isolated");
+assert(seraphRecordCSS.includes('.ei-panel[data-ei-panel="nest"] > :not(.ei-seraph-record)'),"Standard nest view not isolated");
+assert(seraphRecordCSS.includes('.ei-panel[data-ei-panel="engagement"] > :not(.ei-seraph-record)'),"Standard risk view not isolated");
+assert(seraphRecordCSS.includes('prefers-reduced-motion:reduce'),"SERAPH records need motion fallback");
+assert(profileController.includes('badge.textContent=seraph?"미검증"'),"SERAPH summary incorrectly marked verified");
+assert(read("js/eidolon-records-behavior.js").includes('root.dataset.eiClass==="seraph"'),"SERAPH must bypass ordinary adaptation");
+assert(read("js/eidolon-records-nest.js").includes('root.dataset.eiClass==="seraph"'),"SERAPH must bypass ordinary nest scan");
+
+/* SERAPH behavior controls: switching classes restores ordinary navigation. */
+const {initSeraphRecords}=await import("../js/eidolon-records-seraph.js");
+function fakeNode(value=""){
+  const classes=new Set();
+  const handlers=new Map();
+  return {
+    textContent:value, dataset:{},
+    classList:{
+      add(name){classes.add(name)},remove(name){classes.delete(name)},
+      toggle(name,on){if(on)classes.add(name);else classes.delete(name)},
+      contains(name){return classes.has(name)}
+    },
+    addEventListener(type,handler){handlers.set(type,handler)},
+    setAttribute(name,value){this.attributes??={};this.attributes[name]=value},
+    getAttribute(name){return this.attributes?.[name]??null},
+    click(){handlers.get("click")?.()},
+    get offsetWidth(){return 1}
+  };
+}
+const evidenceButtons=["form","contact","combat"].map(key=>{
+  const node=fakeNode();node.dataset.eiSeraphEvidence=key;return node;
+});
+const tabs=["profile","behavior","nest","engagement"].map(key=>{
+  const node=fakeNode("ORIGINAL "+key);node.dataset.eiTabBtn=key;return node;
+});
+const header=fakeNode("4개 항목 // 공개"),detail=fakeNode();
+const fields=Object.fromEntries(
+ ["code","state","title","body"].map(key=>[key,fakeNode()])
+);
+const mockRoot={
+  dataset:{eiClass:"brute",eiTab:"behavior"},
+  querySelector(selector){
+    if(selector===".ei-record-console > header em")return header;
+    if(selector==="[data-ei-seraph-evidence-detail]")return detail;
+    if(selector==="[data-ei-seraph-evidence].active")return evidenceButtons.find(n=>n.classList.contains("active"));
+    return Object.entries(fields).find(([key])=>selector===`[data-ei-seraph-evidence-${key}]`)?.[1]||null;
+  },
+  querySelectorAll(selector){
+    if(selector==="[data-ei-tab-btn]")return tabs;
+    if(selector==="[data-ei-seraph-evidence]")return evidenceButtons;
+    return [];
+  }
+};
+const seraphTest=initSeraphRecords(mockRoot,{reduced:true});
+seraphTest.setClass("seraph");
+assert.equal(tabs[1].textContent,"02 // 목격 기록");
+assert.equal(header.textContent,"규격외 // 단편 기록");
+evidenceButtons[1].click();
+assert.equal(fields.title.textContent,"의사소통 여부 미확인");
+assert.equal(evidenceButtons[1].getAttribute("aria-pressed"),"true");
+seraphTest.setClass("hunter");
+assert.equal(tabs[1].textContent,"ORIGINAL behavior");
+assert.equal(header.textContent,"4개 항목 // 공개");
+seraphTest.destroy();
 console.log("PASS: classes, GLBs, SERAPH fallback, risk meters, CSS and entrypoints");
