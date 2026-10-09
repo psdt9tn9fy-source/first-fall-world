@@ -132,7 +132,7 @@ f.forceNodes[2].click();
 assert.equal(f.title,"항공 전력");
 f.forceNodes[3].click();
 assert.equal(f.title,"특수 전력");
-assert.match(f.description,/국가/);
+assert.match(f.description,/각국/);
 f.forceNodes[4].click();
 assert.equal(f.title,"지원 전력");
 assert.equal(f.facts[0].textContent,"전력 유지 · 작전 지속");
