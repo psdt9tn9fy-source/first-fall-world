@@ -10,7 +10,7 @@ export function initEidolon(){
   const nestButtons=[...root.querySelectorAll("[data-ei-nest]")];
   const scanner=root.querySelector("#eiScanner");
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let classIndex=2,scanTimer=0,pointerX=null;
+  let classIndex=0,scanTimer=0,pointerX=null;
   const textRuns=new WeakMap();
   let threeDModulePromise=null,threeDController=null,dossierPromise=null,dossier=null,recordsPromise=null,records=null;
 
@@ -255,7 +255,7 @@ export function initEidolon(){
   window.addEventListener("archive:eidolon-context",e=>setSource(e.detail));
   window.addEventListener("archive:record-opened",e=>{if(e.detail?.key==="eidolon"){setTimeout(pulseScan,90);sync3D()}});
 
-  selectClass("brute",{animate:false});
+  selectClass("swarm",{animate:false});
   loadRecords();
   setNest("small");
 }
