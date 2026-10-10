@@ -520,7 +520,7 @@
 </section>
 <!-- 04 / EIDOLON -->
 <section class="view eidolon-view" data-view="eidolon">
-  <section class="eidolon-lab" id="eidolonLab" data-ei-class="brute" data-ei-tab="profile" data-ei-nest="small">
+  <section class="eidolon-lab" id="eidolonLab" data-ei-class="swarm" data-ei-tab="profile" data-ei-nest="small">
     <header class="ei-head">
       <div><div class="kicker">I.D.A. // 적성 개체 분석실</div><h2>에이돌론<br><span>분석 기록.</span></h2></div>
       <div class="ei-head-meta">
@@ -534,9 +534,9 @@
     <div class="ei-grid">
       <aside class="ei-class-nav" aria-label="Eidolon classification">
         <div class="ei-class-head"><span>개체 분류</span><b>6개 기록</b></div>
-        <button class="ei-class-btn" type="button" data-ei-class-btn="swarm" role="option"><span class="ei-class-mark">I</span><div><b>스웜</b><small>정찰 / 침투</small></div></button>
+        <button class="ei-class-btn active" type="button" data-ei-class-btn="swarm" role="option" aria-selected="true"><span class="ei-class-mark">I</span><div><b>스웜</b><small>정찰 / 침투</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="hunter" role="option"><span class="ei-class-mark">II</span><div><b>헌터</b><small>추적 / 도심</small></div></button>
-        <button class="ei-class-btn active" type="button" data-ei-class-btn="brute" role="option" aria-selected="true"><span class="ei-class-mark">III</span><div><b>브루트</b><small>중장갑</small></div></button>
+        <button class="ei-class-btn" type="button" data-ei-class-btn="brute" role="option"><span class="ei-class-mark">III</span><div><b>브루트</b><small>중장갑</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="dominion" role="option"><span class="ei-class-mark">IV</span><div><b>도미니언</b><small>지휘형</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="ark" role="option"><span class="ei-class-mark">V</span><div><b>아크</b><small>전략 개체</small></div></button>
         <button class="ei-class-btn" type="button" data-ei-class-btn="seraph" role="option"><span class="ei-class-mark">?</span><div><b>세라프</b><small>규격외 분류</small></div></button>
@@ -566,19 +566,19 @@
         <button class="ei-hotspot network" type="button" data-ei-focus="network"><span>분석</span><b>네트워크</b></button>
         <button class="ei-hotspot morphology active" type="button" data-ei-focus="morphology"><span>분석</span><b>형태</b></button>
         <i class="ei-scanline" aria-hidden="true"></i>
-        <div class="ei-scan-foot"><span>옆으로 넘기기 / 방향키 // 분류 변경</span><b data-ei-field="scale">전차급</b></div>
+        <div class="ei-scan-foot"><span>옆으로 넘기기 / 방향키 // 분류 변경</span><b data-ei-field="scale">소형 / 대량생산</b></div>
       </section>
 
       <aside class="ei-assessment">
         <header><span>적성 개체 기록</span><b>분류 기록 // 공개</b></header>
-        <div class="ei-assess-primary"><span>분류</span><b class="ei-class-lockup"><i class="ei-class-mark" data-ei-field="mark">III</i><u>//</u><i class="ei-class-name" data-ei-field="name">브루트</i></b><em data-ei-field="ko">브루트</em></div>
-        <div class="ei-assess-role"><span>역할</span><b data-ei-field="role">중장갑 / 직접 돌격</b></div>
-        <div class="ei-risk-wrap"><div class="ei-risk-head"><span>작전 위험도</span><b><em data-ei-field="risk">상황별</em></b></div><div class="ei-risk-scale"><span data-risk="D">D</span><span data-risk="C">C</span><span data-risk="B">B</span><span data-risk="A">A</span><span data-risk="S">S</span><i class="ei-risk-breach" aria-hidden="true"></i><strong class="ei-risk-unbounded">측정 불가</strong></div></div>
+        <div class="ei-assess-primary"><span>분류</span><b class="ei-class-lockup"><i class="ei-class-mark" data-ei-field="mark">I</i><u>//</u><i class="ei-class-name" data-ei-field="name">스웜</i></b><em data-ei-field="ko">SWARM</em></div>
+        <div class="ei-assess-role"><span>역할</span><b data-ei-field="role">정찰 / 침투 / 집단전</b></div>
+        <div class="ei-risk-wrap"><div class="ei-risk-head"><span>작전 위험도</span><b><em data-ei-field="risk">D급 // 표준</em></b></div><div class="ei-risk-scale"><span data-risk="D">D</span><span data-risk="C">C</span><span data-risk="B">B</span><span data-risk="A">A</span><span data-risk="S">S</span><i class="ei-risk-breach" aria-hidden="true"></i><strong class="ei-risk-unbounded">측정 불가</strong></div></div>
         <div class="ei-focus-readout">
           <div class="ei-focus-head"><span>분석 항목</span><b id="eiFocusIndex">03 / 03</b></div>
           <div class="ei-focus-switch" role="group" aria-label="Analysis channel"><button type="button" data-ei-focus="core">코어</button><button type="button" data-ei-focus="network">네트워크</button><button class="active" type="button" data-ei-focus="morphology">형태</button></div>
-          <b id="eiFocusTitle">형태 분석</b><em id="eiFocusMeta">전차급 // 중장갑 / 직접 돌격</em>
-          <p id="eiFocusBody">전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류. 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.</p>
+          <b id="eiFocusTitle">형태 분석</b><em id="eiFocusMeta">소형 / 대량생산 // 정찰 / 침투 / 집단전</em>
+          <p id="eiFocusBody">소형 양산형. 정찰·침투·집단전에 특화된 기본 분류. 형태와 크기는 개체마다 다양하며 이 화면은 분류 참고용 개념 스캔이다.</p>
           <div class="ei-focus-status"><span>상태 // <b id="eiFocusStatus">확인됨</b></span><button type="button" data-ei-open-info>상세 정보 ↗</button></div>
         </div>
       </aside>
@@ -597,20 +597,20 @@
             <div class="ei-ident-field">
               <i class="ei-lock-corner c1"></i><i class="ei-lock-corner c2"></i><i class="ei-lock-corner c3"></i><i class="ei-lock-corner c4"></i>
               <span class="ei-ident-cross">+</span>
-              <div class="ei-ident-lockup"><small>개체 분류</small><strong><span data-ei-profile-mark>III</span><i>//</i><b data-ei-profile-name>브루트</b></strong><em data-ei-ident-result>식별 완료</em></div>
+              <div class="ei-ident-lockup"><small>개체 분류</small><strong><span data-ei-profile-mark>I</span><i>//</i><b data-ei-profile-name>스웜</b></strong><em data-ei-ident-result>식별 완료</em></div>
               <span class="ei-fragment f1">코어 // 감지</span><span class="ei-fragment f2">형태 // 대조</span><span class="ei-fragment f3">데이터 // 대조</span><span class="ei-fragment f4">역할 // 판정</span>
             </div>
             <div class="ei-ident-data">
-              <article data-ident-row><span>기수</span><b data-ident="class">III // 브루트</b><em>확인됨</em></article>
-              <article data-ident-row><span>규모</span><b data-ident="scale">전차급</b><em>확인됨</em></article>
-              <article data-ident-row><span>역할</span><b data-ident="role">중장갑 / 직접 돌격</b><em>확인됨</em></article>
+              <article data-ident-row><span>기수</span><b data-ident="class">I // 스웜</b><em>확인됨</em></article>
+              <article data-ident-row><span>규모</span><b data-ident="scale">소형 / 대량생산</b><em>확인됨</em></article>
+              <article data-ident-row><span>역할</span><b data-ident="role">정찰 / 침투 / 집단전</b><em>확인됨</em></article>
               <article data-ident-row><span>코어</span><b>동력 / 연산 / 신경망</b><em>확인됨</em></article>
               <article data-ident-row><span>형태 분석</span><b>개체별 상이</b><em>가변</em></article>
               <article data-ident-row><span>기원</span><b>불명</b><em>미확인</em></article>
             </div>
             <div class="ei-correlation"><span>데이터 일치도</span><i><b></b></i><strong data-ei-correlation>높음 // 확인됨</strong></div>
           </div>
-          <p class="ei-profile-brief" id="eiProfileBody">전차급 중장갑 개체. 강한 장갑과 직접적인 전투압력을 특징으로 하는 분류.</p>
+          <p class="ei-profile-brief" id="eiProfileBody">소형 양산형. 정찰·침투·집단전에 특화된 기본 분류.</p>
           <button class="ei-profile-rescan" type="button" data-ei-rescan>개체 다시 분석 <span>↻</span></button>
           <div class="ei-seraph-notice" id="eiSeraphNotice" hidden><span>규격외 기록</span><b>I–V 분류 미적용 // 확인된 실물 표본 없음</b></div>
           <div class="ei-seraph-record ei-seraph-profile" data-seraph-panel="profile" aria-label="세라프 미확인 자료">
@@ -634,7 +634,7 @@
             <article data-ei-trace-node="2"><span>03</span><b>공유</b><em>네트워크 연결</em><p>개체의 전투 경험이 다른 에이돌론의 대응 방식에 반영될 수 있다.</p></article>
             <article data-ei-trace-node="3"><span>04</span><b>적응</b><em>대응 갱신</em><p>동일한 무기와 전술의 반복은 점차 효과를 잃을 수 있다.</p></article>
           </div>
-          <div class="ei-trace-footer"><span id="eiBehaviorClass">BRUTE // 중장갑 / 직접 돌격</span><button type="button" data-ei-run-trace>과정 재생 ↻</button></div>
+          <div class="ei-trace-footer"><span id="eiBehaviorClass">스웜 // 정찰 / 침투 / 집단전</span><button type="button" data-ei-run-trace>과정 재생 ↻</button></div>
           <div class="ei-behavior-warning"><b>현장 기록</b><p>에이돌론의 전투학습과 정보공유는 확인된 공통 위협 특성이다. 정확한 적응 양상은 개체와 교전 상황에 따라 달라질 수 있다.</p></div>
           <div class="ei-seraph-record ei-seraph-behavior" data-seraph-panel="behavior" aria-label="세라프 목격 기록">
             <div class="ei-seraph-record-top"><span>FRAGMENTARY TESTIMONY // SERAPH</span><b>BEHAVIOR UNRESOLVED</b></div>
@@ -914,4 +914,4 @@
   </div>
 </div>
 </div>
-<script type="module" src="./js/main.js?v=20261009-pc-world-terminal-v1"></script></body></html>
+<script type="module" src="./js/main.js?v=20261010-swarm-default-v1"></script></body></html>
