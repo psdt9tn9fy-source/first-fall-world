@@ -1,4 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER,CHARACTER_COUNTRIES} from "./characters-data.js?v=20261008-character-v9";
+import {CHARACTERS,CHARACTER_ORDER,CHARACTER_COUNTRIES} from "./characters-data.js?v=20261012-chaeryeong-lock-v1";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
@@ -54,19 +54,24 @@ export function initCharacters(){
     cardList?.replaceChildren();
     people.forEach(person=>{
       const card=document.createElement("button");card.type="button";card.className="char-directory-card";
-      card.setAttribute("aria-label",person.name+" 인물 기록 열람");
+      const locked=person.locked===true;
+      if(locked){card.disabled=true;card.classList.add("is-locked");card.setAttribute("aria-label",person.name+" · 미공개 인물, 열람 불가");}
+      if(!locked)card.setAttribute("aria-label",person.name+" 인물 기록 열람");
       const visual=person.visuals?.[0];
       if(visual?.src){
-        const img=document.createElement("img");img.src=visual.src;img.alt="";img.loading="lazy";img.decoding="async";card.append(img);
+        const portrait=document.createElement("div");portrait.className="char-directory-portrait";
+        const img=document.createElement("img");img.src=visual.src;img.alt="";img.loading="lazy";img.decoding="async";portrait.append(img);
+        if(locked){const seal=document.createElement("span");seal.className="char-directory-seal";seal.innerHTML="<b>◆ CLASSIFIED ◆</b><strong>COMING SOON</strong><small>ACCESS LOCKED // 002</small>";portrait.append(seal);}
+        card.append(portrait);
       }
       const info=document.createElement("div");info.className="char-directory-card-info";
-      const code=document.createElement("span");code.className="char-directory-card-code";code.textContent="PERSONNEL FILE // "+(person.record||"—");
+      const code=document.createElement("span");code.className="char-directory-card-code";code.textContent=locked?"SEALED RECORD // "+(person.record||"—"):"PERSONNEL FILE // "+(person.record||"—");
       const name=document.createElement("b");name.className="char-directory-card-name";name.textContent=person.name;
       const meta=document.createElement("span");meta.className="char-directory-card-meta";
       meta.textContent=(group.key==="china"?person.nation+" · ":"")+(person.affiliation||person.nation||"");
-      const action=document.createElement("span");action.className="char-directory-card-cta";action.textContent="기록 열람 →";
+      const action=document.createElement("span");action.className="char-directory-card-cta";action.textContent=locked?"◈ ACCESS DENIED · 공개 예정":"기록 열람 →";
       info.append(code,name,meta,action);card.append(info);
-      card.addEventListener("click",()=>selectCharacter(person.id));
+      if(!locked)card.addEventListener("click",()=>selectCharacter(person.id));
       cardList?.append(card);
     });
   }
@@ -98,7 +103,7 @@ export function initCharacters(){
     requestAnimationFrame(()=>root.scrollIntoView({behavior:"instant",block:"start"}));
   }
   function selectCharacter(id){
-    if(!CHARACTERS[id])return;
+    if(!CHARACTERS[id]||CHARACTERS[id].locked)return;
     character=CHARACTERS[id];
     countryKey=regionFor(character.nationKey).key;
     render();
