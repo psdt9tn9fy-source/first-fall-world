@@ -15,9 +15,16 @@ export const CHARACTER_COUNTRIES=[
   {key:"cadc",name:"중앙아시아 공동방위체",nationKeys:["cadc"]},
   {key:"medc",name:"중동 공동방위체",nationKeys:["medc"]}
 ];
-export const CHARACTER_ORDER=["seorin"];
+export const CHARACTER_ORDER=["seorin","chaeryeong"];
 
 export const CHARACTERS={
+  chaeryeong:{
+    id:"chaeryeong",record:"002",locked:true,
+    name:"윤채령",roman:"YOON CHAE-RYEONG",nation:"대한민국",nationKey:"rok",
+    affiliation:"대한민국 육군 · 소령",position:"기동타격대장",
+    teaser:"NO SIGNAL // IDENTITY SEALED",
+    visuals:[{src:"./assets/caveduck-yoon-chaeryeong.webp",label:"LOCKED",detail:"접근 제한"}]
+  },
   seorin:{
     id:"seorin",
     record:"001",
