@@ -4,7 +4,7 @@ import {initMilitary} from "./military.js?v=20261009-military-deployment-v1";
 import { initCharacters } from "./characters.js?v=20261012-chaeryeong-lock-v1";
 import { initAccess } from "./access.js?v=20261007-refactor-3";
 import { initNavigation } from "./navigation.js?v=20261007-refactor-3";
-import { initNations } from "./nations.js?v=20261009-military-command-v1";
+import { initNations } from "./nations.js?v=20261014-rus-dossier-v1";
 import { initEidolon } from "./eidolon.js?v=20261010-swarm-default-v1";
 import { initWorldMobile } from "./world-mobile.js?v=20261009-pc-world-terminal-v1";
 
