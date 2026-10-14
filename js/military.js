@@ -389,7 +389,9 @@ export function initMilitary(){
     selectLevel(node.dataset.milNode);
   }));
   q("[data-mil-route-btn]")?.addEventListener("click",runRoute);
+  window.addEventListener("military:nation-changed",event=>{if(event.detail?.key!=="ida")cancelRoute()});
   window.addEventListener("archive:record-opened",event=>{
+    if(root.dataset.milCountry && root.dataset.milCountry!=="ida"){cancelRoute();return}
     if(event.detail?.key==="military"&&(root.dataset.mode==="command"||root.dataset.mode==="structure"||root.dataset.mode==="force"||root.dataset.mode==="rank"||root.dataset.mode==="deployment"))runRoute();
     else if(event.detail?.key!=="military")cancelRoute();
   });
