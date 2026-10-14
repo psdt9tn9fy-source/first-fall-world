@@ -18,7 +18,7 @@ export function initNationMilitary(){
   catalog.className="mil-country-catalog";
   catalog.id="milCountryCatalog";
   catalog.hidden=true;
-  catalog.innerHTML='<div class="mil-catalog-head"><div><span class="mil-micro">국가 목록 / 17개국</span><h3>국가 선택</h3></div><button type="button" data-mil-catalog-close aria-label="국가 목록 닫기">닫기 ×</button></div><div class="mil-country-grid" role="group" aria-label="국가별 군사체계"></div><p class="mil-catalog-foot">자료가 등록된 국가만 상세 기록을 열람할 수 있어. 나머지 국가는 준비 중으로 표시돼.</p>';
+  catalog.innerHTML='<div class="mil-catalog-head"><div><span class="mil-micro">국가 목록 / 17개국</span><h3>국가 선택</h3></div><button type="button" data-mil-catalog-close aria-label="국가 목록 닫기">닫기 ×</button></div><div class="mil-country-grid" role="group" aria-label="국가별 군사체계"></div><p class="mil-catalog-foot">상세 기록이 등록된 국가는 열람할 수 있습니다. 미등록 국가는 자료 준비 중으로 표시됩니다.</p>';
   nav.after(catalog);
   const grid=catalog.querySelector(".mil-country-grid");
   const entries=[{key:"ida",name:"I.D.A. 국제연합방위기구",code:"IDA",eng:"ALLIANCE RECORD"},...countries];
