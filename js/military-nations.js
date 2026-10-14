@@ -12,13 +12,13 @@ export function initNationMilitary(){
   const getFlag=key=>"./assets/flags-hq/"+key+"-2134."+(ext[key]||"jpg");
   const nav=document.createElement("div");
   nav.className="mil-country-nav";
-  nav.innerHTML='<div class="mil-current"><span class="mil-micro">SELECTED ARCHIVE / 2134</span><div class="mil-current-name"><img data-mil-current-flag alt="" hidden><div><b data-mil-current-name>I.D.A. 연합군</b><small data-mil-current-code>ALLIANCE / GENERAL RECORD</small></div></div></div><button type="button" class="mil-country-toggle" aria-expanded="false" aria-controls="milCountryCatalog"><span>국가별 군사기록</span><b>국가 선택 <i aria-hidden="true">⌄</i></b></button>';
+  nav.innerHTML='<div class="mil-current"><span class="mil-micro">군사기록 / 2134</span><div class="mil-current-name"><img data-mil-current-flag alt="" hidden><div><b data-mil-current-name>I.D.A. 연합군</b><small data-mil-current-code>공통 군사체계</small></div></div></div><button type="button" class="mil-country-toggle" aria-expanded="false" aria-controls="milCountryCatalog"><span>군사체계를 확인할 국가</span><b>국가 바꾸기 <i aria-hidden="true">⌄</i></b></button>';
   root.insertBefore(nav,modes);
   const catalog=document.createElement("div");
   catalog.className="mil-country-catalog";
   catalog.id="milCountryCatalog";
   catalog.hidden=true;
-  catalog.innerHTML='<div class="mil-catalog-head"><div><span class="mil-micro">WORLD DEFENSE DIRECTORY / 17 STATES</span><h3>국가별 군사체계</h3></div><button type="button" data-mil-catalog-close aria-label="국가 목록 닫기">닫기 ×</button></div><div class="mil-country-grid" role="group" aria-label="국가별 군사체계"></div><p class="mil-catalog-foot">국가별 기록은 순차적으로 공개됩니다. <b>DATA PENDING</b>은 아직 열람 준비 중인 자료입니다.</p>';
+  catalog.innerHTML='<div class="mil-catalog-head"><div><span class="mil-micro">국가 목록 / 17개국</span><h3>국가 선택</h3></div><button type="button" data-mil-catalog-close aria-label="국가 목록 닫기">닫기 ×</button></div><div class="mil-country-grid" role="group" aria-label="국가별 군사체계"></div><p class="mil-catalog-foot">자료가 등록된 국가만 상세 기록을 열람할 수 있어. 나머지 국가는 준비 중으로 표시돼.</p>';
   nav.after(catalog);
   const grid=catalog.querySelector(".mil-country-grid");
   const entries=[{key:"ida",name:"I.D.A. 국제연합방위기구",code:"IDA",eng:"ALLIANCE RECORD"},...countries];
@@ -36,7 +36,7 @@ export function initNationMilitary(){
     const info=document.createElement("span");
     info.className="mil-country-option-text";
     const name=document.createElement("b");name.textContent=item.name;
-    const code=document.createElement("small");code.textContent=item.code+" / "+(ready?"RECORD AVAILABLE":"DATA PENDING");
+    const code=document.createElement("small");code.textContent=ready?"상세 기록 열람 가능":"자료 준비 중";
     info.append(name,code);
     button.append(emblem,info);
     grid.append(button);
@@ -46,14 +46,14 @@ export function initNationMilitary(){
   panel.className="mil-country-panel";
   panel.hidden=true;
   panel.setAttribute("aria-label","국가별 군사 기록");
-  panel.innerHTML='<header class="mil-country-hero"><div class="mil-country-hero-main"><span class="mil-micro" data-mil-nation-code></span><h3 data-mil-nation-name></h3><p data-mil-nation-summary></p></div><aside><span class="mil-micro">OPERATIONAL PROFILE</span><b data-mil-nation-tagline></b></aside></header><nav class="mil-country-subnav" aria-label="군사 기록 분류"></nav><div class="mil-country-workspace"><div class="mil-country-list"><div class="mil-country-list-header"><span data-mil-section-code></span><b data-mil-section-title></b></div><div class="mil-country-items"></div></div><article class="mil-country-detail" aria-live="polite" aria-atomic="true"><div class="mil-country-detail-code" data-mil-detail-code></div><h4 data-mil-detail-title></h4><p data-mil-detail-meta></p><p data-mil-detail-body></p><div class="mil-country-chips" data-mil-detail-facts></div></article></div><footer class="mil-country-footer">I.D.A. / WORLD DEFENSE ARCHIVE · 2134</footer>';
+  panel.innerHTML='<header class="mil-country-hero"><div class="mil-country-hero-main"><span class="mil-micro" data-mil-nation-code></span><h3 data-mil-nation-name></h3><p data-mil-nation-summary></p></div><aside><span class="mil-micro">주요 방위 임무</span><b data-mil-nation-tagline></b></aside></header><nav class="mil-country-subnav" aria-label="군사 기록 분류"></nav><div class="mil-country-workspace"><div class="mil-country-list"><div class="mil-country-list-header"><span data-mil-section-code></span><b data-mil-section-title></b></div><div class="mil-country-items"></div></div><article class="mil-country-detail" aria-live="polite" aria-atomic="true"><div class="mil-country-detail-code" data-mil-detail-code></div><h4 data-mil-detail-title></h4><p data-mil-detail-meta></p><p data-mil-detail-body></p><div class="mil-country-chips" data-mil-detail-facts></div></article></div><footer class="mil-country-footer">2134 / 국제연합방위기구 군사기록</footer>';
   root.insertBefore(panel,modes);
 
   const pending=document.createElement("section");
   pending.className="mil-country-pending";
   pending.hidden=true;
   pending.setAttribute("aria-label","기록 준비 중");
-  pending.innerHTML='<span class="mil-micro">STATE MILITARY DOSSIER</span><div class="mil-pending-identity"><img data-mil-pending-flag alt=""><div><span data-mil-pending-code></span><h3 data-mil-pending-title></h3></div></div><div class="mil-pending-divider"></div><strong>DATA PENDING</strong><p>해당 국가의 세부 군사기록은 현재 열람 준비 중입니다.</p><small>I.D.A. / ARCHIVE INDEX 2134</small>';
+  pending.innerHTML='<span class="mil-micro">군사기록 / 2134</span><div class="mil-pending-identity"><img data-mil-pending-flag alt=""><div><span data-mil-pending-code></span><h3 data-mil-pending-title></h3></div></div><div class="mil-pending-divider"></div><strong>자료 준비 중</strong><p>해당 국가의 세부 군사기록은 현재 열람 준비 중입니다.</p><small>I.D.A. / 2134</small>';
   root.insertBefore(pending,modes);
 
   const q=sel=>panel.querySelector(sel);
@@ -91,7 +91,7 @@ export function initNationMilitary(){
       b.setAttribute("aria-pressed",String(active));
     });
     const record=records[index],section=MILITARY_NATION_SECTIONS.find(([id])=>id===sectionKey);
-    fields.detailCode.textContent=MILITARY_NATIONS[nationKey].code+" / "+section[2]+" — "+String(index+1).padStart(2,"0");
+    fields.detailCode.textContent=section[1]+" / "+String(index+1).padStart(2,"0");
     fields.detailTitle.textContent=record.name;
     fields.detailMeta.textContent=record.meta;
     fields.detailBody.textContent=record.body;
@@ -99,6 +99,23 @@ export function initNationMilitary(){
     (record.facts||[]).forEach(text=>{
       const badge=document.createElement("span");badge.textContent=text;fields.detailFacts.append(badge);
     });
+    fields.items.querySelector(".mil-inline-detail")?.remove();
+    const inline=document.createElement("div");
+    inline.className="mil-inline-detail";
+    const hint=document.createElement("span");
+    hint.className="mil-inline-hint";
+    hint.textContent="상세 설명";
+    const description=document.createElement("p");
+    description.textContent=record.body;
+    const facts=document.createElement("div");
+    facts.className="mil-inline-facts";
+    (record.facts||[]).forEach(text=>{
+      const item=document.createElement("span");
+      item.textContent=text;
+      facts.append(item);
+    });
+    inline.append(hint,description,facts);
+    fields.items.querySelectorAll("button")[index]?.after(inline);
   }
   function setSection(key){
     const data=MILITARY_NATIONS[nationKey];
@@ -110,7 +127,7 @@ export function initNationMilitary(){
       button.classList.toggle("active",active);
       button.setAttribute("aria-pressed",String(active));
     });
-    fields.sectionCode.textContent="DOSSIER / "+section[2];
+    fields.sectionCode.textContent=section[2]+" / 주요 항목";
     fields.sectionTitle.textContent=section[1];
     fields.items.replaceChildren();
     data.sections[key].forEach((item,index)=>{
@@ -142,7 +159,7 @@ export function initNationMilitary(){
     currentFlag.hidden=isIda;
     if(!isIda)currentFlag.src=getFlag(key);
     nav.querySelector("[data-mil-current-name]").textContent=isIda?"I.D.A. 국제연합방위기구":item.name;
-    nav.querySelector("[data-mil-current-code]").textContent=isIda?"ALLIANCE / GENERAL RECORD":item.code+" / "+(record?"RECORD AVAILABLE":"DATA PENDING");
+    nav.querySelector("[data-mil-current-code]").textContent=isIda?"공통 군사체계":record?"상세 군사기록 열람 가능":"자료 준비 중";
     grid.querySelectorAll("button").forEach(button=>{
       const active=button.dataset.milCountryPick===key;
       button.classList.toggle("active",active);
@@ -152,8 +169,8 @@ export function initNationMilitary(){
     window.dispatchEvent(new CustomEvent("military:nation-changed",{detail:{key}}));
     if(record){
       panel.dataset.nation=key;
-      fields.code.textContent=record.code+" / NATIONAL MILITARY ARCHIVE";
-      fields.name.textContent=record.name+" · "+record.eng;
+      fields.code.textContent="군사기록 / "+record.code+" / 2134";
+      fields.name.textContent=record.name;
       fields.summary.textContent=record.summary;
       fields.tagline.textContent=record.tagline;
       setSection("command");
