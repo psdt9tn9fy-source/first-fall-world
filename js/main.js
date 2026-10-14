@@ -1,7 +1,7 @@
 import { initIntro } from "./intro.js?v=20261009-v1";
 import { initArchive } from "./archive.js?v=20261009-v1";
 import {initMilitary} from "./military.js?v=20261014-country-tabs-v1";
-import {initNationMilitary} from "./military-nations.js?v=20261014-legible-military-v4";
+import {initNationMilitary} from "./military-nations.js?v=20261014-legible-military-v5";
 import { initCharacters } from "./characters.js?v=20261012-chaeryeong-lock-v1";
 import { initAccess } from "./access.js?v=20261007-refactor-3";
 import { initNavigation } from "./navigation.js?v=20261007-refactor-3";
