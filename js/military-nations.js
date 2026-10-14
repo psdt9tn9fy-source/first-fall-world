@@ -1,4 +1,4 @@
-import {MILITARY_NATIONS,MILITARY_NATION_SECTIONS} from "./military-nations-data.js?v=20261014-country-archive-v2";
+import {MILITARY_NATIONS,MILITARY_NATION_SECTIONS} from "./military-nations-data.js?v=20261014-legible-military-v4";
 import {N,ext} from "./data.js?v=20261007-refactor-3";
 
 /* One nation catalogue shared by desktop and mobile. Country details are data-driven. */
