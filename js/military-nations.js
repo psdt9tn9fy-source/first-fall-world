@@ -173,5 +173,9 @@ export function initNationMilitary(){
     const b=e.target.closest("button[data-mil-country-item]");
     if(b)selectItem(Number(b.dataset.milCountryItem));
   });
+  window.addEventListener("military:select-nation",event=>{
+    const target=event.detail?.key;
+    setNation(MILITARY_NATIONS[target]?target:"ida");
+  });
   setNation("ida");
 }
