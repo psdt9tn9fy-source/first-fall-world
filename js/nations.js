@@ -259,7 +259,10 @@ export function initNations(){
   },{passive:true});
 
   tabButtons.forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.naTab)));
-  militaryLink?.addEventListener("click",()=>window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:"military"}})));
+  militaryLink?.addEventListener("click",()=>{
+    window.dispatchEvent(new CustomEvent("military:select-nation",{detail:{key:currentKey}}));
+    window.dispatchEvent(new CustomEvent("archive:open-record",{detail:{key:"military"}}));
+  });
   prev.addEventListener("click",()=>step(-1));next.addEventListener("click",()=>step(1));
 
   window.addEventListener("archive:select-nation",e=>{
