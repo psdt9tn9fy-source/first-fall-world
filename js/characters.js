@@ -1,4 +1,4 @@
-import {CHARACTERS,CHARACTER_ORDER,CHARACTER_COUNTRIES} from "./characters-data.js?v=20261015-chaeryeong-open-v1";
+import {CHARACTERS,CHARACTER_ORDER,CHARACTER_COUNTRIES} from "./characters-data.js?v=20261015-chaeryeong-four-photos-v1";
 
 export function initCharacters(){
   const root=document.querySelector("#characterArchive");
@@ -142,7 +142,7 @@ export function initCharacters(){
     root.querySelectorAll("[data-char-image]").forEach(img=>{
       const visual=character.visuals?.[Number(img.dataset.charImage)];
       if(visual?.src){img.src=visual.src;img.alt=character.name+" — "+visual.detail}else{img.removeAttribute("src");img.alt="이미지 미등록"}
-      img.style.objectFit=(character.id==="chaeryeong"&&Number(img.dataset.charImage)===3)?"contain":"";
+      img.style.removeProperty("object-fit");
     });
     const facts=root.querySelector("#characterFacts");
     if(facts){
