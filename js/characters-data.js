@@ -34,10 +34,10 @@ export const CHARACTERS={
     accent:"#c46c92",
     image:null,
     visuals:[
-      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"인물",detail:"육군 소령 윤채령"},
-      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"평소",detail:"여유로운 표정과 오른팔 타투"},
-      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"군복",detail:"제7기동대응여단 기동타격대장"},
-      {src:"./assets/yoon-chaeryeong-sd.webp",label:"SD",detail:"윤채령 SD 일러스트"}
+      {src:"./assets/characters/yoon-chaeryeong-portrait.webp",label:"인물",detail:"장난스러운 표정의 윤채령 · 군복"},
+      {src:"./assets/characters/yoon-chaeryeong-personality.webp",label:"평소",detail:"여유로운 표정과 오른팔 타투"},
+      {src:"./assets/characters/yoon-chaeryeong-combat.webp",label:"전투",detail:"사격 자세 · 전술 현장"},
+      {src:"./assets/characters/yoon-chaeryeong-casual.webp",label:"사복",detail:"도심 속 사복 차림"}
     ],
     nation:"대한민국",
     nationKey:"rok",
