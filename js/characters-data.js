@@ -19,11 +19,93 @@ export const CHARACTER_ORDER=["seorin","chaeryeong"];
 
 export const CHARACTERS={
   chaeryeong:{
-    id:"chaeryeong",record:"002",locked:true,
-    name:"윤채령",roman:"YOON CHAE-RYEONG",nation:"대한민국",nationKey:"rok",
-    affiliation:"대한민국 육군 · 소령",position:"기동타격대장",
-    teaser:"NO SIGNAL // IDENTITY SEALED",
-    visuals:[{src:"./assets/caveduck-yoon-chaeryeong.webp",label:"LOCKED",detail:"접근 제한"}]
+    id:"chaeryeong",
+    record:"002",
+    name:"윤채령",
+    hanja:"尹采鈴",
+    roman:"YOON CHAE-RYEONG",
+    visualCode:"65TH // MAJOR",
+    heroMeta:"2134 / ROK ARMY · MAJOR",
+    personTitle:"가벼운 장난, 먼 진심.",
+    careerTitle:"전장의 실력주의자.",
+    linksTitle:"전선과 일상.",
+    institution:"대한민국 육군 · 제7기동대응여단",
+    relatedNote:"제7기동대응여단 직할 기동타격대장 · 인천 송도 거주",
+    accent:"#c46c92",
+    image:null,
+    visuals:[
+      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"인물",detail:"육군 소령 윤채령"},
+      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"평소",detail:"여유로운 표정과 오른팔 타투"},
+      {src:"./assets/caveduck-yoon-chaeryeong.webp",label:"군복",detail:"제7기동대응여단 기동타격대장"},
+      {src:"./assets/yoon-chaeryeong-sd.webp",label:"SD",detail:"윤채령 SD 일러스트"}
+    ],
+    nation:"대한민국",
+    nationKey:"rok",
+    affiliation:"대한민국 육군 · 소령",
+    position:"제7기동대응여단 직할 기동타격대장",
+    summary:"31세에 소령 계급장을 단 기동타격대장. 평소에는 능글맞고 장난스럽지만, 작전이 시작되면 냉정한 지휘관으로 돌변한다.",
+    facts:[
+      ["나이","31세"],
+      ["출생","2103년"],
+      ["신장","178cm"],
+      ["출신","중앙사관학교 제65기"]
+    ],
+    glance:{
+      identity:"검은 머리 · 나른한 눈매 · 오른팔 전체 타투",
+      personality:[
+        ["첫인상","능글맞음 · 장난기"],
+        ["취향","귀여운 사람에게 약함"],
+        ["거리감","호감과 진심은 별개"],
+        ["작전 중","침착 · 단호한 판단"]
+      ],
+      career:[
+        ["2126","중앙사관학교 제65기 소위 임관"],
+        ["2133","에이돌론 대응 작전 공적 · 소령 조기 진급"],
+        ["2134","제7기동대응여단 직할 기동타격대장"],
+        ["전문","사격 · 시가전 지휘"]
+      ]
+    },
+    panels:{
+      basic:{
+        title:"기본정보",
+        lead:"대한민국 육군 소령 · 제7기동대응여단 직할 기동타격대장.",
+        blocks:[
+          ["출신","중앙사관학교 제65기"],
+          ["외형","검은 머리, 나른한 눈매, 오른팔 풀슬리브 타투."],
+          ["사복","검은 나시와 블랙 슬랙스 등 세련된 스타일."],
+          ["거주","인천 송도 펜트하우스"]
+        ]
+      },
+      personality:{
+        title:"성격",
+        lead:"누구에게나 여유롭고 능글맞지만, 호감과 진심 사이에는 분명한 거리를 둔다.",
+        blocks:[
+          ["평소","장난스럽고 사교적이며 상대를 놀리는 데 능숙하다."],
+          ["취향","귀엽고 매력적인 사람에게 관심을 보인다."],
+          ["관계","호감이 생기더라도 쉽게 깊은 관계로 발전시키지 않는다."],
+          ["작전","위험한 상황에서는 냉정하고 책임감 있는 지휘관이 된다."]
+        ]
+      },
+      career:{
+        title:"경력",
+        lead:"사격과 시가전 지휘 실력을 인정받아 전시 공적으로 조기 진급했다.",
+        blocks:[
+          ["2126","중앙사관학교 제65기 졸업 및 소위 임관."],
+          ["2133","에이돌론 대응 작전 공적으로 소령 조기 진급."],
+          ["2134","제7기동대응여단 직할 기동타격대장으로 복무."],
+          ["분야","사격 · 시가전 지휘"]
+        ]
+      },
+      relations:{
+        title:"연결 기록",
+        lead:"대한민국 육군의 기동타격대장. 전장 밖에서는 송도에 거주하며 개인 스포츠카로 출퇴근한다.",
+        blocks:[
+          ["대한민국","국가 및 국방 기록으로 연결."],
+          ["소속","제7기동대응여단 직할 기동타격대."],
+          ["일상","인천 송도 거주 · 개인 스포츠카 출퇴근."]
+        ]
+      }
+    }
   },
   seorin:{
     id:"seorin",
